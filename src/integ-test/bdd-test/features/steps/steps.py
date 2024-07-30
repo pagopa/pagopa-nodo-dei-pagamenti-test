@@ -4188,18 +4188,50 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 
 @step("insert through the query {query_name} into the table {table_name} the fields {row_keys_fields} with {row_values_fields} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, row_keys_fields, row_values_fields, macro, db_name):
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
-        'row_keys_fields', row_keys_fields).replace('row_values_fields', row_values_fields)
-    selected_query = utils.replace_global_variables(selected_query, context)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
-    row_values_fields = utils.replace_global_variables(row_values_fields, context)
-    row_values_fields = utils.replace_local_variables(row_values_fields, context)
-    row_values_fields = utils.replace_context_variables(row_values_fields, context)
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
-    adopted_db.closeConnection(conn)
+    try:
+        
+        db_selected = context.config.userdata.get("db_configuration").get(db_name)
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('row_keys_fields', row_keys_fields).replace('row_values_fields', row_values_fields)
+        
+        if "#uuid1#" in selected_query:
+            uuid = utils.generate_uuid()
+            selected_query = selected_query.replace('#uuid1#', uuid)
+            setattr(context, "1uuid", uuid)
+            
+        if "#uuid2#" in selected_query:
+            uuid = utils.generate_uuid()
+            selected_query = selected_query.replace('#uuid2#', uuid)
+            setattr(context, "2uuid", uuid)
+            
+        if "#timedate#" in selected_query:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+            selected_query = selected_query.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+            
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        
+        row_values_fields = utils.replace_global_variables(row_values_fields, context)
+        row_values_fields = utils.replace_local_variables(row_values_fields, context)
+        row_values_fields = utils.replace_context_variables(row_values_fields, context)
+   
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        adopted_db.closeConnection(conn)
+        
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("delete through the query {query_name} into the table {table_name} with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")

@@ -5,7 +5,7 @@ Feature: TEST INSERT
     # test scritti a valle della necessità di inserire un partizionamento durante la migrazione da Oracle a Postgres
 
     @ALL @INSERT @INSERT_1
-    Scenario: chiediStato_RPT_PARCHEGGIATA_NODO_Carrello
+    Scenario: chiediStato_RPT_PARCHEGGIATA_NODO_Carrello (ID-1)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -164,7 +164,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_3
-    Scenario: chiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
+    Scenario: chiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio (ID-3)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -376,15 +376,15 @@ Feature: TEST INSERT
 
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                        |
-            | IDENT_DOMINIO | $nodoInviaRPT.identificativoDominio |
-            | IUV           | avanzaErrResponse                   |
-            | CCP           | $1ccp                               |
-            | ORDER BY      | INSERTED_TIMESTAMP ASC              |
+            | where_keys    | where_values                                        |
+            | IDENT_DOMINIO | $nodoInviaCarrelloRPT.identificativoIntermediarioPA |
+            | IUV           | avanzaErrResponse                                   |
+            | CCP           | $1ccp                                               |
+            | ORDER BY      | INSERTED_TIMESTAMP ASC                              |
 
 
     @ALL @INSERT @INSERT_4
-    Scenario: chiediStato_RPT_RIFIUTATA_PSP
+    Scenario: chiediStato_RPT_RIFIUTATA_PSP (ID-4)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
@@ -459,7 +459,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_5
-    Scenario: chiediStato_RPT_ERRORE_INVIO_PSP_mod1
+    Scenario: chiediStato_RPT_ERRORE_INVIO_PSP_mod1 (ID-5)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | 44444444444     |
@@ -543,7 +543,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_9
-    Scenario: nodoInviaRPT - RT_ACCETTATA_PA
+    Scenario: nodoInviaRPT - RT_ACCETTATA_PA (ID-9)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -753,7 +753,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_10
-    Scenario: NotificaAnnullamento_RPT_CONPSP
+    Scenario: NotificaAnnullamento_RPT_CONPSP (ID-10)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
@@ -933,7 +933,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_11
-    Scenario: close ko con update a DB dopo aver già avuto una RT
+    Scenario: close ko con update a DB dopo aver già avuto una RT (ID-11)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -1076,7 +1076,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_12
-    Scenario: close v2 ko con update sullo stato
+    Scenario: close v2 ko con update sullo stato (ID-12)
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -1227,7 +1227,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_13
-    Scenario: spo con update sullo stato
+    Scenario: spo con update sullo stato (ID-13)
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -1367,7 +1367,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_14
-    Scenario: spoV2 con update sullo stato
+    Scenario: spoV2 con update sullo stato (ID-14)
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -1507,7 +1507,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_15
-    Scenario: activate attivazione fallita con update sullo stato
+    Scenario: activate attivazione fallita con update sullo stato (ID-15)
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -1637,7 +1637,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_16
-    Scenario: activateV2 attivazione fallita con update sullo stato
+    Scenario: activateV2 attivazione fallita con update sullo stato (ID-16)
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -1768,7 +1768,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_17 @after_1
-    Scenario: INSERT - activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> STATI_RPT_SNAPSHOT fare update con RPT_PARCHEGGIATA_NODO_MOD3 --> POSITION_PAYMENT_STATUS_SNAPSHOT fare update con PAYING_RPT --> POSITION_STATUS_SNAPSHOT fare update con PAYING --> mod3CancelV1
+    Scenario: INSERT - activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> STATI_RPT_SNAPSHOT fare update con RPT_PARCHEGGIATA_NODO_MOD3 --> POSITION_PAYMENT_STATUS_SNAPSHOT fare update con PAYING_RPT --> POSITION_STATUS_SNAPSHOT fare update con PAYING --> mod3CancelV1 (ID-17)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2072,7 +2072,7 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_18
-    Scenario: MOD1 carrello multibeneficiario rt push
+    Scenario: MOD1 carrello multibeneficiario rt push (ID-18)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -2251,9 +2251,331 @@ Feature: TEST INSERT
             | PA_FISCAL_CODE | #creditor_institution_code# |
 
 
+    @ALL @INSERT @INSERT_19
+    Scenario: updateRptStatiAndSnapshotAndDeleteteRetryPaInviaRT (ID-20)
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | codiceContestoPagamento           | #ccp1#                          |
+            | importoSingoloVersamento          | 10.00                           |
+        And RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | identificativoUnivocoRiscossione  | $1iuv                           |
+            | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $1iuv                           |
+            | codiceContestoPagamento               | $1ccp                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                 |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#    |
+            | rpt                                   | $rpt1Attachment                 |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given from body with datatable horizontal paaInviaRT_Timeout_KO initial XML paaInviaRT
+            | esito | delay |
+            | OK    | 10000 |
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        And from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#                 |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP#    |
+            | password                        | #password#                      |
+            | identificativoPSP               | #psp#                           |
+            | identificativoDominio           | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento | $1iuv                           |
+            | codiceContestoPagamento         | $1ccp                           |
+            | forzaControlloSegno             | 1                               |
+            | rt                              | $rtAttachment                   |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+        And wait 10 seconds for expiration
+
+        # RETRY_PA_INVIA_RT
+        And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code#           |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+
+        # RETRY_PA_INVIA_RT_GI
+        And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code#           |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+
+        When job paRetryPaInviaRtNegative triggered after 5 seconds
+        And wait 5 seconds for expiration
+
+        # RETRY_PA_INVIA_RT
+        Then verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code#           |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+
+        # RETRY_PA_INVIA_RT_GI
+        And verify 0 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code#           |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+
+
+
+    @ALL @INSERT @INSERT_7
+    Scenario: PPT_RPT_DUPLICATA da controllare nella tabella STATI_RPT_SNAPSHOT che non ci sia un duplicato per la tripletta
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | BBT                             |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | codiceContestoPagamento           | CCD01                           |
+            | importoSingoloVersamento          | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $1iuv                           |
+            | codiceContestoPagamento               | CCD01                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp_AGID#                      |
+            | identificativoIntermediarioPSP        | #broker_AGID#                   |
+            | identificativoCanale                  | #canale_AGID_BBT#               |
+            | rpt                                   | $rpt1Attachment                 |
+        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+            | esitoComplessivoOperazione  | OK                 |
+            | identificativoCarrello      | $1iuv              |
+            | parametriPagamentoImmediato | idBruciatura=$1iuv |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT
+        And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                          |
+            | IDENT_DOMINIO | #creditor_institution_code_old#       |
+            | IUV           | $1iuv                                 |
+            | CCP           | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY      | INSERTED_TIMESTAMP ASC                |
+
+        # RPT_GI
+        And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                          |
+            | IDENT_DOMINIO | #creditor_institution_code_old#       |
+            | IUV           | $1iuv                                 |
+            | CCP           | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY      | INSERTED_TIMESTAMP ASC                |
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                      |
+            | ID          | NotNone                                                    |
+            | ID_SESSIONE | $sessionToken                                              |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code_old#       |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY   | ID ASC                                |
+        And verify 3 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code_old#       |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY   | ID ASC                                |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code_old#       |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+
+        # STATI_RPT_SNAPSHOT
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code_old#       |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+
+        Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code_old#       |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                      |
+            | password                              | #password#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#       |
+            | identificativoUnivocoVersamento       | $1iuv                                 |
+            | codiceContestoPagamento               | $nodoInviaRPT.codiceContestoPagamento |
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
+
+        Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $1iuv                           |
+            | codiceContestoPagamento               | CCD01                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp_AGID#                      |
+            | identificativoIntermediarioPSP        | #broker_AGID#                   |
+            | identificativoCanale                  | #canale_AGID_BBT#               |
+            | rpt                                   | $rpt1Attachment                 |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
+        Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code_old#       |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                      |
+            | password                              | #password#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#       |
+            | identificativoUnivocoVersamento       | $1iuv                                 |
+            | codiceContestoPagamento               | $nodoInviaRPT.codiceContestoPagamento |
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+
+        # RPT
+        And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                          |
+            | IDENT_DOMINIO | #creditor_institution_code_old#       |
+            | IUV           | $1iuv                                 |
+            | CCP           | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY      | INSERTED_TIMESTAMP ASC                |
+
+        # RPT_GI
+        And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                          |
+            | IDENT_DOMINIO | #creditor_institution_code_old#       |
+            | IUV           | $1iuv                                 |
+            | CCP           | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY      | INSERTED_TIMESTAMP ASC                |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code_old#       |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+
+        # STATI_RPT_SNAPSHOT
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | ID_DOMINIO | #creditor_institution_code_old#       |
+            | IUV        | $1iuv                                 |
+            | CCP        | $nodoInviaRPT.codiceContestoPagamento |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+
+
+
+    @ALL @INSERT @INSERT_20
+    Scenario: updateRptSnapshotAndDeleteteRetryPaInviaRT - verificare che venga fatta la delete sulla retry_pa_invia_rt e retry_pa_invia_rt_gi
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
+        And wait 5 seconds after triggered refresh job ALL
+        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And insert through the query insert_query into the table RETRY_PA_INVIA_RT_GI the fields ID_DOMINIO,IUV,CCP,INSERTED_TIMESTAMP with '#creditor_institution_code_old#','$iuv','$activatePaymentNoticeResponse.paymentToken','#timedate#' under macro update_query on db nodo_online
+        And insert through the query insert_query into the table RETRY_PA_INVIA_RT the fields ID_SESSIONE,ID_STAZIONE,ID_INTERMEDIARIO_PA,ID_CANALE,ID_SESSIONE_ORIGINALE,ID_DOMINIO,IUV,CCP,STATO,INSERTED_TIMESTAMP,INSERTED_BY,UPDATED_TIMESTAMP,UPDATED_BY,RETRY,STATO_RPT with '#uuid1#','#id_station_old#','#id_broker_old#','#canaleFittizio#','#uuid2#','#creditor_institution_code_old#','$iuv','$activatePaymentNoticeResponse.paymentToken','TO_RETRY','#timedate#','nodoInviaRPT','#timedate#','nodoInviaRPT',5,'RT_ERRORE_INVIO_A_PA' under macro update_query on db nodo_online
+
+        # RETRY_PA_INVIA_RT_GI
+        And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | ID_DOMINIO | #creditor_institution_code_old#             |
+            | IUV        | $iuv                                        |
+            | CCP        | $activatePaymentNoticeResponse.paymentToken |
+       
+        # RETRY_PA_INVIA_RT
+        And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | ID_DOMINIO | #creditor_institution_code_old#             |
+            | IUV        | $iuv                                        |
+            | CCP        | $activatePaymentNoticeResponse.paymentToken |
+
+        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#             |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | dataOraMessaggioRichiesta         | #timedate#                                  |
+            | dataEsecuzionePagamento           | #date#                                      |
+            | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
+            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | importoSingoloVersamento          | $activatePaymentNotice.amount               |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#             |
+            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
+            | password                              | #password#                                  |
+            | identificativoPSP                     | #pspFittizio#                               |
+            | identificativoIntermediarioPSP        | #brokerFittizio#                            |
+            | identificativoCanale                  | #canaleFittizio#                            |
+            | rpt                                   | $rptAttachment                              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        # RETRY_PA_INVIA_RT_GI
+        And verify 0 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | ID_DOMINIO | #creditor_institution_code_old#             |
+            | IUV        | $iuv                                        |
+            | CCP        | $activatePaymentNoticeResponse.paymentToken |
+
+        # RETRY_PA_INVIA_RT
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | ID_DOMINIO | #creditor_institution_code_old#             |
+            | IUV        | $iuv                                        |
+            | CCP        | $activatePaymentNoticeResponse.paymentToken |
+
+
+
+
 
     @after1
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And update parameter default_token_duration_validity_millis on configuration keys with value 1800000
+        And wait 5 seconds after triggered refresh job ALL
+
+    @after3
+    Scenario: After restore
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL

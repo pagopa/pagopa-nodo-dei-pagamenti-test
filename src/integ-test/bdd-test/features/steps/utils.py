@@ -6,6 +6,7 @@ from webbrowser import get
 from xml.dom.minidom import parseString
 import random
 import string
+import uuid
 
 from behave.__main__ import main as behave_main
 import time
@@ -1638,3 +1639,7 @@ def generate_list_dict_values_obt(list_col_split, exec_query):
 #         print(f"Errore durante la ricezione degli eventi: {e}")
 #     finally:
 #         client.close()
+
+
+def generate_uuid():
+    return str(uuid.uuid4())

@@ -55,7 +55,6 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
 
 def execute_read_query(connection, query):
     print(f' Executing query [{query}] on PostgresDB instance...')
-    print(query)
     cursor = connection.cursor()
     result = None
     try:
@@ -68,6 +67,9 @@ def execute_read_query(connection, query):
         elif query.startswith('UPDATE'): 
             connection.commit()
             print("Update executed successfully")
+        elif query.startswith('INSERT'): 
+            connection.commit()
+            print("Insert executed successfully")
     except OperationalError as e:
         print(f"The error '{e}' occurred")
 
