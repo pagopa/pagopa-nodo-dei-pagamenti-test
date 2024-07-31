@@ -2515,7 +2515,7 @@ Feature: TEST INSERT
             | ID_DOMINIO | #creditor_institution_code_old#             |
             | IUV        | $iuv                                        |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
-       
+
         # RETRY_PA_INVIA_RT
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
@@ -2565,6 +2565,65 @@ Feature: TEST INSERT
             | IUV        | $iuv                                        |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
 
+
+
+    @ALL @INSERT @INSERT_6
+    Scenario: nodoInviaRPT - modello 3 con 2 chiamate nodoInviaRPT che partano in parallelo con lo stesso token (CCP) in request
+        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#             |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | dataOraMessaggioRichiesta         | #timedate#                                  |
+            | dataEsecuzionePagamento           | #date#                                      |
+            | importoTotaleDaVersare            | 10.00                                       |
+            | tipoVersamento                    | PO                                          |
+            | identificativoUnivocoVersamento   | $iuv                                        |
+            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | importoSingoloVersamento          | 10.00                                       |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#             |
+            | identificativoUnivocoVersamento       | $iuv                                        |
+            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
+            | password                              | #password#                                  |
+            | identificativoPSP                     | #psp#                                       |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                             |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#                |
+            | rpt                                   | $rpt1Attachment                             |
+        And saving nodoInviaRPT request in nodoInviaRPT1
+        And RPT2 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#             |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | dataOraMessaggioRichiesta         | #timedate#                                  |
+            | dataEsecuzionePagamento           | #date#                                      |
+            | importoTotaleDaVersare            | 10.00                                       |
+            | tipoVersamento                    | PO                                          |
+            | identificativoUnivocoVersamento   | $iuv                                        |
+            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | importoSingoloVersamento          | 10.00                                       |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#             |
+            | identificativoUnivocoVersamento       | $iuv                                        |
+            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
+            | password                              | #password#                                  |
+            | identificativoPSP                     | #psp#                                       |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                             |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#                |
+            | rpt                                   | $rpt2Attachment                             |
+        And saving nodoInviaRPT request in nodoInviaRPT2
+        When calling primitive nodoInviaRPT_nodoInviaRPT1 POST and nodoInviaRPT_nodoInviaRPT2 POST in parallel
+        Then check primitive response nodoInviaRPT2Response and primitive response nodoInviaRPT1Response
 
 
 
