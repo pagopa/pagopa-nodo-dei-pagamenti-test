@@ -2493,7 +2493,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_21
+    @ALL @INSERT @INSERT_22
     Scenario: updateRptSnapshotAndDeleteteRetryPaInviaRT - verificare che venga fatta la delete sulla retry_pa_invia_rt e retry_pa_invia_rt_gi
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2829,6 +2829,289 @@ Feature: TEST INSERT
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP        | $1ccp                                         |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
+
+
+
+
+    # @ALL @INSERT @INSERT_26
+    # Scenario: caso RPT annullata WISP con RT generato da job paInviaRT
+    #     Given generate 1 notice number and iuv with aux digit 3, segregation code 46 and application code NA
+    #     And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+    #         | identificativoDominio             | #creditor_institution_code# |
+    #         | identificativoStazioneRichiedente | irraggiungibile             |
+    #         | dataOraMessaggioRichiesta         | #timedate#                  |
+    #         | dataEsecuzionePagamento           | #date#                      |
+    #         | importoTotaleDaVersare            | 10.00                       |
+    #         | tipoVersamento                    | PO                          |
+    #         | identificativoUnivocoVersamento   | $1iuv                       |
+    #         | codiceContestoPagamento           | #ccp1#                      |
+    #         | importoSingoloVersamento          | 10.00                       |
+    #     And RT generation RT_generation with datatable vertical
+    #         | identificativoDominio             | #creditor_institution_code# |
+    #         | identificativoStazioneRichiedente | irraggiungibile             |
+    #         | dataOraMessaggioRicevuta          | #timedate#                  |
+    #         | importoTotalePagato               | 10.00                       |
+    #         | identificativoUnivocoVersamento   | $1iuv                       |
+    #         | identificativoUnivocoRiscossione  | $1iuv                       |
+    #         | CodiceContestoPagamento           | $1ccp                       |
+    #         | codiceEsitoPagamento              | 0                           |
+    #         | singoloImportoPagato              | 10.00                       |
+    #     And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+    #         | identificativoIntermediarioPA         | irraggiungibile              |
+    #         | identificativoStazioneIntermediarioPA | irraggiungibile              |
+    #         | identificativoDominio                 | #creditor_institution_code#  |
+    #         | identificativoUnivocoVersamento       | $1iuv                        |
+    #         | codiceContestoPagamento               | $1ccp                        |
+    #         | password                              | #password#                   |
+    #         | identificativoPSP                     | #psp#                        |
+    #         | identificativoIntermediarioPSP        | #id_broker_psp#              |
+    #         | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
+    #         | rpt                                   | $rpt1Attachment              |
+    #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRPT response
+    #     Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+    #         | identificativoIntermediarioPSP  | #id_broker_psp#              |
+    #         | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
+    #         | password                        | #password#                   |
+    #         | identificativoPSP               | #psp#                        |
+    #         | identificativoDominio           | #creditor_institution_code#  |
+    #         | identificativoUnivocoVersamento | $1iuv                        |
+    #         | codiceContestoPagamento         | $1ccp                        |
+    #         | forzaControlloSegno             | 1                            |
+    #         | rt                              | $rtAttachment                |
+    #     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRT response
+    #     And wait 5 seconds for expiration
+
+    #     # RETRY_PA_INVIA_RT_GI
+    #     And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $1ccp                       |
+
+    #     # RETRY_PA_INVIA_RT
+    #     And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $1ccp                       |
+
+    #     And replace ccp1 content with $1ccp content
+    #     And replace iuv content with $1iuv content
+
+    #     Given RPT2 generation RPT_generation_tipoVersamento with datatable vertical
+    #         | identificativoDominio             | #creditor_institution_code# |
+    #         | identificativoStazioneRichiedente | irraggiungibile             |
+    #         | dataOraMessaggioRichiesta         | #timedate#                  |
+    #         | dataEsecuzionePagamento           | #date#                      |
+    #         | importoTotaleDaVersare            | 10.00                       |
+    #         | tipoVersamento                    | BBT                         |
+    #         | identificativoUnivocoVersamento   | $iuv                        |
+    #         | codiceContestoPagamento           | #ccp2#                      |
+    #         | importoSingoloVersamento          | 10.00                       |
+    #     And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+    #         | identificativoIntermediarioPA         | irraggiungibile             |
+    #         | identificativoStazioneIntermediarioPA | irraggiungibile             |
+    #         | identificativoDominio                 | #creditor_institution_code# |
+    #         | identificativoUnivocoVersamento       | $iuv                        |
+    #         | codiceContestoPagamento               | $2ccp                       |
+    #         | password                              | #password#                  |
+    #         | identificativoPSP                     | #psp_AGID#                  |
+    #         | identificativoIntermediarioPSP        | #broker_AGID#               |
+    #         | identificativoCanale                  | #canale_AGID_BBT#           |
+    #         | rpt                                   | $rpt2Attachment             |
+    #     And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT the parameter RETRY = '5', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
+    #     And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT the parameter CCP = '$2ccp', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
+    #     And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT_GI the parameter CCP = '$2ccp', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
+    #     And wait 5 seconds for expiration
+    #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRPT response
+    #     And retrieve session token from $nodoInviaRPTResponse.url
+
+    #     When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of informazioniPagamento response is 200
+
+    #     Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_ANNULLATA_WISP', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$2ccp' under macro update_query on db nodo_online
+    #     And wait 5 seconds for expiration
+
+    #     # RETRY_PA_INVIA_RT_GI
+    #     And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $2ccp                       |
+
+    #     # RETRY_PA_INVIA_RT
+    #     And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $2ccp                       |
+
+    #     When job paInviaRt triggered after 5 seconds
+    #     Then wait 7 seconds for expiration
+
+    #     # RETRY_PA_INVIA_RT_GI
+    #     And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $2ccp                       |
+
+    #     # RETRY_PA_INVIA_RT
+    #     And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $2ccp                       |
+
+    #     # STATI_RPT_SNAPSHOT
+    #     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+    #         | column      | value                                       |
+    #         | ID_SESSIONE | $sessionToken                               |
+    #         | STATO       | RPT_PARCHEGGIATA_NODO |
+    #         | INSERTED_BY | nodoInviaRPT                   |
+    #     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+    #         | where_keys | where_values                |
+    #         | ID_DOMINIO | #creditor_institution_code# |
+    #         | IUV        | $1iuv                       |
+    #         | CCP        | $2ccp                       |
+
+
+
+    @ALL @INSERT @INSERT_25
+    Scenario: nodoInviaRT - fare un invia rt e scrivere due volte nella tabella di retry (la stessa rt)
+        Given generate 1 notice number and iuv with aux digit 3, segregation code 46 and application code NA
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | irraggiungibile             |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | PO                          |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | #ccp1#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RT1 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | irraggiungibile             |
+            | dataOraMessaggioRicevuta          | #timedate#                  |
+            | importoTotalePagato               | 10.00                       |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | identificativoUnivocoRiscossione  | $1iuv                       |
+            | CodiceContestoPagamento           | $1ccp                       |
+            | codiceEsitoPagamento              | 0                           |
+            | singoloImportoPagato              | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | irraggiungibile              |
+            | identificativoStazioneIntermediarioPA | irraggiungibile              |
+            | identificativoDominio                 | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento       | $1iuv                        |
+            | codiceContestoPagamento               | $1ccp                        |
+            | password                              | #password#                   |
+            | identificativoPSP                     | #psp#                        |
+            | identificativoIntermediarioPSP        | #id_broker_psp#              |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
+            | rpt                                   | $rpt1Attachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#              |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
+            | password                        | #password#                   |
+            | identificativoPSP               | #psp#                        |
+            | identificativoDominio           | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento | $1iuv                        |
+            | codiceContestoPagamento         | $1ccp                        |
+            | forzaControlloSegno             | 1                            |
+            | rt                              | $rt1Attachment               |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+        And wait 5 seconds for expiration
+
+        # RETRY_PA_INVIA_RT_GI
+        And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                |
+            | ID_DOMINIO | #creditor_institution_code# |
+            | IUV        | $1iuv                       |
+            | CCP        | $1ccp                       |
+
+        # RETRY_PA_INVIA_RT
+        And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                |
+            | ID_DOMINIO | #creditor_institution_code# |
+            | IUV        | $1iuv                       |
+            | CCP        | $1ccp                       |
+
+        And RPT2 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | irraggiungibile             |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | PO                          |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | #ccp2#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RT2 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | irraggiungibile             |
+            | dataOraMessaggioRicevuta          | #timedate#                  |
+            | importoTotalePagato               | 10.00                       |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | identificativoUnivocoRiscossione  | $1iuv                       |
+            | CodiceContestoPagamento           | $2ccp                       |
+            | codiceEsitoPagamento              | 0                           |
+            | singoloImportoPagato              | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | irraggiungibile              |
+            | identificativoStazioneIntermediarioPA | irraggiungibile              |
+            | identificativoDominio                 | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento       | $1iuv                        |
+            | codiceContestoPagamento               | $2ccp                        |
+            | password                              | #password#                   |
+            | identificativoPSP                     | #psp#                        |
+            | identificativoIntermediarioPSP        | #id_broker_psp#              |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
+            | rpt                                   | $rpt2Attachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT the parameter RETRY = '5', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1ccp' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT the parameter CCP = '$2ccp', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1ccp' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT_GI the parameter CCP = '$2ccp', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1ccp' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#              |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
+            | password                        | #password#                   |
+            | identificativoPSP               | #psp#                        |
+            | identificativoDominio           | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento | $1iuv                        |
+            | codiceContestoPagamento         | $2ccp                        |
+            | forzaControlloSegno             | 1                            |
+            | rt                              | $rt2Attachment               |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+        And wait 5 seconds for expiration
+
+        # RETRY_PA_INVIA_RT_GI
+        And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                |
+            | ID_DOMINIO | #creditor_institution_code# |
+            | IUV        | $1iuv                       |
+            | CCP        | $2ccp                       |
+
+        # RETRY_PA_INVIA_RT
+        And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                |
+            | ID_DOMINIO | #creditor_institution_code# |
+            | IUV        | $1iuv                       |
+            | CCP        | $2ccp                       |
+
+
 
 
 
