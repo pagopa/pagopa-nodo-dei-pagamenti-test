@@ -59,17 +59,19 @@ def execute_read_query(connection, query):
     result = None
     try:
         cursor.execute(query)
-
+        connection.commit()
+        
         if query.startswith('SELECT'):  
             result = cursor.fetchall()
             print(f' Query executed successfully - [{len(result)}] row/s found')            
             return result
+        
         elif query.startswith('UPDATE'): 
-            connection.commit()
             print("Update executed successfully")
+            
         elif query.startswith('INSERT'): 
-            connection.commit()
             print("Insert executed successfully")
+            
     except OperationalError as e:
         print(f"The error '{e}' occurred")
 

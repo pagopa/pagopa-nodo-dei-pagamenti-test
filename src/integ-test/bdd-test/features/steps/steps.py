@@ -3371,6 +3371,36 @@ def step_impl(context, query_name, date, macro, db_name):
 
     exec_query = adopted_db.executeQuery(conn, selected_query)
     adopted_db.closeConnection(conn)
+    
+    
+@then("apply new restore initial configurations")
+def step_impl(context):
+    try:
+        dbRun = getattr(context, "dbRun")
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "nodo_cfg"
+        db_selected = db_config.get(db_name)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        # Call the procedure to reset test data for CONFIGURATION_KEYS table
+        reset_test_data_query = "select nodo4_cfg.resettestdata();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+        
+        # Call the procedure to reset test data for CANALI table
+        reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        
+        # Call the procedure to reset test data for STAZIONI table
+        reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        if conn:
+            conn.rollback()
+
+    adopted_db.closeConnection(conn)
 
 
 @then("restore initial configurations")
