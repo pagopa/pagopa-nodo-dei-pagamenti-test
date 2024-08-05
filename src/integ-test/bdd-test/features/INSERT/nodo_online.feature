@@ -161,8 +161,6 @@ Feature: TEST INSERT
             | where_keys  | where_values |
             | ID_CARRELLO | $1iuv        |
 
-        And apply new restore initial configurations
-
 
 
     @ALL @INSERT @INSERT_3

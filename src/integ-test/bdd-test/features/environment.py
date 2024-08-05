@@ -20,6 +20,13 @@ except ModuleNotFoundError:
 import sys
 from io import StringIO
 
+db_online = None
+db_offline = None
+db_re = None
+db_wfesp = None
+
+SUBKEY = "2da21a24a3474673ad8464edb4a71011"
+
 user_profile = os.environ.get("USERPROFILE")
 
 # Variabile globale per segnalare se lo scenario "after" deve essere eseguito
@@ -36,6 +43,7 @@ tag_after_selected = ''
 
 def before_all(context):
     print('Global settings...')
+    global user_profile
 
     myconfigfile = context.config.userdata["conffile"]
     more_userdata = json.load(open(myconfigfile))
@@ -100,6 +108,77 @@ def before_all(context):
         config_dict[row[config_key]] = row[config_value]
     
     setattr(context, 'configurations', config_dict)
+    
+    db_config = context.config.userdata.get("db_configuration")
+    db_name = "nodo_cfg"
+    db_selected = db_config.get(db_name)
+    
+    if dbRun == "Postgres":
+        try:
+            dbRun = getattr(context, "dbRun")
+            db_config = context.config.userdata.get("db_configuration")
+            db_name = "nodo_cfg"
+            db_selected = db_config.get(db_name)
+
+            adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            # Call the procedure to reset test data for CONFIGURATION_KEYS table
+            print(f"----> SET CONFIGURATION_KEYS...")
+            reset_test_data_query = "select nodo4_cfg.resettestdata();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            
+            # Call the procedure to reset test data for CANALI table
+            print(f"----> SET CANALI...")
+            reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+            
+            # Call the procedure to reset test data for STAZIONI table
+            print(f"----> SET STAZIONI...")
+            reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            if conn:
+                conn.rollback()
+                print("----> ROLLBACK COMPLETED")
+                
+
+        adopted_db.closeConnection(conn)
+        
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Host': header_host}
+
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+        
+        print("Refreshing...")
+        refresh_response = None
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            ####RUN DA LOCALE
+            if user_profile != None:
+                refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+            ###RUN DA REMOTO
+            else:      
+                refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                
+            time.sleep(5)
+        
+            print('refresh_response: ', refresh_response)
+            assert refresh_response.status_code == 200, f"Refresh Failed!!!!"
+        
+        else:
+            pass
 
 
 def before_feature(context, feature):
@@ -141,9 +220,9 @@ def before_scenario(context, scenario):
             tag_after_selected = f"after_{i}"
             break
 
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    # context.stdout_capture = StringIO()
+    # context.original_stdout = sys.stdout
+    # sys.stdout = context.stdout_capture
 
 
 
@@ -166,32 +245,32 @@ def after_scenario(context, scenario):
                 context.execute_steps(text_step)
         print("----> AFTER STEP COMPLETED")
 
-    dbRun = getattr(context, "dbRun")
-    if dbRun == "Postgres":
-        sys.stdout = context.original_stdout
-        context.stdout_capture.seek(0)
-        captured_stdout = context.stdout_capture.read()
+    # dbRun = getattr(context, "dbRun")
+    # if dbRun == "Postgres":
+    #     sys.stdout = context.original_stdout
+    #     context.stdout_capture.seek(0)
+    #     captured_stdout = context.stdout_capture.read()
 
-        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-        context.stdout_capture.close()
+    #     context.stdout_capture.close()
 
-        # Stampa l'output nel terminale
-        print(f"\nCaptured stdout:\n{captured_stdout}")
+    #     # Stampa l'output nel terminale
+    #     print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    elif dbRun == "Oracle":
-        ####RUN DA LOCALE
-        if user_profile != None:
-            sys.stdout = context.original_stdout
-            context.stdout_capture.seek(0)
-            captured_stdout = context.stdout_capture.read()
+    # elif dbRun == "Oracle":
+    #     ####RUN DA LOCALE
+    #     if user_profile != None:
+    #         sys.stdout = context.original_stdout
+    #         context.stdout_capture.seek(0)
+    #         captured_stdout = context.stdout_capture.read()
 
-            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-            context.stdout_capture.close()
+    #         context.stdout_capture.close()
 
-            # Stampa l'output nel terminale
-            print(f"\nCaptured stdout:\n{captured_stdout}")
+    #         # Stampa l'output nel terminale
+    #         print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
@@ -207,12 +286,102 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    pass
-    # dbRun = getattr(context, "dbRun")
-    # db_config = context.config.userdata.get("db_configuration")
-    # db_name = "nodo_cfg"
-    # db_selected = db_config.get(db_name)
+    
+    global user_profile
+    
+    dbRun = getattr(context, "dbRun")
+    db_config = context.config.userdata.get("db_configuration")
+    db_name = "nodo_cfg"
+    db_selected = db_config.get(db_name)
+    
+    if dbRun == "Postgres":
+        proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
+        print(f"Proxy enabled: {proxyEnabled}")
+        if proxyEnabled == 'True':
+            ####RUN DA LOCALE
+            if user_profile != None:
+                proxies = {
+                    'http': 'http://172.31.253.47:8080',
+                    'https': 'http://172.31.253.47:8080',
+                }
+            ####RUN IN REMOTO
+            else:
+                proxies = {
+                    'http': 'http://10.79.20.33:80',
+                    'https': 'http://10.79.20.33:80',
+                }
+        else:
+            proxies = None
+    
+        setattr(context, 'proxies', proxies)
+        try:
+            dbRun = getattr(context, "dbRun")
+            db_config = context.config.userdata.get("db_configuration")
+            db_name = "nodo_cfg"
+            db_selected = db_config.get(db_name)
 
+            adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            # Call the procedure to reset test data for CONFIGURATION_KEYS table
+            print(f"----> RESTORE CONFIGURATION_KEYS...")
+            reset_test_data_query = "select nodo4_cfg.resettestdata();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            
+            # Call the procedure to reset test data for CANALI table
+            print(f"----> RESTORE CANALI...")
+            reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+            
+            # Call the procedure to reset test data for STAZIONI table
+            print(f"----> RESTORE STAZIONI...")
+            reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            if conn:
+                conn.rollback()
+                print("----> ROLLBACK COMPLETED")
+                
+
+        adopted_db.closeConnection(conn)
+
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Host': header_host}
+
+        user_profile = None
+
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+        
+        print("Refreshing...")
+        refresh_response = None
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            ####RUN DA LOCALE
+            if user_profile != None:
+                refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+            ###RUN DA REMOTO
+            else:      
+                refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                
+            time.sleep(5)
+        
+            print('refresh_response: ', refresh_response)
+            assert refresh_response.status_code == 200, f"Refresh Failed!!!!"
+        
+        else:
+            pass
+    
     # adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
 
     # config_dict = getattr(context, 'configurations')
@@ -234,17 +403,8 @@ def after_all(context):
     #     adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
     # adopted_db.closeConnection(conn)
-    # header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    # headers = {'Host': header_host}
-
-    # refresh_response = None
-    # if dbRun == "Postgres":
-    #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     # if dbRun == "Oracle":
     #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
-
-    # time.sleep(10)
-    # assert refresh_response.status_code == 200
 
 
 
