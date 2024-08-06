@@ -2902,7 +2902,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
     @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_8 @after_2
-    Scenario: NM3 flow OK, FLOW con PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-56)
+    Scenario: NM3 flow OK, FLOW con PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ (NM3-56)
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
