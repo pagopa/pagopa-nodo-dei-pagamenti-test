@@ -242,12 +242,7 @@ def save_soap_action(context, mock, primitive, soap_action, override=False):
 
     response = None
     if dbRun == "Postgres":
-        ####RUN DA LOCALE
-        if user_profile != None:
-            response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
-        ###RUN DA REMOTO
-        else:  
-            response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
     elif dbRun == "Oracle":
         response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
     print(response.content, response.status_code)
@@ -675,12 +670,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         
         get_response = ''
         if dbRun == "Postgres":
-            ####RUN DA LOCALE
-            if user_profile != None:
-                get_response = requests.get(url_nodo, headers=headers, verify=False)
-            ###RUN DA REMOTO
-            else:   
-                get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
             get_response = requests.get(url_nodo, headers=headers, verify=False)
 
@@ -708,13 +698,8 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
             print(f"primitive: {primitive} ---> body: {body}")
 
-            if dbRun == "Postgres":
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-                ###RUN DA REMOTO
-                else:  
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            if dbRun == "Postgres": 
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -757,13 +742,8 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
 
-            if dbRun == "Postgres":
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-                ###RUN DA REMOTO
-                else:  
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            if dbRun == "Postgres": 
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
@@ -883,13 +863,8 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
         
         get_response = ''
-        if dbRun == "Postgres":
-            ####RUN DA LOCALE
-            if user_profile != None:
-                get_response = requests.get(url_nodo, headers=headers, verify=False)
-            ###RUN DA REMOTO
-            else:   
-                get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        if dbRun == "Postgres": 
+            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
             get_response = requests.get(url_nodo, headers=headers, verify=False)
 
@@ -918,12 +893,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             print(f"primitive: {primitive} ---> body: {body}")
 
             if dbRun == "Postgres":
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-                ###RUN DA REMOTO
-                else:  
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -967,12 +937,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
 
             if dbRun == "Postgres":
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-                ###RUN DA REMOTO
-                else:  
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
@@ -1014,12 +979,7 @@ def single_thread(context, soap_primitive, tipo):
         
         soap_response = ''
         if dbRun == "Postgres":
-            ####RUN DA LOCALE
-            if user_profile != None:
-                soap_response = requests.get(url_nodo, headers=headers, verify=False)
-            ###RUN DA REMOTO
-            else:  
-                soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
             soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("response: ", soap_response.content)
@@ -1046,12 +1006,7 @@ def single_thread(context, soap_primitive, tipo):
 
             response = ''
             if dbRun == "Postgres":
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-                ###RUN DA REMOTO
-                else: 
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -1102,12 +1057,7 @@ def single_thread(context, soap_primitive, tipo):
             response = ''
             print(f"url: {url_nodo}")
             if dbRun == "Postgres":
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-                ###RUN DA REMOTO
-                else: 
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
