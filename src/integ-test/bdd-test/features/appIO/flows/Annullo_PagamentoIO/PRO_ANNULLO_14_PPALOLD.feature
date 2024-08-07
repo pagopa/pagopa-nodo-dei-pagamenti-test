@@ -301,4 +301,4 @@ Feature: PRO_ANNULLO_14_PPALOLD 44
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-        And restore initial configurations
+        And apply new restore initial configurations

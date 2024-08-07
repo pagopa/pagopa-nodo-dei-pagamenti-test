@@ -349,7 +349,7 @@ Feature: RTPull flows 1461
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
-        And restore initial configurations
+        And apply new restore initial configurations
 
     #Retry ACK system error step1
     Scenario: Execute nodoInviaRPT_systemError
@@ -399,7 +399,7 @@ Feature: RTPull flows 1461
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
-        And restore initial configurations
+        And apply new restore initial configurations
 
 
     #Retry ACK malformed step1
@@ -446,7 +446,7 @@ Feature: RTPull flows 1461
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
-        And restore initial configurations
+        And apply new restore initial configurations
 
 
     #Retry ACK syntax KO step1
@@ -498,5 +498,5 @@ Feature: RTPull flows 1461
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
-        And restore initial configurations
+        And apply new restore initial configurations
     

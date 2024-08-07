@@ -34,4 +34,4 @@ Feature: semantic check for activatePaymentNotice regarding idempotency 1041
 
    #DB check
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
-    And restore initial configurations
+    And apply new restore initial configurations

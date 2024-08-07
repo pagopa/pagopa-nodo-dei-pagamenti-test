@@ -163,7 +163,7 @@ Feature: PRO_ANNULLO_04 20
         And job mod3CancelV2 triggered after 10 seconds
         #And wait 10 seconds for expiration
         And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        Then restore initial configurations
+        Then apply new restore initial configurations
         And verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

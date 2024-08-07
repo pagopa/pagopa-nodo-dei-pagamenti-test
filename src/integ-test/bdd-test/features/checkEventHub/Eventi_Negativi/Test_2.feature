@@ -83,4 +83,4 @@ Feature: annullamentorptmaitichiestedapm_pa_new 179
       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
       And job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-      And restore initial configurations
+      And apply new restore initial configurations

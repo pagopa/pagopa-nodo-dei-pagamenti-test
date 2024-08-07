@@ -3382,25 +3382,72 @@ def step_impl(context):
         db_selected = db_config.get(db_name)
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        if dbRun == "Postgres":
 
-        # Call the procedure to reset test data for CONFIGURATION_KEYS table
-        reset_test_data_query = "select nodo4_cfg.resettestdata();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            # Call the procedure to reset test data for CONFIGURATION_KEYS table
+            reset_test_data_query = "select nodo4_cfg.resettestdata();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            
+            # Call the procedure to reset test data for CANALI table
+            reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+            
+            # Call the procedure to reset test data for STAZIONI table
+            reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+            
+            # Call the procedure to reset test data for PA_STAZIONE_PA table
+            reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+            
+            # Call the procedure to reset test data for CANALI_NODO table
+            reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
         
-        # Call the procedure to reset test data for CANALI table
-        reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        elif dbRun == "Oracle":
+            config_dict = getattr(context, 'configurations')
+            update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+
+            for key, value in config_dict.items():
+
+                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
+                
+                adopted_db.executeQuery(conn, selected_query, as_dict=True)
+
+        adopted_db.closeConnection(conn)
         
-        # Call the procedure to reset test data for STAZIONI table
-        reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Host': header_host}
+
+        refresh_response = None
+    
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    
+        elif dbRun == "Oracle":
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+
+        time.sleep(3)
+        assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
         
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
     except Exception as e:
-        print(f"An error occurred: {e}")
-        if conn:
-            conn.rollback()
-
-    adopted_db.closeConnection(conn)
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then("restore initial configurations")

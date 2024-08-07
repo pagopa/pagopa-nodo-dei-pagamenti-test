@@ -171,7 +171,7 @@ Feature: task_509 115
         And wait 5 seconds for expiration
         And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         Then check token_valid_to is greater than token_valid_from plus default_durata_estensione_token_IO
-        And restore initial configurations
+        And apply new restore initial configurations
     
     @PM
     # [TASK_509_08]
@@ -184,4 +184,4 @@ Feature: task_509 115
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200 
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # Assertion Failed: check expected element: INSERTED, obtained: ['PAYING']
-        And restore initial configurations
+        And apply new restore initial configurations

@@ -301,4 +301,4 @@ Feature: annullamentorptmairichiestedapm_pa_old 168
       And the nodoInviaRPT scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-      And restore initial configurations
+      And apply new restore initial configurations

@@ -162,4 +162,4 @@ Feature: Block revision for sendPaymentOutcome 170
         And the informazioniPagamento scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        And restore initial configurations
+        And apply new restore initial configurations

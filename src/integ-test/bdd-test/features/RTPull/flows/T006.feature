@@ -285,4 +285,4 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006] 1468
         And checks the value RT_ESITO_SCONOSCIUTO_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value NotNone of the record at column RETRY of the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        And restore initial configurations
+        And apply new restore initial configurations

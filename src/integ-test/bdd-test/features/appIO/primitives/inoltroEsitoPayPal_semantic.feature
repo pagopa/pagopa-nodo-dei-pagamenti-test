@@ -589,7 +589,7 @@ Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_02]
     And checks the value None of the record at column CODICE_AUTORIZZATIVO_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value responseMalformata of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
-    And restore initial configurations
+    And apply new restore initial configurations
 
 # [SEM_NIEPP_03]
 @PM

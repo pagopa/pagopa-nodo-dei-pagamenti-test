@@ -654,4 +654,4 @@ Feature: gestioneReceiptMb_09 849
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And restore initial configurations
+        And apply new restore initial configurations

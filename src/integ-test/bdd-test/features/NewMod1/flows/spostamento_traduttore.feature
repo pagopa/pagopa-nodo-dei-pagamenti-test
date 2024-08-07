@@ -1335,7 +1335,7 @@ Feature: spostamento traduttore 954
         Given the Test 3 (part 3) scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And restore initial configurations
+        And apply new restore initial configurations
 
     @test 
     Scenario: Test 3 (part 5)
@@ -1442,7 +1442,7 @@ Feature: spostamento traduttore 954
         Given the Test 3.1 (part 3) scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And restore initial configurations
+        And apply new restore initial configurations
 
     @test 
     Scenario: Test 3.1 (part 5)

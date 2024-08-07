@@ -86,7 +86,7 @@ Feature: PRO_ANNULLO_02 18
         And job mod3CancelV2 triggered after 15 seconds
         And wait 20 seconds for expiration
         Then verify the HTTP status code of informazioniPagamento response is 200
-        And restore initial configurations
+        And apply new restore initial configurations
         And checks the value PAYING, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -104,4 +104,4 @@ Feature: PRO_ANNULLO_02 18
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value Y, Y, Y, Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
+        And apply new restore initial configurations

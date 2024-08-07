@@ -89,5 +89,5 @@ Feature: FLUSSO_APIO_33 105
         And wait 15 seconds for expiration
         And PSP sends soap activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And restore initial configurations
+        And apply new restore initial configurations
         

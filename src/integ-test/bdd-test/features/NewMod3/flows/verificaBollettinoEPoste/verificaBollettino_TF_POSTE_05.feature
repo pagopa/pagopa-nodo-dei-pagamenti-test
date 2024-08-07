@@ -120,7 +120,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05] 1351
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
-        And restore initial configurations
+        And apply new restore initial configurations
 
 
     Scenario: RPT generation

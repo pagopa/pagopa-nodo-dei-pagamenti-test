@@ -323,4 +323,4 @@ Scenario: Check PSP list
     And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro AppIO with db name nodo_offline
     And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
     And check data is $listaCarte of listaPSP response
-    And restore initial configurations
+    And apply new restore initial configurations

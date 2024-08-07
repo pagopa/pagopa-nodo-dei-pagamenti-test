@@ -370,4 +370,4 @@ Feature: PRO_ANNULLO_00_PPALOLD 14
         And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status_old on db nodo_online under macro AppIO
         #check correctness STATI_RPT table
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-        And restore initial configurations
+        And apply new restore initial configurations

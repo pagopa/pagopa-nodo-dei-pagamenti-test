@@ -40,4 +40,4 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And verify the paymentToken of the activatePaymentNotice response is equals to target
-    And restore initial configurations
+    And apply new restore initial configurations

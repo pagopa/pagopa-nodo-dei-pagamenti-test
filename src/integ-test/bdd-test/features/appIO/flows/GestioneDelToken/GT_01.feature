@@ -94,4 +94,4 @@ Feature: GT_01 54
         Then verify the HTTP status code of informazioniPagamento response is 200
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
-        And restore initial configurations
+        And apply new restore initial configurations

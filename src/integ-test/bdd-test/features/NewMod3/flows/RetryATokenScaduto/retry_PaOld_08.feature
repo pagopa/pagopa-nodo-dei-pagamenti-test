@@ -228,4 +228,4 @@ Feature: process tests for retryAtokenScaduto 1168
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
     And wait 70 seconds for expiration
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    And restore initial configurations
+    And apply new restore initial configurations

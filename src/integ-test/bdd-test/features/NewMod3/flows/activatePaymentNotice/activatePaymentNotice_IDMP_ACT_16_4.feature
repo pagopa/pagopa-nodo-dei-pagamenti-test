@@ -69,4 +69,4 @@ Feature: semantic check for activatePaymentNotice regarding idempotency 1047
     And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
-    And restore initial configurations
+    And apply new restore initial configurations

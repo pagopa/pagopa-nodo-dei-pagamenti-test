@@ -111,7 +111,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-    And restore initial configurations
+    And apply new restore initial configurations
 
   # @runnable
   #   # Send payment outcome Phase 2 - different paymentMethod [IDMP_SPO_24]
@@ -395,5 +395,5 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
-    And restore initial configurations
+    And apply new restore initial configurations
 

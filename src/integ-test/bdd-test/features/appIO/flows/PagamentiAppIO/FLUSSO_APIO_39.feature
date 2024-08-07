@@ -251,4 +251,4 @@
 #         # TODO: check correctness of POSITION_RECEIPT_RECIPIENT_STATUS table
 #         # TODO: check correctness of POSITION_RECEIPT_XML table
 #         # TODO: check correctness of XML Receipt
-#         And restore initial configurations
+#         And apply new restore initial configurations

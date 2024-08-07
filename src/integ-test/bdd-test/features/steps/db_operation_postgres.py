@@ -59,7 +59,6 @@ def execute_read_query(connection, query):
     result = None
     try:
         cursor.execute(query)
-        connection.commit()
         
         if query.startswith('SELECT'):  
             result = cursor.fetchall()
@@ -67,9 +66,11 @@ def execute_read_query(connection, query):
             return result
         
         elif query.startswith('UPDATE'): 
+            connection.commit()
             print("Update executed successfully")
             
-        elif query.startswith('INSERT'): 
+        elif query.startswith('INSERT'):
+            connection.commit() 
             print("Insert executed successfully")
             
     except OperationalError as e:

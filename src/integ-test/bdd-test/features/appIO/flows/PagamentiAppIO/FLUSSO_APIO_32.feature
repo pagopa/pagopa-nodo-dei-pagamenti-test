@@ -96,5 +96,5 @@ Scenario: Execute activateIOPayment1 (Phase 5)
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-    And restore initial configurations
+    And apply new restore initial configurations
 
