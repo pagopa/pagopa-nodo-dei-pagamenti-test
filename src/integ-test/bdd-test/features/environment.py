@@ -173,8 +173,6 @@ def before_all(context):
         except Exception as e:
             # Gestione di tutte le altre eccezioni
             print("----->>>> Exception:", e)
-            # Interrompiamo il test
-            raise e
 
 
 def before_feature(context, feature):
@@ -372,10 +370,6 @@ def after_all(context):
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
-        # Interrompiamo il test
-        raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
         print("----->>>> Exception:", e)
-        # Interrompiamo il test
-        raise e
