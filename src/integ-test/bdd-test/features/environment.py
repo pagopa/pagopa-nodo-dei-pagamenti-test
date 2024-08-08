@@ -216,9 +216,9 @@ def before_scenario(context, scenario):
             tag_after_selected = f"after_{i}"
             break
 
-    # context.stdout_capture = StringIO()
-    # context.original_stdout = sys.stdout
-    # sys.stdout = context.stdout_capture
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
 
 
 
@@ -241,32 +241,32 @@ def after_scenario(context, scenario):
                 context.execute_steps(text_step)
         print("----> AFTER STEP COMPLETED")
 
-    # dbRun = getattr(context, "dbRun")
-    # if dbRun == "Postgres":
-    #     sys.stdout = context.original_stdout
-    #     context.stdout_capture.seek(0)
-    #     captured_stdout = context.stdout_capture.read()
+    dbRun = getattr(context, "dbRun")
+    if dbRun == "Postgres":
+        sys.stdout = context.original_stdout
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
 
-    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    #     context.stdout_capture.close()
+        context.stdout_capture.close()
 
-    #     # Stampa l'output nel terminale
-    #     print(f"\nCaptured stdout:\n{captured_stdout}")
+        # Stampa l'output nel terminale
+        print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    # elif dbRun == "Oracle":
-    #     ####RUN DA LOCALE
-    #     if user_profile != None:
-    #         sys.stdout = context.original_stdout
-    #         context.stdout_capture.seek(0)
-    #         captured_stdout = context.stdout_capture.read()
+    elif dbRun == "Oracle":
+        ####RUN DA LOCALE
+        if user_profile != None:
+            sys.stdout = context.original_stdout
+            context.stdout_capture.seek(0)
+            captured_stdout = context.stdout_capture.read()
 
-    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    #         context.stdout_capture.close()
+            context.stdout_capture.close()
 
-    #         # Stampa l'output nel terminale
-    #         print(f"\nCaptured stdout:\n{captured_stdout}")
+            # Stampa l'output nel terminale
+            print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
@@ -274,11 +274,6 @@ def after_scenario(context, scenario):
 def after_feature(context, feature):
     global_configuration = context.config.userdata.get("global_configuration")
 
-    # DISABLE see @config-ec too
-    # for tag in feature.tags:
-    #     if tag == 'config-ec':
-    #         # reset apiconfig
-    #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
 
 def after_all(context):
@@ -384,14 +379,3 @@ def after_all(context):
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
-
-
-
-def config_ec(context):
-    global_configuration = context.config.userdata.get("global_configuration")
-
-    # with open(context.config.base_dir + '/../resources/creditorinstitutions.json', 'r') as reader:
-    #     creditor_institution_code = global_configuration.get("creditor_institution_code")
-    #     payload = reader.read().replace('#creditor_institution_code#', creditor_institution_code)
-
-    #     context.apiconfig.create_creditor_institution(payload)
