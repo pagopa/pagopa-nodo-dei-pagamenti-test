@@ -468,4 +468,4 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01] 1243
         And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $PAYMENT_TOKEN
         And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
         And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
-        And restore initial configurations
+        And apply new restore initial configurations

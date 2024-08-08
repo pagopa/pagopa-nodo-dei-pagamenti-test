@@ -152,4 +152,4 @@ Feature: NCAP 320
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is PARKED of avanzamentoPagamento response
-        And restore initial configurations
+        And apply new restore initial configurations

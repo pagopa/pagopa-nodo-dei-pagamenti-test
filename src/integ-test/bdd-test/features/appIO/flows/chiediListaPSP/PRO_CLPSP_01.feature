@@ -181,4 +181,4 @@ Scenario: Check correct PSP list
     And through the query getPspCarte_poste2 retrieve param listaCarte at position -1 and save it under the key listaCarte
     And compare list between data in listaPSP response and $listaCarte
     #And check data is $listaCarte of listaPSP response
-    And restore initial configurations
+    And apply new restore initial configurations

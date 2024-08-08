@@ -83,4 +83,4 @@ Feature: GT_06 59
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And check token_valid_to is equal to token_valid_from plus 15000
-        And restore initial configurations
+        And apply new restore initial configurations

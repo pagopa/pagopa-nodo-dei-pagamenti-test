@@ -79,4 +79,4 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1270
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp on db nodo_online under macro NewMod3
-    And restore initial configurations
+    And apply new restore initial configurations

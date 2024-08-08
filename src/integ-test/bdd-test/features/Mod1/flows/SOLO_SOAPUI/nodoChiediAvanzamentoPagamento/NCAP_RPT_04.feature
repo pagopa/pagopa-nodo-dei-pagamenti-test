@@ -173,4 +173,4 @@ Feature: NCAP 393
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And restore initial configurations
+        And apply new restore initial configurations

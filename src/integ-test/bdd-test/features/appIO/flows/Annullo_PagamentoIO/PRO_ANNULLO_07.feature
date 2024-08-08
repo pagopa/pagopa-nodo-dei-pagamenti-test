@@ -137,7 +137,7 @@ Feature: PRO_ANNULLO_07 26
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
+        And apply new restore initial configurations
     
     @runnable
     Scenario: Execute activateIOPayment1 (Phase 3) [PRO_ANNULLO_07]
@@ -151,4 +151,4 @@ Feature: PRO_ANNULLO_07 26
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # check correctness POSITION_TRANSFER table
         And checks the value Y, N of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
+        And apply new restore initial configurations

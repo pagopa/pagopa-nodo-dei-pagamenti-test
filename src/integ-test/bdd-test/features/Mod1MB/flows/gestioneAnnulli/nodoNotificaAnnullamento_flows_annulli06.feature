@@ -527,4 +527,4 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06] 830
 
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-      And restore initial configurations
+      And apply new restore initial configurations

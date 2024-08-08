@@ -181,5 +181,5 @@ Feature: GT_07 60
         And wait 15 seconds for expiration
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        And restore initial configurations
+        And apply new restore initial configurations
     

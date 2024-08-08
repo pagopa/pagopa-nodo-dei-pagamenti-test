@@ -203,4 +203,4 @@ Feature: Block revision for sendPaymentOutcome 171
         And the closePaymentV2 scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        And restore initial configurations
+        And apply new restore initial configurations

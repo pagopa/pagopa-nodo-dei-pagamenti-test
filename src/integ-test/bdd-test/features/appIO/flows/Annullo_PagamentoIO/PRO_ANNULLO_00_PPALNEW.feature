@@ -185,4 +185,4 @@ Feature: PRO_ANNULLO_00_PPALNEW 13
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # check correctness POSITION_TRANSFER table
         And checks the value N, Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
+        And apply new restore initial configurations

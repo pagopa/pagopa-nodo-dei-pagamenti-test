@@ -175,4 +175,4 @@ Feature: Semantic checks KO for activatePaymentNoticeReq 1524
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNotice response
     And check description is expirationTime deve essere <= 7000 of activatePaymentNotice response
-    And restore initial configurations
+    And apply new restore initial configurations

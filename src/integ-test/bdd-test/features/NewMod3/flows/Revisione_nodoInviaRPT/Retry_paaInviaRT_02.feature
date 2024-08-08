@@ -612,4 +612,4 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02] 1244
         And checks the value $station_id of the record at column recipient_station_id of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column xml of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
-        And restore initial configurations
+        And apply new restore initial configurations

@@ -495,7 +495,7 @@ Feature: parkedList checks 333
 
     @PM @dependentwrite @dependentread @lazy
     Scenario: restore configurations
-        Then restore initial configurations
+        Then apply new restore initial configurations
 
     ###############################################################################################
 

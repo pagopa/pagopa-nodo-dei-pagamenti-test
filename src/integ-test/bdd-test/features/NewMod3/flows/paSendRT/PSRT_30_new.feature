@@ -940,7 +940,7 @@ Feature: process tests for paSendRT [PSRT_30] 1113
         # Scenario: 24 job refresh pa (2)
         #     Given the 24 DB check + db update scenario executed successfully
         Then refresh job ALL triggered after 10 seconds
-        And restore initial configurations
+        And apply new restore initial configurations
 
 
     # PSRT_26
@@ -1194,7 +1194,7 @@ Feature: process tests for paSendRT [PSRT_30] 1113
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And restore initial configurations
+        And apply new restore initial configurations
 
     # PSRT_27
 
@@ -1420,7 +1420,7 @@ Feature: process tests for paSendRT [PSRT_30] 1113
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And restore initial configurations
+        And apply new restore initial configurations
 
     # PSRT_29
 
@@ -1669,4 +1669,4 @@ Feature: process tests for paSendRT [PSRT_30] 1113
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And restore initial configurations
+        And apply new restore initial configurations

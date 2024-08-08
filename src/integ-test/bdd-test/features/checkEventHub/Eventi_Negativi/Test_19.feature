@@ -412,4 +412,4 @@ Feature: flow checks for closePayment - PA old 178
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
       And check description is Payment annullato o scaduto of sendPaymentOutcome response
-      And restore initial configurations
+      And apply new restore initial configurations
