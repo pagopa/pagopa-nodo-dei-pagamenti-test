@@ -6407,8 +6407,7 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-  @after1
-  Scenario: After restore
-    Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+
+    @after1
+    Scenario: After restore 1
+        Then apply new restore initial configurations

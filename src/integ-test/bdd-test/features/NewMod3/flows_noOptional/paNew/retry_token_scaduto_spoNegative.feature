@@ -348,6 +348,5 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
 
 
     @after1
-    Scenario: After restore
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-        And wait 3 seconds after triggered refresh job ALL
+    Scenario: After restore 1
+        Then apply new restore initial configurations

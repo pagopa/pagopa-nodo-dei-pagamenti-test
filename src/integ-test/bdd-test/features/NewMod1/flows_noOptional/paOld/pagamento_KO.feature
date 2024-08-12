@@ -458,6 +458,5 @@ Feature: NMU flows PA Old con pagamento KO
 
 
     @after1
-    Scenario: After restore
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+    Scenario: After restore 1
+        Then apply new restore initial configurations

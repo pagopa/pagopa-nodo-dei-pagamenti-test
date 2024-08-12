@@ -1213,7 +1213,5 @@ Feature: NM3 flows con attivazione fallita
 
 
     @after1
-    Scenario: After restore
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+    Scenario: After restore 1
+        Then apply new restore initial configurations

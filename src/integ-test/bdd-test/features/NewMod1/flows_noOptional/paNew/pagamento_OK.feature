@@ -499,7 +499,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_2 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_2 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-9)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -985,7 +985,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_3 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_3 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1465,7 +1465,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_4 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_4 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -2444,7 +2444,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_6 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_6 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo c con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -2929,7 +2929,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_7 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_7 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -3410,7 +3410,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_8 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_8 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -4393,7 +4393,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_10 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_10 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -4882,7 +4882,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_11 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_11 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -5367,7 +5367,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_12 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_12 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -6351,7 +6351,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_14 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_14 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -6838,7 +6838,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_15 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_15 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -7323,7 +7323,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_16 @after_5
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_16 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -10601,7 +10601,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_20 @after_3
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_20 @after_1
     Scenario: NMU flow paNEW OK con broadcast paPrinc!=paSec MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-49)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -18952,7 +18952,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_28 @after_2
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_28 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), BIZ+ e SPRv2+ (NMU-44)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -19542,7 +19542,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_29 @after_2
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_29 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotifyV2 con flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), BIZ+ e SPRv2+ (NMU-45)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -20131,7 +20131,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_30 @after_2
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_30 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp2 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spo+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-46)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -20864,7 +20864,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_31 @after_2
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_31 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-47)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -21598,7 +21598,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_32 @after_2
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_32 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-48)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -28868,7 +28868,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_39 @after_2
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_39 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con 1 token e senza flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (anche broadcast principale che è anche secondaria?) tutte le receipt NON hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-37)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -33554,7 +33554,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_48 @after_4
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_48 @after_1
     Scenario: NMU flow paNEW OK con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 (flag standin in response in base a configurazione eCommerce)-> paGetPaymentV2 verso ACA con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD e flag standin, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-56)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -35794,74 +35794,4 @@ Feature: NMU flows con PA New pagamento OK
 
     @after1
     Scenario: After restore 1
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 3 seconds after triggered refresh job ALL
-
-
-    @after2
-    Scenario: After restore 2
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 3 seconds after triggered refresh job ALL
-
-
-    @after3
-    Scenario: After restore 3
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
-
-
-
-    @after4
-    Scenario: After restore 4
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 3 seconds after triggered refresh job ALL
-
-
-    @after5
-    Scenario: After restore 5
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
-
-
-
-
-
-    @after_6
-    Scenario: After restore 6
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        Then apply new restore initial configurations

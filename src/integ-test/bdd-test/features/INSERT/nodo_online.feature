@@ -2492,7 +2492,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_22 @after_3
+    @ALL @INSERT @INSERT_22 @after_1
     Scenario: updateRptSnapshotAndDeleteteRetryPaInviaRT - verificare che venga fatta la delete sulla retry_pa_invia_rt e retry_pa_invia_rt_gi
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -3117,12 +3117,5 @@ Feature: TEST INSERT
 
 
     @after1
-    Scenario: After restore
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And update parameter default_token_duration_validity_millis on configuration keys with value 1800000
-        And wait 5 seconds after triggered refresh job ALL
-
-    @after3
-    Scenario: After restore
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+    Scenario: After restore 1
+        Then apply new restore initial configurations
