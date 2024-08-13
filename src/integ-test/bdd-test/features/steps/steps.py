@@ -2307,7 +2307,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         soap_response = None
         if dbRun == "Postgres":
             soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            print(f"run da remoto -> si proxy: {getattr(context,'proxies')}")
+            print(f"run -> si proxy: {getattr(context,'proxies')}")
 
         elif dbRun == "Oracle":
             soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
@@ -2409,14 +2409,8 @@ def step_impl(context, job_name, seconds):
         dbRun = getattr(context, "dbRun")
         
         if dbRun == "Postgres":
-            #RUN DA LOCALE
-            if user_profile != None:
-                nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
-                print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
-            #RUN DA REMOTO
-            else:
-                nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
-                print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name} with proxies: {getattr(context,'proxies')}")
+            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name} with proxies: {getattr(context,'proxies')}")
         elif dbRun == "Oracle":
             #RUN DA LOCALE
             if user_profile != None:
