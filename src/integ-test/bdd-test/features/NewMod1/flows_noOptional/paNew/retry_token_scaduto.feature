@@ -976,6 +976,7 @@ Feature: NMU flows con PA New retry a token scaduto
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
