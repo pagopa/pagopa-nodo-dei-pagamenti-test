@@ -2938,7 +2938,7 @@ def step_impl(context, sender, method, service, receiver):
             print(f"URL REST: {url_nodo}")
             print(f"Body: {json_body}")
 
-            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
         #RUN DA REMOTO
         else:
             print(f"URL REST: {url_nodo}/{service}")
