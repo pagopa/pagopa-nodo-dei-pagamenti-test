@@ -266,12 +266,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                               |
-      | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-      | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-      | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+      | column         | value                                                                                                               |
+      | TRANSACTION_ID | $transaction_id                                                                                                     |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                     |
+      | INSERTED_BY    | closePayment-v2                                                                                                     |
+      | UPDATED_BY     | closePayment-v2                                                                                                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
@@ -1523,12 +1523,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.paypalPayment.transactionId xml check value NotNone in position 0
-    And from $pspNotifyPayment.paypalPayment.pspTransactionId xml check value NotNone in position 0
-    And from $pspNotifyPayment.paypalPayment.totalAmount xml check value 12 in position 0
-    And from $pspNotifyPayment.paypalPayment.fee xml check value 2 in position 0
-    And from $pspNotifyPayment.paypalPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+    And from $pspNotifyPaymentReq.paypalPayment.transactionId xml check value NotNone in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.pspTransactionId xml check value NotNone in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.totalAmount xml check value 12 in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.fee xml check value 2 in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
     # pspNotifyPayment RESP
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
@@ -1912,7 +1912,7 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-          # RE #####
+    # RE #####
     # activatePaymentNoticeV2 REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
@@ -2060,15 +2060,15 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.ctBancomatpayPayment.transactionId xml check value NotNone in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.outcomePaymentGateway xml check value 00 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.totalAmount xml check value 12 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.fee xml check value 2 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.authorizationCode xml check value 123456 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.paymentGateway xml check value 00 in position 0
-        # pspNotifyPayment RESP
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.transactionId xml check value NotNone in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.outcomePaymentGateway xml check value 00 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.totalAmount xml check value 12 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.fee xml check value 2 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.authorizationCode xml check value 123456 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.paymentGateway xml check value 00 in position 0
+    # pspNotifyPayment RESP
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -2417,12 +2417,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                               |
-      | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-      | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-      | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+      | column         | value                                                                                                                         |
+      | TRANSACTION_ID | $transaction_id                                                                                                               |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn           |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                                |
+      | INSERTED_BY    | closePayment-v2                                                                                                               |
+      | UPDATED_BY     | closePayment-v2                                                                                                               |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
@@ -2449,7 +2449,146 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-    # RE
+    # RE #####
+    # activatePaymentNoticeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+    And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+    And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+    # activatePaymentNoticeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+    And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+    And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.paymentDescription xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
+    # paaAttivaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
+    And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaAttivaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $paaAttivaRPTReq.identificativoCanalePSP xml check value #canale_AGID_02# in position 0
+    # paaAttivaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTResp
+    And from $paaAttivaRPTResp.esito xml check value OK in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value IT45R0760103200000000001016 in position 0
+    # nodoInviaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
+    And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $nodoInviaRPTReq.password xml check value #password# in position 0
+    And from $nodoInviaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoCanale xml check value #canale_AGID_02# in position 0
+    And from $nodoInviaRPTReq.rpt xml check value $rptAttachment in position 0
+    # nodoInviaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
+    And from $nodoInviaRPTResp.esito xml check value OK in position 0
+    And from $nodoInviaRPTResp.redirect xml check value 1 in position 0
+    # closePayment-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+    And from $closePaymentv2Req.fee json check value 2.0 in position 0
+    And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+    And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+    And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+    And from $closePaymentv2Req.outcome json check value OK in position 0
+    And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+    And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+    # closePayment-v2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+    And from $closePaymentv2Resp.outcome json check value OK in position 0
+    # pspNotifyPayment REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -2458,23 +2597,105 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value tipoVersamento in position 0
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value CP in position 0
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value outcomePaymentGateway in position 1
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 00 in position 1
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value timestampOperation in position 2
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 2021-07-09T17:06:03 in position 2
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value totalAmount in position 3
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 12 in position 3
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value paymentGateway in position 4
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 00 in position 4
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value fee in position 5
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 2 in position 5
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value authorizationCode in position 6
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 123456 in position 6
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value rrn in position 7
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 11223344 in position 7
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value tipoVersamento in position 0
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value CP in position 0
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value outcomePaymentGateway in position 1
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 1
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value timestampOperation in position 2
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 2021-07-09T17:06:03 in position 2
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value totalAmount in position 3
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 12 in position 3
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value paymentGateway in position 4
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 4
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value fee in position 5
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 2 in position 5
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value authorizationCode in position 6
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 123456 in position 6
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.key xml check value rrn in position 7
+    And from $pspNotifyPaymentReq.additionalPaymentInformations.metadata.mapEntry.value xml check value 11223344 in position 7
+    # pspNotifyPayment RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | pspNotifyPayment                              |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+    And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+    And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_versione_primitive_2# in position 0
+    And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+    And from $sendPaymentOutcomeV2Req.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+    And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+    # paaInviaRT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
+    And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaInviaRTReq.rt xml check value NotNone in position 0
+    # paaInviaRT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
+    And from $paaInviaRTResp.esito xml check value OK in position 0
+    # sendPaymentResult-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentResult-v2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+    And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+    And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+    And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 12$iuv in position 0
+    And from $sendPaymentResultv2Req.payments.debtor json check value RCCGLD09P09H501E in position 0
+    And from $sendPaymentResultv2Req.payments.description json check value pagamento multibeneficiario in position 0
+    And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
   @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_6 @after_1
@@ -2773,7 +2994,146 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-    # RE
+    # RE #####
+    # activatePaymentNoticeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+    And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+    And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+    # activatePaymentNoticeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+    And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+    And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.paymentDescription xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
+    # paaAttivaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
+    And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaAttivaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $paaAttivaRPTReq.identificativoCanalePSP xml check value #canale_AGID_02# in position 0
+    # paaAttivaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTResp
+    And from $paaAttivaRPTResp.esito xml check value OK in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value IT45R0760103200000000001016 in position 0
+    # nodoInviaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
+    And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $nodoInviaRPTReq.password xml check value #password# in position 0
+    And from $nodoInviaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoCanale xml check value #canale_AGID_02# in position 0
+    And from $nodoInviaRPTReq.rpt xml check value $rptAttachment in position 0
+    # nodoInviaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
+    And from $nodoInviaRPTResp.esito xml check value OK in position 0
+    And from $nodoInviaRPTResp.redirect xml check value 1 in position 0
+    # closePayment-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+    And from $closePaymentv2Req.fee json check value 2.0 in position 0
+    And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+    And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+    And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+    And from $closePaymentv2Req.outcome json check value OK in position 0
+    And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+    And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+    # closePayment-v2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+    And from $closePaymentv2Resp.outcome json check value OK in position 0
+    # pspNotifyPayment REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -2782,14 +3142,96 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.creditCardPayment.rrn check value 11223344 in position 0
-    And from $pspNotifyPayment.creditCardPayment.outcomePaymentGateway check value 00 in position 0
-    And from $pspNotifyPayment.creditCardPayment.totalAmount check value 12 in position 0
-    And from $pspNotifyPayment.creditCardPayment.fee check value 2 in position 0
-    And from $pspNotifyPayment.creditCardPayment.timestampOperation check value 2021-07-09T17:06:03 in position 0
-    And from $pspNotifyPayment.creditCardPayment.authorizationCode check value 123456 in position 0
-    And from $pspNotifyPayment.creditCardPayment.paymentGateway check value 00 in position 0
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+    And from $pspNotifyPaymentReq.creditCardPayment.rrn xml check value 11223344 in position 0
+    And from $pspNotifyPaymentReq.creditCardPayment.outcomePaymentGateway xml check value 00 in position 0
+    And from $pspNotifyPaymentReq.creditCardPayment.totalAmount xml check value 12 in position 0
+    And from $pspNotifyPaymentReq.creditCardPayment.fee xml check value 2 in position 0
+    And from $pspNotifyPaymentReq.creditCardPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+    And from $pspNotifyPaymentReq.creditCardPayment.authorizationCode xml check value 123456 in position 0
+    And from $pspNotifyPaymentReq.creditCardPayment.paymentGateway xml check value 00 in position 0
+    # pspNotifyPayment RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | pspNotifyPayment                              |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+    And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+    And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_versione_primitive_2# in position 0
+    And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+    And from $sendPaymentOutcomeV2Req.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+    And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+    # paaInviaRT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
+    And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaInviaRTReq.rt xml check value NotNone in position 0
+    # paaInviaRT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
+    And from $paaInviaRTResp.esito xml check value OK in position 0
+    # sendPaymentResult-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentResult-v2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+    And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+    And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+    And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 12$iuv in position 0
+    And from $sendPaymentResultv2Req.payments.debtor json check value RCCGLD09P09H501E in position 0
+    And from $sendPaymentResultv2Req.payments.description json check value pagamento multibeneficiario in position 0
+    And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
   @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_7 @after_1
@@ -3086,7 +3528,144 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-    # RE
+    # RE #####
+    # activatePaymentNoticeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+    And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+    And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+    # activatePaymentNoticeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+    And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+    And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.paymentDescription xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
+    # paaAttivaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
+    And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaAttivaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $paaAttivaRPTReq.identificativoCanalePSP xml check value #canale_AGID_02# in position 0
+    # paaAttivaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTResp
+    And from $paaAttivaRPTResp.esito xml check value OK in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value IT45R0760103200000000001016 in position 0
+    # nodoInviaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
+    And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $nodoInviaRPTReq.password xml check value #password# in position 0
+    And from $nodoInviaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoCanale xml check value #canale_AGID_02# in position 0
+    And from $nodoInviaRPTReq.rpt xml check value $rptAttachment in position 0
+    # nodoInviaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
+    And from $nodoInviaRPTResp.esito xml check value OK in position 0
+    And from $nodoInviaRPTResp.redirect xml check value 1 in position 0
+    # closePayment-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+    And from $closePaymentv2Req.fee json check value 2.0 in position 0
+    And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+    And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+    And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+    And from $closePaymentv2Req.outcome json check value OK in position 0
+    And from $closePaymentv2Req.paymentMethod json check value PPAL in position 0
+    And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.pspTransactionId json check value NotNone in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+    # closePayment-v2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+    And from $closePaymentv2Resp.outcome json check value OK in position 0
+    # pspNotifyPayment REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -3095,12 +3674,95 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.paypalPayment.transactionId check value NotNone in position 0
-    And from $pspNotifyPayment.paypalPayment.pspTransactionId check value NotNone in position 0
-    And from $pspNotifyPayment.paypalPayment.totalAmount check value 12 in position 0
-    And from $pspNotifyPayment.paypalPayment.fee check value 2 in position 0
-    And from $pspNotifyPayment.paypalPayment.timestampOperation check value 2021-07-09T17:06:03 in position 0
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+    And from $pspNotifyPaymentReq.paypalPayment.transactionId xml check value NotNone in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.pspTransactionId xml check value NotNone in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.totalAmount xml check value 12 in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.fee xml check value 2 in position 0
+    And from $pspNotifyPaymentReq.paypalPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+    # pspNotifyPayment RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | pspNotifyPayment                              |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+    And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+    And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_versione_primitive_2# in position 0
+    And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+    And from $sendPaymentOutcomeV2Req.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+    And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+    # paaInviaRT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
+    And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaInviaRTReq.rt xml check value NotNone in position 0
+    # paaInviaRT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
+    And from $paaInviaRTResp.esito xml check value OK in position 0
+    # sendPaymentResult-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentResult-v2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+    And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+    And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+    And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 12$iuv in position 0
+    And from $sendPaymentResultv2Req.payments.debtor json check value RCCGLD09P09H501E in position 0
+    And from $sendPaymentResultv2Req.payments.description json check value pagamento multibeneficiario in position 0
+    And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+
 
 
   @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_8 @after_1
@@ -3399,7 +4061,146 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-    # RE
+    # RE #####
+    # activatePaymentNoticeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+    And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+    And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+    # activatePaymentNoticeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+    And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+    And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.paymentDescription xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
+    # paaAttivaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
+    And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaAttivaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $paaAttivaRPTReq.identificativoCanalePSP xml check value #canale_AGID_02# in position 0
+    # paaAttivaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTResp
+    And from $paaAttivaRPTResp.esito xml check value OK in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value IT45R0760103200000000001016 in position 0
+    # nodoInviaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
+    And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $nodoInviaRPTReq.password xml check value #password# in position 0
+    And from $nodoInviaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoCanale xml check value #canale_AGID_02# in position 0
+    And from $nodoInviaRPTReq.rpt xml check value $rptAttachment in position 0
+    # nodoInviaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
+    And from $nodoInviaRPTResp.esito xml check value OK in position 0
+    And from $nodoInviaRPTResp.redirect xml check value 1 in position 0
+    # closePayment-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+    And from $closePaymentv2Req.fee json check value 2.0 in position 0
+    And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+    And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+    And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+    And from $closePaymentv2Req.outcome json check value OK in position 0
+    And from $closePaymentv2Req.paymentMethod json check value BPAY in position 0
+    And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+    # closePayment-v2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+    And from $closePaymentv2Resp.outcome json check value OK in position 0
+    # pspNotifyPayment REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -3408,17 +4209,102 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.ctBancomatpayPayment.transactionId check value NotNone in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.outcomePaymentGateway check value 00 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.totalAmount check value 12 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.fee check value 2 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.timestampOperation check value 2021-07-09T17:06:03 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.authorizationCode check value 123456 in position 0
-    And from $pspNotifyPayment.ctBancomatpayPayment.paymentGateway check value 00 in position 0
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.transactionId xml check value NotNone in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.outcomePaymentGateway xml check value 00 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.totalAmount xml check value 12 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.fee xml check value 2 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.authorizationCode xml check value 123456 in position 0
+    And from $pspNotifyPaymentReq.ctBancomatpayPayment.paymentGateway xml check value 00 in position 0
+    # pspNotifyPayment RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | pspNotifyPayment                              |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+    And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+    And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+    And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_versione_primitive_2# in position 0
+    And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+    And from $sendPaymentOutcomeV2Req.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+    # sendPaymentOutcomeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+    And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+    # paaInviaRT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
+    And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaInviaRTReq.rt xml check value NotNone in position 0
+    # paaInviaRT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
+    And from $paaInviaRTResp.esito xml check value OK in position 0
+    # sendPaymentResult-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentResult-v2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+    And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+    And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+    And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 12$iuv in position 0
+    And from $sendPaymentResultv2Req.payments.debtor json check value RCCGLD09P09H501E in position 0
+    And from $sendPaymentResultv2Req.payments.description json check value pagamento multibeneficiario in position 0
+    And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-  @ALL @NMU @NMUPAOLD  @NMUPAOLDPAGOK @NMUPAOLDPAGOK_9 @after_1
+
+
+
+  @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_9 @after_1
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp2 notify PSP vp1 spo, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-16)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
     And wait 3 seconds after triggered refresh job ALL
@@ -3680,12 +4566,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                               |
-      | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-      | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-      | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+      | column         | value                                                                                                                         |
+      | TRANSACTION_ID | $transaction_id                                                                                                               |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn           |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                                |
+      | INSERTED_BY    | closePayment-v2                                                                                                               |
+      | UPDATED_BY     | closePayment-v2                                                                                                               |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
@@ -3712,7 +4598,146 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-    # RE
+          # RE #####
+    # activatePaymentNoticeV2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+    And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+    And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+    And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+    # activatePaymentNoticeV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+    And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+    And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.paymentDescription xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+    And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
+    # paaAttivaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
+    And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaAttivaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $paaAttivaRPTReq.identificativoCanalePSP xml check value #canale_AGID_02# in position 0
+    # paaAttivaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaAttivaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTResp
+    And from $paaAttivaRPTResp.esito xml check value OK in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
+    And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value IT45R0760103200000000001016 in position 0
+    # nodoInviaRPT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
+    And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $nodoInviaRPTReq.password xml check value #password# in position 0
+    And from $nodoInviaRPTReq.identificativoPSP xml check value #psp_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoIntermediarioPSP xml check value #broker_AGID# in position 0
+    And from $nodoInviaRPTReq.identificativoCanale xml check value #canale_AGID_02# in position 0
+    And from $nodoInviaRPTReq.rpt xml check value $rptAttachment in position 0
+    # nodoInviaRPT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | nodoInviaRPT                                  |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
+    And from $nodoInviaRPTResp.esito xml check value OK in position 0
+    And from $nodoInviaRPTResp.redirect xml check value 1 in position 0
+    # closePayment-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+    And from $closePaymentv2Req.fee json check value 2.0 in position 0
+    And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+    And from $closePaymentv2Req.idChannel json check value #canale_versione_primitive_2# in position 0
+    And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+    And from $closePaymentv2Req.outcome json check value OK in position 0
+    And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+    And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
+    And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+    And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+    # closePayment-v2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | closePayment-v2                               |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+    And from $closePaymentv2Resp.outcome json check value OK in position 0
+    # pspNotifyPayment REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -3721,23 +4746,105 @@ Feature: NMU flows PA Old con pagamento OK
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value tipoVersamento in position 0
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value CP in position 0
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value outcomePaymentGateway in position 1
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 00 in position 1
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value timestampOperation in position 2
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 2021-07-09T17:06:03 in position 2
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value totalAmount in position 3
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 12 in position 3
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value paymentGateway in position 4
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 00 in position 4
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value fee in position 5
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 2 in position 5
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value authorizationCode in position 6
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 123456 in position 6
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value rrn in position 7
-    And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 11223344 in position 7
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2Req
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value tipoVersamento in position 0
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value CP in position 0
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value outcomePaymentGateway in position 1
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 1
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value timestampOperation in position 2
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 2021-07-09T17:06:03 in position 2
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value totalAmount in position 3
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 12 in position 3
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value paymentGateway in position 4
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 4
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value fee in position 5
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 2 in position 5
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value authorizationCode in position 6
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 123456 in position 6
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value rrn in position 7
+    And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 11223344 in position 7
+        # pspNotifyPaymentV2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | pspNotifyPaymentV2                            |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2Resp
+    And from $pspNotifyPaymentV2Resp.outcome xml check value OK in position 0
+    # sendPaymentOutcome REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcome                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
+    And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
+    And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
+    And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+    And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
+    And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
+    # sendPaymentOutcome RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentOutcome                          |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
+    And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
+    # paaInviaRT REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
+    And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+    And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+    And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+    And from $paaInviaRTReq.rt xml check value NotNone in position 0
+    # paaInviaRT RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | paaInviaRT                                    |
+      | SOTTO_TIPO_EVENTO  | RESP                                          |
+      | ESITO              | RICEVUTA                                      |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
+    And from $paaInviaRTResp.esito xml check value OK in position 0
+    # sendPaymentResult-v2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys         | where_values                                  |
+      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+      | TIPO_EVENTO        | sendPaymentResult-v2                          |
+      | SOTTO_TIPO_EVENTO  | REQ                                           |
+      | ESITO              | INVIATA                                       |
+      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+    And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+    And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+    And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+    And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 12$iuv in position 0
+    And from $sendPaymentResultv2Req.payments.debtor json check value RCCGLD09P09H501E in position 0
+    And from $sendPaymentResultv2Req.payments.description json check value pagamento multibeneficiario in position 0
+    And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
   @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_10 @after_1
@@ -4002,12 +5109,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                               |
-      | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-      | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-      | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+      | column         | value                                                                                                                         |
+      | TRANSACTION_ID | $transaction_id                                                                                                               |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn           |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                                |
+      | INSERTED_BY    | closePayment-v2                                                                                                               |
+      | UPDATED_BY     | closePayment-v2                                                                                                               |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
