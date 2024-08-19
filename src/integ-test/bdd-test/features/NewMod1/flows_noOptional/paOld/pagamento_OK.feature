@@ -74,7 +74,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -240,7 +240,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -619,7 +619,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -785,7 +785,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -1153,7 +1153,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -1319,7 +1319,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -1854,7 +1854,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -2225,7 +2225,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -2391,7 +2391,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -2417,12 +2417,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                                                                                                         |
-      | TRANSACTION_ID | $transaction_id                                                                                                               |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn           |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                                |
-      | INSERTED_BY    | closePayment-v2                                                                                                               |
-      | UPDATED_BY     | closePayment-v2                                                                                                               |
+      | column         | value                                                                                                               |
+      | TRANSACTION_ID | $transaction_id                                                                                                     |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                      |
+      | INSERTED_BY    | closePayment-v2                                                                                                     |
+      | UPDATED_BY     | closePayment-v2                                                                                                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
@@ -2770,7 +2770,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -2936,7 +2936,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -3304,7 +3304,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -3470,7 +3470,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -3837,7 +3837,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -4003,7 +4003,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -4374,7 +4374,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -4540,7 +4540,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -4566,12 +4566,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                                                                                                         |
-      | TRANSACTION_ID | $transaction_id                                                                                                               |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn           |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                                |
-      | INSERTED_BY    | closePayment-v2                                                                                                               |
-      | UPDATED_BY     | closePayment-v2                                                                                                               |
+      | column         | value                                                                                                               |
+      | TRANSACTION_ID | $transaction_id                                                                                                     |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                      |
+      | INSERTED_BY    | closePayment-v2                                                                                                     |
+      | UPDATED_BY     | closePayment-v2                                                                                                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
@@ -4598,7 +4598,7 @@ Feature: NMU flows PA Old con pagamento OK
     And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-          # RE #####
+    # RE #####
     # activatePaymentNoticeV2 REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
@@ -4763,7 +4763,7 @@ Feature: NMU flows PA Old con pagamento OK
     And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 123456 in position 6
     And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value rrn in position 7
     And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 11223344 in position 7
-        # pspNotifyPaymentV2 RESP
+    # pspNotifyPaymentV2 RESP
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
@@ -4778,7 +4778,7 @@ Feature: NMU flows PA Old con pagamento OK
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-      | TIPO_EVENTO        | sendPaymentOutcome                          |
+      | TIPO_EVENTO        | sendPaymentOutcome                            |
       | SOTTO_TIPO_EVENTO  | REQ                                           |
       | ESITO              | RICEVUTA                                      |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -4794,7 +4794,7 @@ Feature: NMU flows PA Old con pagamento OK
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-      | TIPO_EVENTO        | sendPaymentOutcome                          |
+      | TIPO_EVENTO        | sendPaymentOutcome                            |
       | SOTTO_TIPO_EVENTO  | RESP                                          |
       | ESITO              | INVIATA                                       |
       | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -4917,7 +4917,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -5083,7 +5083,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -5109,12 +5109,12 @@ Feature: NMU flows PA Old con pagamento OK
       | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
     # PM_METADATA
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column         | value                                                                                                                         |
-      | TRANSACTION_ID | $transaction_id                                                                                                               |
-      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn           |
-      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                                |
-      | INSERTED_BY    | closePayment-v2                                                                                                               |
-      | UPDATED_BY     | closePayment-v2                                                                                                               |
+      | column         | value                                                                                                               |
+      | TRANSACTION_ID | $transaction_id                                                                                                     |
+      | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+      | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,NotNone                      |
+      | INSERTED_BY    | closePayment-v2                                                                                                     |
+      | UPDATED_BY     | closePayment-v2                                                                                                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values    |
       | TRANSACTION_ID | $transaction_id |
@@ -5465,7 +5465,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -5631,7 +5631,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -6024,7 +6024,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -6190,7 +6190,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -6583,7 +6583,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcomeV2 response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -6749,7 +6749,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -7142,7 +7142,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 5 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -7308,7 +7308,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -7863,7 +7863,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
