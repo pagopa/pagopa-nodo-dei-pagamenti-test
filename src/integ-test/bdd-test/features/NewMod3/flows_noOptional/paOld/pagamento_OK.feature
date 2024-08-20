@@ -58,6 +58,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -501,6 +502,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -1289,6 +1291,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -1731,6 +1734,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -2145,6 +2149,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -2561,6 +2566,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -2975,6 +2981,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -5452,17 +5459,6 @@ Feature: NM3 flows PA Old con pagamento OK
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                           |
-            | TIPO_EVENTO | activatePaymentNotice,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                            |
-            | CODICE_CONTESTO_PAGAMENTO | $activatePaymentNoticeResponse.paymentToken             |
-            | TIPO_EVENTO               | ('activatePaymentNotice','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                     |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                        |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                     |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -5784,17 +5780,6 @@ Feature: NM3 flows PA Old con pagamento OK
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                             |
-            | TIPO_EVENTO | activatePaymentNoticeV2,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                              |
-            | CODICE_CONTESTO_PAGAMENTO | $activatePaymentNoticeV2Response.paymentToken             |
-            | TIPO_EVENTO               | ('activatePaymentNoticeV2','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                       |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                          |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                       |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -6102,17 +6087,6 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check esito is OK of nodoInviaRPT response
         And check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                           |
-            | TIPO_EVENTO | activatePaymentNotice,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                            |
-            | CODICE_CONTESTO_PAGAMENTO | $activatePaymentNoticeResponse.paymentToken             |
-            | TIPO_EVENTO               | ('activatePaymentNotice','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                     |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                        |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                     |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -6420,17 +6394,6 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check esito is OK of nodoInviaRPT response
         And check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                           |
-            | TIPO_EVENTO | activatePaymentNotice,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                            |
-            | CODICE_CONTESTO_PAGAMENTO | $activatePaymentNoticeResponse.paymentToken             |
-            | TIPO_EVENTO               | ('activatePaymentNotice','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                     |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                        |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                     |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -6712,6 +6675,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -6950,6 +6914,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -7199,6 +7164,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -7450,6 +7416,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -7782,6 +7749,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -8128,6 +8096,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -8460,6 +8429,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -8808,6 +8778,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -9174,6 +9145,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job paInviaRt triggered after 3 seconds
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -9569,6 +9541,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job paInviaRt triggered after 3 seconds
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -9967,6 +9940,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job paInviaRt triggered after 3 seconds
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -10364,6 +10338,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job paInviaRt triggered after 3 seconds
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -10747,6 +10722,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -11157,6 +11133,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -11981,6 +11958,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
+        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |

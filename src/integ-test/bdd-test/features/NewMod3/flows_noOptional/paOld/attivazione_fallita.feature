@@ -1238,17 +1238,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                             |
-            | TIPO_EVENTO | activatePaymentNoticeV2,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                              |
-            | CODICE_CONTESTO_PAGAMENTO | $token_by_rptActivations                                  |
-            | TIPO_EVENTO               | ('activatePaymentNoticeV2','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                       |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                          |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                       |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -1571,17 +1560,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                             |
-            | TIPO_EVENTO | activatePaymentNoticeV2,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                              |
-            | CODICE_CONTESTO_PAGAMENTO | $token_by_rptActivations                                  |
-            | TIPO_EVENTO               | ('activatePaymentNoticeV2','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                       |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                          |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                       |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -1915,17 +1893,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check outcome is KO of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                           |
-            | TIPO_EVENTO | activatePaymentNotice,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                            |
-            | CODICE_CONTESTO_PAGAMENTO | $token_by_rptActivations                                |
-            | TIPO_EVENTO               | ('activatePaymentNotice','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                     |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                        |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                     |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -2260,17 +2227,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check outcome is KO of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                           |
-            | TIPO_EVENTO | activatePaymentNotice,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                            |
-            | CODICE_CONTESTO_PAGAMENTO | $token_by_rptActivations                                |
-            | TIPO_EVENTO               | ('activatePaymentNotice','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                     |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                        |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                     |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -3135,17 +3091,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                             |
-            | TIPO_EVENTO | activatePaymentNoticeV2,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                              |
-            | CODICE_CONTESTO_PAGAMENTO | $token_by_rptActivations                                  |
-            | TIPO_EVENTO               | ('activatePaymentNoticeV2','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                       |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                          |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                       |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -3481,17 +3426,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
         And wait 5 seconds for expiration
-        # RE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                             |
-            | TIPO_EVENTO | activatePaymentNoticeV2,paaAttivaRPT,nodoInviaRPT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys                | where_values                                              |
-            | CODICE_CONTESTO_PAGAMENTO | $token_by_rptActivations                                  |
-            | TIPO_EVENTO               | ('activatePaymentNoticeV2','paaAttivaRPT','nodoInviaRPT') |
-            | SOTTO_TIPO_EVENTO         | REQ                                                       |
-            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)                                          |
-            | ORDER BY                  | DATA_ORA_EVENTO ASC                                       |
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |

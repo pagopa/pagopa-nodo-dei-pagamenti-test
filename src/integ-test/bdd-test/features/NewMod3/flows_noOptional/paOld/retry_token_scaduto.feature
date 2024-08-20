@@ -49,6 +49,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -477,6 +478,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -1092,6 +1094,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -1515,6 +1518,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -2081,6 +2085,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -2696,6 +2701,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -3102,6 +3108,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -3509,6 +3516,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -3916,6 +3924,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -4335,6 +4344,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -6941,6 +6951,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -7366,6 +7377,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -7964,6 +7976,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -8670,6 +8683,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -9269,6 +9283,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -9974,6 +9989,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -10589,6 +10605,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -11322,6 +11339,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -12058,6 +12076,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -12791,6 +12810,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -13539,6 +13559,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -14282,6 +14303,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -15027,6 +15049,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -15771,6 +15794,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -18670,6 +18694,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -19398,6 +19423,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -20126,6 +20152,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -20856,6 +20883,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                                   |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -21587,6 +21615,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check description is RPT non accettabile per retry su Outcome a token scaduto of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -22236,6 +22265,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check description is RPT non accettabile per retry su Outcome a token scaduto of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -22887,6 +22917,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check description is RPT non accettabile per retry su Outcome a token scaduto of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -23538,6 +23569,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check description is RPT non accettabile per retry su Outcome a token scaduto of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
