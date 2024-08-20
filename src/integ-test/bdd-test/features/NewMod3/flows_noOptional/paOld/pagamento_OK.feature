@@ -1092,7 +1092,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paInviaRt,paaInviaRT                         |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paaInviaRT              |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
@@ -1111,7 +1111,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
-            | UPDATED_BY         | paInviaRt                                     |
+            | UPDATED_BY         | paaInviaRT                                    |
             | INSERTED_TIMESTAMP | NotNone                                       |
             | UPDATED_TIMESTAMP  | NotNone                                       |
             | PUSH               | None                                          |
@@ -1916,7 +1916,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,paInviaRt,paaInviaRT                             |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
@@ -1935,7 +1935,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
-            | UPDATED_BY         | paInviaRt                                   |
+            | UPDATED_BY         | paaInviaRT                                  |
             | INSERTED_TIMESTAMP | NotNone                                     |
             | UPDATED_TIMESTAMP  | NotNone                                     |
             | PUSH               | None                                        |
@@ -2331,7 +2331,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paInviaRt,paaInviaRT                         |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paaInviaRT              |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
@@ -2350,7 +2350,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
-            | UPDATED_BY         | paInviaRt                                     |
+            | UPDATED_BY         | paaInviaRT                                    |
             | INSERTED_TIMESTAMP | NotNone                                       |
             | UPDATED_TIMESTAMP  | NotNone                                       |
             | PUSH               | None                                          |
@@ -2748,7 +2748,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,paInviaRt,paaInviaRT                             |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
@@ -2767,7 +2767,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
-            | UPDATED_BY         | paInviaRt                                     |
+            | UPDATED_BY         | paaInviaRT                                    |
             | INSERTED_TIMESTAMP | NotNone                                       |
             | UPDATED_TIMESTAMP  | NotNone                                       |
             | PUSH               | None                                          |
@@ -3163,7 +3163,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paInviaRt,paaInviaRT                         |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paaInviaRT              |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
@@ -3182,7 +3182,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
-            | UPDATED_BY         | paInviaRt                                   |
+            | UPDATED_BY         | paaInviaRT                                  |
             | INSERTED_TIMESTAMP | NotNone                                     |
             | UPDATED_TIMESTAMP  | NotNone                                     |
             | PUSH               | None                                        |
@@ -9329,12 +9329,12 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paInviaRt,paaInviaRT                                         |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -9348,7 +9348,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
-            | UPDATED_BY         | paInviaRt                                   |
+            | UPDATED_BY         | paaInviaRT                                  |
             | INSERTED_TIMESTAMP | NotNone                                     |
             | UPDATED_TIMESTAMP  | NotNone                                     |
             | PUSH               | None                                        |
@@ -9728,9 +9728,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -10127,9 +10127,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -10525,9 +10525,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -10909,9 +10909,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -11320,9 +11320,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -11725,12 +11725,12 @@ Feature: NM3 flows PA Old con pagamento OK
             | IUV                   | 12$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,paInviaRt,paaInviaRT                             |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -11744,7 +11744,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
-            | UPDATED_BY         | paInviaRt                                     |
+            | UPDATED_BY         | paaInviaRT                                    |
             | INSERTED_TIMESTAMP | NotNone                                       |
             | UPDATED_TIMESTAMP  | NotNone                                       |
             | PUSH               | None                                          |

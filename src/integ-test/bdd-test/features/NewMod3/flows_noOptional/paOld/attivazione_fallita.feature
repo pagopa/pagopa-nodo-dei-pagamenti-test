@@ -5,7 +5,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
     @ALL @NM3 @NM3ATTFALLITA @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_1
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT timeout  resp KO a activate BIZ attivazione fallita nodoInviaRPT -> resp KO a RPT (NM3-15)
+    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT timeout resp KO a activate BIZ attivazione fallita nodoInviaRPT -> resp KO a RPT (NM3-15)
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -44,6 +44,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values           |
@@ -143,21 +144,21 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ORDER BY   | ID ASC                              |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                            |
-            | ID                    | NotNone                                                                          |
-            | ID_SESSIONE           | NotNone                                                                          |
-            | ID_SESSIONE_ORIGINALE | NotNone                                                                          |
-            | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                |
-            | IUV                   | 12$iuv                                                                           |
-            | CCP                   | $ccp                                                                             |
-            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT                              |
-            | INSERTED_TIMESTAMP    | NotNone                                                                          |
+            | column                | value                                                                                                          |
+            | ID                    | NotNone                                                                                                        |
+            | ID_SESSIONE           | NotNone                                                                                                        |
+            | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
+            | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
+            | IUV                   | 12$iuv                                                                                                         |
+            | CCP                   | $ccp                                                                                                           |
+            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                    |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
-        And verify 4 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
             | ORDER BY   | ID ASC       |
@@ -168,9 +169,9 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode |
             | IUV                | 12$iuv                            |
             | CCP                | $ccp                              |
-            | STATO              | RT_GENERATA_NODO                  |
+            | STATO              | RT_ACCETTATA_PA                   |
             | INSERTED_BY        | nodoInviaRPT                      |
-            | UPDATED_BY         | nodoInviaRPT                      |
+            | UPDATED_BY         | paaInviaRT                        |
             | INSERTED_TIMESTAMP | NotNone                           |
             | UPDATED_TIMESTAMP  | NotNone                           |
             | PUSH               | None                              |
@@ -376,6 +377,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
         And check description is RPT non attivata of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                             |
@@ -2552,6 +2554,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values           |
@@ -2651,21 +2654,21 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ORDER BY   | ID ASC                                |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                            |
-            | ID                    | NotNone                                                                          |
-            | ID_SESSIONE           | NotNone                                                                          |
-            | ID_SESSIONE_ORIGINALE | NotNone                                                                          |
-            | ID_DOMINIO            | $activatePaymentNoticeV2.fiscalCode                                              |
-            | IUV                   | 12$iuv                                                                           |
-            | CCP                   | $ccp                                                                             |
-            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT                              |
-            | INSERTED_TIMESTAMP    | NotNone                                                                          |
+            | column                | value                                                                                                          |
+            | ID                    | NotNone                                                                                                        |
+            | ID_SESSIONE           | NotNone                                                                                                        |
+            | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
+            | ID_DOMINIO            | $activatePaymentNoticeV2.fiscalCode                                                                            |
+            | IUV                   | 12$iuv                                                                                                         |
+            | CCP                   | $ccp                                                                                                           |
+            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                    |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
-        And verify 4 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
             | ORDER BY   | ID ASC       |
@@ -2676,9 +2679,9 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ID_DOMINIO         | $activatePaymentNoticeV2.fiscalCode |
             | IUV                | 12$iuv                              |
             | CCP                | $ccp                                |
-            | STATO              | RT_GENERATA_NODO                    |
+            | STATO              | RT_ACCETTATA_PA                     |
             | INSERTED_BY        | nodoInviaRPT                        |
-            | UPDATED_BY         | nodoInviaRPT                        |
+            | UPDATED_BY         | paaInviaRT                          |
             | INSERTED_TIMESTAMP | NotNone                             |
             | UPDATED_TIMESTAMP  | NotNone                             |
             | PUSH               | None                                |
@@ -2884,6 +2887,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
         And check description is RPT non attivata of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                               |
