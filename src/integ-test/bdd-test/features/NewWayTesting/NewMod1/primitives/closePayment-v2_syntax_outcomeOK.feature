@@ -66,7 +66,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
                 }
             }
             """
-    @test
+    @ALL @PRIMITIVE
     # syntax check - Invalid field
     Scenario Outline: Check syntax error on invalid body element value
         Given the closePaymentV2 scenario executed successfully
@@ -116,7 +116,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
             | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
 
-    @test 
+    @ALL @PRIMITIVE 
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
         Given the closePaymentV2 scenario executed successfully
@@ -129,7 +129,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
             | elem         | value                                 | soapUI test |
             | paymentToken | None                                  | SIN_CPV2_02 |
             | paymentToken | 87cacaf799cadf9vs9s7vasdvs676cavv4574 | SIN_CPV2_03 |
-    @test
+    @ALL @PRIMITIVE
     # syntax check - Invalid field - additionalPaymentInformations [SIN_CPV2_37]
     Scenario: Check syntax error on invalid body element value - additionalPaymentInformations
         Given the closePaymentV2 scenario executed successfully
@@ -253,7 +253,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 OK with fee 0
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -297,7 +297,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
                 }
             }
             """
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 OK with keys repeated
         Given the closePaymentV2 with keys repeated scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -333,7 +333,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
                 }
             }
             """
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 OK with key transactionId
         Given the closePaymentV2 with key transactionId scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -346,7 +346,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @test 
+    @ALL @PRIMITIVE 
     Scenario Outline: check closePaymentV2 OK outline
         Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -409,27 +409,13 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
                 }
             }
             """
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 OK with different keys
         Given the closePaymentV2 with different keys scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
-
-    # test non eseguibile in python: non sono ammessi dei numeri separati da virgola
-    # syntax check - Invalid request
-    # Scenario Outline: Check syntax error on invalid request
-    #     Given the closePaymentV2 scenario executed successfully
-    #     And <elem> with <value> in v2/closepayment
-    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-    #     Then verify the HTTP status code of v2/closepayment response is 400
-    #     And check outcome is KO of v2/closepayment response
-    #     And check description is Invalid request of v2/closepayment response
-    #     Examples:
-    #         | elem        | value | soapUI test |
-    #         | totalAmount | 12,21 | SIN_CPV2_24 |
-    #         | fee         | 12,32 | SIN_CPV2_29 |
 
 
     # syntax check - Mismatched amount [SIN_CPV2_31.1]
@@ -438,7 +424,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @test
+    @ALL @PRIMITIVE
     Scenario: Check syntax error on fee greater than totalAmount
         Given the check activatePaymentNoticeV2 OK 6 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -471,7 +457,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
                 }
             }
             """
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 without brackets in paymentTokens
         Given the closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1] scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -480,7 +466,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check description is Invalid paymentTokens of v2/closepayment response
 
 
-    @test
+    @ALL @PRIMITIVE
     Scenario Outline: check closePaymentV2 OK outline
         Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -595,12 +581,12 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
             }
             """
 
-    @test 
+    @ALL @PRIMITIVE 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @test
+    @ALL @PRIMITIVE
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -621,7 +607,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
             | paymentGateway        | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |
 
 
-    @test 
+    @ALL @PRIMITIVE 
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -655,7 +641,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -690,7 +676,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+    @ALL @PRIMITIVE 
     Scenario: check closePaymentV2 PAG-2555 KO fee None
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -724,7 +710,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 PAG-2555 KO fee Empty
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -759,7 +745,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+    @ALL @PRIMITIVE 
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -793,7 +779,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @ALL @PRIMITIVE
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -848,7 +834,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @test 
+    @ALL @PRIMITIVE 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds

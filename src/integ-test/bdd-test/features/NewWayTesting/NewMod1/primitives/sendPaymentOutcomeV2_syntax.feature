@@ -154,7 +154,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @test
+   @ALL @PRIMITIVE
    # SIN_SPO_00
    Scenario: SIN_SPO_00
       Given the Define MBD scenario executed successfully
@@ -165,7 +165,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And checks faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
       And checks faultCode is not PPT_SYSTEM_ERROR of sendPaymentOutcomeV2 response
-   @test
+   @ALL @PRIMITIVE
    # attribute value check
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
       Given the Define MBD scenario executed successfully
@@ -177,7 +177,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
       Examples:
          | elem             | attribute     | value                                     | soapUI test |
          | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_SPO_01  |
-   @test
+   @ALL @PRIMITIVE
    # element value check
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
       Given the Define MBD scenario executed successfully
@@ -296,7 +296,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          | idTransfer                      | a                                                                                                                                                                                                                                                                 | # marca da bollo 6     |
          | MBDAttachment                   | None                                                                                                                                                                                                                                                              | # marca da bollo 7     |
          | MBDAttachment                   | s                                                                                                                                                                                                                                                                 | # marca da bollo 9     |
-   @test
+   @ALL @PRIMITIVE
    #  the syntax check is OK (check that the error is not PPT_SINTASSI_EXTRAXSD). The SPOV2 outcome is KO though because the payment has not been activated
    Scenario Outline: OK syntax checks
       Given the Define MBD scenario executed successfully
@@ -330,7 +330,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          | idCiBundle           | None        | #commissioni evolute 12 |
          | marcheDaBollo        | None        | # marca da bollo 10     |
 
-   @test
+   @ALL @PRIMITIVE
    # SIN_SPO_19.3
    Scenario: SIN_SPO_19.3
       Given the sendPaymentOutcomeV2 with 6 paymentToken scenario executed successfully
@@ -399,7 +399,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @test
+   @ALL @PRIMITIVE
    Scenario: execute sendPaymentOutcomeV2 MBD token None
       Given the Define MBD scenario executed successfully
       And the sendPaymentOutcomeV2 MBD token None scenario executed successfully
@@ -470,7 +470,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @test
+   @ALL @PRIMITIVE
    Scenario: execute sendPaymentOutcomeV2 MBD token Empty
       Given the Define MBD scenario executed successfully
       And the sendPaymentOutcomeV2 MBD token Empty scenario executed successfully
@@ -541,7 +541,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @test
+   @ALL @PRIMITIVE
    Scenario: execute sendPaymentOutcomeV2 MBD token long
       Given the Define MBD scenario executed successfully
       And the sendPaymentOutcomeV2 MBD token long scenario executed successfully
@@ -549,7 +549,7 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
-   @test
+   @ALL @PRIMITIVE
    # marca da bollo 8 - MBDAttachment Empty --> PPT_SINTASSI_XSD
    Scenario: execute sendPaymentOutcomeV2 MBDAttachment Empty
       Given the Define MBD scenario executed successfully

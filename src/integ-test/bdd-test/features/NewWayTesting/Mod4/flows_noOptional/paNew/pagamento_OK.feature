@@ -5,7 +5,7 @@ Feature: NM4 e MOD4 flows con PA New pagamento OK
         Given systems up
 
 
-    @ALL @NM4 @NM4PANEW @NM4PANEWPAGOK @NM4PANEWPAGOK_1
+    @ALL @FLOW @FLOW_NOOPT @NM4 @NM4PANEW @NM4PANEWPAGOK @NM4PANEWPAGOK_1
     Scenario: NM4 flow OK, FLOW con PA New vp1: nodoChiediCatalogoServiziV2, demandPaymentNotice -> paDemandPaymentNotice, activatePaymentNotice -> paGetPayment, spo+ -> paSendRT, BIZ+ (NM4-4)
         Given from body with datatable horizontal nodoChiediCatalogoServiziV2_noOptional initial XML nodoChiediCatalogoServiziV2
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   |

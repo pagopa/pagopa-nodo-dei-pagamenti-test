@@ -61,7 +61,7 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO 928
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test
+    @ALL @PRIMITIVE
     # attribute value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given the nodoChiediNumeroAvviso scenario executed successfully
@@ -72,7 +72,7 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO 928
         Examples:
             | elem             | attribute     | value                                     |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ |
-    @test
+    @ALL @PRIMITIVE
     # element value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given the nodoChiediNumeroAvviso scenario executed successfully
@@ -109,7 +109,7 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO 928
             | datiSpecificiServizio          | Empty                                |
             | datiSpecificiServizio          | cia                                  |
             | datiSpecificiServizio          | cia$                                 |
-    @test
+    @ALL @PRIMITIVE
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid nodoChiediNumeroAvviso
         Given the nodoChiediNumeroAvviso with two occurrences of <value> scenario executed successfully
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
@@ -121,7 +121,7 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO 928
             | datiSpecificiServizio |
 
 
-    @test
+    @ALL @PRIMITIVE
     Scenario: nodoChiediNumeroAvviso wrong XSD in base64
         Given initial XML nodoChiediNumeroAvviso
             """
@@ -146,7 +146,7 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO 928
 
 
 
-    @test
+    @ALL @PRIMITIVE
     Scenario: nodoChiediNumeroAvviso wrong XSD in base64
         Given initial XML nodoChiediNumeroAvviso
             """

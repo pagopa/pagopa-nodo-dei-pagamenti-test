@@ -26,7 +26,7 @@ Feature: Syntax checks for paGetPaymentRes - OK 1385
 			"""
 		
 
-	@runnable
+	@ALL @PRIMITIVE
 	Scenario Outline: Check paGetPayment response with missing optional fields
 		Given initial XML paGetPayment
 			"""

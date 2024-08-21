@@ -3,7 +3,7 @@ Feature: Semantic checks for verificaBollettino - OK 1396
     Background:
         Given systems up
         
-    @runnable
+    @ALL @PRIMITIVE
     Scenario: Execute verificaBollttino [SEM_VB_10]
         Given initial XML verificaBollettino
             """

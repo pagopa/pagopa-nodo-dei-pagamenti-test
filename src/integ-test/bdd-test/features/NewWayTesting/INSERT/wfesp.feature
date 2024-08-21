@@ -4,7 +4,7 @@ Feature: TEST INSERT WFESP
 
 
 
-    @ALL @INSERT @INSERT_27
+    @ALL @FLOW  @INSERT @INSERT_27
     Scenario: FLOW WFESP con: nodoInviaRPT con response Ok della pspInviaRPT xy, nodoInviaRPT2 con stessa identica response del PSP, tutte con stessa stessa configurazione PSP multibeneficiario (INS-27)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
@@ -66,7 +66,7 @@ Feature: TEST INSERT WFESP
 
 
 
-    @ALL @INSERT @INSERT_28
+    @ALL @FLOW  @INSERT @INSERT_28
     Scenario: FLOW WFESP con: 2 pagamenti con wisp mod 1 e nodoInviaRPT con PSP che risponde uguale per entrambe (INS-28)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
@@ -151,7 +151,7 @@ Feature: TEST INSERT WFESP
 
 
 
-    @ALL @INSERT @INSERT_29
+    @ALL @FLOW  @INSERT @INSERT_29
     Scenario: FLOW WFESP con: nodoInviaCarrelloRPT con response Ok della pspInviaCarrelloRPT xy, nodoInviaCarrelloRPT2 con stessa identica response del PSP, tutte con stessa stessa configurazione PSP multibeneficiario (INS-29)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
@@ -215,7 +215,7 @@ Feature: TEST INSERT WFESP
 
 
 
-    @ALL @INSERT @INSERT_30
+    @ALL @FLOW  @INSERT @INSERT_30
     Scenario: FLOW WFESP con: 2 pagamenti con wisp mod 1 e nodoInviaCarrelloRPT con PSP che risponde uguale per entrambe (INS-30)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical

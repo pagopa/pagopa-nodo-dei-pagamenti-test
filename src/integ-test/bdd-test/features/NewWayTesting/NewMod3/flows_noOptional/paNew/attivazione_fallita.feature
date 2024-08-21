@@ -6,7 +6,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_1 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_1 @after_1
     Scenario: NM3 flow attivazione fallita con KO da PA all'attivazione, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment con resp KO, BIZ attivazione fallita (NM3-7)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -175,7 +175,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_2 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_2 @after_1
     Scenario: NM3 flow attivazione fallita con timeout all'attivazione, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment timeout, BIZ attivazione fallita (NM3-8)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -313,7 +313,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_3 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_3 @after_1
     Scenario: NM3 flow attivazione fallita con KO da PA all'attivazione, FLOW con PA New vp1 e PSP vp2: activateV2 -> paGetPayment con resp KO, BIZ attivazione fallita (NM3-14)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -480,7 +480,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_4 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_4 @after_1
     Scenario: NM3 flow attivazione fallita con timeout all'attivazione, FLOW con PA New vp1 e PSP vp2: activateV2 -> paGetPayment timeout, BIZ attivazione fallita (NM3-15)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -614,7 +614,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_5 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_5 @after_1
     Scenario: NM3 flow attivazione fallita con KO da PA all'attivazione, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 con resp KO, BIZ attivazione fallita (NM3-35)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -782,7 +782,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_6 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_6 @after_1
     Scenario: NM3 flow attivazione fallita con timeout all'attivazione, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 timeout, BIZ attivazione fallita (NM3-36)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -917,7 +917,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_7 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_7 @after_1
     Scenario: NM3 flow attivazione fallita con KO da PA all'attivazione, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 con resp KO, BIZ attivazione fallita (NM3-43)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -1086,7 +1086,7 @@ Feature: NM3 flows con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_8 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWATTIVAZIONEFALLITA @NM3PANEWATTIVAZIONEFALLITA_8 @after_1
     Scenario: NM3 flow attivazione fallita con timeout all'attivazione, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 timeout, BIZ attivazione fallita (NM3-44)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice

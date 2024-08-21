@@ -20,7 +20,7 @@ Feature: process tests for pspInviaCarrelloRPT 929
             </soapenv:Envelope>
             """
 
-    @runnable
+    @ALL @PRIMITIVE
     Scenario: Execute nodoChiediNumeroAvviso [CNARES1]
         Given initial XML paaChiediNumeroAvviso
             """
@@ -49,7 +49,7 @@ Feature: process tests for pspInviaCarrelloRPT 929
         Then check esito is KO of nodoChiediNumeroAvviso response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoChiediNumeroAvviso response
 
-    @runnable
+    @ALL @PRIMITIVE
     Scenario: Execute nodoChiediNumeroAvviso [CNARES2]
         Given initial XML paaChiediNumeroAvviso
             """
@@ -80,7 +80,7 @@ Feature: process tests for pspInviaCarrelloRPT 929
         Then check esito is KO of nodoChiediNumeroAvviso response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoChiediNumeroAvviso response
 
-    @runnable
+    @ALL @PRIMITIVE
     Scenario Outline: Execute nodoChiediNumeroAvviso - outline
         Given initial XML paaChiediNumeroAvviso
             """
@@ -120,7 +120,7 @@ Feature: process tests for pspInviaCarrelloRPT 929
             | esito                            | OK        | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES13    |
             | esito                            | CIAO      | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES14    |
 
-    @runnable
+    @ALL @PRIMITIVE
     Scenario: Execute nodoChiediNumeroAvviso [CNARES12]
         Given initial XML paaChiediNumeroAvviso
             """
@@ -142,7 +142,7 @@ Feature: process tests for pspInviaCarrelloRPT 929
         Then check esito is KO of nodoChiediNumeroAvviso response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoChiediNumeroAvviso response
 
-    @runnable
+    @ALL @PRIMITIVE
     Scenario Outline: Execute nodoChiediNumeroAvviso - 2outline
         Given initial XML paaChiediNumeroAvviso
             """

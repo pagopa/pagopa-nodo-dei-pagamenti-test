@@ -4,7 +4,7 @@ Feature: NM3 flows con pagamento fallito
         Given systems up
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_1
     Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spo-, BIZ- (NM3-3)
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -244,7 +244,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_2
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_2
     Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPayment, spoV2-, BIZ- (NM3-11)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
@@ -483,7 +483,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_3
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_3
     Scenario: NM3 flow OK, FLOW: activate -> paGetPaymentV2 -> spo- BIZ- (NM3-32)
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -723,7 +723,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_4
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_4
     Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPaymentV2, spoV2-, BIZ- (NM3-39)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
@@ -964,7 +964,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_5
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_5
     Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spoV2-, BIZ- (NM3-64)
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -1203,7 +1203,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_6
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_6
     Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPayment, spo-, BIZ- (NM3-68)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
@@ -1442,7 +1442,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_7
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_7
     Scenario: NM3 flow OK, FLOW: activate -> paGetPaymentV2, spoV2-, BIZ- (NM3-86)
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -1682,7 +1682,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_8
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_8
     Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPaymentV2, spo-, BIZ- (NM3-90)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |

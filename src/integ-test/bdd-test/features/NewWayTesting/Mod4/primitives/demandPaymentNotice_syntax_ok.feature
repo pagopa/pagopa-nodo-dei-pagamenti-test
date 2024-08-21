@@ -4,7 +4,7 @@ Feature: flow tests for demandPaymentNotice 923
         Given systems up
 
 
-   @prova1 
+    @ALL @PRIMITIVE
     Scenario: demandPaymentNotice
         Given initial XML demandPaymentNotice
             """
@@ -59,7 +59,7 @@ Feature: flow tests for demandPaymentNotice 923
 
 
 
-   @prova2
+    @ALL @PRIMITIVE
     Scenario: demandPaymentNotice
         Given initial XML demandPaymentNotice
             """

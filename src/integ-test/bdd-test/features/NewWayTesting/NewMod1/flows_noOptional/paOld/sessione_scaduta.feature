@@ -6,7 +6,7 @@ Feature: NMU flows con PA Old sessione scaduta
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDSESSCAD @NMUPAOLDSESSCAD_1 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDSESSCAD @NMUPAOLDSESSCAD_1 @after_1
     Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione prima della closeV2: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, (scadenza sessione), mod3cancelV1 -> paaInviaRT-, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-6)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And wait 3 seconds after triggered refresh job ALL
@@ -416,7 +416,7 @@ Feature: NMU flows con PA Old sessione scaduta
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDSESSCAD @NMUPAOLDSESSCAD_2 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDSESSCAD @NMUPAOLDSESSCAD_2 @after_1
     Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione prima della closeV2: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, (scadenza sessione), mod3cancelV1 -> paaInviaRT-, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-6)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And wait 3 seconds after triggered refresh job ALL

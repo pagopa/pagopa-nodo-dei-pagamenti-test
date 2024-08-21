@@ -5,7 +5,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_1 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_1 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spo+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-17)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -412,7 +412,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_2 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_2 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-19)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -1050,7 +1050,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_3 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_3 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo- con resp PPT_TOKEN_SCADUTO_KO (NM3-20)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -1470,7 +1470,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_4 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_4 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-23)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -2019,7 +2019,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_5 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_5 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activateV2 -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-45)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -2657,7 +2657,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_6 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_6 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-43)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -3064,7 +3064,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_7 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_7 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-62)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -3472,7 +3472,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_8 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_8 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-79)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -3880,7 +3880,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_9 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_9 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spo- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-18)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -4300,7 +4300,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_10 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_10 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-44)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -4723,7 +4723,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_11 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_11 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-21)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -5268,7 +5268,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_12 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_12 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-47)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -5815,7 +5815,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_13 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_13 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-64)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -6363,7 +6363,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_14 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_14 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-81)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -6907,7 +6907,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_15 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_15 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO (NM3-46)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -7329,7 +7329,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_16 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_16 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-49)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -7910,7 +7910,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_17 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_17 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-63)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -8635,7 +8635,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_18 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_18 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-66)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -9217,7 +9217,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_19 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_19 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-80)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -9941,7 +9941,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_20 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_20 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-83)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -10522,7 +10522,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_21 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_21 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-25)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -11256,7 +11256,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_22 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_22 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-51)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -11993,7 +11993,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_23 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_23 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-68)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -12727,7 +12727,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_24 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_24 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-85)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -13465,7 +13465,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_25 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_25 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paaVerificaRPT, activate Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-101)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -14209,7 +14209,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_26 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_26 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT, activateV2 Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-102)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -14955,7 +14955,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_27 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_27 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate e PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT, activateV2 Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-103)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -15700,7 +15700,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_28 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_28 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT, activate Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-104)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -16445,7 +16445,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_29 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_29 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-26)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -16988,7 +16988,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_30 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_30 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT (NM3-52)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -17533,7 +17533,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_31 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_31 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-69)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -18079,7 +18079,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_32 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_32 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT (NM3-86)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -18624,7 +18624,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_33 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_33 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-22)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -19353,7 +19353,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_34 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_34 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-48)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -20082,7 +20082,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_35 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_35 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-65)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -20813,7 +20813,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_36 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_36 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-82)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -21544,7 +21544,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_37 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_37 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-24)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -22194,7 +22194,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_38 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_38 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-50)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -22846,7 +22846,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_39 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_39 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-67)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -23498,7 +23498,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_40 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_40 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-84)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg

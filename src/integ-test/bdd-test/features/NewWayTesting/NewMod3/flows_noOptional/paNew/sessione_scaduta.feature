@@ -6,7 +6,7 @@ Feature: NM3 flows con sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_1 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_1 @after_1
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ- (NM3-6)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -311,7 +311,7 @@ Feature: NM3 flows con sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_2 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_2 @after_1
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp1 e PSP vp2: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ- (NM3-13)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -615,7 +615,7 @@ Feature: NM3 flows con sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_3 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_3 @after_1
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ- (NM3-34)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -920,7 +920,7 @@ Feature: NM3 flows con sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_4 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_4 @after_1
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ- (NM3-42)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice

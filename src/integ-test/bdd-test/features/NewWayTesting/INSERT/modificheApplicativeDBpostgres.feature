@@ -4,7 +4,7 @@ Feature: TEST INSERT
 
     # test scritti a valle della segnalazione fatta verso pagoPA nella mail con oggetto [External] Modifiche applicative e db per PostgreSQL
 
-    @ALL @INSERT @INSERT_1
+    @ALL @FLOW @INSERT @INSERT_1
     Scenario: nodoInviaCarrelloRPT in PPT_CANALE_ERRORE_RESPONSE
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
@@ -34,7 +34,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_2
+    @ALL @FLOW @INSERT @INSERT_2
     Scenario: nodoInviaCarrelloRPT ---> nodoInoltroEsito/mod1 in PPT_CANALE_ERRORE_RESPONSE
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
@@ -81,7 +81,7 @@ Feature: TEST INSERT
         Then check error is timeout of inoltroEsito/mod1 response
 
 
-    @ALL @INSERT @INSERT_3
+    @ALL @FLOW @INSERT @INSERT_3
     Scenario: nodoInviaRPT ---> nodoInoltroEsito/mod1 in PPT_CANALE_ERRORE_RESPONSE
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical

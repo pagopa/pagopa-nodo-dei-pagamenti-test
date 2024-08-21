@@ -21,7 +21,7 @@ Feature: Semantic checks for verifyPaymentReq - OK 1401
       </soapenv:Envelope>
       """
   
-  @runnable
+  @ALL @PRIMITIVE
   Scenario: Check valid URL in WSDL namespace
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response

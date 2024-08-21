@@ -26,7 +26,7 @@ Feature: Syntax checks for paGetPaymentRes - KO 1384
          """
       
 
-   @runnable
+   @ALL @PRIMITIVE
    # element value check
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paGetPayment
@@ -64,7 +64,7 @@ Feature: Syntax checks for paGetPaymentRes - KO 1384
          | outcome             | PP           | SIN_PGPR_09 |
          | outcome             | KO           | SIN_PGPR_10 |
 
-   @runnable
+   @ALL @PRIMITIVE
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paGetPayment
          """

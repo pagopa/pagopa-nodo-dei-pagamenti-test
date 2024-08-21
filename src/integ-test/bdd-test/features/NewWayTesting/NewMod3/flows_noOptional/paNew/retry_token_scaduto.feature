@@ -6,7 +6,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_1 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_1 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRT, BIZ+ (NM3-4)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -388,7 +388,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_2 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_2 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRT, BIZ+ (NM3-12)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -767,7 +767,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_3 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_3 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2, BIZ+ (NM3-33)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -1147,7 +1147,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_4 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_4 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRTV2, BIZ+ (NM3-40)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -1529,7 +1529,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_5 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_5 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2- con resp PPT_TOKEN_SCADUTO_KO (NM3-41)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -1874,7 +1874,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_6 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_6 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1 activate e PSP vp2 spo : activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRT, BIZ+ (NM3-65)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -2255,7 +2255,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_7 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_7 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 activate e PSP vp1 spo: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRT, BIZ+ (NM3-69)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -2636,7 +2636,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_8 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_8 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 activate e PSP vp2 spo: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRTV2, BIZ+ (NM3-87)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -3017,7 +3017,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_9 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_9 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 activate e PSP vp1 spo: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2, BIZ+ (NM3-91)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -3398,7 +3398,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_10 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_10 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 e con broadcast paPrinc=paSec standin e flag invioReceiptStandin=true: activate -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2.(scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2 verso standin, 2 x paSendRTV2 a broadcast PA principale che è anche secondaria BIZ+ (NM3-125)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -3994,7 +3994,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_11 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_11 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 activate e PSP vp2 spo e con broadcast paPrinc=paSec standin e flag invioReceiptStandin=true: activate -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2.(scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2 verso standin, 2 x paSendRTV2 a broadcast PA principale che è anche secondaria BIZ+ (NM3-126)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -4589,7 +4589,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_12 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_12 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-146)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -4967,7 +4967,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_13 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_13 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-147)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -5347,7 +5347,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_14 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_14 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-148)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -5727,7 +5727,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_15 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_15 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-149)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -6106,7 +6106,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_16 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_16 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-150)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -6490,7 +6490,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_17 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_17 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-151)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -6874,7 +6874,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_18 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_18 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-152)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -7256,7 +7256,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_19 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_19 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-153)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -7637,7 +7637,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_20 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_20 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2, con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> paSendRT principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-117)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -8287,7 +8287,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_21 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_21 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2, con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> paSendRT principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-119)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -9007,7 +9007,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_22 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_22 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 con broadcast paPrinc=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-121)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -9490,7 +9490,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_23 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_23 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 con broadcast paPrinc=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-123)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -9981,7 +9981,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_24 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_24 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 activate e PSP vp1 spo, con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spo+ -> paSendRTV2 principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-127)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
@@ -10704,7 +10704,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_25 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_25 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2, con broadcast paPrinc!=paSec con GEC e standin: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> invio paSendRT verso stazione principale standin, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso broadcast PA principale. BIZ+ (NM3-118)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -11680,7 +11680,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_26 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_26 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2, con broadcast paPrinc!=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, paSendRTV2 verso bradcast PA principale con vp2. BIZ+ (NM3-120)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -12660,7 +12660,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_27 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_27 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 con broadcast paPrinc!=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-122)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -13144,7 +13144,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_28 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_28 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 con broadcast paPrinc!=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-124)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -13632,7 +13632,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_29 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_29 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ Poste ->  paSendRTV2 verso stazione principale, paSendRTV2 a broadcast PA principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-128)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -14628,7 +14628,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_30 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_30 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spo+ Poste ->  paSendRTV2 verso stazione principale, paSendRTV2 a broadcast PA principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-134)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -15624,7 +15624,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_31 @after_1
+    @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_31 @after_1
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spo+ Poste ->  paSendRTV2 verso stazione principale, paSendRTV2 a broadcast PA principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-131)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg

@@ -4,7 +4,7 @@ Feature: TEST INSERT
 
     # test scritti a valle della necessità di inserire un partizionamento durante la migrazione da Oracle a Postgres
 
-    @ALL @INSERT @INSERT_1
+    @ALL @FLOW  @INSERT @INSERT_1
     Scenario: nodoInviaCarrelloRPT - serve duplicato carrello e poi verificare che non ci siano duplicati nella tabella STATI_CARRELLO_SNAPSHOT e STATI_CARRELLO_SNAPSHOT_GI
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -163,7 +163,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_3
+    @ALL @FLOW  @INSERT @INSERT_3
     Scenario: nodoInviaCarrelloRPT - caso duplicato rpt; Verificare che non vi siano duplicati sulla tabella RPT e RPT_GI
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -383,7 +383,7 @@ Feature: TEST INSERT
             | ORDER BY      | INSERTED_TIMESTAMP ASC                              |
 
 
-    @ALL @INSERT @INSERT_4
+    @ALL @FLOW  @INSERT @INSERT_4
     Scenario: nodoInviaRPT - caso duplicato rpt; Verificare che non vi siano duplicati sulla tabella RPT e RPT_GI
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT generation RPT_generation with datatable vertical
@@ -458,7 +458,7 @@ Feature: TEST INSERT
             | ORDER BY      | INSERTED_TIMESTAMP ASC              |
 
 
-    @ALL @INSERT @INSERT_5
+    @ALL @FLOW  @INSERT @INSERT_5
     Scenario: nodoInviaRPT - prima nodoInviaRPT va in errore invio a PSP, rimando la stessa nodoInviasRPT e non deve essere rifiutata per duplicato
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -542,7 +542,7 @@ Feature: TEST INSERT
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
 
 
-    @ALL @INSERT @INSERT_9
+    @ALL @FLOW  @INSERT @INSERT_9
     Scenario: RT pull con tripla duplicata - fare un cambio stato sulla tabella RPT_STATI_SNAPSHOT -> stato a prima della rt pull -> rilancio la rt pull con i relativi override
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -752,7 +752,7 @@ Feature: TEST INSERT
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
 
 
-    @ALL @INSERT @INSERT_10
+    @ALL @FLOW  @INSERT @INSERT_10
     Scenario: nodoNotificaAnnullamento - fare un cambio stato sulla tabella RPT_STATI_SNAPSHOT -> stato a prima della notifica annullamento -> rilancio la notifica annullamento e lo stato sulla STATI_RPT _SNAPSHOT rimane quello dell'update; Verificare che non vi siano duplicati sulla tabella RT , RT_GI
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -932,7 +932,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_11
+    @ALL @FLOW  @INSERT @INSERT_11
     Scenario: close ko con update a DB dopo aver già avuto una RT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -1079,7 +1079,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_12
+    @ALL @FLOW  @INSERT @INSERT_12
     Scenario: close v2 ko con update sullo stato
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -1235,7 +1235,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_13
+    @ALL @FLOW  @INSERT @INSERT_13
     Scenario: spo con update sullo stato
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -1376,7 +1376,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_14
+    @ALL @FLOW  @INSERT @INSERT_14
     Scenario: spoV2 con update sullo stato
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -1517,7 +1517,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_15
+    @ALL @FLOW  @INSERT @INSERT_15
     Scenario: activate attivazione fallita con update sullo stato
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -1641,7 +1641,7 @@ Feature: TEST INSERT
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
 
 
-    @ALL @INSERT @INSERT_16
+    @ALL @FLOW  @INSERT @INSERT_16
     Scenario: activateV2 attivazione fallita con update sullo stato
         Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -1766,7 +1766,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_17 @after_1
+    @ALL @FLOW  @INSERT @INSERT_17 @after_1
     Scenario: INSERT - activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> STATI_RPT_SNAPSHOT fare update con RPT_PARCHEGGIATA_NODO_MOD3 --> POSITION_PAYMENT_STATUS_SNAPSHOT fare update con PAYING_RPT --> POSITION_STATUS_SNAPSHOT fare update con PAYING --> mod3CancelV1
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -2070,7 +2070,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_18
+    @ALL @FLOW  @INSERT @INSERT_18
     Scenario: MOD1 carrello multibeneficiario rt push
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
@@ -2250,7 +2250,7 @@ Feature: TEST INSERT
             | PA_FISCAL_CODE | #creditor_institution_code# |
 
 
-    @ALL @INSERT @INSERT_20
+    @ALL @FLOW  @INSERT @INSERT_20
     Scenario: updateRptStatiAndSnapshotAndDeleteteRetryPaInviaRT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -2337,7 +2337,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_7
+    @ALL @FLOW  @INSERT @INSERT_7
     Scenario: PPT_RPT_DUPLICATA da controllare nella tabella STATI_RPT_SNAPSHOT che non ci sia un duplicato per la tripletta
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -2492,7 +2492,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_22 @after_1
+    @ALL @FLOW  @INSERT @INSERT_22 @after_1
     Scenario: updateRptSnapshotAndDeleteteRetryPaInviaRT - verificare che venga fatta la delete sulla retry_pa_invia_rt e retry_pa_invia_rt_gi
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2567,7 +2567,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_6
+    @ALL @FLOW  @INSERT @INSERT_6
     Scenario: nodoInviaRPT - modello 3 con 2 chiamate nodoInviaRPT che partano in parallelo con lo stesso token (CCP) in request
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
@@ -2657,7 +2657,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_8
+    @ALL @FLOW  @INSERT @INSERT_8
     Scenario: nodoInviaRT diretta - a seguito dell'invio di una nodoInviaRT, se invio nuovamente la nodoInviaRT otterrò PPT_RT_DUPLICATA
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation with datatable vertical
@@ -2833,7 +2833,7 @@ Feature: TEST INSERT
 
 
 
-    # @ALL @INSERT @INSERT_26
+    # @ALL @FLOW  @INSERT @INSERT_26
     # Scenario: caso RPT annullata WISP con RT generato da job paInviaRT
     #     Given generate 1 notice number and iuv with aux digit 3, segregation code 46 and application code NA
     #     And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
@@ -2980,7 +2980,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_25
+    @ALL @FLOW  @INSERT @INSERT_25
     Scenario: nodoInviaRT - fare un invia rt e scrivere due volte nella tabella di retry (la stessa rt)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 46 and application code NA
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
