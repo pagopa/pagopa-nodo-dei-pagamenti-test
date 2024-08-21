@@ -20,7 +20,7 @@ Feature: Syntax checks for verifyPaymentReq - OK 1403
          </soapenv:Body>
       </soapenv:Envelope>
       """
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   Scenario: Check valid URL in WSDL namespace
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response

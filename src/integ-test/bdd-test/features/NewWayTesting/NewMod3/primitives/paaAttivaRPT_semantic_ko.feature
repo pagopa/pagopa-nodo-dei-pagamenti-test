@@ -28,7 +28,7 @@ Feature: process check for activatePaymentNotice - KO 1376
       """
     
 
-@ALL @PRIMITIVE
+@ALL @PRIMITIVE @NM3
   Scenario Outline: semantic check on paaAttivaRPTRes
     Given initial XML paaAttivaRPT
       # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)

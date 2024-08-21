@@ -27,7 +27,7 @@ Feature: Semantic checks for paGetPaymentRes - OK 1383
       """
     
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   Scenario Outline: Check outcome OK on amount or fiscalCodePA of paGetPaymentRes different from paGetPaymentReq
     Given EC replies to nodo-dei-pagamenti with the paGetPayment
 	"""

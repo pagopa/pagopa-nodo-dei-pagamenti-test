@@ -22,7 +22,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK 1388
       """
     
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
     Given initial XML paVerifyPaymentNotice
     """

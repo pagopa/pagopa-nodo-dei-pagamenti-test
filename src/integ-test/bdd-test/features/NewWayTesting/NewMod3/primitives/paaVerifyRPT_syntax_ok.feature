@@ -22,7 +22,7 @@ Feature: check syntax OK for paaVerificaRPTRes 1381
             """
         
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NM3
     Scenario Outline:
         Given initial XML paaVerificaRPT
             """

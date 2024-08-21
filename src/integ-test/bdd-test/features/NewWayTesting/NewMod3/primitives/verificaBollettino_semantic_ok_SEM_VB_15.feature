@@ -3,7 +3,7 @@ Feature: Semantic checks for verificaBollettino - OK [SEM_VB_15] 1397
   Background:
     Given systems up
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   Scenario: Check ccPost associates with two PA
     Given initial XML verificaBollettino
       """

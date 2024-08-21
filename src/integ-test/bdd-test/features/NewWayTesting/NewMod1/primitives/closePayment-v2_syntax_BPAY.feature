@@ -146,12 +146,12 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
                 }
             }
             """
-    @ALL @PRIMITIVE 
+    @ALL @PRIMITIVE @NMU 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -171,7 +171,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
 
 
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
         Given initial JSON v2/closepayment
             """
@@ -206,7 +206,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount oversize
         Given initial JSON v2/closepayment
             """
@@ -243,7 +243,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount null
         Given initial JSON v2/closepayment
             """
@@ -279,7 +279,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @ALL @PRIMITIVE 
+    @ALL @PRIMITIVE @NMU 
     Scenario: check closePaymentV2 PAG-2555 KO fee None
         Given initial JSON v2/closepayment
             """
@@ -314,7 +314,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: check closePaymentV2 PAG-2555 KO fee oversize
         Given initial JSON v2/closepayment
             """
@@ -351,7 +351,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: check closePaymentV2 PAG-2555 KO fee null
         Given initial JSON v2/closepayment
             """
@@ -387,7 +387,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @ALL @PRIMITIVE 
+    @ALL @PRIMITIVE @NMU 
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
         Given initial JSON v2/closepayment
             """
@@ -422,7 +422,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @ALL @PRIMITIVE 
+    @ALL @PRIMITIVE @NMU 
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation null
         Given initial JSON v2/closepayment
             """
@@ -458,7 +458,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: check closePaymentV2 PAG-2555 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully
@@ -468,7 +468,7 @@ Feature: syntax checks for closePaymentV2 - BPAY 963
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @ALL @PRIMITIVE 
+    @ALL @PRIMITIVE @NMU 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds

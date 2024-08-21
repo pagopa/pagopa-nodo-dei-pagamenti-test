@@ -18,7 +18,7 @@
          </soapenv:Body>
       </soapenv:Envelope>
       """
- @ALL @PRIMITIVE @PG34
+ @ALL @PRIMITIVE @NM3 @PG34
  # attribute value check
  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in verificaBollettino
@@ -29,7 +29,7 @@
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_VB_01   |
  
- @ALL @PRIMITIVE
+ @ALL @PRIMITIVE @NM3
  # element value check
  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in verificaBollettino

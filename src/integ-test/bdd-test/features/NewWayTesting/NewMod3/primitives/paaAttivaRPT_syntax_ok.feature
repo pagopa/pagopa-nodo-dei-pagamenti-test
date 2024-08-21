@@ -3,7 +3,7 @@ Feature: check syntax OK for paaAttivaRPT 1378
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NM3
     Scenario Outline:
         Given initial XML activatePaymentNotice
             """

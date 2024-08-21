@@ -13,7 +13,7 @@ Feature: syntax checks for checkPosition 961
                 ]
             }
             """
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     # KO tests
     Scenario Outline: KO tests
         Given <elem> with <value> in checkPosition

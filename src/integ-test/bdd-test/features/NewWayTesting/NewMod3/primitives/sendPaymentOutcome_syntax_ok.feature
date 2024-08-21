@@ -30,7 +30,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
     And PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   # [SIN_SPO_00]
   Scenario: Check sendPaymentOutcome response with mandatory fields
     Given initial XML sendPaymentOutcome
@@ -87,7 +87,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   # element value check
   Scenario Outline: Check sendPaymentOutcome response with missing optional fields
     Given initial XML sendPaymentOutcome
@@ -162,7 +162,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
       | e-mail              | None        | SIN_SPO_70  |
       | idempotencyKey      | None        | SIN_SPO_80  |
 
-@ALL @PRIMITIVE
+@ALL @PRIMITIVE @NM3
 Scenario: SPO with alphanumeric idempotency key
     Given initial XML activatePaymentNotice
       """

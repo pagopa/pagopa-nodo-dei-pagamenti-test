@@ -22,7 +22,7 @@ Feature: check syntax KO for paaVerificaRPTRes 1380
             """
         
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NM3
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given initial XML paaVerificaRPT
             """
@@ -130,7 +130,7 @@ Feature: check syntax KO for paaVerificaRPTRes 1380
             | causaleVersamento                     | Empty                                                                                                                                         | SIN_PVRPTR_69 |
             | causaleVersamento                     | CXYFD9jxEWpaefYPBMGaWHbDBIeU01JMraSQJ7VKHnfWT75DaLXvAPEcV7TDFfThv4u56iGvFT86Ui0ma9EVs1kRk5ETNjGc281weayrfiiHauaJfSNTDxqMONb7tN3PkkgBcn1gJxr6Y | SIN_PVRPTR_70 |
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NM3
     Scenario: missing faultBean for esito KO [SIN_PVRPTR_10]
         Given initial XML paaVerificaRPT
             """

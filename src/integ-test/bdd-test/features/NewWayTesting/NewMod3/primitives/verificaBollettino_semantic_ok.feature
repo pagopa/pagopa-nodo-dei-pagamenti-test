@@ -19,12 +19,12 @@ Feature: Semantic checks for verificaBollettino - OK 1395
       </soapenv:Envelope>
       """
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   Scenario: Check valid URL in WSDL namespace
     When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   #[SEM_VB_13] pt.1
   Scenario Outline: Execute verificaBollettino request
     Given <elem> with <value> in verificaBollettino
@@ -35,7 +35,7 @@ Feature: Semantic checks for verificaBollettino - OK 1395
       | elem  | value                                | soapUI test |
       | idPSP | 123456789012345678901234567890123456 | SEM_VB_13   |
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   #[SEM_VB_13] pt.2
   Scenario: Excecute verificaBollettino2 request
     Given ccPost with 666666666666 in verificaBollettino

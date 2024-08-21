@@ -30,19 +30,19 @@ Feature: Semantic checks OK for activatePaymentNotice 1372
       </soapenv:Envelope>
       """
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   Scenario: Check valid URL in WSDL namespace
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   # idPsp in idempotencyKey (idempotencyKey: <idPSp>+"_"+<RANDOM STRING>) not in db  [SEM_APNR_17]
   Scenario: Check outcome OK on non-existent psp in idempotencyKey
     Given random idempotencyKey having 00088877799 as idPSP in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @ALL @PRIMITIVE
+  @ALL @PRIMITIVE @NM3
   # idPsp in idempotencyKey (idempotencyKey: <idPsp>+"_"+<RANDOM STRING>) with field ENABLED = N  [SEM_APNR_18]
   Scenario: Check outcome OK on disabled psp in idempotencyKey
     Given random idempotencyKey having 80000000001 as idPSP in activatePaymentNotice

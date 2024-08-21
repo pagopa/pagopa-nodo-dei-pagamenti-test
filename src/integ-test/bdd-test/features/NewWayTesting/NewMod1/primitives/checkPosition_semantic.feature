@@ -150,7 +150,7 @@ Feature: semantic checks for checkPosition outcome OK 960
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     # SEM_CPO_01
     Scenario: Code 200 OK 1
         Given the checkPosition scenario executed successfully
@@ -165,7 +165,7 @@ Feature: semantic checks for checkPosition outcome OK 960
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: Code 200 OK 2 (part 2)
         Given the Code 200 OK 2 (part 1) scenario executed successfully
         And the checkPosition scenario executed successfully
@@ -202,7 +202,7 @@ Feature: semantic checks for checkPosition outcome OK 960
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request2
         And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: Code 200 KO (part 4)
         Given the Code 200 KO (part 3) scenario executed successfully
         And the checkPosition with 3 activated notice numbers scenario executed successfully
@@ -216,7 +216,7 @@ Feature: semantic checks for checkPosition outcome OK 960
         And checking value $XML_RE is containing value <description>PAID</description>
         And checking value $XML_RE is containing value <description>NOTIFIED</description>
 
-    @ALL @PRIMITIVE 
+    @ALL @PRIMITIVE @NMU 
     Scenario: checkPosition with station version 1 [PG-37]
         Given the checkPosition scenario executed successfully
         And noticeNumber with 002$iuv in checkPosition
@@ -224,7 +224,7 @@ Feature: semantic checks for checkPosition outcome OK 960
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     Scenario: Wrong configuration 1
         Given the checkPosition scenario executed successfully
         And fiscalCode with 12345678902 in checkPosition
@@ -233,7 +233,7 @@ Feature: semantic checks for checkPosition outcome OK 960
         And check outcome is KO of checkPosition response
         And check description is Wrong configuration of checkPosition response
 
-    @ALL @PRIMITIVE
+    @ALL @PRIMITIVE @NMU
     # SEM_CPO_06
     Scenario: Wrong configuration 2
         Given the checkPosition with 3 notice numbers scenario executed successfully

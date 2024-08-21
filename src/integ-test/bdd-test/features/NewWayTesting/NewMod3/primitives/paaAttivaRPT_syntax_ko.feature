@@ -3,7 +3,7 @@ Feature: check syntax KO for paaAttivaRPT 1377
     Background:
         Given systems up
 
-@ALL @PRIMITIVE
+@ALL @PRIMITIVE @NM3
     Scenario Outline:
         Given initial XML activatePaymentNotice
             """

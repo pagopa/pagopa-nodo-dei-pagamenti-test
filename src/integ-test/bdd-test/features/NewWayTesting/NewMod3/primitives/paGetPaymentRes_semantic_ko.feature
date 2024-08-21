@@ -26,7 +26,7 @@ Feature:  semantic checks for paGetPaymentRes - KO 1382
 			"""
 		
 
-	@ALL @PRIMITIVE
+	@ALL @PRIMITIVE @NM3
 	# fiscalCodePA and IBAN check: fiscalCodePA and IBAN not in db, fiscalCodePA with field ENABLED = N, IBAN not associated to fiscalCodePa in NODO4_CFG.INFORMATIVE_CONTO_ACCREDITO_DETAIL table
 	Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on non-existent or disabled body element value
 		Given initial XML paGetPayment
