@@ -34,7 +34,16 @@ Feature: TEST INSERT WFESP
             | rpt                                   | $rptAttachment                       |
         When EC sends SOAP nodoInviaRPT1 to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT1 response
-        Given from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_secondary# |
+            | identificativoStazioneRichiedente | #id_station_old#                      |
+            | dataOraMessaggioRichiesta         | #timedate#                            |
+            | dataEsecuzionePagamento           | #date#                                |
+            | importoTotaleDaVersare            | 10.00                                 |
+            | identificativoUnivocoVersamento   | $1iuv                                 |
+            | codiceContestoPagamento           | CCD01                                 |
+            | importoSingoloVersamento          | 10.00                                 |
+        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |
@@ -78,17 +87,22 @@ Feature: TEST INSERT WFESP
             | identificativoUnivocoVersamento   | $1iuv                           |
             | codiceContestoPagamento           | CCD01                           |
             | importoSingoloVersamento          | 10.00                           |
+        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+            | esitoComplessivoOperazione  | OK                 |
+            | identificativoCarrello      | $1iuv              |
+            | parametriPagamentoImmediato | idBruciatura=$1iuv |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT1
-            | identificativoIntermediarioPA         | #id_broker_old#                      |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                     |
-            | identificativoDominio                 | #creditor_institution_code_old#      |
-            | identificativoUnivocoVersamento       | $1iuv                                |
-            | codiceContestoPagamento               | CCD01                                |
-            | password                              | #password#                           |
-            | identificativoPSP                     | #psp#                                |
-            | identificativoIntermediarioPSP        | #id_broker_psp#                      |
-            | identificativoCanale                  | #canale_IMMEDIATO_MULTIBENEFICIARIO# |
-            | rpt                                   | $rptAttachment                       |
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $1iuv                           |
+            | codiceContestoPagamento               | CCD01                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp_AGID#                      |
+            | identificativoIntermediarioPSP        | #broker_AGID#                   |
+            | identificativoCanale                  | #canale_AGID_02#                |
+            | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT1 to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT1 response
         And retrieve session token from $nodoInviaRPT1Response.url
@@ -108,16 +122,25 @@ Feature: TEST INSERT WFESP
             | tipoOperazione              | web           |
         When WISP sends REST POST inoltroEsito/mod1_json to nodo-dei-pagamenti
         Then check esito is OK of inoltroEsito/mod1 response
-        Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT2
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_secondary# |
+            | identificativoStazioneRichiedente | #id_station_old#                      |
+            | dataOraMessaggioRichiesta         | #timedate#                            |
+            | dataEsecuzionePagamento           | #date#                                |
+            | importoTotaleDaVersare            | 10.00                                 |
+            | identificativoUnivocoVersamento   | $1iuv                                 |
+            | codiceContestoPagamento           | CCD01                                 |
+            | importoSingoloVersamento          | 10.00                                 |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT2
             | identificativoIntermediarioPA         | #id_broker_old#                       |
             | identificativoStazioneIntermediarioPA | #id_station_old#                      |
             | identificativoDominio                 | #creditor_institution_code_secondary# |
             | identificativoUnivocoVersamento       | $1iuv                                 |
             | codiceContestoPagamento               | CCD01                                 |
             | password                              | #password#                            |
-            | identificativoPSP                     | #psp#                                 |
-            | identificativoIntermediarioPSP        | #id_broker_psp#                       |
-            | identificativoCanale                  | #canale_IMMEDIATO_MULTIBENEFICIARIO#  |
+            | identificativoPSP                     | #psp_AGID#                            |
+            | identificativoIntermediarioPSP        | #broker_AGID#                         |
+            | identificativoCanale                  | #canale_AGID_02#                      |
             | rpt                                   | $rptAttachment                        |
         When EC sends SOAP nodoInviaRPT2 to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT2 response
@@ -130,15 +153,14 @@ Feature: TEST INSERT WFESP
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
         Given from body with datatable vertical inoltroEsitoMod1 initial json inoltroEsito/mod1
-            | idPagamento                 | $sessionToken |
-            | identificativoPsp           | #psp#         |
-            | tipoVersamento              | BP            |
-            | identificativoIntermediario | #psp#         |
-            | identificativoCanale        | #canale#      |
-            | tipoOperazione              | web           |
+            | idPagamento                 | $sessionToken                        |
+            | identificativoPsp           | #psp#                                |
+            | tipoVersamento              | BP                                   |
+            | identificativoIntermediario | #id_broker_psp#                      |
+            | identificativoCanale        | #canale_IMMEDIATO_MULTIBENEFICIARIO# |
+            | tipoOperazione              | web                                  |
         When WISP sends REST POST inoltroEsito/mod1_json to nodo-dei-pagamenti
-        Then check esito is KO of inoltroEsito/mod1 response
-        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of inoltroEsito/mod1 response
+        Then check error is timeout of inoltroEsito/mod1 response
         # RPT
         And verify 1 record for the table RPT retrived by the query on db wfesp with where datatable horizontal
             | where_keys                    | where_values       |
@@ -176,13 +198,22 @@ Feature: TEST INSERT WFESP
             | codiceContestoPagamento               | CCD01                                |
             | rpt                                   | $rptAttachment                       |
         And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
-            | esitoComplessivoOperazione  | OK                                                        |
-            | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello              |
-            | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello |
+            | esitoComplessivoOperazione  | OK                                                         |
+            | identificativoCarrello      | $nodoInviaCarrelloRPT1.identificativoCarrello              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT1.identificativoCarrello |
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT1 to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT1 response
-        Given from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT2
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_secondary# |
+            | identificativoStazioneRichiedente | #id_station_old#                      |
+            | dataOraMessaggioRichiesta         | #timedate#                            |
+            | dataEsecuzionePagamento           | #date#                                |
+            | importoTotaleDaVersare            | 10.00                                 |
+            | identificativoUnivocoVersamento   | $1iuv                                 |
+            | codiceContestoPagamento           | CCD01                                 |
+            | importoSingoloVersamento          | 10.00                                 |
+        And from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT2
             | identificativoIntermediarioPA         | #id_broker_old#                       |
             | identificativoStazioneIntermediarioPA | #id_station_old#                      |
             | identificativoCarrello                | $1iuv                                 |

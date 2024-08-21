@@ -2281,7 +2281,18 @@ def step_impl(context, attribute, value, elem, primitive):
 def step_impl(context, sender, soap_primitive, receiver):
     try:
         dbRun = getattr(context, "dbRun")
-        url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+        #Check se l'ultimo carattere della soap primitive è un numero, in questo caso lo taglia
+        soap_primitive_original = ''
+
+        if soap_primitive[-1].isdigit():
+            if 'nodoInviaRPT' in soap_primitive or 'nodoInviaCarrelloRPT1' in soap_primitive:
+                soap_primitive_original = soap_primitive[:-1]
+            else:
+                soap_primitive_original = soap_primitive
+        else:
+            soap_primitive_original = soap_primitive
+
+        url_nodo = utils.get_soap_url_nodo(context, soap_primitive_original)
 
         flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
@@ -2289,9 +2300,9 @@ def step_impl(context, sender, soap_primitive, receiver):
         header_host = utils.estrapola_header_host(url_nodo)
 
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive_original, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
         else:
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive_original, 'Host': header_host}
         
         print("url_nodo: ", url_nodo)
         print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -2312,9 +2323,9 @@ def step_impl(context, sender, soap_primitive, receiver):
         elif dbRun == "Oracle":
             soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
-        print(soap_response.content.decode('utf-8'))
-        print(soap_response.status_code)
-        print(f'soap response: {soap_response.headers}')
+        print('soap response content: ' + soap_response.content.decode('utf-8'))
+        print(f'soap response status code: {soap_response.status_code}')
+        print(f'soap response header: {soap_response.headers}')
         setattr(context, soap_primitive + RESPONSE, soap_response)
 
         assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
