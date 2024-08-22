@@ -61,7 +61,6 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And check importo field exists in informazioniPagamento response
@@ -69,7 +68,6 @@ Feature: TEST INSERT
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
-
         Given from body with datatable vertical inoltroEsitoMod1 initial json inoltroEsito/mod1
             | idPagamento                 | $sessionToken |
             | identificativoPsp           | #psp#         |
@@ -107,7 +105,6 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
         And check importo field exists in informazioniPagamento response

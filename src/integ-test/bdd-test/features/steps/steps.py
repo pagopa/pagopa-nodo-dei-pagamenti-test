@@ -2285,7 +2285,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         soap_primitive_original = ''
 
         if soap_primitive[-1].isdigit():
-            if 'nodoInviaRPT' in soap_primitive or 'nodoInviaCarrelloRPT1' in soap_primitive:
+            if 'nodoInviaRPT' in soap_primitive or 'nodoInviaCarrelloRPT' in soap_primitive:
                 soap_primitive_original = soap_primitive[:-1]
             else:
                 soap_primitive_original = soap_primitive

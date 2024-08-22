@@ -48,7 +48,6 @@ Feature: TEST INSERT
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                          |
@@ -64,7 +63,6 @@ Feature: TEST INSERT
             | where_keys | where_values |
             | IUV        | $1iuv        |
             | ORDER BY   | ID ASC       |
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                          |
@@ -80,7 +78,6 @@ Feature: TEST INSERT
             | where_keys | where_values |
             | IUV        | $2iuv        |
             | ORDER BY   | ID ASC       |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                       |
@@ -93,7 +90,6 @@ Feature: TEST INSERT
         And verify 2 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
-
         # STATI_CARRELLO_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                  |
@@ -103,8 +99,6 @@ Feature: TEST INSERT
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_CARRELLO_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
-
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | 44444444444    |
             | identificativoStazioneIntermediarioPA | 44444444444_01 |
@@ -117,7 +111,6 @@ Feature: TEST INSERT
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | 44444444444    |
             | identificativoStazioneIntermediarioPA | 44444444444_01 |
@@ -130,7 +123,6 @@ Feature: TEST INSERT
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoInviaCarrelloRPT_2elemLista initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | 44444444444       |
             | identificativoStazioneIntermediarioPA | 44444444444_01    |
@@ -150,12 +142,10 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
-
         # STATI_CARRELLO_SNAPSHOT
         And verify 1 record for the table STATI_CARRELLO_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
-
         # STATI_CARRELLO_SNAPSHOT_GI
         And verify 1 record for the table STATI_CARRELLO_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values |
@@ -217,10 +207,8 @@ Feature: TEST INSERT
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
         And replace iuv content with avanzaErrResponse content
         And replace iuv2 content with avanzaErrResponse content
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                          |
@@ -238,7 +226,6 @@ Feature: TEST INSERT
             | IUV        | avanzaErrResponse      |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                          |
@@ -256,7 +243,6 @@ Feature: TEST INSERT
             | IUV        | avanzaErrResponse      |
             | CCP        | $2ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         Given from body with datatable vertical pspInviaCarrelloRPT_timeout initial xml pspInviaCarrelloRPT
             | esitoComplessivoOperazione | malformata |
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
@@ -269,7 +255,6 @@ Feature: TEST INSERT
             | tipoOperazione              | web           |
         When WISP sends REST POST inoltroEsito/mod1_json to nodo-dei-pagamenti
         Then check error is timeout of inoltroEsito/mod1 response
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | 44444444444       |
             | identificativoStazioneIntermediarioPA | 44444444444_01    |
@@ -283,7 +268,6 @@ Feature: TEST INSERT
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoInviaCarrelloRPT_2elemLista initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | 44444444444       |
             | identificativoStazioneIntermediarioPA | 44444444444_01    |
@@ -303,7 +287,6 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | 44444444444       |
             | identificativoStazioneIntermediarioPA | 44444444444_01    |
@@ -317,7 +300,6 @@ Feature: TEST INSERT
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoInviaCarrelloRPT_2elemLista initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | 44444444444       |
             | identificativoStazioneIntermediarioPA | 44444444444_01    |
@@ -337,7 +319,6 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | 44444444444       |
             | identificativoStazioneIntermediarioPA | 44444444444_01    |
@@ -348,32 +329,27 @@ Feature: TEST INSERT
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
-
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
-
         # RPT
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | avanzaErrResponse      |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RPT
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | avanzaErrResponse      |
             | CCP        | $2ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | avanzaErrResponse      |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                        |
@@ -413,7 +389,6 @@ Feature: TEST INSERT
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
         And check id is #psp# of nodoInviaRPT response
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | #creditor_institution_code# |
             | identificativoStazioneIntermediarioPA | #id_station#                |
@@ -425,7 +400,6 @@ Feature: TEST INSERT
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker#                 |
             | identificativoStazioneIntermediarioPA | #id_station#                |
@@ -441,14 +415,12 @@ Feature: TEST INSERT
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
         And check id is NodoDeiPagamentiSPC of nodoInviaRPT response
-
         # RPT
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | RPTdaRifPsp            |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                        |
@@ -485,7 +457,6 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_IRRAGGIUNGIBILE of nodoInviaRPT response
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | 44444444444     |
             | identificativoStazioneIntermediarioPA | 44444444444_01  |
@@ -497,7 +468,6 @@ Feature: TEST INSERT
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | 44444444444                  |
             | identificativoStazioneIntermediarioPA | 44444444444_01               |
@@ -511,14 +481,12 @@ Feature: TEST INSERT
             | rpt                                   | $rpt1Attachment              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         # RPT
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | irraggiungibile        |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                        |
@@ -526,14 +494,12 @@ Feature: TEST INSERT
             | IUV           | irraggiungibile                     |
             | CCP           | $1ccp                               |
             | ORDER BY      | INSERTED_TIMESTAMP ASC              |
-
         # STATI_RPT_SNAPSHOT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | irraggiungibile        |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
@@ -592,7 +558,6 @@ Feature: TEST INSERT
         And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                    |
@@ -604,8 +569,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value             |
@@ -619,16 +582,13 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And wait 5 seconds for expiration
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                                                       |
@@ -640,7 +600,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value             |
@@ -654,13 +613,11 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -668,7 +625,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | CCD01                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -676,13 +632,11 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | CCD01                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RETRY_PA_INVIA_RT
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_ACCETTATA_PSP', with where condition ID_DOMINIO='$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
         And from body with datatable horizontal pspChiediListaRT_noOptional initial XML pspChiediListaRT
@@ -695,7 +649,6 @@ Feature: TEST INSERT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 2 seconds for expiration
         When job pspChiediListaAndChiediRt triggered after 5 seconds
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                                                                        |
@@ -707,8 +660,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value             |
@@ -722,13 +673,11 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -736,7 +685,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | CCD01                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -744,7 +692,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | CCD01                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RETRY_PA_INVIA_RT
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
@@ -779,7 +726,6 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                      |
@@ -791,7 +737,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                 |
@@ -805,19 +750,15 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                       |
@@ -829,7 +770,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value            |
@@ -843,13 +783,11 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value        |
@@ -861,19 +799,15 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_PARCHEGGIATA_NODO', with where condition ID_DOMINIO='$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                       |
@@ -885,7 +819,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                 |
@@ -899,13 +832,11 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values           |
             | IUV        | $1iuv                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value        |
@@ -921,7 +852,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | CCD01                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1026,14 +956,11 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
         Given generic update through the query param_update_generic_where_condition of the table RT_GI the parameter CCP = '$ccp2', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$ccp2', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
         Given from body with datatable vertical closePaymentBody initial json v1/closepayment
             | token                       | $sessionToken                        |
             | outcome                     | KO                                   |
@@ -1052,7 +979,6 @@ Feature: TEST INSERT
         Then verify the HTTP status code of v1/closepayment response is 500
         And check esito is KO of v1/closepayment response
         And check descrizione is Errore generico. of v1/closepayment response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1068,7 +994,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $ccp2                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1127,7 +1052,6 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1139,7 +1063,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | 12$1iuv                |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         And replace ccp1 content with $1ccp content
         And replace iuv content with $1iuv content
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
@@ -1175,14 +1098,11 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
         Given generic update through the query param_update_generic_where_condition of the table RT_GI the parameter CCP = '$activatePaymentNoticeV2Response.paymentToken', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$activatePaymentNoticeV2Response.paymentToken', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
         Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | KO                                            |
@@ -1208,7 +1128,6 @@ Feature: TEST INSERT
         Then verify the HTTP status code of v2/closepayment response is 500
         And check outcome is KO of v2/closepayment response
         And check description is Errore generico. of v2/closepayment response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1224,7 +1143,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $activatePaymentNoticeV2Response.paymentToken |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1283,7 +1201,6 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1295,7 +1212,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | 12$1iuv                |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1303,7 +1219,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $1ccp                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         And replace ccp1 content with $1ccp content
         And replace iuv content with $1iuv content
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
@@ -1337,11 +1252,9 @@ Feature: TEST INSERT
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         Given generic update through the query param_update_generic_where_condition of the table RT_GI the parameter CCP = '$activatePaymentNoticeResponse.paymentToken', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$activatePaymentNoticeResponse.paymentToken', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -1349,7 +1262,6 @@ Feature: TEST INSERT
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SYSTEM_ERROR of sendPaymentOutcome response
         And check description is Errore generico. of sendPaymentOutcome response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1365,7 +1277,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $activatePaymentNoticeResponse.paymentToken   |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1424,7 +1335,6 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1436,7 +1346,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | 12$1iuv                |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1444,7 +1353,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $1ccp                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         And replace ccp1 content with $1ccp content
         And replace iuv content with $1iuv content
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
@@ -1478,11 +1386,9 @@ Feature: TEST INSERT
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         Given generic update through the query param_update_generic_where_condition of the table RT_GI the parameter CCP = '$activatePaymentNoticeV2Response.paymentToken', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$activatePaymentNoticeV2Response.paymentToken', with where condition IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -1490,7 +1396,6 @@ Feature: TEST INSERT
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SYSTEM_ERROR of sendPaymentOutcomeV2 response
         And check description is Errore generico. of sendPaymentOutcomeV2 response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1506,7 +1411,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $activatePaymentNoticeV2Response.paymentToken |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1565,7 +1469,6 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1577,7 +1480,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | 12$1iuv                |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                        |
@@ -1585,10 +1487,8 @@ Feature: TEST INSERT
             | IUV           | 12$1iuv                             |
             | CCP           | $1ccp                               |
             | ORDER BY      | INSERTED_TIMESTAMP ASC              |
-
         And replace ccp content with $1ccp content
         And replace iuv content with 12$1iuv content
-
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 3$iuv        | 10.00  |
@@ -1619,19 +1519,16 @@ Feature: TEST INSERT
             | rpt                                   | rptAttachment                   |
         Then saving activatePaymentNotice request in activatePaymentNotice
         And saving nodoInviaRPT request in nodoInviaRPT
-
         When calling in parallel with update token activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST with 3000 ms delay
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
         And check description is Pagamento in attesa risulta in corso al sistema pagoPA of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-
         # RT
         And verify 0 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values             |
             | CCP        | $token_by_rptActivations |
             | ORDER BY   | INSERTED_TIMESTAMP ASC   |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1689,7 +1586,6 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value    |
@@ -1701,7 +1597,6 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | 12$1iuv                |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                        |
@@ -1709,10 +1604,8 @@ Feature: TEST INSERT
             | IUV           | 12$1iuv                             |
             | CCP           | $1ccp                               |
             | ORDER BY      | INSERTED_TIMESTAMP ASC              |
-
         And replace ccp content with $1ccp content
         And replace iuv content with 12$1iuv content
-
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 3$iuv        | 10.00  |
@@ -1743,19 +1636,16 @@ Feature: TEST INSERT
             | rpt                                   | rptAttachment                   |
         Then saving activatePaymentNoticeV2 request in activatePaymentNoticeV2
         And saving nodoInviaRPT request in nodoInviaRPT
-
         When calling in parallel with update token activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST with 3000 ms delay
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And check description is Pagamento in attesa risulta in corso al sistema pagoPA of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-
         # RT
         And verify 0 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values             |
             | CCP        | $token_by_rptActivations |
             | ORDER BY   | INSERTED_TIMESTAMP ASC   |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1805,7 +1695,6 @@ Feature: TEST INSERT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And wait 2 seconds for expiration
-
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -1829,7 +1718,6 @@ Feature: TEST INSERT
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
-
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column         | value                               |
@@ -1847,7 +1735,6 @@ Feature: TEST INSERT
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
-
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -1869,7 +1756,6 @@ Feature: TEST INSERT
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                          |
@@ -1890,7 +1776,6 @@ Feature: TEST INSERT
             | where_keys | where_values              |
             | IUV        | 12$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -1910,7 +1795,6 @@ Feature: TEST INSERT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-
         # RT_GI
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -1928,7 +1812,6 @@ Feature: TEST INSERT
             | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
-
         # RT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                                       |
@@ -1958,15 +1841,12 @@ Feature: TEST INSERT
             | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
-
         Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_PARCHEGGIATA_NODO_MOD3', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAYING_RPT', with where condition PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio' AND NOTICE_ID = '$activatePaymentNotice.noticeNumber' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATUS = 'PAYING', with where condition PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio' AND NOTICE_ID = '$activatePaymentNotice.noticeNumber' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -1990,7 +1870,6 @@ Feature: TEST INSERT
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
-
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -2012,7 +1891,6 @@ Feature: TEST INSERT
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
-
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                          |
@@ -2033,7 +1911,6 @@ Feature: TEST INSERT
             | where_keys | where_values              |
             | IUV        | 12$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
-
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -2053,14 +1930,12 @@ Feature: TEST INSERT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
             | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
-
         # RT
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -2138,11 +2013,8 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
-
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
         Given from body with datatable vertical pspInviaCarrelloRPTCarte initial XML pspInviaCarrelloRPTCarte
             | esitoComplessivoOperazione | OK |
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
@@ -2179,19 +2051,16 @@ Feature: TEST INSERT
             | rt                              | $rt2Attachment                        |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # POSITION_SERVICE_GI
         And verify 1 record for the table POSITION_SERVICE_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                |
             | NOTICE_ID      | 302$1iuv                    |
             | PA_FISCAL_CODE | #creditor_institution_code# |
-
         # POSITION_SERVICE
         And verify 1 record for the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                |
             | NOTICE_ID      | 302$1iuv                    |
             | PA_FISCAL_CODE | #creditor_institution_code# |
-
         Given generate 2 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
@@ -2236,13 +2105,11 @@ Feature: TEST INSERT
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-
         # POSITION_SERVICE_GI
         And verify 1 record for the table POSITION_SERVICE_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                |
             | NOTICE_ID      | 302$1iuv                    |
             | PA_FISCAL_CODE | #creditor_institution_code# |
-
         # POSITION_SERVICE
         And verify 1 record for the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                |
@@ -2303,31 +2170,26 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 10 seconds for expiration
-
         # RETRY_PA_INVIA_RT
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | ID_DOMINIO | #creditor_institution_code#           |
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
-
         # RETRY_PA_INVIA_RT_GI
         And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | ID_DOMINIO | #creditor_institution_code#           |
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
-
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         And wait 5 seconds for expiration
-
         # RETRY_PA_INVIA_RT
         Then verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | ID_DOMINIO | #creditor_institution_code#           |
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
-
         # RETRY_PA_INVIA_RT_GI
         And verify 0 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
@@ -2409,7 +2271,6 @@ Feature: TEST INSERT
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                |
-
         # STATI_RPT_SNAPSHOT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
@@ -2417,7 +2278,6 @@ Feature: TEST INSERT
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                |
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | #creditor_institution_code_old#       |
             | identificativoStazioneIntermediarioPA | #id_station_old#                      |
@@ -2427,7 +2287,6 @@ Feature: TEST INSERT
             | codiceContestoPagamento               | $nodoInviaRPT.codiceContestoPagamento |
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-
         Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
@@ -2453,7 +2312,6 @@ Feature: TEST INSERT
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
-
         # RPT
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                          |
@@ -2461,7 +2319,6 @@ Feature: TEST INSERT
             | IUV           | $1iuv                                 |
             | CCP           | $nodoInviaRPT.codiceContestoPagamento |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                |
-
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                          |
@@ -2469,7 +2326,6 @@ Feature: TEST INSERT
             | IUV           | $1iuv                                 |
             | CCP           | $nodoInviaRPT.codiceContestoPagamento |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
@@ -2477,7 +2333,6 @@ Feature: TEST INSERT
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                |
-
         # STATI_RPT_SNAPSHOT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
@@ -2503,21 +2358,18 @@ Feature: TEST INSERT
         Then check outcome is OK of activatePaymentNotice response
         And insert through the query insert_query into the table RETRY_PA_INVIA_RT_GI the fields ID_DOMINIO,IUV,CCP,INSERTED_TIMESTAMP with '#creditor_institution_code_old#','12$iuv','$activatePaymentNoticeResponse.paymentToken','#timedate#' under macro update_query on db nodo_online
         And insert through the query insert_query into the table RETRY_PA_INVIA_RT the fields ID_SESSIONE,ID_STAZIONE,ID_INTERMEDIARIO_PA,ID_CANALE,ID_SESSIONE_ORIGINALE,ID_DOMINIO,IUV,CCP,STATO,INSERTED_TIMESTAMP,INSERTED_BY,UPDATED_TIMESTAMP,UPDATED_BY,RETRY,STATO_RPT with '#uuid1#','#id_station_old#','#id_broker_old#','#canaleFittizio#','#uuid2#','#creditor_institution_code_old#','12$iuv','$activatePaymentNoticeResponse.paymentToken','TO_RETRY','#timedate#','nodoInviaRPT','#timedate#','nodoInviaRPT',5,'RT_ERRORE_INVIO_A_PA' under macro update_query on db nodo_online
-
         # RETRY_PA_INVIA_RT_GI
         And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
             | ID_DOMINIO | #creditor_institution_code_old#             |
             | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
-
         # RETRY_PA_INVIA_RT
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
             | ID_DOMINIO | #creditor_institution_code_old#             |
             | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
-
         Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -2546,14 +2398,12 @@ Feature: TEST INSERT
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         # RETRY_PA_INVIA_RT_GI
         And verify 0 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
             | ID_DOMINIO | #creditor_institution_code_old#             |
             | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
-
         # RETRY_PA_INVIA_RT
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
@@ -2620,21 +2470,18 @@ Feature: TEST INSERT
         And saving nodoInviaRPT request in nodoInviaRPT2
         When calling primitive nodoInviaRPT_nodoInviaRPT1 POST and nodoInviaRPT_nodoInviaRPT2 POST in parallel
         Then check primitive response nodoInviaRPT2Response and primitive response nodoInviaRPT1Response
-
         # STATI_RPT_SNAPSHOT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
             | IUV        | $iuv                                        |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                      |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
             | IUV        | $iuv                                        |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                      |
-
         # RPT
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -2642,7 +2489,6 @@ Feature: TEST INSERT
             | IUV           | $iuv                                        |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                      |
-
         # RPT_GI
         And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -2705,21 +2551,18 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
         # STATI_RPT_SNAPSHOT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP        | $1ccp                                         |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP        | $1ccp                                         |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
-
         # RT
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -2727,7 +2570,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $1ccp                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -2735,7 +2577,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $1ccp                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | #creditor_institution_code_old#       |
             | identificativoStazioneIntermediarioPA | #id_station_old#                      |
@@ -2795,7 +2636,6 @@ Feature: TEST INSERT
         And checks stato contains RT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
         # RT
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -2803,7 +2643,6 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $1ccp                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # RT_GI
         And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -2811,14 +2650,12 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $1ccp                                         |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
-
         # STATI_RPT_SNAPSHOT
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP        | $1ccp                                         |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
-
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
@@ -3025,21 +2862,18 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
-
         # RETRY_PA_INVIA_RT_GI
         And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                |
             | ID_DOMINIO | #creditor_institution_code# |
             | IUV        | $1iuv                       |
             | CCP        | $1ccp                       |
-
         # RETRY_PA_INVIA_RT
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                |
             | ID_DOMINIO | #creditor_institution_code# |
             | IUV        | $1iuv                       |
             | CCP        | $1ccp                       |
-
         And RPT2 generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | irraggiungibile             |
@@ -3073,12 +2907,10 @@ Feature: TEST INSERT
             | rpt                                   | $rpt2Attachment              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
         And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT the parameter RETRY = '5', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1ccp' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT the parameter CCP = '$2ccp', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1ccp' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table RETRY_PA_INVIA_RT_GI the parameter CCP = '$2ccp', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1ccp' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-
         Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
             | identificativoIntermediarioPSP  | #id_broker_psp#              |
             | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
@@ -3092,14 +2924,12 @@ Feature: TEST INSERT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And wait 5 seconds for expiration
-
         # RETRY_PA_INVIA_RT_GI
         And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                |
             | ID_DOMINIO | #creditor_institution_code# |
             | IUV        | $1iuv                       |
             | CCP        | $2ccp                       |
-
         # RETRY_PA_INVIA_RT
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                |
