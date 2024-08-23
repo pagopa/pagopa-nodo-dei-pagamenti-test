@@ -7688,7 +7688,7 @@ Feature: NMU flows PA Old con pagamento OK
       | paymentGateway        | 00                                            |
     Then saving nodoInviaRPT request in nodoInviaRPT
     And saving v2/closepayment request in v2/closepayment
-    When calling primitive evolution nodoInviaRPT and v2/closepayment with POST and POST in parallel with 150 ms delay
+    When calling primitive evolution nodoInviaRPT and v2/closepayment with POST and POST in parallel with 300 ms delay
     Then check esito is OK of nodoInviaRPT response
     And verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -7925,8 +7925,8 @@ Feature: NMU flows PA Old con pagamento OK
     # RE CRONOLOGIA EVENTI REQ E RESP
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column            | value                                                                                                                                                                                                                                                                       |
-      | tipo_evento       | activatePaymentNoticeV2,paaAttivaRPT,paaAttivaRPT,activatePaymentNoticeV2,nodoInviaRPT,closePayment-v2,nodoInviaRPT,closePayment-v2,pspNotifyPayment,pspNotifyPayment,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT,paaInviaRT,sendPaymentResult-v2,sendPaymentResult-v2 |
-      | sotto_tipo_evento | REQ,REQ,RESP,RESP,REQ,REQ,RESP,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP                                                                                                                                                                                                     |
+      | tipo_evento       | activatePaymentNoticeV2,paaAttivaRPT,paaAttivaRPT,activatePaymentNoticeV2,nodoInviaRPT,nodoInviaRPT,closePayment-v2,closePayment-v2,pspNotifyPayment,pspNotifyPayment,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT,paaInviaRT,sendPaymentResult-v2,sendPaymentResult-v2 |
+      | sotto_tipo_evento | REQ,REQ,RESP,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP                                                                                                                                                                                                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
       | where_keys         | where_values                                  |
       | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
