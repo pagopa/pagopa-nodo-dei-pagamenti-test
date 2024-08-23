@@ -1,5 +1,7 @@
 Feature: flow tests for demandPaymentNotice 923
 
+    #Questi test per ora non funzionano, dovrebbe essere il PG-106 e funzioneranno solo dopo il merge. Attualmente questa implementazione non è ancora su postgres (23/08/24)
+
     Background:
         Given systems up
 
