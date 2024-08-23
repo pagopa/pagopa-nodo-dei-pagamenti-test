@@ -32,14 +32,7 @@ user_profile = os.environ.get("USERPROFILE")
 # Variabile globale per segnalare se lo scenario "after" deve essere eseguito
 execute_after_scenario = False
 
-# Lista nome scenari After
-list_name_scenario_after = []
 
-# Dict after n nome scenario after n
-dict_after_n_name_scenario_n = {}
-
-# Tag after da eseguire
-tag_after_selected = '' 
 
 def before_all(context):
     print('Global settings...')
@@ -208,48 +201,79 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     global execute_after_scenario
-    global dict_after_n_name_scenario_n
-    global tag_after_selected
 
-    if execute_after_scenario:
-        print(f"----> AFTER SCENARIO RESTORE EXECUTING...")
+    try:
 
-        # # Resetta la variabile "after"
-        execute_after_scenario = False  
+        if execute_after_scenario:
+            print(f"----> AFTER SCENARIO RESTORE EXECUTING...")
 
-        ####Invece dell'after per ogni scenario che lo richiede, per postgres, chiamo direttamente le stored procedure eliminando gli skipped dovuti agli after
+            # # Resetta la variabile "after"
+            execute_after_scenario = False  
 
-        db_config = context.config.userdata.get("db_configuration")
-        db_name = "nodo_cfg"
-        db_selected = db_config.get(db_name)
-        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+            ####Invece dell'after per ogni scenario che lo richiede, per postgres, chiamo direttamente le stored procedure eliminando gli skipped dovuti agli after
 
-        # Call the procedure to reset test data for CONFIGURATION_KEYS table
-        print(f"----> RESTORE CONFIGURATION_KEYS...")
-        reset_test_data_query = "select nodo4_cfg.resettestdata();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            db_config = context.config.userdata.get("db_configuration")
+            db_name = "nodo_cfg"
+            db_selected = db_config.get(db_name)
+            adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            # Call the procedure to reset test data for CONFIGURATION_KEYS table
+            print(f"----> RESTORE CONFIGURATION_KEYS...")
+            reset_test_data_query = "select nodo4_cfg.resettestdata();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            
+            # Call the procedure to reset test data for CANALI table
+            print(f"----> RESTORE CANALI...")
+            reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+            
+            # Call the procedure to reset test data for STAZIONI table
+            print(f"----> RESTORE STAZIONI...")
+            reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+            
+            # Call the procedure to reset test data for PA_STAZIONE_PA table
+            print(f"----> RESTORE PA_STAZIONE_PA...")
+            reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+            
+            # Call the procedure to reset test data for CANALI_NODO table
+            print(f"----> RESTORE CANALI_NODO...")
+            reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+
+            print("----> AFTER SCENARIO RESTORE COMPLETED")
+
+            adopted_db.closeConnection(conn)
+
+            ##REFRESH
+            flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+            headers = ''
+            header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+
+            if flag_subscription == 'Y':
+                headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            else:
+                headers = {'Host': header_host}
+
+            refresh_response = None
+            
+            print(f"----> REFRESH AFTER SCENARIO EXECUTING...")
         
-        # Call the procedure to reset test data for CANALI table
-        print(f"----> RESTORE CANALI...")
-        reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
-        
-        # Call the procedure to reset test data for STAZIONI table
-        print(f"----> RESTORE STAZIONI...")
-        reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
-        
-        # Call the procedure to reset test data for PA_STAZIONE_PA table
-        print(f"----> RESTORE PA_STAZIONE_PA...")
-        reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
-        
-        # Call the procedure to reset test data for CANALI_NODO table
-        print(f"----> RESTORE CANALI_NODO...")
-        reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
 
-        print("----> AFTER SCENARIO RESTORE COMPLETED")
+            time.sleep(3)
+            assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
+            print(f"----> REFRESH AFTER SCENARIO COMPLETED!")
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
 
     dbRun = getattr(context, "dbRun")
     if dbRun == "Postgres":
