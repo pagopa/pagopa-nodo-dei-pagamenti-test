@@ -176,15 +176,6 @@ def before_all(context):
 
 
 def before_feature(context, feature):
-    global list_name_scenario_after
-    global dict_after_n_name_scenario_n
-
-    i = 1
-    for scenario in feature.scenarios:
-        if f"after{i}" in scenario.tags:
-            list_name_scenario_after.append(scenario.name)
-            dict_after_n_name_scenario_n[f"after_{i}"] = scenario.name
-            i += 1
 
     services = context.config.userdata.get("services")
     # add heading
@@ -205,14 +196,9 @@ def before_feature(context, feature):
 
 def before_scenario(context, scenario):
     global execute_after_scenario
-    global list_name_scenario_after
-    global tag_after_selected
 
-    for i in range(1, len(list_name_scenario_after)+1):
-        if f"after_{i}" in scenario.effective_tags:
-            execute_after_scenario = True
-            tag_after_selected = f"after_{i}"
-            break
+    if "after" in scenario.effective_tags:
+        execute_after_scenario = True
 
     context.stdout_capture = StringIO()
     context.original_stdout = sys.stdout
@@ -226,18 +212,44 @@ def after_scenario(context, scenario):
     global tag_after_selected
 
     if execute_after_scenario:
-        for after, name_scenario_after in dict_after_n_name_scenario_n.items():
-            if after == tag_after_selected:
-                print(f"----> AFTER STEP: {name_scenario_after} EXECUTING...")
-                name = name_scenario_after
-                # # Resetta la variabile per evitare di eseguire lo scenario "after" più volte
-                execute_after_scenario = False  
+        print(f"----> AFTER SCENARIO RESTORE EXECUTING...")
 
-                # # Esegue tutti gli step dello scenario "after"
-                phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
-                text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
-                context.execute_steps(text_step)
-        print("----> AFTER STEP COMPLETED")
+        # # Resetta la variabile "after"
+        execute_after_scenario = False  
+
+        ####Invece dell'after per ogni scenario che lo richiede, per postgres, chiamo direttamente le stored procedure eliminando gli skipped dovuti agli after
+
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "nodo_cfg"
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        # Call the procedure to reset test data for CONFIGURATION_KEYS table
+        print(f"----> RESTORE CONFIGURATION_KEYS...")
+        reset_test_data_query = "select nodo4_cfg.resettestdata();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+        
+        # Call the procedure to reset test data for CANALI table
+        print(f"----> RESTORE CANALI...")
+        reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        
+        # Call the procedure to reset test data for STAZIONI table
+        print(f"----> RESTORE STAZIONI...")
+        reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        
+        # Call the procedure to reset test data for PA_STAZIONE_PA table
+        print(f"----> RESTORE PA_STAZIONE_PA...")
+        reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+        
+        # Call the procedure to reset test data for CANALI_NODO table
+        print(f"----> RESTORE CANALI_NODO...")
+        reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+
+        print("----> AFTER SCENARIO RESTORE COMPLETED")
 
     dbRun = getattr(context, "dbRun")
     if dbRun == "Postgres":
