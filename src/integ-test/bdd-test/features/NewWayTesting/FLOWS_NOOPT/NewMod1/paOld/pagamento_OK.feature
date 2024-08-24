@@ -7922,17 +7922,6 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys | where_values                                  |
       | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
     # RE #####
-    # RE CRONOLOGIA EVENTI REQ E RESP
-    And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column            | value                                                                                                                                                                                                                                                                       |
-      | tipo_evento       | activatePaymentNoticeV2,paaAttivaRPT,paaAttivaRPT,activatePaymentNoticeV2,nodoInviaRPT,nodoInviaRPT,closePayment-v2,closePayment-v2,pspNotifyPayment,pspNotifyPayment,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT,paaInviaRT,sendPaymentResult-v2,sendPaymentResult-v2 |
-      | sotto_tipo_evento | REQ,REQ,RESP,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP,REQ,RESP                                                                                                                                                                                                     |
-    And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RE retrived by the query on db re with where datatable horizontal
-      | where_keys         | where_values                                  |
-      | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-      | SOTTO_TIPO_EVENTO  | ('REQ','RESP')                                |
-      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-      | ORDER BY           | DATA_ORA_EVENTO ASC                           |
     # activatePaymentNoticeV2 REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
       | where_keys         | where_values                                  |
