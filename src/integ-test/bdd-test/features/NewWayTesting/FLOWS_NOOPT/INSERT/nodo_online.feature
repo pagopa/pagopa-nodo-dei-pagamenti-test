@@ -2358,6 +2358,7 @@ Feature: TEST INSERT
         Then check outcome is OK of activatePaymentNotice response
         And insert through the query insert_query into the table RETRY_PA_INVIA_RT_GI the fields ID_DOMINIO,IUV,CCP,INSERTED_TIMESTAMP with '#creditor_institution_code_old#','12$iuv','$activatePaymentNoticeResponse.paymentToken','#timedate#' under macro update_query on db nodo_online
         And insert through the query insert_query into the table RETRY_PA_INVIA_RT the fields ID_SESSIONE,ID_STAZIONE,ID_INTERMEDIARIO_PA,ID_CANALE,ID_SESSIONE_ORIGINALE,ID_DOMINIO,IUV,CCP,STATO,INSERTED_TIMESTAMP,INSERTED_BY,UPDATED_TIMESTAMP,UPDATED_BY,RETRY,STATO_RPT with '#uuid1#','#id_station_old#','#id_broker_old#','#canaleFittizio#','#uuid2#','#creditor_institution_code_old#','12$iuv','$activatePaymentNoticeResponse.paymentToken','TO_RETRY','#timedate#','nodoInviaRPT','#timedate#','nodoInviaRPT',5,'RT_ERRORE_INVIO_A_PA' under macro update_query on db nodo_online
+        And wait 3 seconds for expiration
         # RETRY_PA_INVIA_RT_GI
         And verify 1 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
@@ -2398,6 +2399,7 @@ Feature: TEST INSERT
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 3 seconds for expiration
         # RETRY_PA_INVIA_RT_GI
         And verify 0 record for the table RETRY_PA_INVIA_RT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
