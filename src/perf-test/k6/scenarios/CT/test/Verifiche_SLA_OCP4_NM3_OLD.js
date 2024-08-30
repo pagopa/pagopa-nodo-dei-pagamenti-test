@@ -7,7 +7,6 @@ import { activatePaymentNotice } from './api/activatePaymentNotice.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { sleep } from 'k6';
 //import * as test_selector from '../../test_selector.js';
 
 
@@ -126,7 +125,6 @@ export function total() {
   let creditorReferenceId=res.creditorReferenceId;
   let importoTotaleDaVersare = res.amount;
   console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
-  sleep(180);
   res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 
 
