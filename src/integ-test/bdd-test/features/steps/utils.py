@@ -36,8 +36,6 @@ from urllib3.util.retry import Retry
 import xml.etree.ElementTree as ET
 
 
-getattr(context, "SUBKEY") = "2da21a24a3474673ad8464edb4a71011"
-
 def random_s():
     import random
     cont = 5
