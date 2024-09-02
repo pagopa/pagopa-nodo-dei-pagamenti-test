@@ -36,7 +36,7 @@ from urllib3.util.retry import Retry
 import xml.etree.ElementTree as ET
 
 
-SUBKEY = "2da21a24a3474673ad8464edb4a71011"
+getattr(context, "SUBKEY") = "2da21a24a3474673ad8464edb4a71011"
 
 def random_s():
     import random
@@ -666,7 +666,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         print(f"url: {url_nodo}")
 
         header_host = estrapola_header_host(url_nodo)
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         
         get_response = ''
         if dbRun == "Postgres":
@@ -695,7 +695,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             print(f"primitive: {primitive} ---> body: {body}")
 
             if dbRun == "Postgres": 
@@ -740,7 +740,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")} 
 
             if dbRun == "Postgres": 
                 response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
@@ -860,7 +860,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         print(f"url: {url_nodo}")
 
         header_host = estrapola_header_host(url_nodo)
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         
         get_response = ''
         if dbRun == "Postgres": 
@@ -889,7 +889,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             print(f"primitive: {primitive} ---> body: {body}")
 
             if dbRun == "Postgres":
@@ -934,7 +934,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")} 
 
             if dbRun == "Postgres":
                 response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))

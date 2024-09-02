@@ -34,7 +34,6 @@ import urllib3
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
-SUBKEY = "2da21a24a3474673ad8464edb4a71011"
 
 db_online = None
 db_offline = None
@@ -99,7 +98,7 @@ def step_impl(context):
             header_host = utils.estrapola_header_host(row.get("url"))
 
             if flag_subscription == 'Y':
-                headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+                headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
                 headers = {'Host': header_host}
         
@@ -2300,7 +2299,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         header_host = utils.estrapola_header_host(url_nodo)
 
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive_original, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive_original, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive_original, 'Host': header_host}
         
@@ -2354,7 +2353,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         header_host = utils.estrapola_header_host(url_nodo)
 
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host}
 
@@ -2412,7 +2411,7 @@ def step_impl(context, job_name, seconds):
         header_host = utils.estrapola_header_host(url_nodo)
 
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/xml', 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Content-Type': 'application/xml', 'Host': header_host}
 
@@ -2883,7 +2882,7 @@ def step_impl(context, sender, method, service, receiver):
         header_host = utils.estrapola_header_host(url_nodo)
 
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/json', 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Content-Type': 'application/json', 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Content-Type': 'application/json', 'Host': header_host}
 
@@ -3154,7 +3153,7 @@ def step_impl(context, param, value):
         header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
 
         if flag_subscription == 'Y':
-            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Host': header_host}
 
@@ -3421,7 +3420,7 @@ def step_impl(context):
         header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
 
         if flag_subscription == 'Y':
-            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Host': header_host}
 
@@ -3478,7 +3477,7 @@ def step_impl(context):
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
 
     if flag_subscription == 'Y':
-        headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
     else:
         headers = {'Host': header_host}
 
