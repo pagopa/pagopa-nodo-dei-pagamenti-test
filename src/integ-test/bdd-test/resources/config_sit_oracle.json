@@ -141,5 +141,8 @@
          "password": "WEFSP",
          "port": "1522"
       }
+   },
+   "env": {
+      "api-config-subscription-key": "PIPPO"
    }
 }
