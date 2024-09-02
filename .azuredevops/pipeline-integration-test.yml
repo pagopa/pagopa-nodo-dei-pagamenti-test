@@ -160,7 +160,7 @@ stages:
               replace $file ".db_configuration.wfesp.password"  $(db-wfesp-password-${{ parameters.env }})     
               replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
 
-              replace $file ".env.SUBKEY"      $(apim-subscription-key-sit-${{ parameters.env }})
+              replace $file ".env.SUBKEY"      $(apim-subscription-key-${{ parameters.env }})
 
               jq . $file
             displayName: "Configure Global Properties"
