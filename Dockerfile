@@ -28,6 +28,9 @@ ADD entrypoint.sh test/entrypoint.sh
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
 
+#install python-dotenv
+RUN pip3 install python-dotenv
+
 #install ps 
 RUN apt-get update && \
 	apt-get install -y procps

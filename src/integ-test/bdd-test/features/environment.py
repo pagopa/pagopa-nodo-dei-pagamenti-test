@@ -319,102 +319,101 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    pass
-    # global user_profile
+    global user_profile
     
-    # dbRun = getattr(context, "dbRun")
+    dbRun = getattr(context, "dbRun")
     
-    # if dbRun == "Postgres":
-    #     proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
-    #     print(f"Proxy enabled: {proxyEnabled}")
-    #     if proxyEnabled == 'True':
-    #         ####RUN DA LOCALE
-    #         if user_profile != None:
-    #             proxies = {
-    #                 'http': 'http://172.31.253.47:8080',
-    #                 'https': 'http://172.31.253.47:8080',
-    #             }
-    #         ####RUN IN REMOTO
-    #         else:
-    #             proxies = {
-    #                 'http': 'http://10.79.20.33:80',
-    #                 'https': 'http://10.79.20.33:80',
-    #             }
-    #     else:
-    #         proxies = None
+    if dbRun == "Postgres":
+        proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
+        print(f"Proxy enabled: {proxyEnabled}")
+        if proxyEnabled == 'True':
+            ####RUN DA LOCALE
+            if user_profile != None:
+                proxies = {
+                    'http': 'http://172.31.253.47:8080',
+                    'https': 'http://172.31.253.47:8080',
+                }
+            ####RUN IN REMOTO
+            else:
+                proxies = {
+                    'http': 'http://10.79.20.33:80',
+                    'https': 'http://10.79.20.33:80',
+                }
+        else:
+            proxies = None
     
-    #     setattr(context, 'proxies', proxies)
-    # try:
-    #     db_config = context.config.userdata.get("db_configuration")
-    #     db_name = "nodo_cfg"
-    #     db_selected = db_config.get(db_name)
-    #     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    #     if dbRun == "Postgres":
+        setattr(context, 'proxies', proxies)
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "nodo_cfg"
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        if dbRun == "Postgres":
 
-    #         # Call the procedure to reset test data for CONFIGURATION_KEYS table
-    #         print(f"----> RESTORE CONFIGURATION_KEYS...")
-    #         reset_test_data_query = "select nodo4_cfg.resettestdata();"
-    #         exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            # Call the procedure to reset test data for CONFIGURATION_KEYS table
+            print(f"----> RESTORE CONFIGURATION_KEYS...")
+            reset_test_data_query = "select nodo4_cfg.resettestdata();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
             
-    #         # Call the procedure to reset test data for CANALI table
-    #         print(f"----> RESTORE CANALI...")
-    #         reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
-    #         exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+            # Call the procedure to reset test data for CANALI table
+            print(f"----> RESTORE CANALI...")
+            reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
             
-    #         # Call the procedure to reset test data for STAZIONI table
-    #         print(f"----> RESTORE STAZIONI...")
-    #         reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
-    #         exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+            # Call the procedure to reset test data for STAZIONI table
+            print(f"----> RESTORE STAZIONI...")
+            reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
             
-    #         # Call the procedure to reset test data for PA_STAZIONE_PA table
-    #         print(f"----> RESTORE PA_STAZIONE_PA...")
-    #         reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
-    #         exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+            # Call the procedure to reset test data for PA_STAZIONE_PA table
+            print(f"----> RESTORE PA_STAZIONE_PA...")
+            reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
             
-    #         # Call the procedure to reset test data for CANALI_NODO table
-    #         print(f"----> RESTORE CANALI_NODO...")
-    #         reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
-    #         exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+            # Call the procedure to reset test data for CANALI_NODO table
+            print(f"----> RESTORE CANALI_NODO...")
+            reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
+            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
         
-    #     elif dbRun == "Oracle":
-    #         config_dict = getattr(context, 'configurations')
-    #         update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+        elif dbRun == "Oracle":
+            config_dict = getattr(context, 'configurations')
+            update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-    #         for key, value in config_dict.items():
+            for key, value in config_dict.items():
 
-    #             selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
+                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
                 
-    #             adopted_db.executeQuery(conn, selected_query, as_dict=True)
+                adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
-    #     adopted_db.closeConnection(conn)
+        adopted_db.closeConnection(conn)
         
-    #     flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
-    #     headers = ''
-    #     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+        headers = ''
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
 
-    #     if flag_subscription == 'Y':
-    #         headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
-    #     else:
-    #         headers = {'Host': header_host}
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Host': header_host}
 
-    #     refresh_response = None
+        refresh_response = None
         
-    #     print(f"----> REFRESH...")
+        print(f"----> REFRESH...")
     
-    #     if dbRun == "Postgres":
-    #         print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-    #         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     
-    #     elif dbRun == "Oracle":
-    #         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+        elif dbRun == "Oracle":
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    #     time.sleep(3)
-    #     assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
+        time.sleep(3)
+        assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
         
-    # except AssertionError as e:
-    #     # Stampiamo il messaggio di errore dell'assert
-    #     print("----->>>> Assertion Error: ", e)
-    # except Exception as e:
-    #     # Gestione di tutte le altre eccezioni
-    #     print("----->>>> Exception:", e)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
