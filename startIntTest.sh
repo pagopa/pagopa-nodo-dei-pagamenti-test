@@ -150,6 +150,8 @@ replace $file ".db_configuration.wfesp.user"      $db_wfesp_username_sit
 replace $file ".db_configuration.wfesp.password"  $db_wfesp_password_sit     
 replace $file ".db_configuration.wfesp.port"      $db_wfesp_port_sit
 
+replace $file ".env.SUBKEY"      $APICFG_SUBSCRIPTION_KEY
+
 echo "replace config file END"
 
 if [ "$fromAPI" = true ]; then
