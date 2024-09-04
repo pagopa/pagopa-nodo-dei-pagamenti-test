@@ -144,21 +144,21 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ORDER BY   | ID ASC                              |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                                          |
-            | ID                    | NotNone                                                                                                        |
-            | ID_SESSIONE           | NotNone                                                                                                        |
-            | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
-            | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
-            | IUV                   | 12$iuv                                                                                                         |
-            | CCP                   | $ccp                                                                                                           |
-            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                    |
-            | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
+            | column                | value                                                                            |
+            | ID                    | NotNone                                                                          |
+            | ID_SESSIONE           | NotNone                                                                          |
+            | ID_SESSIONE_ORIGINALE | NotNone                                                                          |
+            | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                |
+            | IUV                   | 12$iuv                                                                           |
+            | CCP                   | $ccp                                                                             |
+            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT                              |
+            | INSERTED_TIMESTAMP    | NotNone                                                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
             | IUV        | 12$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
-        And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+        And verify 4 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
             | ORDER BY   | ID ASC       |
@@ -169,9 +169,9 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode |
             | IUV                | 12$iuv                            |
             | CCP                | $ccp                              |
-            | STATO              | RT_ACCETTATA_PA                   |
+            | STATO              | RT_GENERATA_NODO                  |
             | INSERTED_BY        | nodoInviaRPT                      |
-            | UPDATED_BY         | paaInviaRT                        |
+            | UPDATED_BY         | nodoInviaRPT                      |
             | INSERTED_TIMESTAMP | NotNone                           |
             | UPDATED_TIMESTAMP  | NotNone                           |
             | PUSH               | None                              |
