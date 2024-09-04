@@ -9,6 +9,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
     Scenario: NM4 flow OK, FLOW con PA Old e PSP New: nodoChiediCatalogoServizi, nodoChiedinumeroAvviso -> paaChiediNumeroAvviso, activatePaymentNotice -> paaAttivaRPT, nodoInviaRPT, spo+ -> paaInviaRT+, BIZ+ (NM4-3)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter QUARTO_MODELLO = 'Y', with where condition OBJ_ID = '16643' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter QUARTO_MODELLO = 'N', with where condition OBJ_ID = '1689962' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
         And from body with datatable horizontal nodoChiediCatalogoServizi_noOptional initial XML nodoChiediCatalogoServizi
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   |
