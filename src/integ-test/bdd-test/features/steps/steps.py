@@ -378,6 +378,8 @@ def step_impl(context, primitive, type_table, filebody):
             else:      
                 current_directory = os.getcwd()
                 
+                substring_current_directory = ""
+                
                 substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
@@ -642,6 +644,8 @@ def step_impl(context, primitive, filebody):
             # Specifica il percorso del tuo file XML da remoto
             current_directory = os.getcwd()
             
+            substring_current_directory = ""
+            
             substring_current_directory = current_directory[:-2]
 
             print("La directory corrente è:", current_directory)
@@ -878,6 +882,8 @@ def step_impl(context, primitive, type_table, filebody):
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
                 
+                substring_current_directory = ""
+                
                 substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
@@ -1106,6 +1112,8 @@ def step_impl(context, filebody, type_table, number):
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
                 
+                substring_current_directory = ""
+                
                 substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
@@ -1302,6 +1310,8 @@ def step_impl(context, filebody, type_table):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = ""
                 
                 substring_current_directory = current_directory[:-2]
 
@@ -1803,6 +1813,8 @@ def step_impl(context, filebody, type_table):
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
                 
+                substring_current_directory = ""
+                
                 substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
@@ -1945,6 +1957,8 @@ def step_impl(context, filebody, type_table):
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
                 
+                substring_current_directory = ""
+                
                 substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
@@ -2031,6 +2045,10 @@ def step_impl(context, filebody, type_table, number):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = ""
+                
+                substring_current_directory = ""
                 
                 substring_current_directory = current_directory[:-2]
 
