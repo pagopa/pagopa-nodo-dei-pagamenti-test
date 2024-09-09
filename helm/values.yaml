@@ -191,4 +191,4 @@ deployments:
           - name: db_wfesp_port_sit
             value: "{{ .Values.database.port_spc }}"
           - name: HTTPS_PROXY
-            value: https://10.79.20.33:80
+            value: https://10.79.20.33:81
