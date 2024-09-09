@@ -377,10 +377,12 @@ def step_impl(context, primitive, type_table, filebody):
             ###RUN DA REMOTO
             else:      
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = utils.find_file(f"{filebody}.xml", current_directory)            
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
                 
                 print("Il file path corrente è:", file_path)
 
@@ -639,10 +641,12 @@ def step_impl(context, primitive, filebody):
         else:      
             # Specifica il percorso del tuo file XML da remoto
             current_directory = os.getcwd()
+            
+            substring_current_directory = current_directory[:-2]
 
             print("La directory corrente è:", current_directory)
 
-            file_path = utils.find_file(f"{filebody}.xml", current_directory)            
+            file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
             
             print("Il file path corrente è:", file_path)
 
@@ -873,10 +877,12 @@ def step_impl(context, primitive, type_table, filebody):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
                 
-                file_json = utils.find_file(f"{filebody}.json", current_directory)  
+                file_json = open(f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
                 
                 print("Il file path corrente è:", file_path)
             
@@ -1099,10 +1105,12 @@ def step_impl(context, filebody, type_table, number):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = utils.find_file(f"{filebody}.xml", current_directory)           
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
                 
                 print("Il file path corrente è:", file_path)
 
@@ -1294,10 +1302,12 @@ def step_impl(context, filebody, type_table):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = utils.find_file(f"{filebody}.xml", current_directory)              
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
                 
                 print("Il file path corrente è:", file_path)
 
@@ -1792,10 +1802,12 @@ def step_impl(context, filebody, type_table):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = utils.find_file(f"{filebody}.xml", current_directory)             
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
                 
                 print("Il file path corrente è:", file_path)
 
@@ -1932,10 +1944,12 @@ def step_impl(context, filebody, type_table):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = utils.find_file(f"{filebody}.xml", current_directory)            
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
                 
                 print("Il file path corrente è:", file_path)
 
@@ -2017,10 +2031,12 @@ def step_impl(context, filebody, type_table, number):
             else:      
                 # Specifica il percorso del tuo file XML da remoto
                 current_directory = os.getcwd()
+                
+                substring_current_directory = current_directory[:-2]
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = utils.find_file(f"{filebody}.xml", current_directory)            
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
                 
                 print("Il file path corrente è:", file_path)
 
