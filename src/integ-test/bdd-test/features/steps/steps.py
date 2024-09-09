@@ -380,12 +380,9 @@ def step_impl(context, primitive, type_table, filebody):
 
                 print("La directory corrente è:", current_directory)
 
-                # Ottieni la directory di root del file system
-                root_directory = os.path.abspath(os.sep)
-
-                print("La root del file system è:", root_directory)
-                # Specifica il percorso del tuo file XML da remoto
-                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -641,7 +638,13 @@ def step_impl(context, primitive, filebody):
         ###RUN DA REMOTO
         else:      
             # Specifica il percorso del tuo file XML da remoto
-            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            current_directory = os.getcwd()
+
+            print("La directory corrente è:", current_directory)
+
+            file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+            
+            print("Il file path corrente è:", file_path)
 
     # Leggi il contenuto del file XML come stringa
     with open(file_path, 'r') as file:
@@ -869,7 +872,13 @@ def step_impl(context, primitive, type_table, filebody):
             ###RUN DA REMOTO
             else:      
                 # Specifica il percorso del tuo file XML da remoto
-                file_json = open(f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
+                current_directory = os.getcwd()
+
+                print("La directory corrente è:", current_directory)
+                
+                file_json = open(f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
+                
+                print("Il file path corrente è:", file_path)
             
         data_json = json.load(file_json)
 
@@ -1089,7 +1098,13 @@ def step_impl(context, filebody, type_table, number):
             ###RUN DA REMOTO
             else:      
                 # Specifica il percorso del tuo file XML da remoto
-                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+                current_directory = os.getcwd()
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1278,7 +1293,13 @@ def step_impl(context, filebody, type_table):
             ###RUN DA REMOTO
             else:      
                 # Specifica il percorso del tuo file XML da remoto
-                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+                current_directory = os.getcwd()
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1770,7 +1791,13 @@ def step_impl(context, filebody, type_table):
             ###RUN DA REMOTO
             else:      
                 # Specifica il percorso del tuo file XML da remoto
-                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+                current_directory = os.getcwd()
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1904,7 +1931,13 @@ def step_impl(context, filebody, type_table):
             ###RUN DA REMOTO
             else:      
                 # Specifica il percorso del tuo file XML da remoto
-                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+                current_directory = os.getcwd()
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1983,7 +2016,13 @@ def step_impl(context, filebody, type_table, number):
             ###RUN DA REMOTO
             else:      
                 # Specifica il percorso del tuo file XML da remoto
-                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+                current_directory = os.getcwd()
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
