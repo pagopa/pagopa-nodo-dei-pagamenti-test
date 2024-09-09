@@ -1589,5 +1589,12 @@ def generate_list_dict_values_obt(list_col_split, exec_query):
 #         client.close()
 
 
-def generate_uuid():
-    return str(uuid.uuid4())
+def find_file(filename, search_directory='.'):
+    # Cammina attraverso tutte le directory e sottodirectory a partire da 'search_directory'
+    for root, dirs, files in os.walk(search_directory):
+        if filename in files:
+            # Restituisce il percorso completo del file trovato
+            return os.path.join(root, filename)
+    
+    # Se il file non è trovato, restituisci None
+    return None

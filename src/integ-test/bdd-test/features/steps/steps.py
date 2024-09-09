@@ -380,7 +380,7 @@ def step_impl(context, primitive, type_table, filebody):
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = utils.find_file(f"{filebody}.xml", current_directory)            
                 
                 print("Il file path corrente è:", file_path)
 
@@ -642,7 +642,7 @@ def step_impl(context, primitive, filebody):
 
             print("La directory corrente è:", current_directory)
 
-            file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+            file_path = utils.find_file(f"{filebody}.xml", current_directory)            
             
             print("Il file path corrente è:", file_path)
 
@@ -876,7 +876,7 @@ def step_impl(context, primitive, type_table, filebody):
 
                 print("La directory corrente è:", current_directory)
                 
-                file_json = open(f"{current_directory}/src/integ-test/bdd-test/resources/json/{filebody}.json")
+                file_json = utils.find_file(f"{filebody}.json", current_directory)  
                 
                 print("Il file path corrente è:", file_path)
             
@@ -1102,7 +1102,7 @@ def step_impl(context, filebody, type_table, number):
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = utils.find_file(f"{filebody}.xml", current_directory)           
                 
                 print("Il file path corrente è:", file_path)
 
@@ -1297,7 +1297,7 @@ def step_impl(context, filebody, type_table):
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = utils.find_file(f"{filebody}.xml", current_directory)              
                 
                 print("Il file path corrente è:", file_path)
 
@@ -1795,7 +1795,7 @@ def step_impl(context, filebody, type_table):
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = utils.find_file(f"{filebody}.xml", current_directory)             
                 
                 print("Il file path corrente è:", file_path)
 
@@ -1935,7 +1935,7 @@ def step_impl(context, filebody, type_table):
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = utils.find_file(f"{filebody}.xml", current_directory)            
                 
                 print("Il file path corrente è:", file_path)
 
@@ -2020,7 +2020,7 @@ def step_impl(context, filebody, type_table, number):
 
                 print("La directory corrente è:", current_directory)
 
-                file_path = f"{current_directory}/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                file_path = utils.find_file(f"{filebody}.xml", current_directory)            
                 
                 print("Il file path corrente è:", file_path)
 
