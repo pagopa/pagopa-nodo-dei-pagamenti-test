@@ -3134,6 +3134,9 @@ def step_impl(context, param, value):
         if utils.contiene_carattere_apice(value):
             value = value.replace("'", "''")
 
+        if value == 'empty':
+            value = ''
+
         selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
@@ -3375,42 +3378,31 @@ def step_impl(context):
         db_selected = db_config.get(db_name)
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-        if dbRun == "Postgres":
 
-            # Call the procedure to reset test data for CONFIGURATION_KEYS table
-            print(f"----> RESTORE CONFIGURATION_KEYS...")
-            reset_test_data_query = "select nodo4_cfg.resettestdata();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
-            
-            # Call the procedure to reset test data for CANALI table
-            print(f"----> RESTORE CANALI...")
-            reset_test_data_canali = "select nodo4_cfg.resettestcanali();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
-            
-            # Call the procedure to reset test data for STAZIONI table
-            print(f"----> RESTORE STAZIONI...")
-            reset_test_data_stazioni = "select nodo4_cfg.resetteststazioni();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
-            
-            # Call the procedure to reset test data for PA_STAZIONE_PA table
-            print(f"----> RESTORE PA_STAZIONE_PA...")
-            reset_test_data_pa_stazione_pa = "select nodo4_cfg.resettestpastazionepa();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
-            
-            # Call the procedure to reset test data for CANALI_NODO table
-            print(f"----> RESTORE CANALI_NODO...")
-            reset_test_data_canali_nodo = "select nodo4_cfg.resettestcanalinodo();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+        # Call the procedure to reset test data for CONFIGURATION_KEYS table
+        print(f"----> RESTORE CONFIGURATION_KEYS...")
+        reset_test_data_query = "select resettestdata();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
         
-        elif dbRun == "Oracle":
-            config_dict = getattr(context, 'configurations')
-            update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
-
-            for key, value in config_dict.items():
-
-                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
-                
-                adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        # Call the procedure to reset test data for CANALI table
+        print(f"----> RESTORE CANALI...")
+        reset_test_data_canali = "select resettestcanali();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        
+        # Call the procedure to reset test data for STAZIONI table
+        print(f"----> RESTORE STAZIONI...")
+        reset_test_data_stazioni = "select resetteststazioni();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        
+        # Call the procedure to reset test data for PA_STAZIONE_PA table
+        print(f"----> RESTORE PA_STAZIONE_PA...")
+        reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+        
+        # Call the procedure to reset test data for CANALI_NODO table
+        print(f"----> RESTORE CANALI_NODO...")
+        reset_test_data_canali_nodo = "select resettestcanalinodo();"
+        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
 
         adopted_db.closeConnection(conn)
         
