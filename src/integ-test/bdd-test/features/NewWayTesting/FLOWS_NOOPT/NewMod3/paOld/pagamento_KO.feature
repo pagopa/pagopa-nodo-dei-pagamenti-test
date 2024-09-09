@@ -231,11 +231,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -642,11 +642,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -1054,11 +1054,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
@@ -1465,11 +1465,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -1876,11 +1876,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
@@ -2285,11 +2285,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
@@ -2694,11 +2694,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
@@ -3104,11 +3104,11 @@ Feature: NM3 flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
