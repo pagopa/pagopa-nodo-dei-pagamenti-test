@@ -417,7 +417,7 @@ Feature: NMU flows con PA Old sessione scaduta
 
 
     @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDSESSCAD @NMUPAOLDSESSCAD_2 @after
-    Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione prima della closeV2: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, (scadenza sessione), mod3cancelV1 -> paaInviaRT-, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-6)
+    Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione dopo timeout a notify e prima di spo: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations in timeout (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ- e SPRv2- spo+ con resp KO (NMU-7)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And wait 3 seconds after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
