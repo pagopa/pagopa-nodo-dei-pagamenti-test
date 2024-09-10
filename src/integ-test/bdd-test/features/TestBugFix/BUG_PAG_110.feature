@@ -1,4 +1,4 @@
-Feature: NMU flows PA Old con pagamento OK
+Feature: TEST BUG FIX FOR PAG-110
 
     Background:
         Given systems up
