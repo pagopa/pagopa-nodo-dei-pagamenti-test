@@ -3598,7 +3598,7 @@ def step_impl(context, result_query, type_table, db_name, table_name, columns):
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        # EXECUTE QUERY WITH POLLING SET TO 30 SEC
+        # EXECUTE QUERY WITH POLLING SET TO 60 SEC
         exec_query = utils.query_with_polling(conn, adopted_db, selected_query, 1)
             
         assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
@@ -4534,7 +4534,10 @@ def step_impl(context, table_name, db_name, type_table, number):
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        # EXECUTE QUERY WITH POLLING SET TO 60 SEC
+        exec_query = utils.query_with_polling(conn, adopted_db, selected_query, number)
+            
+        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
 
         print("record query result: ", exec_query)
         assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
