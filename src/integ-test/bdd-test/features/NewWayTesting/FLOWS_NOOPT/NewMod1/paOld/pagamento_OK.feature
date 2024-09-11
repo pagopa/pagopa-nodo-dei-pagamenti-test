@@ -226,7 +226,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -256,7 +256,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -771,7 +771,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -801,7 +801,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -1305,7 +1305,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -1335,7 +1335,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -1840,7 +1840,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -1870,7 +1870,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -2377,7 +2377,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -2407,7 +2407,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -2922,7 +2922,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -2952,7 +2952,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -3456,7 +3456,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -3486,7 +3486,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -3989,7 +3989,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -4019,7 +4019,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -4526,7 +4526,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -4556,7 +4556,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -5069,7 +5069,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -5099,7 +5099,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -5617,7 +5617,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -5647,7 +5647,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -6176,7 +6176,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -6206,7 +6206,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -6735,7 +6735,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -6765,7 +6765,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -7294,7 +7294,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -7324,7 +7324,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -7849,7 +7849,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -7879,7 +7879,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-      | ORDER BY       | ID ASC                                |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
