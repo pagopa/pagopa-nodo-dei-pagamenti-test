@@ -1610,11 +1610,18 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
-        if exec_query != None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
-            print(f"Results found after {sec} seconds!!!")
-            break
+        if size_record_expected == 0:
+            if exec_query is not None and len(exec_query) == size_record_expected:
+                print(f"Results found after {sec} seconds!!!")
+                break
+            else:
+                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
         else:
-            print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+            if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
+                print(f"Results found after {sec} seconds!!!")
+                break
+            else:
+                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
 
         sec += 1
         polling_time -= 1
