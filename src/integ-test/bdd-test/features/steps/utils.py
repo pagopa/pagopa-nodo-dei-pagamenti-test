@@ -1613,11 +1613,11 @@ def query_with_polling(conn, adopted_db, selected_query):
         if exec_query != None and len(exec_query) != 0:
             print(f"Results found after {sec} seconds!!!")
             break
-
-        sec += 0.5
+        
+        sec += 1
         polling_time -= 1
         print(f"{polling_time} seconds left before timeout...")
-        time.sleep(0.5)
+        time.sleep(1)
 
     if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
         print("Polling timed out with no results.")
