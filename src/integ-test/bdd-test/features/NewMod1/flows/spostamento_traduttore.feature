@@ -461,7 +461,7 @@ Feature: spostamento traduttore 954
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
-                "paymentMethod": "CP",
+                "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
                 "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "transactionId": "#transaction_id#",
