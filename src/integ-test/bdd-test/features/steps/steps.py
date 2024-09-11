@@ -2399,7 +2399,6 @@ def step_impl(context, sender, soap_primitive, receiver):
         if dbRun == "Postgres":
             soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
             print(f"run -> si proxy: {getattr(context,'proxies')}")
-
         elif dbRun == "Oracle":
             soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
@@ -3028,8 +3027,10 @@ def step_impl(context, sender, method, service, receiver):
 
             print(f"URL REST: {url_nodo}")
             print(f"Body: {json_body}")
-
-            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+            if dbRun == "Postgres":
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == "Oracle":
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         #RUN DA REMOTO
         else:
             print(f"URL REST: {url_nodo}/{service}")
@@ -3597,7 +3598,11 @@ def step_impl(context, result_query, type_table, db_name, table_name, columns):
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        # EXECUTE QUERY WITH POLLING SET TO 30 SEC
+        exec_query = utils.query_with_polling(conn, adopted_db, selected_query)
+            
+        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
+
         if exec_query is not None:
             print(f'executed query: {exec_query}')
             
@@ -3870,8 +3875,10 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
-        assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
+        # EXECUTE QUERY WITH POLLING SET TO 30 SEC
+        exec_query = utils.query_with_polling(conn, adopted_db, selected_query)
+            
+        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
 
         ###CONVERSIONE STRINGA IN DICT
         dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))

@@ -1598,3 +1598,28 @@ def find_file(filename, search_directory='.'):
     
     # Se il file non è trovato, restituisci None
     return None
+
+
+###METODO PER EFFETTUARE QUERY CON POLLING
+def query_with_polling(conn, adopted_db, selected_query):
+    exec_query = ''
+    polling_time = 30
+    print(f"Polling time set to: {polling_time} seconds")
+    sec = 0
+    while polling_time > 0:
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
+        if exec_query != None and len(exec_query) != 0:
+            print(f"Results found after {sec} seconds!!!")
+            break
+
+        sec += 0.5
+        polling_time -= 1
+        print(f"{polling_time} seconds left before timeout...")
+        time.sleep(0.5)
+
+    if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
+        print("Polling timed out with no results.")
+
+    return exec_query

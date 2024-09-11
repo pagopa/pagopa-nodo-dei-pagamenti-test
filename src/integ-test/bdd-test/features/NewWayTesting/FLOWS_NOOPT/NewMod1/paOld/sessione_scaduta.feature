@@ -493,7 +493,6 @@ Feature: NMU flows con PA Old sessione scaduta
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check description is Payment annullato o scaduto of sendPaymentOutcome response
-        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |

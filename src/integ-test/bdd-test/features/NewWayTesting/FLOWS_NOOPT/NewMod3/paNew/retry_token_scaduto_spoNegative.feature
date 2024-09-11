@@ -49,7 +49,6 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check description is paymentToken is expired on outcome KO of sendPaymentOutcome response
-        And wait 5 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |

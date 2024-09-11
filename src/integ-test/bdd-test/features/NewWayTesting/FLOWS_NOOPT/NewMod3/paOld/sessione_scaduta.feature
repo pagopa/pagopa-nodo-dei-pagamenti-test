@@ -42,7 +42,6 @@ Feature: NM3 flows PA Old sessione scaduta
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -416,7 +415,6 @@ Feature: NM3 flows PA Old sessione scaduta
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
@@ -789,7 +787,6 @@ Feature: NM3 flows PA Old sessione scaduta
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1163,7 +1160,6 @@ Feature: NM3 flows PA Old sessione scaduta
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
@@ -1513,7 +1509,6 @@ Feature: NM3 flows PA Old sessione scaduta
         Then check outcome is OK of activatePaymentNotice response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And wait 5 seconds for expiration
         # POSITION_PAYMENT
         Given generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
@@ -1693,7 +1688,6 @@ Feature: NM3 flows PA Old sessione scaduta
         Then check outcome is OK of activatePaymentNoticeV2 response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        And wait 5 seconds for expiration
         # POSITION_PAYMENT
         Given generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |

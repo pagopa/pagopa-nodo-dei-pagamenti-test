@@ -44,7 +44,6 @@ Feature: NM3 flows PA Old con attivazione fallita
             | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values           |
@@ -377,7 +376,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
         And check description is RPT non attivata of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                             |
@@ -571,7 +569,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is KO of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                           |
@@ -905,7 +902,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 6000 ms delay
         Then check outcome is KO of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                           |
@@ -1239,7 +1235,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -1561,7 +1556,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 6000 ms delay
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -1894,7 +1888,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is KO of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -2228,7 +2221,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 6000 ms delay
         Then check outcome is KO of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -2554,7 +2546,6 @@ Feature: NM3 flows PA Old con attivazione fallita
             | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values           |
@@ -2887,7 +2878,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
         And check description is RPT non attivata of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                               |
@@ -3094,7 +3084,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
@@ -3429,7 +3418,6 @@ Feature: NM3 flows PA Old con attivazione fallita
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 6000 ms delay
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values             |
