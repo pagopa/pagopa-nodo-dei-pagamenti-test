@@ -1601,7 +1601,7 @@ def find_file(filename, search_directory='.'):
 
 
 ###METODO PER EFFETTUARE QUERY CON POLLING
-def query_with_polling(conn, adopted_db, selected_query):
+def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
     exec_query = ''
     polling_time = 60
     print(f"Polling time set to: {polling_time} seconds")
@@ -1610,14 +1610,16 @@ def query_with_polling(conn, adopted_db, selected_query):
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
-        if exec_query != None and len(exec_query) != 0:
+        if exec_query != None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
             print(f"Results found after {sec} seconds!!!")
             break
+        else:
+            print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
 
         sec += 1
         polling_time -= 1
         print(f"{polling_time} seconds left before timeout...")
-        current_timestamp = datetime.now()
+        current_timestamp = datetime.datetime.now()
         print(f"{current_timestamp} current timestamp")
         time.sleep(1)
 

@@ -3599,7 +3599,7 @@ def step_impl(context, result_query, type_table, db_name, table_name, columns):
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
         # EXECUTE QUERY WITH POLLING SET TO 30 SEC
-        exec_query = utils.query_with_polling(conn, adopted_db, selected_query)
+        exec_query = utils.query_with_polling(conn, adopted_db, selected_query, 1)
             
         assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
 
@@ -3875,11 +3875,6 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        # EXECUTE QUERY WITH POLLING SET TO 30 SEC
-        exec_query = utils.query_with_polling(conn, adopted_db, selected_query)
-            
-        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
-
         ###CONVERSIONE STRINGA IN DICT
         dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))
 
@@ -3888,6 +3883,11 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
 
         ###CREAZIONE LIST DI DICT VALUES EXPECTED BY SIZE
         list_dict_fields_values_expected = utils.generate_list_dict_values_exp(list_col_split, size_dict_fields_values_expected, list_values_expected)
+
+        # EXECUTE QUERY WITH POLLING SET TO 60 SEC
+        exec_query = utils.query_with_polling(conn, adopted_db, selected_query, size_dict_fields_values_expected+1)
+            
+        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
        
         ###CREAZIONE LIST DI DICT VALUES OBTAINED
         list_dict_fields_values_obtained = utils.generate_list_dict_values_obt(list_col_split, exec_query)
