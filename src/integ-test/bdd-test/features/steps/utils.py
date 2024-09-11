@@ -1603,7 +1603,7 @@ def find_file(filename, search_directory='.'):
 ###METODO PER EFFETTUARE QUERY CON POLLING
 def query_with_polling(conn, adopted_db, selected_query):
     exec_query = ''
-    polling_time = 30
+    polling_time = 60
     print(f"Polling time set to: {polling_time} seconds")
     sec = 0
     while polling_time > 0:
@@ -1613,10 +1613,12 @@ def query_with_polling(conn, adopted_db, selected_query):
         if exec_query != None and len(exec_query) != 0:
             print(f"Results found after {sec} seconds!!!")
             break
-        
+
         sec += 1
         polling_time -= 1
         print(f"{polling_time} seconds left before timeout...")
+        current_timestamp = datetime.now()
+        print(f"{current_timestamp} current timestamp")
         time.sleep(1)
 
     if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
