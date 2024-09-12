@@ -21579,6 +21579,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check description is RPT non accettabile per retry su Outcome a token scaduto of nodoInviaRPT response
+        And wait 5 seconds for expiration
         # RPT_ACTIVATIONS
         Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |

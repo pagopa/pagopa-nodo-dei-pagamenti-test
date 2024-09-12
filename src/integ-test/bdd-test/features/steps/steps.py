@@ -3334,12 +3334,6 @@ def step_impl(context, job_name, seconds):
         print("Refreshing...")
         refresh_response = None
         if dbRun == "Postgres":
-            # ####RUN DA LOCALE
-            # if user_profile != None:
-            #     print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-            #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
-            # ###RUN DA REMOTO
-            # else:
             print(f"URL refresh: {utils.get_refresh_config_url(context)}")
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
