@@ -3320,7 +3320,7 @@ def step_impl(context, param, value):
 @step("wait {seconds} seconds after triggered refresh job {job_name}")
 def step_impl(context, job_name, seconds):
     try:
-        headers = {'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+        headers = {'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
 
         dbRun = getattr(context, "dbRun")
 
@@ -3363,7 +3363,7 @@ def step_impl(context, job_name, seconds):
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
     try:
-        headers = {'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+        headers = {'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
 
         dbRun = getattr(context, "dbRun")
 
@@ -3377,12 +3377,6 @@ def step_impl(context, job_name):
         print("Refreshing...")
         refresh_response = None
         if dbRun == "Postgres":
-            # ####RUN DA LOCALE
-            # if user_profile != None:
-            #     print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-            #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
-            # ###RUN DA REMOTO
-            # else:
             print(f"URL refresh: {utils.get_refresh_config_url(context)}")
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
