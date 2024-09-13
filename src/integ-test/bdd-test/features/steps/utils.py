@@ -1603,6 +1603,7 @@ def find_file(filename, search_directory='.'):
 ###METODO PER EFFETTUARE QUERY CON POLLING
 def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
     exec_query = ''
+    exec_query_updated = ''
     polling_time = 60
     print(f"Polling time set to: {polling_time} seconds")
     sec = 0
@@ -1618,7 +1619,21 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
                 print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
         else:
             if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
-                print(f"Results found after {sec} seconds!!!")
+                ###CHECK IF THE FIELD OF RECORDS CAN BE UPDATED
+                i = 1
+                print(f"Check per 3 sec se ci sono aggiornamenti nel record")
+                while i <= 3:
+                    print(f"Check {i} aggiornamenti")
+                    exec_query_updated = adopted_db.executeQuery(conn, selected_query)
+
+                    if exec_query_updated != exec_query:
+                        print(f"Record con aggiornamento!!!")
+                        break
+
+                    time.sleep(1)
+                    i += 1
+
+                print(f"Results found after {sec+i} seconds!!!")
                 break
             else:
                 print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
@@ -1633,4 +1648,4 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
     if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
         print("Polling timed out with no results.")
 
-    return exec_query
+    return exec_query_updated
