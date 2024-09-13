@@ -3333,6 +3333,7 @@ def step_impl(context, job_name, seconds):
 
         print("Refreshing...")
         refresh_response = None
+
         if dbRun == "Postgres":
             print(f"URL refresh: {utils.get_refresh_config_url(context)}")
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
@@ -3343,7 +3344,6 @@ def step_impl(context, job_name, seconds):
         setattr(context, job_name + RESPONSE, refresh_response)
         print(f"wait for: {seconds} seconds")
         time.sleep(int(seconds))
-
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
         print("Refresh Completed!")

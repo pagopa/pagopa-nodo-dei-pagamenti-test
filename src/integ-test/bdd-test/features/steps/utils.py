@@ -1622,7 +1622,7 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
                 ###CHECK IF THE FIELD OF RECORDS CAN BE UPDATED
 
                 print(f"Check per 1 sec se ci sono aggiornamenti nel record")
-                time.sleep(1)
+                time.sleep(0.5)
                 
                 exec_query_updated = adopted_db.executeQuery(conn, selected_query)
 
@@ -1645,3 +1645,38 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
         print("Polling timed out with no results.")
 
     return exec_query_updated
+
+
+
+###METODO PER EFFETTUARE QUERY ALLA CAHCE
+def query_new_record_cache(conn, adopted_db):
+    new_record_cache = False
+    
+    wait_time = 15
+    print(f"Wait after refresh set to: {wait_time} seconds")
+    sec = 0
+
+    size_record_expected = 1
+    selected_query = "select * from cache c where c.time > SYSDATE - INTERVAL '10' SECOND ORDER BY TIME desc LIMIT 1"
+
+    while wait_time > 0:
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
+        if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
+            new_record_cache = True
+            print(f"New record found table cache after {sec} seconds!!!")
+            break
+        else:
+            print(f"New record cache search in progress...")
+
+        sec += 1
+        wait_time -= 1
+        print(f"{wait_time} seconds left before timeout...")
+        current_timestamp = datetime.datetime.now()
+        print(f"{current_timestamp} current timestamp")
+        time.sleep(1)
+
+    if wait_time == 0 and (exec_query is None or len(exec_query) == 0):
+        print("Wait timed out with no results.")
+
+    return new_record_cache
