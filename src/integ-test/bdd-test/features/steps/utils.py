@@ -1620,20 +1620,16 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
         else:
             if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
                 ###CHECK IF THE FIELD OF RECORDS CAN BE UPDATED
-                i = 1
-                print(f"Check per 3 sec se ci sono aggiornamenti nel record")
-                while i <= 3:
-                    print(f"Check {i} aggiornamenti")
-                    exec_query_updated = adopted_db.executeQuery(conn, selected_query)
 
-                    if exec_query_updated != exec_query:
-                        print(f"Record con aggiornamento!!!")
-                        break
+                print(f"Check per 1 sec se ci sono aggiornamenti nel record")
+                time.sleep(1)
+                
+                exec_query_updated = adopted_db.executeQuery(conn, selected_query)
 
-                    time.sleep(1)
-                    i += 1
+                if exec_query_updated != exec_query:
+                    print(f"Record con aggiornamento!!!")
 
-                print(f"Results found after {sec+i} seconds!!!")
+                print(f"Results found after {sec+1} seconds!!!")
                 break
             else:
                 print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
