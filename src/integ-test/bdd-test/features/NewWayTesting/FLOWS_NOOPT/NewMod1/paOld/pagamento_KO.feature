@@ -70,6 +70,7 @@ Feature: NMU flows PA Old con pagamento KO
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                        |

@@ -1621,15 +1621,15 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
             if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
                 ###CHECK IF THE FIELD OF RECORDS CAN BE UPDATED
 
-                print(f"Check per 1 sec se ci sono aggiornamenti nel record")
-                time.sleep(0.5)
+                # print(f"Check per 1 sec se ci sono aggiornamenti nel record")
+                # time.sleep(0.5)
                 
-                exec_query_updated = adopted_db.executeQuery(conn, selected_query)
+                # exec_query_updated = adopted_db.executeQuery(conn, selected_query)
 
-                if exec_query_updated != exec_query:
-                    print(f"Record con aggiornamento!!!")
+                # if exec_query_updated != exec_query:
+                #     print(f"Record con aggiornamento!!!")
 
-                print(f"Results found after {sec+1} seconds!!!")
+                print(f"Results found after {sec} seconds!!!")
                 break
             else:
                 print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
@@ -1644,7 +1644,7 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
     if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
         print("Polling timed out with no results.")
 
-    return exec_query_updated
+    return exec_query
 
 
 
@@ -1657,7 +1657,7 @@ def query_new_record_cache(conn, adopted_db):
     sec = 0
 
     size_record_expected = 1
-    selected_query = "select * from cache c where c.time > SYSDATE - INTERVAL '10' SECOND ORDER BY TIME desc LIMIT 1"
+    selected_query = "select * from cache c where c. time > trunc(SYSDATE - interval '10' second) order by TIME desc limit 1"
 
     while wait_time > 0:
         exec_query = adopted_db.executeQuery(conn, selected_query)

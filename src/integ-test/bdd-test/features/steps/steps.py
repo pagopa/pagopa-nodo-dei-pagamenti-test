@@ -3343,7 +3343,18 @@ def step_impl(context, job_name, seconds):
 
         setattr(context, job_name + RESPONSE, refresh_response)
         print(f"wait for: {seconds} seconds")
-        time.sleep(int(seconds))
+        #time.sleep(int(seconds))
+        db_name = "nodo_cfg"
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        new_record_cache = utils.query_new_record_cache(conn, adopted_db)
+
+        adopted_db.closeConnection(conn)
+
+        assert new_record_cache == True, f"New record cache not found!"
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
         print("Refresh Completed!")

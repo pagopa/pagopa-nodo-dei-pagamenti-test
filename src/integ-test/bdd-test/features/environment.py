@@ -247,7 +247,7 @@ def after_scenario(context, scenario):
 
             print("----> AFTER SCENARIO RESTORE COMPLETED")
 
-            adopted_db.closeConnection(conn)
+            #adopted_db.closeConnection(conn)
 
             ##REFRESH
             flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
@@ -271,7 +271,13 @@ def after_scenario(context, scenario):
             elif dbRun == 'Oracle':
                 refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-            time.sleep(3)
+            #time.sleep(3)
+
+
+            new_record_cache = utils.query_new_record_cache(conn, adopted_db)
+            adopted_db.closeConnection(conn)
+            assert new_record_cache == True, f"New record cache not found!"
+
             assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
             print(f"----> REFRESH AFTER SCENARIO COMPLETED!")
 

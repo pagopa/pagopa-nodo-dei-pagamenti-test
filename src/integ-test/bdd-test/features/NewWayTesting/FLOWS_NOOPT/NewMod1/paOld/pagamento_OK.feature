@@ -74,6 +74,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -618,6 +619,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -1151,6 +1153,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -1685,6 +1688,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -2221,6 +2225,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -2765,6 +2770,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -3298,6 +3304,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -3830,6 +3837,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -4366,6 +4374,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -4908,6 +4917,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -5455,6 +5465,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -6013,6 +6024,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -6571,6 +6583,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcomeV2 response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -7129,6 +7142,7 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -7683,6 +7697,7 @@ Feature: NMU flows PA Old con pagamento OK
       | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 1 seconds for expiration
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |

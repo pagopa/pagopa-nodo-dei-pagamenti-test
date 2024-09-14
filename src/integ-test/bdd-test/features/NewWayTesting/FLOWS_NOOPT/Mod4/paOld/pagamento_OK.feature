@@ -67,6 +67,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                        |
@@ -530,6 +531,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | forzaControlloSegno             | 1                                                  |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                        |
@@ -874,6 +876,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And job paInviaRt triggered after 10 seconds
         And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
+        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                        |

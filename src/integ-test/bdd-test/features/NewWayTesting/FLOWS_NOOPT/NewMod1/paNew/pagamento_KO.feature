@@ -137,6 +137,7 @@ Feature: NMU flows con pagamento KO
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
         And check description is Unknown token of v2/closepayment response
+        And wait 1 seconds for expiration
         # POSITION_PAYMENT_STATUS
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -783,6 +784,7 @@ Feature: NMU flows con pagamento KO
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         # POSITION_PAYMENT_STATUS
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -1430,6 +1432,7 @@ Feature: NMU flows con pagamento KO
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
+        And wait 1 seconds for expiration
         # POSITION_PAYMENT_STATUS
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
