@@ -3342,7 +3342,7 @@ def step_impl(context, job_name, seconds):
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
         setattr(context, job_name + RESPONSE, refresh_response)
-        print(f"wait for: {seconds} seconds")
+        #print(f"wait for: {seconds} seconds")
         #time.sleep(int(seconds))
         db_name = "nodo_cfg"
         db_config = context.config.userdata.get("db_configuration")
@@ -3350,7 +3350,7 @@ def step_impl(context, job_name, seconds):
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        new_record_cache = utils.query_new_record_cache(conn, adopted_db)
+        new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
 
         adopted_db.closeConnection(conn)
 

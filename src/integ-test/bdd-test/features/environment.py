@@ -161,7 +161,13 @@ def before_all(context):
         elif dbRun == 'Oracle':
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-        time.sleep(3)
+        #time.sleep(3)
+        
+        #CHECK REFRESH ON DB
+        new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
+        adopted_db.closeConnection(conn)
+        assert new_record_cache == True, f"New record cache not found!"
+        
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
     except Exception as e:
@@ -202,11 +208,9 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     global execute_after_scenario
-
     dbRun = getattr(context, "dbRun")
 
     try:
-
         if execute_after_scenario:
             print(f"----> AFTER SCENARIO RESTORE EXECUTING...")
 
@@ -273,8 +277,8 @@ def after_scenario(context, scenario):
 
             #time.sleep(3)
 
-
-            new_record_cache = utils.query_new_record_cache(conn, adopted_db)
+            #CHECK REFRESH ON DB
+            new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
             adopted_db.closeConnection(conn)
             assert new_record_cache == True, f"New record cache not found!"
 
@@ -401,7 +405,13 @@ def after_all(context):
         elif dbRun == "Oracle":
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-        time.sleep(3)
+        #time.sleep(3)
+
+        #CHECK REFRESH ON DB
+        new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
+        adopted_db.closeConnection(conn)
+        assert new_record_cache == True, f"New record cache not found!"
+
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
         
     except AssertionError as e:

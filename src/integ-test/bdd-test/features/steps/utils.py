@@ -1649,7 +1649,7 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
 
 
 ###METODO PER EFFETTUARE QUERY ALLA CAHCE
-def query_new_record_cache(conn, adopted_db):
+def query_new_record_cache(conn, adopted_db, dbRun):
     new_record_cache = False
     
     wait_time = 15
@@ -1657,7 +1657,12 @@ def query_new_record_cache(conn, adopted_db):
     sec = 0
 
     size_record_expected = 1
-    selected_query = "select * from cache c where c. time > trunc(SYSDATE - interval '10' second) order by TIME desc limit 1"
+    selected_query = ''
+
+    if dbRun == 'Postgres':
+        selected_query = "select * from cache c where c. time > trunc(SYSDATE - interval '10' second) order by TIME desc limit 1"
+    elif dbRun == 'Oracle':
+        selected_query = "select * from cache c where c.time > trunc(SYSDATE - (10 / (24 * 60 * 60))) order by c.time desc fetch first 1 row only"
 
     while wait_time > 0:
         exec_query = adopted_db.executeQuery(conn, selected_query)
