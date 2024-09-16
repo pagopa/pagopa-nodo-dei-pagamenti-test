@@ -3317,8 +3317,8 @@ def step_impl(context, param, value):
         raise e
 
 
-@step("wait {seconds} seconds after triggered refresh job {job_name}")
-def step_impl(context, job_name, seconds):
+@step("waiting after triggered refresh job {job_name}")
+def step_impl(context, job_name):
     try:
         headers = {'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
 
@@ -3342,8 +3342,8 @@ def step_impl(context, job_name, seconds):
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
         setattr(context, job_name + RESPONSE, refresh_response)
-        #print(f"wait for: {seconds} seconds")
-        #time.sleep(int(seconds))
+
+        #CHECK NEW RECORD CACHE AFTER REFRESH
         db_name = "nodo_cfg"
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)

@@ -7,7 +7,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_1 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+  nodoInviaRPT -> paaInviaRT+ (subito, senza job paInviaRT) BIZ+ (NM3-2)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     |
@@ -432,7 +432,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_2 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: verify -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (subito, senza job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-1)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     |
@@ -1254,7 +1254,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_4 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-28)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -2078,7 +2078,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_6 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-30)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -2493,7 +2493,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_7 @after
     Scenario: NM3 flow OK, FLOW con PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-73)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -2537,7 +2537,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -2952,7 +2952,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -3326,7 +3326,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_9 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-12)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -3709,7 +3709,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_10 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ -> paaInviaRT+ BIZ+ (NM3-38)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -4091,7 +4091,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_11 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ -> paaInviaRT+ BIZ+ (NM3-61)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -4397,7 +4397,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_12 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-78)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -4704,7 +4704,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_13 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-93)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -5023,7 +5023,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-96)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -5341,7 +5341,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_15 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-99)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -5386,7 +5386,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -5662,7 +5662,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp2 activate e PSP POSTE vp1 spo: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-100)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -5707,7 +5707,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -5982,7 +5982,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_17 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+ REQ -> lock nodoInviaRPT REQ -> aspetta lock spo+ RESP nodoInviaRPT RESP -> paaInviaRT+ BIZ+ (NM3-105)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -6289,7 +6289,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_18 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT   nodoInviaRPT REQ -> lock spo+ REQ -> aspetta lock nodoInviaRPT RESP spo+ RESP -> paaInviaRT+ BIZ+ (NM3-106)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -7324,7 +7324,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_22 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spoV2+ (NM3-32)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -8024,7 +8024,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -8684,7 +8684,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_26 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spo+ (NM3-75)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -8706,7 +8706,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -9426,7 +9426,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ (tramite job paInviaRT) BIZ+ (NM3-31)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -9823,7 +9823,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spo+  nodoInviaRPT -> paaInviaRT+ (tramite job paInviaRT) BIZ+ (NM3-74)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -9845,7 +9845,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -10221,7 +10221,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_30 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ (tramite job paInviaRT) BIZ+ (NM3-57)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -10243,7 +10243,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -10619,7 +10619,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_31 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate PSP vp2 spo: activate -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-54)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -11030,7 +11030,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_32 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate PSP vp1 spo: activateV2 -> paaAttivaRPT  spo+  nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-71)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -11822,7 +11822,7 @@ Feature: NM3 flows PA Old con pagamento OK
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_34 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate PSP vp2 spo: verify -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spoV2+ -> paaInviaRT+ (subito, senza job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-53)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     |

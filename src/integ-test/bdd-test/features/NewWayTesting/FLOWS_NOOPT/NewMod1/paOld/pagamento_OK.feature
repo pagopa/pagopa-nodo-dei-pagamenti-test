@@ -7,7 +7,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_1 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-8)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -550,7 +550,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_2 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-9)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -610,7 +610,7 @@ Feature: NMU flows PA Old con pagamento OK
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -1086,7 +1086,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_3 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso PPAL, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con paypalPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-10)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -1144,7 +1144,7 @@ Feature: NMU flows PA Old con pagamento OK
       | fee1                  | 2                                             |
       | timestampOperation1   | 2021-07-09T17:06:03                           |
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -1619,7 +1619,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_4 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso BPAY, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-11)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -1679,7 +1679,7 @@ Feature: NMU flows PA Old con pagamento OK
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -2158,7 +2158,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_5 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-12)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -2701,7 +2701,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_6 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-13)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -2761,7 +2761,7 @@ Feature: NMU flows PA Old con pagamento OK
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -3237,7 +3237,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_7 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso PPAL, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-14)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -3295,7 +3295,7 @@ Feature: NMU flows PA Old con pagamento OK
       | fee1                  | 2                                             |
       | timestampOperation1   | 2021-07-09T17:06:03                           |
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -3768,7 +3768,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_8 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso BPAY, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-15)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -3828,7 +3828,7 @@ Feature: NMU flows PA Old con pagamento OK
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
@@ -4307,7 +4307,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_9 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp2 notify PSP vp1 spo, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-16)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -4850,7 +4850,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_10 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp2: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspnotifyV2, spoV2+  -> paaInviaRT+, BIZ+ e SPRv2+ (NMU-20)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -5393,7 +5393,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_11 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1, chiamate parallelo -> spo+ arriva prima della risposta alla notify -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations REQ, spo+ REQ -> attesa lock, pspNotify RESP OK, spo+ RESP OK -> paInviaRT+, BIZ+ (NMU-21)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -5952,7 +5952,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_12 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp2, chiamate parallelo -> spo+ arriva prima della risposta alla notify -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 REQ, spoV2+ REQ -> attesa lock, pspNotifyV2 RESP OK, spoV2+ RESP OK -> paInviaRT+, BIZ+ (NMU-22)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -6511,7 +6511,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_13 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify e PSP vp2 spo, chiamate parallelo -> spo+ arriva prima della risposta alla notify -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations REQ, spoV2+ REQ -> attesa lock, pspNotify RESP OK, spoV2+ RESP OK -> paInviaRT+, BIZ+ (NMU-23)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -7070,7 +7070,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_14 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp2 notify e PSP vp1 spo, chiamate parallelo -> spo+ arriva prima della risposta alla notify -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations REQ, spo+ REQ -> attesa lock, pspNotifyV2 RESP OK, spo+ RESP OK -> paInviaRT+, BIZ+ (NMU-24)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -7629,7 +7629,7 @@ Feature: NMU flows PA Old con pagamento OK
   @ALL @FLOW @FLOW_NOOPT @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_15 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1, chiamate parallelo -> CloseV2 prima di response a RPT -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT REQ, closeV2+ REQ -> non c'è il lock, prosegue solo se è già stata scritta la RPT a DB, nodoInviaRPT RESP, closeV2 RESP -> pspNotify con additionalPaymentInformations, spo+ -> paInviaRT+, BIZ+ e SPR+ (NMU-4)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-    And wait 3 seconds after triggered refresh job ALL
+    And waiting after triggered refresh job ALL
     And from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |

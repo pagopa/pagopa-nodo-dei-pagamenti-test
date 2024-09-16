@@ -1660,7 +1660,7 @@ Feature: TEST INSERT
     Scenario: INSERT - activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> STATI_RPT_SNAPSHOT fare update con RPT_PARCHEGGIATA_NODO_MOD3 --> POSITION_PAYMENT_STATUS_SNAPSHOT fare update con PAYING_RPT --> POSITION_STATUS_SNAPSHOT fare update con PAYING --> mod3CancelV1
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -2346,7 +2346,7 @@ Feature: TEST INSERT
     @ALL @FLOW  @INSERT @INSERT_22 @after
     Scenario: updateRptSnapshotAndDeleteteRetryPaInviaRT - verificare che venga fatta la delete sulla retry_pa_invia_rt e retry_pa_invia_rt_gi
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |

@@ -8,7 +8,7 @@ Feature: NM3 flows PA Old sessione scaduta
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> paaInviaRT- BIZ- (NM3-9)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -382,7 +382,7 @@ Feature: NM3 flows PA Old sessione scaduta
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  nodoInviaRPT -> paaInviaRT- BIZ- (NM3-10)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -755,7 +755,7 @@ Feature: NM3 flows PA Old sessione scaduta
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> paaInviaRT- BIZ- (NM3-35)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -1129,7 +1129,7 @@ Feature: NM3 flows PA Old sessione scaduta
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  nodoInviaRPT -> paaInviaRT- BIZ- (NM3-36)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -1501,7 +1501,7 @@ Feature: NM3 flows PA Old sessione scaduta
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_5 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1 BIZ- (NM3-11)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -1681,7 +1681,7 @@ Feature: NM3 flows PA Old sessione scaduta
     @ALL @FLOW @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_6 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1 BIZ- (NM3-37)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |

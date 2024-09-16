@@ -10,7 +10,7 @@ Feature: TEST BUG FIX FOR PAG-110
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And nodo-dei-pagamenti has config parameter closePaymentV2DenyListTipoVersamento set to empty
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 312#iuv#     |
@@ -512,7 +512,7 @@ Feature: TEST BUG FIX FOR PAG-110
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And nodo-dei-pagamenti has config parameter closePaymentV2DenyListTipoVersamento set to empty
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 312#iuv#     |
@@ -1024,7 +1024,7 @@ Feature: TEST BUG FIX FOR PAG-110
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And nodo-dei-pagamenti has config parameter closePaymentV2DenyListTipoVersamento set to empty
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 312#iuv#     |
@@ -1525,7 +1525,7 @@ Feature: TEST BUG FIX FOR PAG-110
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And nodo-dei-pagamenti has config parameter closePaymentV2DenyListTipoVersamento set to empty
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 312#iuv#     |
@@ -2035,7 +2035,7 @@ Feature: TEST BUG FIX FOR PAG-110
     Scenario: FLOW con PA Old e PSP vp1 BPAY, FLOW: nodoAttivaRPT -> paaAttivaRPT, nodoInviaRPT, close+ -> pspNotifyPayment con BPAY in timeout, mod3CancelV1 -> SPR con outcome KO
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And nodo-dei-pagamenti has config parameter closePaymentV2DenyListTipoVersamento set to empty
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable vertical nodoAttivaRPT_noOptional initial XML nodoAttivaRPT
             | identificativoPSP              | #psp#                        |
             | identificativoIntermediarioPSP | #id_broker_psp#              |

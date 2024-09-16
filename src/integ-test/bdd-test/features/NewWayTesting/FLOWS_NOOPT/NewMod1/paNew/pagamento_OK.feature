@@ -549,7 +549,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1033,7 +1033,7 @@ Feature: NMU flows con PA New pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1515,7 +1515,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -2494,7 +2494,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -2977,7 +2977,7 @@ Feature: NMU flows con PA New pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -3460,7 +3460,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -4444,7 +4444,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -4931,7 +4931,7 @@ Feature: NMU flows con PA New pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -5418,7 +5418,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -6402,7 +6402,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -6887,7 +6887,7 @@ Feature: NMU flows con PA New pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -7374,7 +7374,7 @@ Feature: NMU flows con PA New pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -10606,7 +10606,7 @@ Feature: NMU flows con PA New pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And MB generation MBD_generation with datatable vertical
             | CodiceFiscale | #creditor_institution_code#                  |
             | Denominazione | #psp#                                        |
@@ -11271,7 +11271,7 @@ Feature: NMU flows con PA New pagamento OK
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         Given update parameter station.stand-in on configuration keys with value 66666666666_01
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 25.00  |
@@ -11300,7 +11300,7 @@ Feature: NMU flows con PA New pagamento OK
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv1     | 25.00  |
@@ -12366,7 +12366,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -13465,7 +13465,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -14565,7 +14565,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -15665,7 +15665,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -16769,7 +16769,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -17871,7 +17871,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -18965,7 +18965,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -19555,7 +19555,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -20144,7 +20144,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -20877,7 +20877,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -21611,7 +21611,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -22354,7 +22354,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -23444,7 +23444,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -24528,7 +24528,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -25618,7 +25618,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -26712,7 +26712,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -27798,7 +27798,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -28881,7 +28881,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 347#iuv#     |
@@ -33566,7 +33566,7 @@ Feature: NMU flows con PA New pagamento OK
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And MB generation MBD_generation with datatable vertical
             | CodiceFiscale | #creditor_institution_code#                  |
             | Denominazione | #psp#                                        |
@@ -34718,7 +34718,7 @@ Feature: NMU flows con PA New pagamento OK
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         Given update parameter station.stand-in on configuration keys with value 66666666666_01
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 25.00  |
@@ -34747,7 +34747,7 @@ Feature: NMU flows con PA New pagamento OK
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv1     | 25.00  |

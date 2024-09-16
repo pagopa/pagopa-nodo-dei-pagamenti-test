@@ -3412,7 +3412,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
@@ -4008,7 +4008,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
@@ -7650,7 +7650,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -8302,7 +8302,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -9020,7 +9020,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -9505,7 +9505,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -9996,7 +9996,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -10723,7 +10723,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -11700,7 +11700,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -12679,7 +12679,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_01
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -13164,7 +13164,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
@@ -13648,7 +13648,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -14644,7 +14644,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -15634,7 +15634,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
         And update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |

@@ -10,7 +10,7 @@ Feature: NMU flows con PA Old sessione scaduta
     Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione prima della closeV2: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, (scadenza sessione), mod3cancelV1 -> paaInviaRT-, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-6)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 312#iuv#     |
@@ -422,7 +422,7 @@ Feature: NMU flows con PA Old sessione scaduta
     Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione dopo timeout a notify e prima di spo: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations in timeout (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ- e SPRv2- spo+ con resp KO (NMU-7)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 312#iuv#     |

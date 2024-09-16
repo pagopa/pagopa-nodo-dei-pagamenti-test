@@ -9,7 +9,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spo+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-17)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -416,7 +416,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-19)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -1054,7 +1054,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo- con resp PPT_TOKEN_SCADUTO_KO (NM3-20)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -1474,7 +1474,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-23)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -2023,7 +2023,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activateV2 -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-45)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -2661,7 +2661,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-43)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -3068,7 +3068,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-62)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -3476,7 +3476,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-79)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -3884,7 +3884,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spo- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-18)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -4304,7 +4304,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-44)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -4727,7 +4727,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-21)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -5272,7 +5272,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-47)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -5819,7 +5819,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-64)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -6367,7 +6367,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-81)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -6911,7 +6911,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO (NM3-46)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -7333,7 +7333,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-49)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -7914,7 +7914,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-63)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -8639,7 +8639,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-66)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -9221,7 +9221,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-80)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -9945,7 +9945,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-83)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -10527,7 +10527,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -10576,7 +10576,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -11261,7 +11261,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -11310,7 +11310,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -11998,7 +11998,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -12047,7 +12047,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -12732,7 +12732,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -12781,7 +12781,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -13470,7 +13470,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -13530,7 +13530,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -14214,7 +14214,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -14274,7 +14274,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -14960,7 +14960,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -15020,7 +15020,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -15705,7 +15705,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
@@ -15765,7 +15765,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -16450,7 +16450,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -16499,7 +16499,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -16993,7 +16993,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -17042,7 +17042,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -17538,7 +17538,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -17587,7 +17587,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -18084,7 +18084,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -18133,7 +18133,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 5 seconds for expiration
@@ -18628,7 +18628,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-22)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -19357,7 +19357,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-48)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -20086,7 +20086,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-65)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -20817,7 +20817,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-82)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -21548,7 +21548,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-24)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -22198,7 +22198,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-50)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -22850,7 +22850,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-67)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
@@ -23502,7 +23502,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-84)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And wait 5 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |

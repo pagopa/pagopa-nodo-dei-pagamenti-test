@@ -172,7 +172,7 @@ Feature: Commissioni evolute process 1103
     # sunny day activate
     Scenario: Execute activate 2
         Given update parameter gec.enabled on configuration keys with value true
-        And wait 60 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response

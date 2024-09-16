@@ -160,10 +160,8 @@ def before_all(context):
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == 'Oracle':
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
-
-        #time.sleep(3)
         
-        #CHECK REFRESH ON DB
+        #CHECK NEW RECORD CACHE AFTER REFRESH
         new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
         adopted_db.closeConnection(conn)
         assert new_record_cache == True, f"New record cache not found!"
@@ -275,9 +273,7 @@ def after_scenario(context, scenario):
             elif dbRun == 'Oracle':
                 refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-            #time.sleep(3)
-
-            #CHECK REFRESH ON DB
+            #CHECK NEW RECORD CACHE AFTER REFRESH
             new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
             adopted_db.closeConnection(conn)
             assert new_record_cache == True, f"New record cache not found!"
@@ -405,9 +401,7 @@ def after_all(context):
         elif dbRun == "Oracle":
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-        #time.sleep(3)
-
-        #CHECK REFRESH ON DB
+        #CHECK NEW RECORD CACHE AFTER REFRESH
         new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
         adopted_db.closeConnection(conn)
         assert new_record_cache == True, f"New record cache not found!"

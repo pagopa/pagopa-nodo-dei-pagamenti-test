@@ -10,7 +10,7 @@ Feature: JIRA - PG-108
     Scenario: demandPaymentNotice
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter SERVIZIO_POF = 'POF', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'api.dev.platform.pagopa.it', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
-        And wait 3 seconds after triggered refresh job ALL
+        And waiting after triggered refresh job ALL
         And wait 2 seconds for expiration
         Given from body with datatable horizontal demandPaymentNotice_noOptional initial XML demandPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
