@@ -890,7 +890,7 @@ def step_impl(context, primitive, type_table, filebody):
                 
                 file_json = open(f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
                 
-                print("Il file path corrente è:", file_path)
+                print("Il file path corrente è:", file_json)
             
         data_json = json.load(file_json)
 
