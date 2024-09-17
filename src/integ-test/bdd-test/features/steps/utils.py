@@ -1643,7 +1643,7 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
 def query_new_record_cache(conn, adopted_db, dbRun):
     new_record_cache = False
     
-    wait_time = 15
+    wait_time = 20
     print(f"Wait after refresh set to: {wait_time} seconds")
     sec = 0
 
@@ -1653,7 +1653,7 @@ def query_new_record_cache(conn, adopted_db, dbRun):
     if dbRun == 'Postgres':
         selected_query = "SELECT * FROM cache c WHERE c.time > trunc(SYSDATE - interval '10' second) ORDER BY c.time DESC limit 1"
     elif dbRun == 'Oracle':
-        selected_query = "SELECT * FROM cache c WHERE c.time > (CURRENT_TIMESTAMP - INTERVAL '15' SECOND) ORDER BY c.time DESC"
+        selected_query = "SELECT * FROM cache c WHERE c.time > (CURRENT_TIMESTAMP - INTERVAL '30' SECOND) ORDER BY c.time DESC"
 
     while wait_time > 0:
         exec_query = adopted_db.executeQuery(conn, selected_query)
