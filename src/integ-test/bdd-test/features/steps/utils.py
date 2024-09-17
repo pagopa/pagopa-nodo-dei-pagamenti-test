@@ -1651,9 +1651,9 @@ def query_new_record_cache(conn, adopted_db, dbRun):
     selected_query = ''
 
     if dbRun == 'Postgres':
-        selected_query = "select * from cache c where c. time > trunc(SYSDATE - interval '10' second) order by TIME desc limit 1"
+        selected_query = "SELECT * FROM cache c WHERE c.time > trunc(SYSDATE - interval '10' second) ORDER BY c.time DESC limit 1"
     elif dbRun == 'Oracle':
-        selected_query = "select * from cache c where c.time > trunc(SYSDATE - (10 / (24 * 60 * 60))) order by c.time desc fetch first 1 row only"
+        selected_query = "SELECT * FROM cache c WHERE c.time >= (CURRENT_TIMESTAMP - INTERVAL '10' SECOND) ORDER BY c.time DESC;"
 
     while wait_time > 0:
         exec_query = adopted_db.executeQuery(conn, selected_query)
