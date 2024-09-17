@@ -4028,9 +4028,13 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
        
-        if value == 'None':
-            print('Check value None')
-            assert query_result[0] == None, f"assert result query with None for Failed!"
+        if value == 'None':  
+            if dbRun == 'Postgres':
+                print('Check value None for Postgres')
+                assert query_result[0] == '', f"assert result query with None for Failed!"
+            elif dbRun == 'Oracle':
+                print('Check value None for Oracle')
+                assert query_result[0] == None, f"assert result query with None for Failed!"
         elif value == 'NotNone':
             print('Check value NotNone')
             assert query_result[0] != None, f"assert result query with Not None Failed!"
