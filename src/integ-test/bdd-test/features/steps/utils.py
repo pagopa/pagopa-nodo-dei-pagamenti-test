@@ -1644,7 +1644,7 @@ def query_new_record_cache(conn, adopted_db, dbRun):
     new_record_cache = False
     
     wait_time = 20
-    print(f"Wait after refresh set to: {wait_time} seconds")
+    print(f"Timeout new record refresh set to: {wait_time} seconds")
     sec = 0
 
     size_record_expected = 1
