@@ -4031,7 +4031,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         if value == 'None':  
             if dbRun == 'Postgres':
                 print('Check value None for Postgres')
-                assert query_result[0] == '', f"assert result query with None for Failed!"
+                if query_result[0] == None:
+                    assert query_result[0] == None, f"assert result query with None for Failed!"
+                elif query_result[0] == '':
+                    assert query_result[0] == '', f"assert result query with None for Failed!"
             elif dbRun == 'Oracle':
                 print('Check value None for Oracle')
                 assert query_result[0] == None, f"assert result query with None for Failed!"
