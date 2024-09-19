@@ -918,7 +918,7 @@ Feature: flow tests for sendPaymentResultV2 953
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test @prova
     Scenario: T_SPR_V2_21 (part 2)
         Given the T_SPR_V2_21 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds

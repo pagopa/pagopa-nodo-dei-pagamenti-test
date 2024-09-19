@@ -5893,3 +5893,67 @@ def step_impl(context):
 
 
 
+
+@then(u'validating xml response {primitive_resp} by xsd {xsd}')
+def step_impl(context, primitive_resp, xsd):
+
+    from lxml import etree
+
+    try:
+        # Decode xml response
+        decode_xml = b64.b64decode(primitive_resp)
+
+        # Read xsd file
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
+            file_path = f"src/integ-test/bdd-test/resources/xsd/{xsd}.xsd"
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XSD da locale
+                file_path = f"src/integ-test/bdd-test/resources/xsd/{xsd}.xsd"
+            ###RUN DA REMOTO
+            else:      
+                current_directory = os.getcwd()
+                
+                substring_current_directory = ""
+                
+                substring_current_directory = current_directory[:-2]
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xsd/{xsd}.xsd"             
+                
+                print("Il file path corrente è:", file_path)
+
+        # Carica lo schema XSD
+        with open(file_path, 'r') as schema_file:
+            schema_root = etree.parse(schema_file)
+            schema = etree.XMLSchema(schema_root)
+
+        # Carica l'XML da validare
+        xml_doc = etree.parse(decode_xml)
+
+        assert schema.validate(xml_doc) == True, f"Errore nella validazione dell'XML {primitive_resp}"
+
+        print(f"Validazione xml {xml_doc} OK!")
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
