@@ -5900,8 +5900,14 @@ def step_impl(context, primitive_resp, xsd):
     from lxml import etree
 
     try:
+        xml_resp = getattr(context, primitive_resp)
+        xml_document = parseString(xml_resp.content)
+        xmlCatalogoServizi = xml_document.getElementsByTagName('xmlCatalogoServizi')[0].firstChild.data
+
         # Decode xml response
-        decode_xml = b64.b64decode(primitive_resp)
+        decode_xml = b64.b64decode(xmlCatalogoServizi)
+
+        xml_resp_decoded = decode_xml.decode('utf-8')
 
         # Read xsd file
         file_path = ''
@@ -5941,9 +5947,10 @@ def step_impl(context, primitive_resp, xsd):
             schema = etree.XMLSchema(schema_root)
 
         # Carica l'XML da validare
-        xml_doc = etree.parse(decode_xml)
+        xml_doc = etree.fromstring(xml_resp_decoded.split('?>', 1)[-1])
 
-        assert schema.validate(xml_doc) == True, f"Errore nella validazione dell'XML {primitive_resp}"
+        validate = schema.validate(xml_doc)
+        assert validate == True, f"{', '.join([f'Errore di validazione: {error.message}, Riga: {error.line}, Colonna: {error.column}' for error in schema.error_log])}"
 
         print(f"Validazione xml {xml_doc} OK!")
 
