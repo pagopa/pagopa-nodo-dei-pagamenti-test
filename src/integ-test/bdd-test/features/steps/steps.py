@@ -24,6 +24,8 @@ import utils as utils
 from behave import *
 from requests.exceptions import RetryError
 
+from lxml import etree
+
 try:
     import cx_Oracle
 except ModuleNotFoundError:
@@ -5896,9 +5898,6 @@ def step_impl(context):
 
 @then(u'validating xml response {primitive_resp} by xsd {xsd}')
 def step_impl(context, primitive_resp, xsd):
-
-    from lxml import etree
-
     try:
         xml_resp = getattr(context, primitive_resp)
         xml_document = parseString(xml_resp.content)

@@ -230,6 +230,7 @@ stages:
               sudo pip3 install cx-Oracle
               sudo pip3 install xmltodict
               sudo pip3 install python-dotenv
+              sudo pip3 install lxml
               echo python version
               python3 -V
               whereis behave
