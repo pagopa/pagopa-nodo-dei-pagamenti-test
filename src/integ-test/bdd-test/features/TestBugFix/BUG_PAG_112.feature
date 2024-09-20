@@ -6,7 +6,7 @@ Feature: TEST BUG FIX FOR PAG-112
 
 
 
-    @ALL @PAG_112 @PAG_112_1 @after
+    @ALL @PAG_112 @PAG_112_1
     Scenario: NM4 flow KO, FLOW con PA New vp1: nodoChiediCatalogoServiziV2 check validation XSD
         Given from body with datatable horizontal nodoChiediCatalogoServiziV2_noOptional initial XML nodoChiediCatalogoServiziV2
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   |
