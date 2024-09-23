@@ -53,7 +53,7 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
 
 
 
-def execute_read_query(connection, query):
+def execute_read_query(context, connection, query):
     print(f' Executing query [{query}] on PostgresDB instance...')
     cursor = connection.cursor()
     result = None
@@ -77,8 +77,8 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' occurred")
 
 # wrapper    
-def executeQuery(conn, query:str, as_dict:bool = False) -> list:
-    return execute_read_query(conn, query)
+def executeQuery(context, conn, query:str, as_dict:bool = False) -> list:
+    return execute_read_query(context, conn, query)
 
 
 def closeConnection_old(conn) -> None:

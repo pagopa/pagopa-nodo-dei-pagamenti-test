@@ -32,11 +32,26 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
 #         print(f"The error '{e}' occurred")
 
 
-def executeQuery(conn, query:str, as_dict:bool = False) -> list:
+def executeQuery(context, conn, query:str, as_dict:bool = False) -> list:
     print(f' Executing query [{query}] on genericQuery service...')
     try:
         print('executing_sql_query ...')
-        headers = {'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print(f"User Profile: {user_profile} ->>> local run!")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+
+        ####RUN DA LOCALE
+        if user_profile != None:
+            SUBKEY = os.getenv('SUBKEY')
+        ####RUN DA REMOTO   
+        else:
+            SUBKEY = context.config.userdata.get("env").get("SUBKEY")
+
+        headers = {'Ocp-Apim-Subscription-Key': SUBKEY}
 
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
         print(f">>>>>>>>>>>>>>db operation apicfg URL {url}")

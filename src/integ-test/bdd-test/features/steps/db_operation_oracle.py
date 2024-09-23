@@ -29,7 +29,7 @@ def closeConnection(conn) -> None:
         traceback.print_exc() 
 
 
-def executeQuery(conn, query:str, as_dict:bool = False) -> list:
+def executeQuery(context, conn, query:str, as_dict:bool = False) -> list:
     print(f' Executing query [{query}] on OracleDB instance...')
     try:        
         cur = conn.cursor()

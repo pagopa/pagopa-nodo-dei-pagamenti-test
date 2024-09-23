@@ -3228,7 +3228,7 @@ def step_impl(context, param, value):
         setattr(context, param, value)
         print(">>>>>>>>>>>>>>>", getattr(context, param))
 
-        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
         if exec_query is not None:
             print(f'executed query: {exec_query}')
 
@@ -3301,7 +3301,7 @@ def step_impl(context, param, value):
         setattr(context, param, value)
         print(">>>>>>>>>>>>>>>", getattr(context, param))
 
-        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
         if exec_query is not None:
             print(f'executed query: {exec_query}')
 
@@ -3448,7 +3448,7 @@ def step_impl(context, query_name, date, macro, db_name):
     selected_query = utils.query_json(context, query_name, macro).replace('date', date)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
     adopted_db.closeConnection(conn)
     
     
@@ -3465,27 +3465,27 @@ def step_impl(context):
         # Call the procedure to reset test data for CONFIGURATION_KEYS table
         print(f"----> RESTORE CONFIGURATION_KEYS...")
         reset_test_data_query = "select resettestdata();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
         
         # Call the procedure to reset test data for CANALI table
         print(f"----> RESTORE CANALI...")
         reset_test_data_canali = "select resettestcanali();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
         
         # Call the procedure to reset test data for STAZIONI table
         print(f"----> RESTORE STAZIONI...")
         reset_test_data_stazioni = "select resetteststazioni();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
         
         # Call the procedure to reset test data for PA_STAZIONE_PA table
         print(f"----> RESTORE PA_STAZIONE_PA...")
         reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
         
         # Call the procedure to reset test data for CANALI_NODO table
         print(f"----> RESTORE CANALI_NODO...")
         reset_test_data_canali_nodo = "select resettestcanalinodo();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
 
         adopted_db.closeConnection(conn)
         
@@ -3542,7 +3542,7 @@ def step_impl(context):
 
         selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
         
-        adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
 
     adopted_db.closeConnection(conn)
 
@@ -3635,7 +3635,7 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
         if exec_query is not None:
             print(f'executed query: {exec_query}')
             
@@ -3967,7 +3967,7 @@ def step_impl(context, value, column, table_name, db_name, type_table):
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4025,7 +4025,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4106,7 +4106,7 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     selected_query = utils.replace_global_variables(selected_query, context)
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
@@ -4121,7 +4121,7 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
     adopted_db.closeConnection(conn)
 
 
@@ -4139,7 +4139,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
         selected_query = utils.replace_context_variables(selected_query, context)
         selected_query = utils.replace_global_variables(selected_query, context)
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
         adopted_db.closeConnection(conn)
 
     except AssertionError as e:
@@ -4169,7 +4169,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
  
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4187,7 +4187,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4203,7 +4203,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4216,7 +4216,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4231,7 +4231,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4245,7 +4245,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4273,7 +4273,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4292,7 +4292,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4306,7 +4306,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4322,7 +4322,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4337,7 +4337,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -4382,7 +4382,7 @@ def step_impl(context, query_name, table_name, row_keys_fields, row_values_field
         row_values_fields = utils.replace_context_variables(row_values_fields, context)
    
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
         adopted_db.closeConnection(conn)
         
     except AssertionError as e:
@@ -4405,7 +4405,7 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
@@ -4437,7 +4437,7 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
         selected_query = utils.replace_context_variables(selected_query, context)
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
         adopted_db.closeConnection(conn)
 
     except AssertionError as e:
@@ -4463,7 +4463,7 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
     adopted_db.closeConnection(conn)
 
 
@@ -4479,7 +4479,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -4511,7 +4511,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -4574,7 +4574,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         print("record query result: ", exec_query)
         assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
@@ -4603,7 +4603,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         print("record query result: ", exec_query)
         assert len(exec_query) > 0, f"{len(exec_query)}"
@@ -4627,10 +4627,8 @@ def step_impl(context, condition, param):
     db_selected = db_config.get(db_name)
     adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace(
-        'columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
-    token_valid_from, token_valid_to = adopted_db.executeQuery(
-        nodo_online_conn, token_validity_query)[0]
+    token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace('columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
+    token_valid_from, token_valid_to = adopted_db.executeQuery(context, nodo_online_conn, token_validity_query)[0]
     adopted_db.closeConnection(nodo_online_conn)
 
     print(token_valid_to)
@@ -5013,19 +5011,19 @@ def step_impl(context):
     query3_replaced = utils.replace_local_variables(query3, context)
     query4_replaced = utils.replace_local_variables(query4, context)
 
-    rpt_id_row = adopted_db.executeQuery(conn, query_payment_replaced)
-    service_row = adopted_db.executeQuery(conn, query_service_replaced)
-    transfer_row = adopted_db.executeQuery(conn, query_transfer_replaced)
-    rpt = adopted_db.executeQuery(conn, query1_replaced)
-    plan = adopted_db.executeQuery(conn, query2_replaced)
-    act = adopted_db.executeQuery(conn, query3_replaced)
-    vers = adopted_db.executeQuery(conn, query4_replaced)
+    rpt_id_row = adopted_db.executeQuery(context, conn, query_payment_replaced)
+    service_row = adopted_db.executeQuery(context, conn, query_service_replaced)
+    transfer_row = adopted_db.executeQuery(context, conn, query_transfer_replaced)
+    rpt = adopted_db.executeQuery(context, conn, query1_replaced)
+    plan = adopted_db.executeQuery(context, conn, query2_replaced)
+    act = adopted_db.executeQuery(context, conn, query3_replaced)
+    vers = adopted_db.executeQuery(context, conn, query4_replaced)
 
     debtor_id = service_row[0][0]
     print(debtor_id)
 
     query_debtor = f"SELECT ID, ENTITY_UNIQUE_IDENTIFIER_VALUE FROM POSITION_SUBJECT WHERE ID = '{debtor_id}'"
-    debtor_row = adopted_db.executeQuery(conn, query_debtor)
+    debtor_row = adopted_db.executeQuery(context, conn, query_debtor)
 
     adopted_db.closeConnection(conn)
 
@@ -5237,10 +5235,10 @@ def step_impl(context):
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
-    rows = adopted_db.executeQuery(conn, query)
-    rows1 = adopted_db.executeQuery(conn, query1)
-    rows2 = adopted_db.executeQuery(conn, query2)
-    rows4 = adopted_db.executeQuery(conn, query4)
+    rows = adopted_db.executeQuery(context, conn, query)
+    rows1 = adopted_db.executeQuery(context, conn, query1)
+    rows2 = adopted_db.executeQuery(context, conn, query2)
+    rows4 = adopted_db.executeQuery(context, conn, query4)
 
     adopted_db.closeConnection(conn)
 
@@ -5249,7 +5247,7 @@ def step_impl(context):
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
-    rows3 = adopted_db.executeQuery(conn, query3)
+    rows3 = adopted_db.executeQuery(context, conn, query3)
 
     adopted_db.closeConnection(conn)
 
@@ -5297,17 +5295,17 @@ def step_impl(context):
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     XML = utils.replace_local_variables(XML, context)
-    xml_rows = adopted_db.executeQuery(conn, XML)
+    xml_rows = adopted_db.executeQuery(context, conn, XML)
     query = utils.replace_local_variables(query, context)
-    rows = adopted_db.executeQuery(conn, query)
+    rows = adopted_db.executeQuery(context, conn, query)
     query1 = utils.replace_local_variables(query1, context)
-    rows1 = adopted_db.executeQuery(conn, query1)
+    rows1 = adopted_db.executeQuery(context, conn, query1)
     query2 = utils.replace_local_variables(query2, context)
-    rows2 = adopted_db.executeQuery(conn, query2)
+    rows2 = adopted_db.executeQuery(context, conn, query2)
     query3 = utils.replace_local_variables(query3, context)
-    rows3 = adopted_db.executeQuery(conn, query3)
+    rows3 = adopted_db.executeQuery(context, conn, query3)
     query4 = utils.replace_local_variables(query4, context)
-    rows4 = adopted_db.executeQuery(conn, query4)
+    rows4 = adopted_db.executeQuery(context, conn, query4)
     
     xml_rpt = ''
     if dbRun == "Postgres":
@@ -5358,7 +5356,7 @@ def step_impl(context):
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
     query5 = utils.replace_local_variables(query5, context)
-    rows5 = adopted_db.executeQuery(conn, query5)
+    rows5 = adopted_db.executeQuery(context, conn, query5)
 
     adopted_db.closeConnection(conn)
 
@@ -5590,7 +5588,7 @@ def step_impl(context, causaleVers):
     xml_content_query = utils.replace_local_variables(xml_content_query, context)
     xml_content_query = utils.replace_context_variables(xml_content_query, context)
 
-    xml_content_row = adopted_db.executeQuery(conn, xml_content_query)
+    xml_content_row = adopted_db.executeQuery(context, conn, xml_content_query)
     
     xml_rt = ''
     if dbRun == "Postgres":
@@ -5612,7 +5610,7 @@ def step_impl(context, causaleVers):
     query_update = utils.replace_local_variables(query_update, context)
     query_update = utils.replace_context_variables(query_update, context)
 
-    adopted_db.executeQuery(conn, query_update)
+    adopted_db.executeQuery(context, conn, query_update)
 
     adopted_db.closeConnection(conn)
 
@@ -5718,7 +5716,7 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
     print('#############', exec_query)
 
     query_result = [t[0] for t in exec_query]
@@ -5753,7 +5751,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -5762,7 +5760,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
 
     i = 0
     while i <= 50:
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
         nuova_modifica = exec_query[0][0]
 
         if nuova_modifica != ultima_modifica:
@@ -5797,7 +5795,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     ###(metto il maggiore in modo che se ci sono più stati dopo li visualizzo tutti)
     i = 0
     while i <= 10:
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         #nuova_modifica = exec_query [0][0]
@@ -5856,7 +5854,7 @@ def step_impl(context, query_name, db_name):
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        exec_query = adopted_db.executeQuery(conn, query)
+        exec_query = adopted_db.executeQuery(context, conn, query)
 
         if len(exec_query) == 1:
             rowExpected = row
