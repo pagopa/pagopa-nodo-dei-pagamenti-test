@@ -33,7 +33,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome 
 
   # Payment Phase
   Scenario: Execute nodoChiediInformazioniPagamento request
-    Given the Execute activateIOPayment scenario executed successfully
+    Given the Execute activateIOPayment request scenario executed successfully
     When WISP/PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
