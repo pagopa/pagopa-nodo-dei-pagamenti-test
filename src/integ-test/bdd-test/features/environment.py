@@ -103,33 +103,33 @@ def before_all(context):
         # Call the procedure to reset test data for CONFIGURATION_KEYS table
         print(f"----> SET CONFIGURATION_KEYS...")
         reset_test_data_query = "select resettestdata();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
         
         # Call the procedure to reset test data for CANALI table
         print(f"----> SET CANALI...")
         reset_test_data_canali = "select resettestcanali();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
         
         # Call the procedure to reset test data for STAZIONI table
         print(f"----> SET STAZIONI...")
         reset_test_data_stazioni = "select resetteststazioni();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
         
         # Call the procedure to reset test data for PA_STAZIONE_PA table
         print(f"----> SET PA_STAZIONE_PA...")
         reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
         
         # Call the procedure to reset test data for CANALI_NODO table
         print(f"----> SET CANALI_NODO...")
         reset_test_data_canali_nodo = "select resettestcanalinodo();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)             
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)             
 
         adopted_db.closeConnection(conn)
     
         selected_query = utils.query_json(context, 'select_config', 'configurations')
         adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
-        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
 
         adopted_db.closeConnection(conn)
 
@@ -225,27 +225,27 @@ def after_scenario(context, scenario):
             # Call the procedure to reset test data for CONFIGURATION_KEYS table
             print(f"----> RESTORE CONFIGURATION_KEYS...")
             reset_test_data_query = "select resettestdata();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
             
             # Call the procedure to reset test data for CANALI table
             print(f"----> RESTORE CANALI...")
             reset_test_data_canali = "select resettestcanali();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
             
             # Call the procedure to reset test data for STAZIONI table
             print(f"----> RESTORE STAZIONI...")
             reset_test_data_stazioni = "select resetteststazioni();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
             
             # Call the procedure to reset test data for PA_STAZIONE_PA table
             print(f"----> RESTORE PA_STAZIONE_PA...")
             reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
             
             # Call the procedure to reset test data for CANALI_NODO table
             print(f"----> RESTORE CANALI_NODO...")
             reset_test_data_canali_nodo = "select resettestcanalinodo();"
-            exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
 
             print("----> AFTER SCENARIO RESTORE COMPLETED")
 
@@ -356,27 +356,27 @@ def after_all(context):
         # Call the procedure to reset test data for CONFIGURATION_KEYS table
         print(f"----> RESTORE CONFIGURATION_KEYS...")
         reset_test_data_query = "select resettestdata();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_query)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
         
         # Call the procedure to reset test data for CANALI table
         print(f"----> RESTORE CANALI...")
         reset_test_data_canali = "select resettestcanali();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
         
         # Call the procedure to reset test data for STAZIONI table
         print(f"----> RESTORE STAZIONI...")
         reset_test_data_stazioni = "select resetteststazioni();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_stazioni)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
         
         # Call the procedure to reset test data for PA_STAZIONE_PA table
         print(f"----> RESTORE PA_STAZIONE_PA...")
         reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_pa_stazione_pa)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
         
         # Call the procedure to reset test data for CANALI_NODO table
         print(f"----> RESTORE CANALI_NODO...")
         reset_test_data_canali_nodo = "select resettestcanalinodo();"
-        exec_query = adopted_db.executeQuery(conn, reset_test_data_canali_nodo)
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
 
         adopted_db.closeConnection(conn)
         

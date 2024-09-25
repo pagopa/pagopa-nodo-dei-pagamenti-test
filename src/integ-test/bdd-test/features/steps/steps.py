@@ -3352,7 +3352,7 @@ def step_impl(context, job_name):
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        new_record_cache = utils.query_new_record_cache(conn, adopted_db, dbRun)
+        new_record_cache = utils.query_new_record_cache(context, conn, adopted_db, dbRun)
 
         adopted_db.closeConnection(conn)
 
@@ -3565,12 +3565,6 @@ def step_impl(context):
 
     refresh_response = None
     if dbRun == "Postgres":
-        # ####RUN DA LOCALE
-        # if user_profile != None:
-        #     print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
-        # ###RUN DA REMOTO
-        # else:
         print(f"URL refresh: {utils.get_refresh_config_url(context)}")
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     if dbRun == "Oracle":
@@ -3600,7 +3594,7 @@ def step_impl(context, result_query, type_table, db_name, table_name, columns):
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
         # EXECUTE QUERY WITH POLLING SET TO 60 SEC
-        exec_query = utils.query_with_polling(conn, adopted_db, selected_query, 1)
+        exec_query = utils.query_with_polling(context, conn, adopted_db, selected_query, 1)
             
         assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
 
@@ -3886,7 +3880,7 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         list_dict_fields_values_expected = utils.generate_list_dict_values_exp(list_col_split, size_dict_fields_values_expected, list_values_expected)
 
         # EXECUTE QUERY WITH POLLING SET TO 60 SEC
-        exec_query = utils.query_with_polling(conn, adopted_db, selected_query, size_dict_fields_values_expected+1)
+        exec_query = utils.query_with_polling(context, conn, adopted_db, selected_query, size_dict_fields_values_expected+1)
             
         assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
        
@@ -4543,7 +4537,7 @@ def step_impl(context, table_name, db_name, type_table, number):
         selected_query = utils.replace_context_variables(selected_query, context)
 
         # EXECUTE QUERY WITH POLLING SET TO 60 SEC
-        exec_query = utils.query_with_polling(conn, adopted_db, selected_query, number)
+        exec_query = utils.query_with_polling(context, conn, adopted_db, selected_query, number)
 
         print("record query result: ", exec_query)
         assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"

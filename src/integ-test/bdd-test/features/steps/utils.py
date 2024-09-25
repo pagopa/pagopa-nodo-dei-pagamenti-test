@@ -641,7 +641,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
 
             adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-            exec_query = adopted_db.executeQuery(conn, select_get_token)
+            exec_query = adopted_db.executeQuery(context, conn, select_get_token)
             assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
 
             payment_token = exec_query[0][0]
@@ -824,7 +824,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
             adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-            exec_query = adopted_db.executeQuery(conn, select_get_token)
+            exec_query = adopted_db.executeQuery(context, conn, select_get_token)
             assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
 
             payment_token = exec_query[0][0]
@@ -840,7 +840,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
             adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-            exec_query = adopted_db.executeQuery(conn, update_query)
+            exec_query = adopted_db.executeQuery(context, conn, update_query)
 
             payload_b = bytes(payload_support, 'UTF-8')
             payload_uni = b64.b64encode(payload_b)
@@ -1601,7 +1601,7 @@ def find_file(filename, search_directory='.'):
 
 
 ###METODO PER EFFETTUARE QUERY CON POLLING
-def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
+def query_with_polling(context, conn, adopted_db, selected_query, size_record_expected):
     exec_query = ''
     exec_query_updated = ''
     polling_time = 60
@@ -1609,7 +1609,7 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
     sec = 0
     while polling_time > 0:
 
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         if size_record_expected == 0:
             if exec_query is not None and len(exec_query) == size_record_expected:
@@ -1640,7 +1640,7 @@ def query_with_polling(conn, adopted_db, selected_query, size_record_expected):
 
 
 ###METODO PER EFFETTUARE QUERY ALLA CAHCE
-def query_new_record_cache(conn, adopted_db, dbRun):
+def query_new_record_cache(context, conn, adopted_db, dbRun):
     new_record_cache = False
     
     wait_time = 20
@@ -1656,7 +1656,7 @@ def query_new_record_cache(conn, adopted_db, dbRun):
         selected_query = "SELECT * FROM cache c WHERE c.time > (CURRENT_TIMESTAMP - INTERVAL '30' SECOND) ORDER BY c.time DESC limit 1"
 
     while wait_time > 0:
-        exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
 
         if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
             new_record_cache = True
