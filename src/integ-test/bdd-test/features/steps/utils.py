@@ -1651,7 +1651,7 @@ def query_new_record_cache(context, conn, adopted_db, dbRun):
     selected_query = ''
 
     if dbRun == 'Postgres':
-        selected_query = "SELECT * FROM cache c WHERE c.time > trunc(SYSDATE - interval '10' second) ORDER BY c.time DESC limit 1"
+        selected_query = "SELECT * FROM cache c WHERE c.time > (SYSDATE - interval '10' second) ORDER BY c.time DESC limit 1"
     elif dbRun == 'Oracle':
         selected_query = "SELECT * FROM cache c WHERE c.time > (CURRENT_TIMESTAMP - INTERVAL '30' SECOND) ORDER BY c.time DESC limit 1"
 
