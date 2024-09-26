@@ -58,7 +58,7 @@ def executeQuery(context, conn, query:str, as_dict:bool = False) -> list:
         response = requests.post(url, data=query, headers=headers)
         assert response.status_code == 200, f"Error status code db operation apicfg RESPONSE is {response.status_code}"
 
-        if 'select * from cache' not in query.lower():
+        if 'select * from cache' not in query.lower() and 'from CONFIGURATION_KEYS' not in query:
             print(f">>>>>>>>>>>>>>db operation apicfg RESPONSE {response.json()}")
             
         if as_dict:
