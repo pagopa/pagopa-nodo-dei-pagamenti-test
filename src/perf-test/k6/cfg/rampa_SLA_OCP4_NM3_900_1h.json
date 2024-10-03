@@ -1,0 +1,14 @@
+[{
+"Endpoint": "10.79.20.32",
+"Port": 80,
+"SSL": "http",
+
+"MaxThread": 1,
+"TolTh": 110,
+"TOTAL_TIME":110,
+
+"tu": "20s",
+"Scalino_CT_1": 900,
+"Scalino_CT_TIME_1": 3600
+}
+]
