@@ -1405,7 +1405,7 @@ Feature: flow tests for paSendRTV2 1115
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @company
+
     Scenario: PSRTV2_ACTV1_14 (part 2)
         Given the PSRTV2_ACTV1_14 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1438,7 +1438,7 @@ Feature: flow tests for paSendRTV2 1115
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @company
+
     Scenario: PSRTV2_ACTV1_15 (part 2)
         Given the PSRTV2_ACTV1_15 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1472,7 +1472,7 @@ Feature: flow tests for paSendRTV2 1115
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @company
+
     Scenario: PSRTV2_ACTV1_16 (part 2)
         Given the PSRTV2_ACTV1_16 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
@@ -1505,7 +1505,7 @@ Feature: flow tests for paSendRTV2 1115
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @company
+
     Scenario: PSRTV2_ACTV1_17 (part 2)
         Given the PSRTV2_ACTV1_17 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 6 seconds
@@ -1537,7 +1537,7 @@ Feature: flow tests for paSendRTV2 1115
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @company
+
     Scenario: PSRTV2_ACTV1_18 (part 2)
         Given the PSRTV2_ACTV1_18 (part 1) scenario executed successfully
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
