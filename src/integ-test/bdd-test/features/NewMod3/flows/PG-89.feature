@@ -110,7 +110,7 @@ Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza 
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     @runnable
-    Scenario: second activatePaymentNoticeV2 request
+    Scenario: second activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -315,7 +315,7 @@ Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza 
 
 
     @runnable
-    Scenario: fourth activatePaymentNoticeV2 request
+    Scenario: fourth activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
