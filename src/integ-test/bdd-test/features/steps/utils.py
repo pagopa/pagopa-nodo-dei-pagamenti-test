@@ -530,7 +530,7 @@ def replace_global_variables(payload, context):
 def get_history(context, rest_mock, notice_number, primitive):
     s = requests.Session()
     response = requests_retry_session(session=s).get(
-        f"{rest_mock}/history/{notice_number}/{primitive}", proxies = getattr(context,'proxies'))
+        f"{rest_mock}/history/{notice_number}/{primitive}")
     return response.json(), response.status_code
 
 
@@ -666,11 +666,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         header_host = estrapola_header_host(url_nodo)
         headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         
-        get_response = ''
-        if dbRun == "Postgres":
-            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        elif dbRun == "Oracle":
-            get_response = requests.get(url_nodo, headers=headers, verify=False)
+        get_response = requests.get(url_nodo, headers=headers, verify=False)
 
         setattr(context, primitive + "Response", get_response)
         
@@ -696,10 +692,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             print(f"primitive: {primitive} ---> body: {body}")
 
-            if dbRun == "Postgres": 
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oracle':
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             if '<' in body: 
                 body = xmltodict.parse(body)
@@ -740,10 +733,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")} 
 
-            if dbRun == "Postgres": 
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oracle':
-                response = requests.post(url_nodo, body, headers=headers, verify=False)            
+            response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
         setattr(context, primitive + "Response", response)
         print("response: ", response.content)
@@ -860,11 +850,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         header_host = estrapola_header_host(url_nodo)
         headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         
-        get_response = ''
-        if dbRun == "Postgres": 
-            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        elif dbRun == "Oracle":
-            get_response = requests.get(url_nodo, headers=headers, verify=False)
+        get_response = requests.get(url_nodo, headers=headers, verify=False)
 
         setattr(context, primitive + "Response", get_response)
         
@@ -890,10 +876,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             print(f"primitive: {primitive} ---> body: {body}")
 
-            if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oracle':
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             if '<' in body: 
                 body = xmltodict.parse(body)
@@ -934,10 +917,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")} 
 
-            if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oracle':
-                response = requests.post(url_nodo, body, headers=headers, verify=False)            
+            response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
         setattr(context, primitive + "Response", response)
         print("response: ", response.content)
@@ -975,11 +955,7 @@ def single_thread(context, soap_primitive, tipo):
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
         
-        soap_response = ''
-        if dbRun == "Postgres":
-            soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        elif dbRun == "Oracle":
-            soap_response = requests.get(url_nodo, headers=headers, verify=False)
+        soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("response: ", soap_response.content)
 
         print(soap_primitive.split("_")[1] + "Response")
@@ -1002,11 +978,7 @@ def single_thread(context, soap_primitive, tipo):
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
 
-            response = ''
-            if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oracle':
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             url_nodo = f"{get_rest_url_nodo(context, primitive)}"
             print(f"url: {url_nodo}")
@@ -1052,12 +1024,8 @@ def single_thread(context, soap_primitive, tipo):
             else:    
                 url_nodo = get_rest_url_nodo(context, primitive)
 
-            response = ''
             print(f"url: {url_nodo}")
-            if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oracle':
-                response = requests.post(url_nodo, body, headers=headers, verify=False)            
+            response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
         setattr(context, soap_primitive.split("_")[1] + "Response", response)
         print("response: ", response.content)

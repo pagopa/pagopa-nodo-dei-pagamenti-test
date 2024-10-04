@@ -107,18 +107,10 @@ def step_impl(context):
             #CHECK SE LANCIO DA DB POSTGRES O ORACLE
             if dbRun == "Postgres":
                 proxies = getattr(context, "proxies")
-                ####RUN DA LOCALE
-                if user_profile != None:
-                    if url == 'https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1/info':
-                        print(f"############URL:{url} and headers: {headers}")
-                        resp = requests.get(url, headers=headers, verify=False)
-                    else:
-                        print(f"############URL:{url}, proxies {proxies} and headers: {headers}")
-                        resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-                ####RUN DA REMOTO
-                else:
-                    print(f"############URL:{url}, proxies {proxies} and headers: {headers}")
-                    resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+                ####RUN DA LOCALE E REMOTO
+                print(f"############URL:{url} and headers: {headers}")
+                resp = requests.get(url, headers=headers, verify=False)
+
             elif dbRun == "Oracle":
                 print(f"############URL:{url} and headers: {headers}")
                 resp = requests.get(url, headers=headers, verify=False)
@@ -2397,12 +2389,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
-        soap_response = None
-        if dbRun == "Postgres":
-            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            print(f"run -> si proxy: {getattr(context,'proxies')}")
-        elif dbRun == "Oracle":
-            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
         print('soap response content: ' + soap_response.content.decode('utf-8'))
         print(f'soap response status code: {soap_response.status_code}')
@@ -2450,11 +2437,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
         
-        soap_response = None
-        if dbRun == "Postgres":
-            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        elif dbRun == "Oracle":
-            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
         print(soap_response.content.decode('utf-8'))
         print(soap_response.status_code)
@@ -2501,8 +2484,8 @@ def step_impl(context, job_name, seconds):
         dbRun = getattr(context, "dbRun")
         
         if dbRun == "Postgres":
-            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name} with proxies: {getattr(context,'proxies')}")
+            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+            print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
         elif dbRun == "Oracle":
             #RUN DA LOCALE
             if user_profile != None:
@@ -3029,18 +3012,14 @@ def step_impl(context, sender, method, service, receiver):
 
             print(f"URL REST: {url_nodo}")
             print(f"Body: {json_body}")
-            if dbRun == "Postgres":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == "Oracle":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+
+            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         #RUN DA REMOTO
         else:
             print(f"URL REST: {url_nodo}/{service}")
             print(f"Body: {json_body}")
-            if dbRun == "Postgres":
-                nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == "Oracle":
-                nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)   
+
+            nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)   
         
         print(f"rest response content: {nodo_response.content}")
         print(f'rest response headers: {nodo_response.headers}')
@@ -3255,11 +3234,6 @@ def step_impl(context, param, value):
         refresh_response = None
         if dbRun == "Postgres":
             print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-            # ####RUN DA LOCALE
-            # if user_profile != None:
-            #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
-            # ###RUN DA REMOTO
-            # else:      
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
             print(f"URL refresh: {utils.get_refresh_config_url(context)}")
@@ -3504,7 +3478,6 @@ def step_impl(context):
         if dbRun == "Postgres":
             print(f"URL refresh: {utils.get_refresh_config_url(context)}")
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    
         elif dbRun == "Oracle":
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
