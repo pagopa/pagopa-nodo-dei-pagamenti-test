@@ -106,10 +106,13 @@ def step_impl(context):
         
             #CHECK SE LANCIO DA DB POSTGRES O ORACLE
             if dbRun == "Postgres":
-                proxies = getattr(context, "proxies")
                 ####RUN DA LOCALE E REMOTO
-                print(f"############URL:{url} and headers: {headers}")
-                resp = requests.get(url, headers=headers, verify=False)
+                if "https://api.dev.platform.pagopa.it/" in url:
+                    print(f"############URL:{url} and headers: {headers}")
+                    resp = requests.get(url, headers=headers, verify=False)
+                else:
+                    print(f"############URL:{url} and headers: {headers} and proxies: {getattr(context,'proxies')}")
+                    resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
 
             elif dbRun == "Oracle":
                 print(f"############URL:{url} and headers: {headers}")
