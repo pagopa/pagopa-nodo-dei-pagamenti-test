@@ -1644,3 +1644,24 @@ def query_new_record_cache(context, conn, adopted_db, dbRun):
         print("Wait timed out with no results.")
 
     return new_record_cache
+
+
+
+#Effettua una richiesta HTTP utilizzando un proxy configurato manualmente
+def make_request_with_manual_proxy():
+
+    # Crea il dizionario delle configurazioni del proxy
+    # proxies = {
+    #         'http': 'http://172.31.253.47:8080',
+    #         'https': 'http://172.31.253.47:8080',
+    # }
+
+    proxies = None
+
+    try:
+        response = requests.get('https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/monitor', proxies=proxies)
+        response.raise_for_status()  # Solleva un'eccezione se la richiesta non va a buon fine
+        print("Richiesta effettuata con successo!")
+        print(response)
+    except requests.exceptions.RequestException as e:
+        print(f"Errore durante la richiesta: {e}")
