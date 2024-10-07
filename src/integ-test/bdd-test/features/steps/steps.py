@@ -2471,7 +2471,14 @@ def step_impl(context, job_name, seconds):
 
         seconds = utils.replace_local_variables(seconds, context)
         time.sleep(int(seconds))
-        url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+
+        dbRun = getattr(context, "dbRun")
+
+        url_nodo = ''
+        if dbRun == "Postgres":
+            url_nodo = (context.config.userdata.get("services").get("nodo-dei-pagamenti").get("refresh_config_service")).split("config")[0]
+        elif dbRun == 'Oracle':
+            url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")       
 
         flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
@@ -2483,12 +2490,11 @@ def step_impl(context, job_name, seconds):
         else:
             headers = {'Content-Type': 'application/xml', 'Host': header_host}
 
-        nodo_response = None
-        dbRun = getattr(context, "dbRun")
+        nodo_response = None 
         
         if dbRun == "Postgres":
-            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
-            print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+            nodo_response = requests.get(f"{url_nodo}jobs/trigger/{job_name}", headers=headers, verify=False)
+            print(f">>>>>>>>>>>>>>>>>> {url_nodo}jobs/trigger/{job_name}")
         elif dbRun == "Oracle":
             #RUN DA LOCALE
             if user_profile != None:
