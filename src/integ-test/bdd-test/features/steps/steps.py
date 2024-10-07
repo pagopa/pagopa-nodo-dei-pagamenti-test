@@ -2493,8 +2493,8 @@ def step_impl(context, job_name, seconds):
         nodo_response = None 
         
         if dbRun == "Postgres":
-            nodo_response = requests.get(f"{url_nodo}jobs/trigger/{job_name}", headers=headers, verify=False)
-            print(f">>>>>>>>>>>>>>>>>> {url_nodo}jobs/trigger/{job_name}")
+            nodo_response = requests.get(f"{url_nodo}jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            print(f">>>>>>>>>>>>>>>>>> {url_nodo}jobs/trigger/{job_name} with proxies {getattr(context,'proxies')}")
         elif dbRun == "Oracle":
             #RUN DA LOCALE
             if user_profile != None:
