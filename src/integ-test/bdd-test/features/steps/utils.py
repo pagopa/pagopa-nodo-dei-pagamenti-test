@@ -1665,3 +1665,9 @@ def make_request_with_manual_proxy():
         print(response)
     except requests.exceptions.RequestException as e:
         print(f"Errore durante la richiesta: {e}")
+
+
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
