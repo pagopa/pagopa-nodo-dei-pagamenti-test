@@ -262,7 +262,7 @@
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY = 'scheduler.pspRetryAckNegativePollerMaxRetry'",
         "rpt_id1": "SELECT columns FROM table_name  where IUV = $iuv1 and ID_DOMINIO = '#creditor_institution_code_old#'",
         "rpt_id2": "SELECT columns FROM table_name  where IUV = $iuv2 and ID_DOMINIO = '#creditor_institution_code_old#'",
-        "update_servizio": "UPDATE table_name SET param = value WHERE TARGET_PATH = 'pspmock-sit/servizi/MockPSP'",
+        "update_servizio": "UPDATE table_name SET param = value WHERE TARGET_PATH = 'servizi/MockPSP'",
         "update_canale": "UPDATE table_name SET param = value WHERE ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'"
     } ,
     "faultBeanEsteso": {
