@@ -577,6 +577,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
     print("single_thread_evolution")
 
     dbRun = getattr(context, "dbRun")
+    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
     db_online = ''
     db_offline = ''
@@ -664,7 +665,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         print(f"url: {url_nodo}")
 
         header_host = estrapola_header_host(url_nodo)
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        headers = ''
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
         
         get_response = requests.get(url_nodo, headers=headers, verify=False)
 
@@ -689,7 +694,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             print(f"primitive: {primitive} ---> body: {body}")
 
             response = requests.post(url_nodo, body, headers=headers, verify=False)
@@ -731,7 +740,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")} 
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
             response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
@@ -745,6 +758,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
     print("single_thread_evolution")
 
     dbRun = getattr(context, "dbRun")
+    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
     db_online = ''
     db_offline = ''
@@ -848,8 +862,12 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         print(f"url: {url_nodo}")
 
         header_host = estrapola_header_host(url_nodo)
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
-        
+        headers = ''
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+
         get_response = requests.get(url_nodo, headers=headers, verify=False)
 
         setattr(context, primitive + "Response", get_response)
@@ -873,8 +891,12 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
-            print(f"primitive: {primitive} ---> body: {body}")
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+            print(f"primitive: {primitive} ---> body: {body} headers: {headers}")
 
             response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -915,7 +937,11 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")} 
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
             response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
@@ -929,6 +955,8 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 def single_thread(context, soap_primitive, tipo):
     print("single_thread")
     dbRun = getattr(context, "dbRun")
+    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
@@ -950,10 +978,11 @@ def single_thread(context, soap_primitive, tipo):
         print(f"url: {url_nodo}")
 
         header_host = estrapola_header_host(url_nodo)
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
-
-        if 'SUBSCRIPTION_KEY' in os.environ:
-            headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
+        headers = ''
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
         
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("response: ", soap_response.content)
@@ -973,10 +1002,11 @@ def single_thread(context, soap_primitive, tipo):
 
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
-
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
             response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -984,11 +1014,11 @@ def single_thread(context, soap_primitive, tipo):
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
-            headers = {'Content-Type': 'application/json', 'Host': header_host}
-            # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')  
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/json', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/json', 'SOAPAction': primitive, 'Host': header_host}
 
             if '<' in body: 
                 body = xmltodict.parse(body)
