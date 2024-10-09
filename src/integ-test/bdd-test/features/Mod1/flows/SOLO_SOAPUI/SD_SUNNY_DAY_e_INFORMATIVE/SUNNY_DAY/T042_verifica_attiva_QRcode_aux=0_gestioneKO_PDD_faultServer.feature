@@ -5,6 +5,8 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer 560
 
     Scenario: Execute nodoVerificaRPT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = '1.2.3.4', with where condition OBJ_ID = '125' under macro update_query on db nodo_cfg
+        And waiting after triggered refresh job ALL
         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -32,7 +34,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer 560
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
         
-    @runnable
+    @runnable @after
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
