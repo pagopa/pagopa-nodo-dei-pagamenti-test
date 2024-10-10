@@ -44,6 +44,9 @@ def before_all(context):
     proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
     dbRun = context.config.userdata.get("global_configuration").get("dbRun")
     setattr(context, 'dbRun', dbRun)
+    setattr(context, 'myconfigfile', myconfigfile)
+
+    print(f"config file -----> {myconfigfile}")
 
     if user_profile != None:
         setattr(context, 'user_profile', user_profile)

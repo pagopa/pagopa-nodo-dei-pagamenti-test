@@ -2357,7 +2357,7 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     try:
-        dbRun = getattr(context, "dbRun")
+        myconfigfile = getattr(context, 'myconfigfile')
         #Check se l'ultimo carattere della soap primitive è un numero, in questo caso lo taglia
         soap_primitive_original = ''
 
@@ -2392,7 +2392,11 @@ def step_impl(context, sender, soap_primitive, receiver):
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
-        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        soap_response = ''
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        else:
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         print('soap response content: ' + soap_response.content.decode('utf-8'))
         print(f'soap response status code: {soap_response.status_code}')
@@ -2416,7 +2420,7 @@ def step_impl(context, sender, soap_primitive, receiver):
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     try:
-        dbRun = getattr(context, "dbRun")
+        myconfigfile = getattr(context, 'myconfigfile')
         url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
 
         flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
@@ -2440,7 +2444,11 @@ def step_impl(context, sender, soap_primitive, receiver):
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
         
-        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        soap_response = ''
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        else:
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         print(soap_response.content.decode('utf-8'))
         print(soap_response.status_code)
@@ -2947,6 +2955,7 @@ def step_impl(context, name, n):
 @when(u'{sender} sends rest {method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
     try:
+        myconfigfile = getattr(context, 'myconfigfile')
         url_nodo = utils.get_rest_url_nodo(context, service)
         print(url_nodo)
 
@@ -2960,7 +2969,6 @@ def step_impl(context, sender, method, service, receiver):
         else:
             headers = {'Content-Type': 'application/json', 'Host': header_host}
 
-        dbRun = getattr(context, "dbRun")
         body = context.text or ""
         if '_json' in service:
             service = service.split('_')[0]
@@ -3022,7 +3030,11 @@ def step_impl(context, sender, method, service, receiver):
             print(f"URL REST: {url_nodo}")
             print(f"Body: {json_body}")
 
-            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            nodo_response = ''
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            else:
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies=getattr(context, "proxies"))
         #RUN DA REMOTO
         else:
             print(f"URL REST: {url_nodo}/{service}")

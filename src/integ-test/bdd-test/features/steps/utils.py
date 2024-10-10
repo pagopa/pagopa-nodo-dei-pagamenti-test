@@ -577,6 +577,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
     print("single_thread_evolution")
 
     dbRun = getattr(context, "dbRun")
+    myconfigfile = getattr(context, 'myconfigfile')
     flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
     db_online = ''
@@ -671,7 +672,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         else:
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
         
-        get_response = requests.get(url_nodo, headers=headers, verify=False)
+        get_response = ''
+        if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+            get_response = requests.get(url_nodo, headers=headers, verify=False)
+        else:
+            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         setattr(context, primitive + "Response", get_response)
         
@@ -701,7 +706,10 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
                 headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             print(f"primitive: {primitive} ---> body: {body}")
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
             if '<' in body: 
                 body = xmltodict.parse(body)
@@ -746,7 +754,10 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             else:
                 headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False)            
+            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False) 
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
             
         setattr(context, primitive + "Response", response)
         print("response: ", response.content)
@@ -758,6 +769,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
     print("single_thread_evolution")
 
     dbRun = getattr(context, "dbRun")
+    myconfigfile = getattr(context, 'myconfigfile')
     flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
     db_online = ''
@@ -868,7 +880,11 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         else:
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
-        get_response = requests.get(url_nodo, headers=headers, verify=False)
+        get_response = ''
+        if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+            get_response = requests.get(url_nodo, headers=headers, verify=False)
+        else:
+            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         setattr(context, primitive + "Response", get_response)
         
@@ -898,7 +914,10 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
                 headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             print(f"primitive: {primitive} ---> body: {body} headers: {headers}")
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
             if '<' in body: 
                 body = xmltodict.parse(body)
@@ -943,7 +962,10 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             else:
                 headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False)            
+            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
             
         setattr(context, primitive + "Response", response)
         print("response: ", response.content)
@@ -954,7 +976,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
 def single_thread(context, soap_primitive, tipo):
     print("single_thread")
-    dbRun = getattr(context, "dbRun")
+    myconfigfile = getattr(context, 'myconfigfile')
     flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
     primitive = soap_primitive.split("_")[0]
@@ -984,7 +1006,11 @@ def single_thread(context, soap_primitive, tipo):
         else:
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
         
-        soap_response = requests.get(url_nodo, headers=headers, verify=False)
+        soap_response = ''
+        if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+            soap_response = requests.get(url_nodo, headers=headers, verify=False)
+        else:
+            soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         print("response: ", soap_response.content)
 
         print(soap_primitive.split("_")[1] + "Response")
@@ -1008,7 +1034,10 @@ def single_thread(context, soap_primitive, tipo):
             else:
                 headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
             url_nodo = f"{get_rest_url_nodo(context, primitive)}"
             print(f"url: {url_nodo}")
@@ -1055,7 +1084,11 @@ def single_thread(context, soap_primitive, tipo):
                 url_nodo = get_rest_url_nodo(context, primitive)
 
             print(f"url: {url_nodo}")
-            response = requests.post(url_nodo, body, headers=headers, verify=False)            
+
+            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
             
         setattr(context, soap_primitive.split("_")[1] + "Response", response)
         print("response: ", response.content)
