@@ -11,16 +11,16 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter QUARTO_MODELLO = 'Y', with where condition OBJ_ID = '16643' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter QUARTO_MODELLO = 'N', with where condition OBJ_ID = '1689962' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal nodoChiediCatalogoServizi_noOptional initial XML nodoChiediCatalogoServizi
-            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   |
-            | #psp#             | #id_broker_psp#                | #canale_ATTIVATO_PRESSO_PSP# | #password# |
+        And from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | identificativoDominio           |
+            | #psp#             | #id_broker_psp#                | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# |
         When PSP sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
         Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServizi response
         And check fault field not exists in nodoChiediCatalogoServizi response
         Given from body with datatable horizontal nodoChiediNumeroAvviso_noOptional initial XML nodoChiediNumeroAvviso
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | idServizio | idDominioErogatoreServizio      |
             | #psp#             | #id_broker_psp#                | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00010      | #creditor_institution_code_old# |
-        And from body with datatable vertical paaChiediNumeroAvviso_noOptional initial XML paaChiediNumeroAvviso
+        And from body with datatable vertical paaChiediNumeroAvviso_full initial XML paaChiediNumeroAvviso
             | esito                    | OK                                                                                                               |
             | auxDigit                 | 0                                                                                                                |
             | applicationCode          | 00                                                                                                               |
@@ -31,10 +31,10 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaChiediNumeroAvviso
         When psp sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
         Then check esito is OK of nodoChiediNumeroAvviso response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -49,7 +49,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code#                 |
@@ -62,7 +62,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -87,7 +87,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -145,12 +145,12 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
-            | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | FEE                        | 2                                           |
+            | OUTCOME                    | OK                                          |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
