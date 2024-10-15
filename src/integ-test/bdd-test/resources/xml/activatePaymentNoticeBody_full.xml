@@ -11,13 +11,11 @@
 				<fiscalCode>$fiscalCode</fiscalCode>
 				<noticeNumber>$noticeNumber</noticeNumber>
 			</qrCode>
-			<expirationTime>$expirationTime</expirationTime>
 			<amount>$amount</amount>
 			<!--Optional:-->
 			<dueDate>2021-12-31</dueDate>
 			<!--Optional:-->
 			<paymentNote>responseFull</paymentNote>
-			<!--Optional:-->
 		</nod:activatePaymentNoticeReq>
 	</soapenv:Body>
 </soapenv:Envelope>

@@ -25,7 +25,6 @@ Feature: JIRA - PG-108
             | paymentDescription | paymentDescription          |
             | fiscalCodPA        | #creditor_institution_code# |
             | companyName        | companyName                 |
-            | officeName         | officeName                  |
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When psp sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
