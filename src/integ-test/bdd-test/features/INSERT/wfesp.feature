@@ -16,7 +16,7 @@ Feature: TEST INSERT WFESP
             | identificativoUnivocoVersamento   | $1iuv                           |
             | codiceContestoPagamento           | CCD01                           |
             | importoSingoloVersamento          | 10.00                           |
-        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |
@@ -43,7 +43,7 @@ Feature: TEST INSERT WFESP
             | identificativoUnivocoVersamento   | $1iuv                                 |
             | codiceContestoPagamento           | CCD01                                 |
             | importoSingoloVersamento          | 10.00                                 |
-        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |
@@ -87,7 +87,7 @@ Feature: TEST INSERT WFESP
             | identificativoUnivocoVersamento   | $1iuv                           |
             | codiceContestoPagamento           | CCD01                           |
             | importoSingoloVersamento          | 10.00                           |
-        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |

@@ -17,7 +17,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         When PSP sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
         Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServizi response
         And check fault field not exists in nodoChiediCatalogoServizi response
-        Given from body with datatable horizontal nodoChiediNumeroAvviso_noOptional initial XML nodoChiediNumeroAvviso
+        Given from body with datatable horizontal nodoChiediNumeroAvviso initial XML nodoChiediNumeroAvviso
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | idServizio | idDominioErogatoreServizio      |
             | #psp#             | #id_broker_psp#                | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00010      | #creditor_institution_code_old# |
         And from body with datatable vertical paaChiediNumeroAvviso_noOptional initial XML paaChiediNumeroAvviso
@@ -453,7 +453,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         When PSP sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
         Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServizi response
         And check fault field not exists in nodoChiediCatalogoServizi response
-        Given from body with datatable horizontal nodoChiediNumeroAvviso_noOptional initial XML nodoChiediNumeroAvviso
+        Given from body with datatable horizontal nodoChiediNumeroAvviso initial XML nodoChiediNumeroAvviso
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | idServizio | idDominioErogatoreServizio      |
             | #psp#             | #id_broker_psp#                | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00010      | #creditor_institution_code_old# |
         And from body with datatable vertical paaChiediNumeroAvviso_noOptional initial XML paaChiediNumeroAvviso
@@ -794,7 +794,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         When PSP sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
         Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServizi response
         And check fault field not exists in nodoChiediCatalogoServizi response
-        Given from body with datatable horizontal nodoChiediNumeroAvviso_noOptional initial XML nodoChiediNumeroAvviso
+        Given from body with datatable horizontal nodoChiediNumeroAvviso initial XML nodoChiediNumeroAvviso
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | idServizio | idDominioErogatoreServizio      |
             | #psp#             | #id_broker_psp#                | #canaleRtPull_sec#   | #password# | 00010      | #creditor_institution_code_old# |
         And from body with datatable vertical paaChiediNumeroAvviso_noOptional initial XML paaChiediNumeroAvviso
@@ -858,13 +858,13 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | CodiceContestoPagamento           | $ccp                                               |
             | codiceEsitoPagamento              | 0                                                  |
             | singoloImportoPagato              | $nodoAttivaRPT.importoSingoloVersamento            |
-        And from body with datatable horizontal pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable horizontal pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione | identificativoCarrello                        | parametriPagamentoImmediato                                |
             | OK                         | $nodoInviaRPT.identificativoUnivocoVersamento | idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento |
-        And from body with datatable horizontal pspChiediListaRT_noOptional initial XML pspChiediListaRT
+        And from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
             | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
             | #creditor_institution_code_old# | $iuv                            | $ccp                    |
-        And from body with datatable horizontal pspChiediRT_noOptional initial XML pspChiediRT
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
             | rt            |
             | $rtAttachment |
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT

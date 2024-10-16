@@ -542,14 +542,14 @@ Feature: TEST INSERT
             | identificativoIntermediarioPSP        | #psp#                           |
             | identificativoCanale                  | #canaleRtPull_sec#              |
             | rpt                                   | $rpt1Attachment                 |
-        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |
-        And from body with datatable horizontal pspChiediListaRT_noOptional initial XML pspChiediListaRT
+        And from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
             | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
             | #creditor_institution_code_old# | $1iuv                           | CCD01                   |
-        And from body with datatable horizontal pspChiediRT_noOptional initial XML pspChiediRT
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
             | rt            |
             | $rtAttachment |
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
@@ -639,10 +639,10 @@ Feature: TEST INSERT
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
         Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_ACCETTATA_PSP', with where condition ID_DOMINIO='$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
-        And from body with datatable horizontal pspChiediListaRT_noOptional initial XML pspChiediListaRT
+        And from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
             | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
             | #creditor_institution_code_old# | $1iuv                           | CCD01                   |
-        And from body with datatable horizontal pspChiediRT_noOptional initial XML pspChiediRT
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
             | rt            |
             | $rtAttachment |
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
@@ -2223,7 +2223,7 @@ Feature: TEST INSERT
             | identificativoIntermediarioPSP        | #broker_AGID#                   |
             | identificativoCanale                  | #canale_AGID_BBT#               |
             | rpt                                   | $rpt1Attachment                 |
-        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |
@@ -2523,7 +2523,7 @@ Feature: TEST INSERT
             | CodiceContestoPagamento           | $1ccp                           |
             | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
-        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
             | esitoComplessivoOperazione  | OK                 |
             | identificativoCarrello      | $1iuv              |
             | parametriPagamentoImmediato | idBruciatura=$1iuv |
