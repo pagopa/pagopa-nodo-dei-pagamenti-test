@@ -3,7 +3,7 @@ Feature: NMU flows con pagamento KO
     Background:
         Given systems up
 
-    @ALL @FLOW @FLOW_NOOPT @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_1
+    @FLOW_NOOPT @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_1
     Scenario: NMU flow paNEW KO con Multitoken e close con 1 token unknown, FLOW: con checkPosition con 4 nav, 4xactivateV2 -> paGetPayment, closeV2+ con 4 token noti e un token sconosciuto riceve resp KO , nodo annulla i 4 token, 4xBIZ- (NMU-1)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
@@ -651,7 +651,7 @@ Feature: NMU flows con pagamento KO
 
 
 
-    @ALL @FLOW @FLOW_NOOPT @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_2
+    @FLOW_NOOPT @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_2
     Scenario: NMU flow paNEW KO con Multitoken e close outcome KO, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPayment, closeV2- -> nodo annulla i 4 token, 4x BIZ- (NMU-2)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
@@ -1296,7 +1296,7 @@ Feature: NMU flows con pagamento KO
 
 
 
-    @ALL @FLOW @FLOW_NOOPT @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_3
+    @FLOW_NOOPT @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_3
     Scenario: NMU flow paNEW KO con Multitoken con un token scaduto, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPayment, mod3cancelV2 -> scade solo uno dei 4 token, closeV2+ con 4 token riceve resp KO e annulla gli altri 3 token rimasti ,4x BIZ- (NMU-3)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
