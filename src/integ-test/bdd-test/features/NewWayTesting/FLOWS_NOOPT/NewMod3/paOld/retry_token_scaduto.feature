@@ -21582,9 +21582,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal paaAttivaRPT_Timeout_noOptional initial XML paaAttivaRPT
-            | delay | esito |
-            | 10000 | OK    |
+        Given from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+            | delay | 
+            | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
@@ -22232,9 +22232,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal paaAttivaRPT_Timeout_noOptional initial XML paaAttivaRPT
-            | delay | esito |
-            | 10000 | OK    |
+        Given from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+            | delay |
+            | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
@@ -22884,9 +22884,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal paaAttivaRPT_Timeout_noOptional initial XML paaAttivaRPT
-            | delay | esito |
-            | 10000 | OK    |
+        Given from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+            | delay |
+            | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
@@ -23536,9 +23536,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal paaAttivaRPT_Timeout_noOptional initial XML paaAttivaRPT
-            | delay | esito |
-            | 10000 | OK    |
+        Given from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+            | delay |
+            | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
