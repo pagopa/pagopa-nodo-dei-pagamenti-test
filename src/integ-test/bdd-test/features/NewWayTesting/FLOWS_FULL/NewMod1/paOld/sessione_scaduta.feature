@@ -51,7 +51,7 @@ Feature: NMU flows con PA Old sessione scaduta
         And wait 5 seconds for expiration
         When job mod3CancelV1 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -463,7 +463,7 @@ Feature: NMU flows con PA Old sessione scaduta
         Given from body with datatable vertical pspNotifyPayment_Timeout_noOptional initial XML pspNotifyPayment
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |

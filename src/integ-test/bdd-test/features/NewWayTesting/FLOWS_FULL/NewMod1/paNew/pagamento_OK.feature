@@ -13,10 +13,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
-            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | CP            | POS        |
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -33,7 +33,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -57,7 +57,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -72,7 +72,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -87,8 +87,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -106,10 +106,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -131,11 +131,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -458,7 +458,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -527,7 +527,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -1013,7 +1013,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -1493,7 +1493,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -1980,7 +1980,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -2472,7 +2472,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -2957,7 +2957,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -3438,7 +3438,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -3927,7 +3927,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -4422,7 +4422,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -4911,7 +4911,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -5396,7 +5396,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -5885,7 +5885,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -6380,7 +6380,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -6867,7 +6867,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -7352,7 +7352,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -7839,7 +7839,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -8410,7 +8410,7 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4
         And saving paGetPayment request in paGetPayment_4
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |
@@ -9560,7 +9560,7 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4
         And saving paGetPaymentV2 request in paGetPaymentV2_4
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |
@@ -10644,7 +10644,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -11328,7 +11328,7 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |
@@ -12397,7 +12397,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -13496,7 +13496,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -14596,7 +14596,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -15697,7 +15697,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -16801,7 +16801,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -17903,7 +17903,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -18996,7 +18996,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -19586,7 +19586,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -20176,7 +20176,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -20909,7 +20909,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -21643,7 +21643,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -22385,7 +22385,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -23475,7 +23475,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -24559,7 +24559,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -25649,7 +25649,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -26743,7 +26743,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -27829,7 +27829,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -28912,7 +28912,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -29486,7 +29486,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -29998,7 +29998,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -30511,7 +30511,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -31023,7 +31023,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -31535,7 +31535,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -32047,7 +32047,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -32559,7 +32559,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -33072,7 +33072,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -33604,7 +33604,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -34177,7 +34177,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment?clientId&deviceId
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment?clientId&deviceId
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -34775,7 +34775,7 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |

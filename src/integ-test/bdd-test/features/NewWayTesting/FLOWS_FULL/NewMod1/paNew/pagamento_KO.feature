@@ -109,7 +109,7 @@ Feature: NMU flows con pagamento KO
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4Request
         And saving paGetPayment request in paGetPayment_4Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_1unknown_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_1unknown initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |
@@ -757,7 +757,7 @@ Feature: NMU flows con pagamento KO
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4Request
         And saving paGetPayment request in paGetPayment_4Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |
@@ -1404,7 +1404,7 @@ Feature: NMU flows con pagamento KO
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_1unknown_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP_4paymentTokens_1unknown initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
             | token3                | $activatePaymentNoticeV2_3Response.paymentToken |

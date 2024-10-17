@@ -1103,7 +1103,7 @@ Feature: TEST INSERT
         And wait 5 seconds for expiration
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | KO                                            |
             | idPSP                 | #psp#                                         |

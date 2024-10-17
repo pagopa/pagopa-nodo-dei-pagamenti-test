@@ -45,7 +45,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -588,7 +588,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -1124,7 +1124,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -1657,7 +1657,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -2196,7 +2196,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -2739,7 +2739,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -3275,7 +3275,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -3806,7 +3806,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_BPAY initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -4345,7 +4345,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -4888,7 +4888,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -5431,7 +5431,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -5990,7 +5990,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -6549,7 +6549,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -7108,7 +7108,7 @@ Feature: NMU flows PA Old con pagamento OK
       | rpt                                   | $rptAttachment                                |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |
@@ -7665,7 +7665,7 @@ Feature: NMU flows PA Old con pagamento OK
       | identificativoIntermediarioPSP        | #broker_AGID#                                 |
       | identificativoCanale                  | #canale_AGID_02#                              |
       | rpt                                   | $rptAttachment                                |
-    Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+    Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
       | token1                | $activatePaymentNoticeV2Response.paymentToken |
       | outcome               | OK                                            |
       | idPSP                 | #psp#                                         |

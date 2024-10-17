@@ -51,7 +51,7 @@ Feature: TEST BUG FIX FOR PAG-110
         Given from body with datatable vertical pspNotifyPaymentV2_Timeout_noOptional initial XML pspNotifyPaymentV2
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -553,7 +553,7 @@ Feature: TEST BUG FIX FOR PAG-110
         Given from body with datatable vertical pspNotifyPaymentV2_Timeout_noOptional initial XML pspNotifyPaymentV2
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -1065,7 +1065,7 @@ Feature: TEST BUG FIX FOR PAG-110
         Given from body with datatable vertical pspNotifyPayment_Timeout_noOptional initial XML pspNotifyPayment
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_PPAL initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -1566,7 +1566,7 @@ Feature: TEST BUG FIX FOR PAG-110
         Given from body with datatable vertical pspNotifyPayment_Timeout_noOptional initial XML pspNotifyPayment
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
