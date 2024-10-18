@@ -13471,7 +13471,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -14215,7 +14215,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -14961,7 +14961,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -15706,7 +15706,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT

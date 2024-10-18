@@ -8437,7 +8437,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |
@@ -9587,7 +9587,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |
@@ -10624,7 +10624,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_MBD_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_MBD_full initial XML paGetPaymentV2
             | outcome                     | OK                                           |
             | creditorReferenceId         | 10$iuv                                       |
             | paymentAmount               | 10.00                                        |
@@ -10668,7 +10668,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -11219,7 +11219,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 25.00                               |
@@ -11245,7 +11245,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 25.00                               |
@@ -11275,7 +11275,7 @@ Feature: NMU flows con PA New pagamento OK
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 25.00                               |
@@ -11304,7 +11304,7 @@ Feature: NMU flows con PA New pagamento OK
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv1     | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv1                             |
             | paymentAmount               | 25.00                               |
@@ -11355,7 +11355,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |
@@ -12376,7 +12376,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -13475,7 +13475,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -14575,7 +14575,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -15675,7 +15675,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -16779,7 +16779,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -17881,7 +17881,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -18975,7 +18975,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -19565,7 +19565,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -20154,7 +20154,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -20887,7 +20887,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -21621,7 +21621,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -22364,7 +22364,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -23454,7 +23454,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -24538,7 +24538,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -25628,7 +25628,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -26722,7 +26722,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -27808,7 +27808,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -28891,7 +28891,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -33584,7 +33584,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_MBD_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_MBD_full initial XML paGetPaymentV2
             | outcome                     | OK                                           |
             | creditorReferenceId         | 47$iuv                                       |
             | paymentAmount               | 10.00                                        |
@@ -33628,7 +33628,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -34666,7 +34666,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                    |
             | creditorReferenceId         | 02$iuv                                |
             | paymentAmount               | 25.00                                 |
@@ -34692,7 +34692,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                    |
             | creditorReferenceId         | 10$iuv                                |
             | paymentAmount               | 25.00                                 |
@@ -34722,7 +34722,7 @@ Feature: NMU flows con PA New pagamento OK
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                    |
             | creditorReferenceId         | 47$iuv                                |
             | paymentAmount               | 25.00                                 |
@@ -34751,7 +34751,7 @@ Feature: NMU flows con PA New pagamento OK
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv1     | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                    |
             | creditorReferenceId         | 47$iuv1                               |
             | paymentAmount               | 25.00                                 |
@@ -34802,7 +34802,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |

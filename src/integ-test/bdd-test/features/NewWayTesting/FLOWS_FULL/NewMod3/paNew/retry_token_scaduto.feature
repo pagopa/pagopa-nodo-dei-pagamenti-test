@@ -3416,7 +3416,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 50.00                             |
@@ -4012,7 +4012,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 50.00                             |
@@ -7654,7 +7654,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -8306,7 +8306,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -9024,7 +9024,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -9509,7 +9509,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -10000,7 +10000,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -10727,7 +10727,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -11704,7 +11704,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -12683,7 +12683,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -13168,7 +13168,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -13649,7 +13649,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
@@ -13664,7 +13664,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 5000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 10$iuv                      |
             | paymentAmount               | 5000.00                     |
@@ -14645,7 +14645,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
@@ -14660,7 +14660,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 5000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 10$iuv                      |
             | paymentAmount               | 5000.00                     |
@@ -15635,7 +15635,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
@@ -15650,7 +15650,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10000.00                            |

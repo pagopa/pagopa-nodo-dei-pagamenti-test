@@ -37,7 +37,6 @@
 					<!--Optional:-->
 					<e-mail>paGetPayment@test.it</e-mail>
 				</debtor>
-				<!--Optional:-->
 				<transferList>
 					<!--1 to 5 repetitions:-->
 					<transfer>
@@ -49,7 +48,7 @@
 						<transferCategory>$transferCategory</transferCategory>
 					</transfer>
 				</transferList>
-				<!--Optional:-->
+                <!--Optional:-->
 				<metadata>
 					<!--1 to 10 repetitions:-->
 					<mapEntry>
