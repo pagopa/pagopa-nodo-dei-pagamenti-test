@@ -330,7 +330,7 @@ Feature: NM3 flows con attivazione fallita
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | KO                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |

@@ -9,7 +9,7 @@ Feature: NM3 flows con pagamento fallito
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -26,7 +26,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -249,7 +249,7 @@ Feature: NM3 flows con pagamento fallito
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -266,7 +266,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -506,7 +506,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -746,7 +746,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -969,7 +969,7 @@ Feature: NM3 flows con pagamento fallito
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -986,7 +986,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -1208,7 +1208,7 @@ Feature: NM3 flows con pagamento fallito
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -1225,7 +1225,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -1465,7 +1465,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -1705,7 +1705,7 @@ Feature: NM3 flows con pagamento fallito
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti

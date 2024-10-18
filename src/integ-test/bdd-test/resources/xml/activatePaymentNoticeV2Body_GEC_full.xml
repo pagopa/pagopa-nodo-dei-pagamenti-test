@@ -6,14 +6,19 @@
 			<idBrokerPSP>$idBrokerPSP</idBrokerPSP>
 			<idChannel>$idChannel</idChannel>
 			<password>$password</password>
-			<idempotencyKey>$idempotencyKey</idempotencyKey>
 			<qrCode>
 				<fiscalCode>$fiscalCode</fiscalCode>
 				<noticeNumber>$noticeNumber</noticeNumber>
 			</qrCode>
-			<expirationTime>900000</expirationTime>
 			<amount>$amount</amount>
-			<paymentNote>228344_1</paymentNote>
+			<!--Optional:-->
+			<dueDate>2021-12-31</dueDate>
+			<!--Optional:-->
+			<paymentNote>responseFull</paymentNote>
+			<!--Optional:-->
+			<paymentMethod>$paymentMethod</paymentMethod>
+			<!--Optional:-->
+            <touchPoint>$touchPoint</touchPoint>
 		</nod:activatePaymentNoticeV2Request>
 	</soapenv:Body>
 </soapenv:Envelope>

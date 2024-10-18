@@ -31,7 +31,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -475,7 +475,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -904,7 +904,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -1264,7 +1264,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -1706,7 +1706,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -2121,7 +2121,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2538,7 +2538,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -2953,7 +2953,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3359,7 +3359,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -3742,7 +3742,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -4124,7 +4124,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -4430,7 +4430,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4748,7 +4748,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -5067,7 +5067,7 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNoticeV2 and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -5387,7 +5387,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -5708,7 +5708,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And check esito is OK of nodoInviaRPT response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -6014,7 +6014,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         Then saving activatePaymentNotice request in activatePaymentNotice
         And saving nodoInviaRPT request in nodoInviaRPT
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When calling primitive evolution sendPaymentOutcome and nodoInviaRPT with POST and POST in parallel with 100 ms delay
@@ -6321,7 +6321,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         Then saving activatePaymentNotice request in activatePaymentNotice
         And saving nodoInviaRPT request in nodoInviaRPT
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When calling primitive evolution nodoInviaRPT and sendPaymentOutcome with POST and POST in parallel with 100 ms delay
@@ -6604,7 +6604,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -6843,7 +6843,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7093,7 +7093,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -7345,7 +7345,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7678,7 +7678,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -8025,7 +8025,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNotice response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -8358,7 +8358,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -8707,7 +8707,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -9051,7 +9051,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -9447,7 +9447,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -9846,7 +9846,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -10244,7 +10244,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNotice response
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -10629,7 +10629,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -11040,7 +11040,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -11471,7 +11471,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -11865,7 +11865,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti

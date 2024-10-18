@@ -12,7 +12,7 @@ Feature: JIRA - PG-108
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'api.dev.platform.pagopa.it', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
         And wait 2 seconds for expiration
-        Given from body with datatable horizontal demandPaymentNotice_noOptional initial XML demandPaymentNotice
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
         And from body with datatable vertical paDemandPaymentNotice_noOptional initial XML paDemandPaymentNotice

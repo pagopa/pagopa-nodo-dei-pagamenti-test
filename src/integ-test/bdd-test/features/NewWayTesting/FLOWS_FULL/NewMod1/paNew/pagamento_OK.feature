@@ -1476,7 +1476,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -1519,7 +1519,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -1963,7 +1963,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2004,7 +2004,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2455,7 +2455,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2498,7 +2498,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2940,7 +2940,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2981,7 +2981,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3421,7 +3421,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -3464,7 +3464,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3910,7 +3910,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -3951,7 +3951,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4448,7 +4448,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4935,7 +4935,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -5422,7 +5422,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -5909,7 +5909,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -6406,7 +6406,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -6891,7 +6891,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7378,7 +7378,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7863,7 +7863,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -8321,7 +8321,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -8344,7 +8344,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv1     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv1                             |
             | paymentAmount               | 10.00                               |
@@ -8367,7 +8367,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv2     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv2                             |
             | paymentAmount               | 10.00                               |
@@ -8390,7 +8390,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv3     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv3                             |
             | paymentAmount               | 10.00                               |
@@ -12421,7 +12421,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -13520,7 +13520,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -14620,7 +14620,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -15721,7 +15721,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -16825,7 +16825,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -17927,7 +17927,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -19020,7 +19020,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -19610,7 +19610,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -20200,7 +20200,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -20933,7 +20933,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -21667,7 +21667,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -22409,7 +22409,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -23497,7 +23497,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -24583,7 +24583,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -25673,7 +25673,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -26765,7 +26765,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -27853,7 +27853,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -28936,7 +28936,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -29507,7 +29507,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -30019,7 +30019,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -30532,7 +30532,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -31044,7 +31044,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -31517,7 +31517,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -31556,7 +31556,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -32029,7 +32029,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -32068,7 +32068,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -32541,7 +32541,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -32580,7 +32580,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -33054,7 +33054,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -33093,7 +33093,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -34160,7 +34160,7 @@ Feature: NMU flows con PA New pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -34201,7 +34201,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti

@@ -21,7 +21,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNotice response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -450,7 +450,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -1088,7 +1088,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -1508,7 +1508,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -2057,7 +2057,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -2673,7 +2673,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNoticeV2 response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3080,7 +3080,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNotice response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3488,7 +3488,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNoticeV2 response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3896,7 +3896,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNotice response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4316,7 +4316,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNoticeV2 response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -4765,7 +4765,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -5310,7 +5310,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -5857,7 +5857,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -6405,7 +6405,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -6945,7 +6945,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7367,7 +7367,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -7948,7 +7948,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -8673,7 +8673,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -9255,7 +9255,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -9979,7 +9979,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check esito is OK of nodoInviaRPT response
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -10565,7 +10565,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -11299,7 +11299,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -12036,7 +12036,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -12770,7 +12770,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -13519,7 +13519,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -14263,7 +14263,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -15009,7 +15009,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -15754,7 +15754,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -16488,7 +16488,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -17031,7 +17031,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -17576,7 +17576,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -18122,7 +18122,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -18666,7 +18666,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -19395,7 +19395,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -20124,7 +20124,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -20855,7 +20855,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -21586,7 +21586,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -22236,7 +22236,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -22888,7 +22888,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -23540,7 +23540,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        And from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
