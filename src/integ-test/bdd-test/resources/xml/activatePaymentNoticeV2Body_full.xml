@@ -17,9 +17,9 @@
 			<!--Optional:-->
 			<paymentNote>responseFull</paymentNote>
 			<!--Optional:-->
-			<paymentMethod>$paymentMethod</paymentMethod>
+			<paymentMethod>CP</paymentMethod>
 			<!--Optional:-->
-			<touchPoint>$touchPoint</touchPoint>
+			<touchPoint>POS</touchPoint>
 		</nod:activatePaymentNoticeV2Request>
 	</soapenv:Body>
 </soapenv:Envelope>

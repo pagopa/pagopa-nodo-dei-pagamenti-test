@@ -1664,7 +1664,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_5
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-4)
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -2079,7 +2079,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-30)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -2494,7 +2494,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-73)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -2909,7 +2909,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_8 @after
     Scenario: NM3 flow OK, FLOW con PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ (NM3-56)
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -4705,7 +4705,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-93)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -5024,7 +5024,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -5342,7 +5342,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-99)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -5663,7 +5663,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -7073,7 +7073,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_21
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spo+ (NM3-6)
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -7325,7 +7325,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spoV2+ (NM3-32)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -8003,7 +8003,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_24 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spoV2+ (NM3-58)
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -8685,7 +8685,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spo+ (NM3-75)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -9031,7 +9031,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @FLOW_NOOPT @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_27
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spo+  nodoInviaRPT -> paaInviaRT+ (tramite job paInviaRT) BIZ+ (NM3-5)
-        Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -9427,7 +9427,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -9824,7 +9824,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
@@ -10222,7 +10222,7 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ (tramite job paInviaRT) BIZ+ (NM3-57)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT

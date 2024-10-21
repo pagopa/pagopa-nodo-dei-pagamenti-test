@@ -17,7 +17,6 @@
 			<dueDate>2021-12-31</dueDate>
 			<!--Optional:-->
 			<paymentNote>responseFull</paymentNote>
-			<!--Optional:-->
 		</nod:activatePaymentNoticeReq>
 	</soapenv:Body>
 </soapenv:Envelope>

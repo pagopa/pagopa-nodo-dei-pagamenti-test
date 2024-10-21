@@ -14,8 +14,8 @@ Feature: NMU flows con PA New pagamento OK
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
-            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | CP            | POS        |
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
@@ -508,8 +508,8 @@ Feature: NMU flows con PA New pagamento OK
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
-            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | CP            | POS        |
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
@@ -994,8 +994,8 @@ Feature: NMU flows con PA New pagamento OK
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
-            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | PPAL          | POS        |
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
@@ -1473,10 +1473,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -1519,7 +1519,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -1534,7 +1534,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1549,8 +1549,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -1568,10 +1568,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -1593,11 +1593,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1911,7 +1911,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -1960,10 +1960,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2004,7 +2004,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2019,7 +2019,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2034,8 +2034,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -2053,10 +2053,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -2078,11 +2078,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -2405,7 +2405,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -2452,10 +2452,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2498,7 +2498,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2513,7 +2513,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2528,8 +2528,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -2547,10 +2547,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -2572,11 +2572,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -2890,7 +2890,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -2937,10 +2937,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2981,7 +2981,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2996,7 +2996,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3011,8 +3011,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -3030,10 +3030,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -3055,11 +3055,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -3369,7 +3369,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -3418,10 +3418,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -3464,7 +3464,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3479,7 +3479,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3494,8 +3494,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -3513,10 +3513,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -3538,11 +3538,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -3856,7 +3856,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -3907,10 +3907,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -3951,7 +3951,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -3966,7 +3966,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3981,8 +3981,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -4000,10 +4000,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -4025,11 +4025,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -4352,7 +4352,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -4401,10 +4401,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -4448,7 +4448,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4463,7 +4463,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -4478,8 +4478,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -4497,10 +4497,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -4522,11 +4522,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -4890,10 +4890,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -4935,7 +4935,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4950,7 +4950,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -4965,8 +4965,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -4984,10 +4984,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -5009,11 +5009,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -5375,10 +5375,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -5422,7 +5422,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -5437,7 +5437,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -5452,8 +5452,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -5471,10 +5471,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -5496,11 +5496,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -5864,10 +5864,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -5909,7 +5909,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -5924,7 +5924,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -5939,8 +5939,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -5958,10 +5958,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -5983,11 +5983,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6359,10 +6359,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -6406,7 +6406,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -6421,7 +6421,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -6436,8 +6436,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -6455,10 +6455,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -6480,11 +6480,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6846,10 +6846,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -6891,7 +6891,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -6906,7 +6906,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -6921,8 +6921,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -6940,10 +6940,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -6965,11 +6965,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7331,10 +7331,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -7378,7 +7378,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7393,7 +7393,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -7408,8 +7408,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -7427,10 +7427,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -7452,11 +7452,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7818,10 +7818,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -7863,7 +7863,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -7878,7 +7878,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -7893,8 +7893,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -7912,10 +7912,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -7937,11 +7937,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -8318,10 +8318,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -8341,10 +8341,10 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
         And saving paGetPayment request in paGetPayment_1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv1     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv1                             |
             | paymentAmount               | 10.00                               |
@@ -8364,10 +8364,10 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2
         And saving paGetPayment request in paGetPayment_2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv2     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv2                             |
             | paymentAmount               | 10.00                               |
@@ -8387,10 +8387,10 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3
         And saving paGetPayment request in paGetPayment_3
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv3     | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv3                             |
             | paymentAmount               | 10.00                               |
@@ -8437,7 +8437,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |
@@ -8460,7 +8460,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_1Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_1.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -8480,7 +8480,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -8500,7 +8500,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_3Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_3.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -8520,7 +8520,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_4Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_4.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -8536,8 +8536,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -8553,8 +8553,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -8570,8 +8570,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -8587,8 +8587,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -8607,10 +8607,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_1.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -8627,10 +8627,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_2.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -8647,10 +8647,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_3.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -8667,10 +8667,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_4.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -8693,11 +8693,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_1.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -8729,11 +8729,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_2.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -8765,11 +8765,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_3.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -8801,11 +8801,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_4.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9464,10 +9464,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -9488,10 +9488,10 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
         And saving paGetPaymentV2 request in paGetPaymentV2_1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv1     | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv1                             |
             | paymentAmount               | 10.00                               |
@@ -9512,10 +9512,10 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2
         And saving paGetPaymentV2 request in paGetPaymentV2_2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv2     | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv2                             |
             | paymentAmount               | 10.00                               |
@@ -9536,10 +9536,10 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3
         And saving paGetPaymentV2 request in paGetPaymentV2_3
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv3     | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv3                             |
             | paymentAmount               | 10.00                               |
@@ -9587,7 +9587,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |
@@ -9610,7 +9610,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_1Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_1.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9630,7 +9630,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9650,7 +9650,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_3Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_3.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9670,7 +9670,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_4Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_4.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9686,8 +9686,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9703,8 +9703,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9720,8 +9720,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9737,8 +9737,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9757,10 +9757,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_1.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9777,10 +9777,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_2.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9797,10 +9797,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_3.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9817,10 +9817,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_4.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9843,11 +9843,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_1.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9879,11 +9879,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_2.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9915,11 +9915,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_3.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9951,11 +9951,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_4.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -10621,10 +10621,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_MBD_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_MBD_full initial XML paGetPaymentV2
             | outcome                     | OK                                           |
             | creditorReferenceId         | 10$iuv                                       |
             | paymentAmount               | 10.00                                        |
@@ -10668,7 +10668,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -10683,7 +10683,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -10698,8 +10698,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -10717,10 +10717,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -10742,11 +10742,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
+            | OUTCOME                    | OK                                            |
             | PAYMENT_METHOD             | creditCard                                    |
-            | PAYMENT_CHANNEL            | None                                          |
+            | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
-            | PAYER_ID                   | None                                          |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -11216,10 +11216,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 25.00                               |
@@ -11242,10 +11242,10 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 25.00                               |
@@ -11272,10 +11272,10 @@ Feature: NMU flows con PA New pagamento OK
         Given update parameter station.stand-in on configuration keys with value 66666666666_01
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 25.00                               |
@@ -11301,10 +11301,10 @@ Feature: NMU flows con PA New pagamento OK
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv1     | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv1                             |
             | paymentAmount               | 25.00                               |
@@ -11355,7 +11355,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |
@@ -12373,10 +12373,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -12421,7 +12421,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -13472,10 +13472,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -13520,7 +13520,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -14572,10 +14572,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -14620,7 +14620,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -15672,10 +15672,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -15721,7 +15721,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -16776,10 +16776,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -16825,7 +16825,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -17878,10 +17878,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -17927,7 +17927,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -18972,10 +18972,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -19020,7 +19020,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -19562,10 +19562,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -19610,7 +19610,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -20151,10 +20151,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -20200,7 +20200,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -20884,10 +20884,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -20933,7 +20933,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -21618,10 +21618,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -21667,7 +21667,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -22361,10 +22361,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -22409,7 +22409,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -23451,10 +23451,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -23497,7 +23497,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -24535,10 +24535,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -24583,7 +24583,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -25625,10 +25625,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -25673,7 +25673,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -26719,10 +26719,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -26765,7 +26765,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -27805,10 +27805,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 50.00                       |
@@ -27853,7 +27853,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -28888,10 +28888,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 50.00                               |
@@ -28936,7 +28936,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -29465,10 +29465,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -29507,7 +29507,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -29977,10 +29977,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -30019,7 +30019,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -30490,10 +30490,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -30532,7 +30532,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -31002,10 +31002,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -31044,7 +31044,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -31514,10 +31514,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -31556,7 +31556,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -32026,10 +32026,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -32068,7 +32068,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -32538,10 +32538,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -32580,7 +32580,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -33051,10 +33051,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -33093,7 +33093,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         Then saving v2/closepayment request in v2/closepayment
@@ -33581,10 +33581,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_MBD_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_MBD_full initial XML paGetPaymentV2
             | outcome                     | OK                                           |
             | creditorReferenceId         | 47$iuv                                       |
             | paymentAmount               | 10.00                                        |
@@ -33628,7 +33628,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -34157,10 +34157,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -34201,7 +34201,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -34663,10 +34663,10 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                    |
             | creditorReferenceId         | 02$iuv                                |
             | paymentAmount               | 25.00                                 |
@@ -34689,10 +34689,10 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                    |
             | creditorReferenceId         | 10$iuv                                |
             | paymentAmount               | 25.00                                 |
@@ -34719,10 +34719,10 @@ Feature: NMU flows con PA New pagamento OK
         Given update parameter station.stand-in on configuration keys with value 66666666666_01
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 25.00  |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                    |
             | creditorReferenceId         | 47$iuv                                |
             | paymentAmount               | 25.00                                 |
@@ -34748,10 +34748,10 @@ Feature: NMU flows con PA New pagamento OK
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv1     | 25.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                    |
             | creditorReferenceId         | 47$iuv1                               |
             | paymentAmount               | 25.00                                 |
@@ -34802,7 +34802,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
             | idChannel   | #canale_versione_primitive_2#                   |

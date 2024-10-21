@@ -23,7 +23,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -43,7 +43,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -402,10 +402,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -425,7 +425,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -784,7 +784,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 10$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -805,7 +805,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -1161,10 +1161,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -1185,7 +1185,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -1543,10 +1543,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -1567,7 +1567,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -1891,7 +1891,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -1911,7 +1911,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -2269,10 +2269,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -2292,7 +2292,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -2653,7 +2653,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 10$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -2674,7 +2674,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -3031,10 +3031,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -3055,7 +3055,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -3416,7 +3416,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 50.00                             |
@@ -3441,7 +3441,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4012,7 +4012,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 50.00                             |
@@ -4037,7 +4037,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -4606,7 +4606,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -4626,7 +4626,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4981,10 +4981,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -5004,7 +5004,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -5364,7 +5364,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -5384,7 +5384,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -5741,10 +5741,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -5764,7 +5764,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -6123,7 +6123,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 10$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -6144,7 +6144,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -6504,10 +6504,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -6528,7 +6528,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -6891,7 +6891,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 10$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -6912,7 +6912,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -7270,10 +7270,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -7294,7 +7294,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -7651,10 +7651,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -7678,7 +7678,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -8303,10 +8303,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -8331,7 +8331,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -9021,10 +9021,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -9048,7 +9048,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -9506,10 +9506,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -9534,7 +9534,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -9997,10 +9997,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -10025,7 +10025,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -10724,10 +10724,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -10751,7 +10751,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -11701,10 +11701,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -11729,7 +11729,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -12680,10 +12680,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -12707,7 +12707,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -13165,10 +13165,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
             | paymentAmount               | 10000.00                    |
@@ -13193,7 +13193,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -13649,7 +13649,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
@@ -13661,10 +13661,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 5000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 10$iuv                      |
             | paymentAmount               | 5000.00                     |
@@ -13689,7 +13689,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -14645,7 +14645,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
@@ -14657,10 +14657,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 5000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 10$iuv                      |
             | paymentAmount               | 5000.00                     |
@@ -14685,7 +14685,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -15635,7 +15635,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
@@ -15647,10 +15647,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_noOptional initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 10000.00 | PO            | PSP        | 2000           |
-        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10000.00                            |
@@ -15675,7 +15675,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti

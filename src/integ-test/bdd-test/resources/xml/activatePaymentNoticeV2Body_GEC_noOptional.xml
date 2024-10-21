@@ -11,7 +11,9 @@
 				<noticeNumber>$noticeNumber</noticeNumber>
 			</qrCode>
 			<amount>$amount</amount>
+			<!--Optional:-->
 			<paymentMethod>$paymentMethod</paymentMethod>
+			<!--Optional:-->
             <touchPoint>$touchPoint</touchPoint>
 		</nod:activatePaymentNoticeV2Request>
 	</soapenv:Body>
