@@ -181,7 +181,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -189,7 +189,7 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_timeout initial XML paGetPayment
@@ -319,7 +319,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -327,10 +327,10 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | KO                                  |
             | creditorReferenceId         | 02$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -357,7 +357,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                         |
             | TOKEN_VALID_FROM      | None                            |
             | TOKEN_VALID_TO        | None                            |
-            | DUE_DATE              | None                            |
+            | DUE_DATE              | 2021-12-31 00:00:00             |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
@@ -486,7 +486,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -494,10 +494,10 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_timeout initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | delay | 10000 |
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -512,7 +512,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                         |
             | TOKEN_VALID_FROM      | None                            |
             | TOKEN_VALID_TO        | None                            |
-            | DUE_DATE              | None                            |
+            | DUE_DATE              | NotNone                         |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
@@ -620,7 +620,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -628,10 +628,10 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | KO                                |
             | creditorReferenceId         | 10$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -659,7 +659,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                       |
             | TOKEN_VALID_FROM      | None                          |
             | TOKEN_VALID_TO        | None                          |
-            | DUE_DATE              | None                          |
+            | DUE_DATE              | NotNone                       |
             | AMOUNT                | $activatePaymentNotice.amount |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
@@ -788,7 +788,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -796,7 +796,7 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
         And from body with datatable vertical paGetPaymentV2_timeout initial XML paGetPaymentV2
@@ -923,7 +923,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -931,10 +931,10 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | KO                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
@@ -962,7 +962,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                         |
             | TOKEN_VALID_FROM      | None                            |
             | TOKEN_VALID_TO        | None                            |
-            | DUE_DATE              | None                            |
+            | DUE_DATE              | NotNone                         |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
@@ -1092,7 +1092,7 @@ Feature: NM3 flows con attivazione fallita
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -1100,7 +1100,7 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
         And from body with datatable vertical paGetPaymentV2_timeout initial XML paGetPaymentV2
