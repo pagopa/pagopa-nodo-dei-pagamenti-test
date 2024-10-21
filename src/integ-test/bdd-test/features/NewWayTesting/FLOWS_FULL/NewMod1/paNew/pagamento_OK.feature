@@ -9610,7 +9610,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_1Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_1.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9630,7 +9630,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9650,7 +9650,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_3Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_3.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9670,7 +9670,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2_4Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                         |
             | TOKEN_VALID_TO        | NotNone                                         |
-            | DUE_DATE              | None                                            |
+            | DUE_DATE              | NotNone                                         |
             | AMOUNT                | $activatePaymentNoticeV2_4.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                         |
             | UPDATED_TIMESTAMP     | NotNone                                         |
@@ -9686,8 +9686,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9703,8 +9703,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9720,8 +9720,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9737,8 +9737,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9757,10 +9757,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_1.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9777,10 +9777,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_2.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9797,10 +9797,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_3.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9817,10 +9817,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                           |
             | RETENTION_DATE        | None                              |
             | AMOUNT                | $activatePaymentNoticeV2_4.amount |
-            | FLAG_FINAL_PAYMENT    | N                                 |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
             | INSERTED_TIMESTAMP    | NotNone                           |
             | UPDATED_TIMESTAMP     | NotNone                           |
-            | METADATA              | None                              |
+            | METADATA              | NotNone                           |
             | FK_POSITION_SERVICE   | NotNone                           |
             | INSERTED_BY           | activatePaymentNoticeV2           |
             | UPDATED_BY            | activatePaymentNoticeV2           |
@@ -9843,11 +9843,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_1.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9879,11 +9879,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_2.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9915,11 +9915,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_3.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -9951,11 +9951,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                   |
             | AMOUNT                     | $activatePaymentNoticeV2_4.amount               |
             | FEE                        | 2.00                                            |
-            | OUTCOME                    | NotNone                                         |
-            | PAYMENT_METHOD             | None                                            |
-            | PAYMENT_CHANNEL            | None                                            |
-            | TRANSFER_DATE              | None                                            |
-            | PAYER_ID                   | None                                            |
+            | OUTCOME                    | OK                                              |
+            | PAYMENT_METHOD             | creditCard                                      |
+            | PAYMENT_CHANNEL            | app                                             |
+            | TRANSFER_DATE              | NotNone                                         |
+            | PAYER_ID                   | NotNone                                         |
             | INSERTED_TIMESTAMP         | NotNone                                         |
             | UPDATED_TIMESTAMP          | NotNone                                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
@@ -10683,7 +10683,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -10698,8 +10698,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -10717,10 +10717,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -10742,11 +10742,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
+            | OUTCOME                    | OK                                            |
             | PAYMENT_METHOD             | creditCard                                    |
-            | PAYMENT_CHANNEL            | None                                          |
+            | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
-            | PAYER_ID                   | None                                          |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
