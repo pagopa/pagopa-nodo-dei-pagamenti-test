@@ -632,7 +632,7 @@ Feature: NM3 flows con sessione scaduta
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 10$iuv                            |
             | paymentAmount               | 10.00                             |
@@ -937,7 +937,7 @@ Feature: NM3 flows con sessione scaduta
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
             | paymentAmount               | 10.00                               |
