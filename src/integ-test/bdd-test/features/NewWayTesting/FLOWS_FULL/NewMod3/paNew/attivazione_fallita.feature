@@ -207,7 +207,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                       |
             | TOKEN_VALID_FROM      | None                          |
             | TOKEN_VALID_TO        | None                          |
-            | DUE_DATE              | None                          |
+            | DUE_DATE              | NotNone                          |
             | AMOUNT                | $activatePaymentNotice.amount |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
@@ -497,7 +497,7 @@ Feature: NM3 flows con attivazione fallita
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_timeout initial XML paGetPayment
             | delay | 10000 |
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -814,7 +814,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                       |
             | TOKEN_VALID_FROM      | None                          |
             | TOKEN_VALID_TO        | None                          |
-            | DUE_DATE              | None                          |
+            | DUE_DATE              | NotNone                          |
             | AMOUNT                | $activatePaymentNotice.amount |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
@@ -1118,7 +1118,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                         |
             | TOKEN_VALID_FROM      | None                            |
             | TOKEN_VALID_TO        | None                            |
-            | DUE_DATE              | None                            |
+            | DUE_DATE              | NotNone                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
