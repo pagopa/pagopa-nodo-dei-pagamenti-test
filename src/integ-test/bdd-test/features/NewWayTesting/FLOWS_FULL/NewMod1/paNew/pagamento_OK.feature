@@ -21682,7 +21682,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -21697,8 +21697,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -21716,10 +21716,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -21741,11 +21741,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -22424,7 +22424,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -22439,8 +22439,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -22458,10 +22458,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -22483,11 +22483,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -22861,7 +22861,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -22920,7 +22920,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -22992,7 +22992,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -23063,7 +23063,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -23135,7 +23135,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -23207,7 +23207,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -23279,7 +23279,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -23351,7 +23351,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -23512,7 +23512,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -23527,8 +23527,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -23546,10 +23546,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -23571,11 +23571,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -23945,7 +23945,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24004,7 +24004,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24076,7 +24076,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24147,7 +24147,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24219,7 +24219,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24291,7 +24291,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24363,7 +24363,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24435,7 +24435,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -24508,7 +24508,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_35 @after
-    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-51)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-52)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -24598,7 +24598,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -24613,8 +24613,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -24632,10 +24632,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -24657,11 +24657,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -25035,7 +25035,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25094,7 +25094,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25166,7 +25166,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25237,7 +25237,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25309,7 +25309,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25381,7 +25381,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25453,7 +25453,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25525,7 +25525,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -25688,7 +25688,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -25703,8 +25703,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -25722,10 +25722,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -25747,11 +25747,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -26125,7 +26125,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26184,7 +26184,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26256,7 +26256,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26327,7 +26327,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26399,7 +26399,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26471,7 +26471,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26543,7 +26543,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26615,7 +26615,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -26780,7 +26780,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -26795,8 +26795,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -26814,10 +26814,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -26839,11 +26839,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -27213,7 +27213,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27272,7 +27272,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27344,7 +27344,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27415,7 +27415,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27487,7 +27487,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27559,7 +27559,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27631,7 +27631,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27703,7 +27703,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -27868,7 +27868,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -27883,8 +27883,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -27902,10 +27902,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -27927,11 +27927,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | None                                          |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -28305,7 +28305,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28364,7 +28364,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28436,7 +28436,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28507,7 +28507,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28579,7 +28579,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28651,7 +28651,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28723,7 +28723,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28795,7 +28795,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
@@ -28951,7 +28951,7 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -28966,8 +28966,8 @@ Feature: NMU flows con PA New pagamento OK
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -28985,10 +28985,10 @@ Feature: NMU flows con PA New pagamento OK
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -29010,11 +29010,11 @@ Feature: NMU flows con PA New pagamento OK
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | OUTCOME                    | OK                                            |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -29397,7 +29397,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
