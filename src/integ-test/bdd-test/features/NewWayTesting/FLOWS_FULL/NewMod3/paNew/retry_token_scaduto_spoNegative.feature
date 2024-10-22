@@ -12,7 +12,7 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -20,7 +20,7 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -59,7 +59,7 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |

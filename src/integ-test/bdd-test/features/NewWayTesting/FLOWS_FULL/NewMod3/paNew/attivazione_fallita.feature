@@ -207,7 +207,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                       |
             | TOKEN_VALID_FROM      | None                          |
             | TOKEN_VALID_TO        | None                          |
-            | DUE_DATE              | NotNone                          |
+            | DUE_DATE              | NotNone                       |
             | AMOUNT                | $activatePaymentNotice.amount |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
@@ -814,7 +814,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                       |
             | TOKEN_VALID_FROM      | None                          |
             | TOKEN_VALID_TO        | None                          |
-            | DUE_DATE              | NotNone                          |
+            | DUE_DATE              | NotNone                       |
             | AMOUNT                | $activatePaymentNotice.amount |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
@@ -1118,7 +1118,7 @@ Feature: NM3 flows con attivazione fallita
             | PAYMENT_TOKEN         | NotNone                         |
             | TOKEN_VALID_FROM      | None                            |
             | TOKEN_VALID_TO        | None                            |
-            | DUE_DATE              | NotNone                            |
+            | DUE_DATE              | NotNone                         |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |

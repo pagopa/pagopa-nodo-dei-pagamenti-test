@@ -110,7 +110,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | $sendPaymentOutcome.outcome                 |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcome                          |
@@ -350,7 +350,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -590,7 +590,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | $sendPaymentOutcome.outcome                 |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcome                          |
@@ -830,7 +830,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -1070,7 +1070,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome               |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                        |
@@ -1145,7 +1145,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                              |
+            | TIPO_EVENTO        | paGetPayment                                |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | ESITO              | INVIATA                                     |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -1161,7 +1161,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                              |
+            | TIPO_EVENTO        | paGetPayment                                |
             | SOTTO_TIPO_EVENTO  | RESP                                        |
             | ESITO              | RICEVUTA                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -1177,7 +1177,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | ESITO              | RICEVUTA                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -1193,7 +1193,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
             | SOTTO_TIPO_EVENTO  | RESP                                        |
             | ESITO              | INVIATA                                     |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -1309,7 +1309,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | $sendPaymentOutcome.outcome                   |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcome                            |
@@ -1384,7 +1384,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
+            | TIPO_EVENTO        | paGetPayment                                  |
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1400,7 +1400,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
+            | TIPO_EVENTO        | paGetPayment                                  |
             | SOTTO_TIPO_EVENTO  | RESP                                          |
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1416,7 +1416,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcome                          |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1432,7 +1432,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcome                          |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
             | SOTTO_TIPO_EVENTO  | RESP                                          |
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1549,7 +1549,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome               |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                        |
@@ -1656,7 +1656,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | ESITO              | RICEVUTA                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -1672,7 +1672,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
             | SOTTO_TIPO_EVENTO  | RESP                                        |
             | ESITO              | INVIATA                                     |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -1789,7 +1789,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | $sendPaymentOutcome.outcome                   |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcome                            |
@@ -1896,7 +1896,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcome                          |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1912,7 +1912,7 @@ Feature: NM3 flows con pagamento fallito
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcome                          |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
             | SOTTO_TIPO_EVENTO  | RESP                                          |
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1923,7 +1923,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-        
+
     #Posizione non pagabile spov1 OK
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_9
     Scenario: NM3 flow OK, FLOW: activatePaymentNotice -> mod3CancelV2 ->sendPaymentOutcome (OLD_NM3-10)
