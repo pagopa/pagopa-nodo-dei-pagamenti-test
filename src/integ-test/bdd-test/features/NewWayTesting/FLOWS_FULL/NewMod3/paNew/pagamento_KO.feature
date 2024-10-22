@@ -6,7 +6,7 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_1
     Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spo-, BIZ- (NM3-3)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -110,7 +110,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                        |
             | OUTCOME                    | $sendPaymentOutcome.outcome                 |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcome                          |
@@ -350,7 +350,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                          |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -485,7 +485,7 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_3
     Scenario: NM3 flow OK, FLOW: activate -> paGetPaymentV2 -> spo- BIZ- (NM3-32)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -590,7 +590,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                        |
             | OUTCOME                    | $sendPaymentOutcome.outcome                 |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcome                          |
@@ -830,7 +830,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                          |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -966,7 +966,7 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_5
     Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spoV2-, BIZ- (NM3-64)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -1070,7 +1070,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                        |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome               |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                        |
@@ -1309,7 +1309,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                          |
             | OUTCOME                    | $sendPaymentOutcome.outcome                   |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcome                            |
@@ -1444,7 +1444,7 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_7
     Scenario: NM3 flow OK, FLOW: activate -> paGetPaymentV2, spoV2-, BIZ- (NM3-86)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -1549,7 +1549,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                        |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome               |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                        |
@@ -1789,7 +1789,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                          |
             | OUTCOME                    | $sendPaymentOutcome.outcome                   |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcome                            |
