@@ -6,7 +6,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT timeout resp KO a activate BIZ attivazione fallita nodoInviaRPT -> resp KO a RPT (NM3-15)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
@@ -63,7 +63,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #pspFittizio#                     |
             | BROKER_PSP_ID              | #brokerFittizio#                  |
             | CHANNEL_ID                 | #canaleFittizio#                  |
-            | IDEMPOTENCY_KEY            | None                              |
+            | IDEMPOTENCY_KEY            | NotNone                           |
             | AMOUNT                     | $activatePaymentNotice.amount     |
             | FEE                        | None                              |
             | OUTCOME                    | None                              |
@@ -339,7 +339,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_2
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT KO  resp KO a activate BIZ attivazione fallita nodoInviaRPT -> resp KO a RPT (NM3-16)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -539,7 +539,7 @@ Feature: NM3 flows PA Old con attivazione fallita
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ+ (NM3-13)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_KO initial XML paaAttivaRPT
@@ -590,7 +590,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #psp#                             |
             | BROKER_PSP_ID              | #id_broker_psp#                   |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#      |
-            | IDEMPOTENCY_KEY            | None                              |
+            | IDEMPOTENCY_KEY            | NotNone                           |
             | AMOUNT                     | $activatePaymentNotice.amount     |
             | FEE                        | None                              |
             | OUTCOME                    | None                              |
@@ -620,7 +620,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PM_INFO                    | None                              |
             | MBD                        | N                                 |
             | FEE_SPO                    | None                              |
-            | PAYMENT_NOTE               | None                              |
+            | PAYMENT_NOTE               | NotNone                           |
             | FLAG_STANDIN               | N                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -862,7 +862,7 @@ Feature: NM3 flows PA Old con attivazione fallita
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP Timeout -> paaInviaRT- BIZ+ (NM3-14)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
@@ -913,7 +913,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #psp#                             |
             | BROKER_PSP_ID              | #id_broker_psp#                   |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#      |
-            | IDEMPOTENCY_KEY            | None                              |
+            | IDEMPOTENCY_KEY            | NotNone                           |
             | AMOUNT                     | $activatePaymentNotice.amount     |
             | FEE                        | None                              |
             | OUTCOME                    | None                              |
@@ -943,7 +943,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PM_INFO                    | None                              |
             | MBD                        | N                                 |
             | FEE_SPO                    | None                              |
-            | PAYMENT_NOTE               | None                              |
+            | PAYMENT_NOTE               | NotNone                           |
             | FLAG_STANDIN               | N                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -1201,7 +1201,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -1236,7 +1236,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #psp#                               |
             | BROKER_PSP_ID              | #intermediarioPSP2#                 |
             | CHANNEL_ID                 | #canale32#                          |
-            | IDEMPOTENCY_KEY            | None                                |
+            | IDEMPOTENCY_KEY            | NotNone                             |
             | AMOUNT                     | $activatePaymentNoticeV2.amount     |
             | FEE                        | None                                |
             | OUTCOME                    | None                                |
@@ -1266,7 +1266,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PM_INFO                    | None                                |
             | MBD                        | N                                   |
             | FEE_SPO                    | None                                |
-            | PAYMENT_NOTE               | None                                |
+            | PAYMENT_NOTE               | NotNone                             |
             | FLAG_STANDIN               | N                                   |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -1558,7 +1558,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #psp#                               |
             | BROKER_PSP_ID              | #id_broker_psp#                     |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#        |
-            | IDEMPOTENCY_KEY            | None                                |
+            | IDEMPOTENCY_KEY            | NotNone                             |
             | AMOUNT                     | $activatePaymentNoticeV2.amount     |
             | FEE                        | None                                |
             | OUTCOME                    | None                                |
@@ -1588,7 +1588,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PM_INFO                    | None                                |
             | MBD                        | N                                   |
             | FEE_SPO                    | None                                |
-            | PAYMENT_NOTE               | None                                |
+            | PAYMENT_NOTE               | NotNone                             |
             | FLAG_STANDIN               | N                                   |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |

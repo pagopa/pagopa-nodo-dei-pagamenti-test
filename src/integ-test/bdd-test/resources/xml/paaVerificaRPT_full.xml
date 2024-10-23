@@ -1,0 +1,33 @@
+            
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:paaVerificaRPTRisposta>
+			<paaVerificaRPTRisposta>
+				<esito>$esito</esito>
+				<datiPagamentoPA>
+					<importoSingoloVersamento>$importoSingoloVersamento</importoSingoloVersamento>
+					<ibanAccredito>$ibanAccredito</ibanAccredito>
+					<bicAccredito>BSCTCH22</bicAccredito>
+					<enteBeneficiario>
+						<pag:identificativoUnivocoBeneficiario>
+							<pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+							<pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
+						</pag:identificativoUnivocoBeneficiario>
+						<pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+						<pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+						<pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+						<pag:indirizzoBeneficiario>"paaVerificaRPT"</pag:indirizzoBeneficiario>
+						<pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+						<pag:capBeneficiario>jyr</pag:capBeneficiario>
+						<pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+						<pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+						<pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+					</enteBeneficiario>
+					<credenzialiPagatore>of8</credenzialiPagatore>
+					<causaleVersamento>$causaleVersamento</causaleVersamento>
+				</datiPagamentoPA>
+			</paaVerificaRPTRisposta>
+		</ws:paaVerificaRPTRisposta>
+	</soapenv:Body>
+</soapenv:Envelope>
