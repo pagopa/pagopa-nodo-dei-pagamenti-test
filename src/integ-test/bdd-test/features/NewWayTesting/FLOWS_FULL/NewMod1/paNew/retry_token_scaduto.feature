@@ -82,7 +82,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -97,8 +97,8 @@ Feature: NMU flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -116,10 +116,10 @@ Feature: NMU flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -142,8 +142,8 @@ Feature: NMU flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | None                                          |
-            | PAYMENT_METHOD             | NotNone                                       |
-            | PAYMENT_CHANNEL            | NotNone                                       |
+            | PAYMENT_METHOD             | CP                                            |
+            | PAYMENT_CHANNEL            | WISP                                          |
             | TRANSFER_DATE              | None                                          |
             | PAYER_ID                   | None                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
@@ -538,7 +538,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -553,8 +553,8 @@ Feature: NMU flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -572,10 +572,10 @@ Feature: NMU flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -598,8 +598,8 @@ Feature: NMU flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | None                                          |
-            | PAYMENT_METHOD             | NotNone                                       |
-            | PAYMENT_CHANNEL            | NotNone                                       |
+            | PAYMENT_METHOD             | CP                                            |
+            | PAYMENT_CHANNEL            | WISP                                          |
             | TRANSFER_DATE              | None                                          |
             | PAYER_ID                   | None                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
@@ -986,7 +986,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1001,8 +1001,8 @@ Feature: NMU flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -1020,10 +1020,10 @@ Feature: NMU flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -1047,7 +1047,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | FEE                        | None                                          |
             | OUTCOME                    | None                                          |
             | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NotNone                                       |
+            | PAYMENT_CHANNEL            | NA                                            |
             | TRANSFER_DATE              | None                                          |
             | PAYER_ID                   | None                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
