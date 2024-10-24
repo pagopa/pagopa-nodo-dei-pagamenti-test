@@ -12,7 +12,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -20,7 +20,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -59,7 +59,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -74,8 +74,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                 |
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | None                  |
-            | OFFICE_NAME        | None                  |
+            | COMPANY_NAME       | NotNone               |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -93,10 +93,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -117,12 +117,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                       |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -362,7 +362,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -394,7 +394,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -441,7 +441,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -456,8 +456,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -475,10 +475,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -499,12 +499,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                         |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -744,7 +744,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -773,7 +773,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -781,7 +781,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -821,7 +821,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -837,7 +837,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | company               |
-            | OFFICE_NAME        | None                  |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -855,10 +855,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -879,12 +879,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                       |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -1153,7 +1153,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -1201,7 +1201,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1217,7 +1217,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -1235,10 +1235,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -1259,12 +1259,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                         |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1535,7 +1535,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -1583,7 +1583,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1599,7 +1599,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -1617,10 +1617,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -1641,12 +1641,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                         |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | KO                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1880,7 +1880,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -1888,7 +1888,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -1927,7 +1927,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -1942,8 +1942,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                 |
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | None                  |
-            | OFFICE_NAME        | None                  |
+            | COMPANY_NAME       | NotNone               |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -1961,10 +1961,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -1985,12 +1985,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                       |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -2230,7 +2230,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -2261,7 +2261,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -2308,7 +2308,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2323,8 +2323,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -2342,10 +2342,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -2366,12 +2366,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                         |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -2611,7 +2611,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -2642,7 +2642,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -2650,7 +2650,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -2690,7 +2690,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -2706,7 +2706,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | company               |
-            | OFFICE_NAME        | None                  |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -2724,10 +2724,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -2748,12 +2748,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                       |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -3023,7 +3023,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -3071,7 +3071,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3087,7 +3087,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -3105,10 +3105,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -3129,12 +3129,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #psp#                                         |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -3413,7 +3413,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
@@ -3456,7 +3456,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -3472,7 +3472,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | companyName           |
-            | OFFICE_NAME        | None                  |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -3490,10 +3490,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -3514,12 +3514,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -4009,7 +4009,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 2000           | 50.00  |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
@@ -4052,7 +4052,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -4068,7 +4068,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | companyName           |
-            | OFFICE_NAME        | None                  |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -4086,10 +4086,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -4110,12 +4110,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -4595,7 +4595,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -4603,7 +4603,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -4642,7 +4642,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -4657,8 +4657,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                 |
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | None                  |
-            | OFFICE_NAME        | None                  |
+            | COMPANY_NAME       | NotNone               |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -4676,10 +4676,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -4700,12 +4700,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -4945,7 +4945,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -4973,7 +4973,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -5020,7 +5020,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -5035,8 +5035,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -5054,10 +5054,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -5078,12 +5078,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -5323,7 +5323,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -5353,7 +5353,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -5361,7 +5361,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -5400,7 +5400,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -5415,8 +5415,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                 |
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | None                  |
-            | OFFICE_NAME        | None                  |
+            | COMPANY_NAME       | NotNone               |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -5434,10 +5434,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -5458,12 +5458,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -5703,7 +5703,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -5733,7 +5733,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -5780,7 +5780,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -5795,8 +5795,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -5814,10 +5814,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -5838,12 +5838,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6083,7 +6083,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -6112,7 +6112,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -6120,7 +6120,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -6160,7 +6160,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -6176,7 +6176,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | company               |
-            | OFFICE_NAME        | None                  |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -6194,10 +6194,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -6218,12 +6218,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -6496,7 +6496,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -6544,7 +6544,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -6560,7 +6560,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -6578,10 +6578,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -6602,12 +6602,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6880,7 +6880,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -6888,7 +6888,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -6928,7 +6928,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | NotNone                                     |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -6944,7 +6944,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | company               |
-            | OFFICE_NAME        | None                  |
+            | OFFICE_NAME        | NotNone               |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -6962,10 +6962,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -6986,12 +6986,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | NotNone                                        |
+            | PAYMENT_CHANNEL            | app                                          |
+            | TRANSFER_DATE              | NotNone                                        |
+            | PAYER_ID                   | NotNone                                        |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -7262,7 +7262,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -7310,7 +7310,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -7326,7 +7326,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -7344,10 +7344,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -7368,12 +7368,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7694,7 +7694,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -7713,8 +7713,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -7732,10 +7732,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -7756,12 +7756,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -8102,7 +8102,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -8161,7 +8161,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTSecReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTSecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTSecReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTSecReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -8231,7 +8231,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2SecReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2SecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2SecReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2SecReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -8347,7 +8347,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -8367,7 +8367,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -8385,10 +8385,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -8409,12 +8409,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -9064,7 +9064,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -9083,8 +9083,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9102,10 +9102,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -9126,12 +9126,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -9550,7 +9550,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -9570,7 +9570,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9588,10 +9588,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -9612,12 +9612,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -10041,7 +10041,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -10061,7 +10061,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -10079,10 +10079,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -10103,12 +10103,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -10577,7 +10577,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTSecReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTSecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTSecReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTSecReq.receipt.companyName xml check value companyName in position 0
+        And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -10647,7 +10647,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2SecReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2SecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2SecReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2SecReq.receipt.companyName xml check value companyName in position 0
+        And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -10767,7 +10767,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -10786,8 +10786,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -10805,10 +10805,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -10829,12 +10829,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -11167,7 +11167,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        And from $paSendRTReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11221,7 +11221,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRT_BC1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_BC1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_BC1Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_BC1Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_BC1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_BC1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11286,7 +11286,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRT_BC2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_BC2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_BC2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_BC2Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_BC2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_BC2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_BC2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11351,7 +11351,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRT_BC3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_BC3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_BC3Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_BC3Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_BC3Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_BC3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_BC3Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11416,7 +11416,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRT_BC4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRT_BC4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRT_BC4Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRT_BC4Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRT_BC4Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRT_BC4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRT_BC4Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11481,7 +11481,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2_BC5Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_BC5Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_BC5Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_BC5Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_BC5Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_BC5Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_BC5Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11546,7 +11546,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2_BC6Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_BC6Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_BC6Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_BC6Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_BC6Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_BC6Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_BC6Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11611,7 +11611,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2_BC7Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2_BC7Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2_BC7Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2_BC7Req.receipt.companyName xml check value NA in position 0
+        And from $paSendRTV2_BC7Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2_BC7Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2_BC7Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -11745,7 +11745,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -11765,7 +11765,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -11783,10 +11783,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -11807,12 +11807,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -12723,7 +12723,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -12742,8 +12742,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | None                    |
-            | OFFICE_NAME        | None                    |
+            | COMPANY_NAME       | NotNone                 |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -12761,10 +12761,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -12785,12 +12785,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -13209,7 +13209,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -13229,7 +13229,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -13247,10 +13247,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -13271,12 +13271,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -13652,7 +13652,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 50.00                       |
             | options            | EQ                          |
@@ -13705,7 +13705,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -13725,7 +13725,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -13743,10 +13743,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -13767,12 +13767,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -14648,7 +14648,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 50.00                       |
             | options            | EQ                          |
@@ -14701,7 +14701,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -14721,7 +14721,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -14739,10 +14739,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -14763,12 +14763,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -15638,7 +15638,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 50.00                       |
             | options            | EQ                          |
@@ -15691,7 +15691,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
-            | DUE_DATE              | None                                               |
+            | DUE_DATE              | NotNone                                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount                    |
             | INSERTED_TIMESTAMP    | NotNone                                            |
             | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -15711,7 +15711,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | None                    |
+            | OFFICE_NAME        | NotNone                 |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -15729,10 +15729,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | N                               |
+            | FLAG_FINAL_PAYMENT    | Y                               |
             | INSERTED_TIMESTAMP    | NotNone                         |
             | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | None                            |
+            | METADATA              | NotNone                         |
             | FK_POSITION_SERVICE   | NotNone                         |
             | INSERTED_BY           | activatePaymentNoticeV2         |
             | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -15753,12 +15753,12 @@ Feature: NM3 flows con PA New retry a token scaduto
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | NotNone                                          |
+            | PAYMENT_CHANNEL            | app                                            |
+            | TRANSFER_DATE              | NotNone                                          |
+            | PAYER_ID                   | NotNone                                          |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
