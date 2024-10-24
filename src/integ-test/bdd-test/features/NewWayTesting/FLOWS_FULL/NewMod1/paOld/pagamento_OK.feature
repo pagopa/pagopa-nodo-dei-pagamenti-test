@@ -639,7 +639,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -654,7 +654,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -698,11 +698,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2                                             |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1173,7 +1173,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1188,7 +1188,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -1232,11 +1232,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2                                             |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1708,7 +1708,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1723,7 +1723,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -1767,11 +1767,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2                                             |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -2245,7 +2245,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2260,7 +2260,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -2304,11 +2304,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -2790,7 +2790,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2805,7 +2805,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -2849,11 +2849,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2                                             |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -3324,7 +3324,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3339,7 +3339,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -3383,11 +3383,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -3857,7 +3857,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3872,7 +3872,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -3916,11 +3916,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -4394,7 +4394,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -4409,7 +4409,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -4453,11 +4453,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2                                             |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -4937,7 +4937,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -4952,7 +4952,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -4996,11 +4996,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -5485,7 +5485,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -5500,7 +5500,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -5544,11 +5544,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6044,7 +6044,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -6059,7 +6059,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -6103,11 +6103,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6603,7 +6603,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -6618,7 +6618,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -6662,11 +6662,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7162,7 +7162,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -7177,7 +7177,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -7221,11 +7221,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7717,7 +7717,7 @@ Feature: NMU flows PA Old con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -7732,7 +7732,7 @@ Feature: NMU flows PA Old con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | NotNone                 |
+      | COMPANY_NAME       | PA paolo                |
       | OFFICE_NAME        | None                    |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
@@ -7776,11 +7776,11 @@ Feature: NMU flows PA Old con pagamento OK
       | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2.00                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
