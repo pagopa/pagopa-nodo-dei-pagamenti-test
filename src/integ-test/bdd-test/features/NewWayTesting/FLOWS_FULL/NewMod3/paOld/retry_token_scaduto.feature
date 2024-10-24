@@ -13,7 +13,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -36,7 +36,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -420,7 +420,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -435,7 +435,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -465,7 +465,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -1058,7 +1058,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -1073,7 +1073,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -1478,7 +1478,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -1493,7 +1493,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -2027,7 +2027,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -2042,7 +2042,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -2072,7 +2072,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -2665,7 +2665,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -2688,7 +2688,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -3072,7 +3072,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -3095,7 +3095,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -3480,7 +3480,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -3503,7 +3503,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -3888,7 +3888,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -3911,7 +3911,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -4308,7 +4308,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -4331,7 +4331,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -4731,7 +4731,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -4746,7 +4746,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -5276,7 +5276,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -5291,7 +5291,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -5823,7 +5823,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -5838,7 +5838,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -6371,7 +6371,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -6386,7 +6386,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -6915,7 +6915,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -6930,7 +6930,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -7337,7 +7337,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -7352,7 +7352,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -7918,7 +7918,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -7933,7 +7933,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -7963,7 +7963,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -8643,7 +8643,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -8658,7 +8658,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -9225,7 +9225,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -9240,7 +9240,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -9270,7 +9270,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -9949,7 +9949,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -9964,7 +9964,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -10531,7 +10531,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -10546,7 +10546,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -10592,7 +10592,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -11265,7 +11265,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -11280,7 +11280,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -11326,7 +11326,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -12002,7 +12002,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -12017,7 +12017,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -12063,7 +12063,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -12736,7 +12736,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -12751,7 +12751,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -12797,7 +12797,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -13485,7 +13485,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -13500,7 +13500,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -13546,7 +13546,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -14229,7 +14229,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -14244,7 +14244,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -14290,7 +14290,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -14975,7 +14975,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -14990,7 +14990,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -15036,7 +15036,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -15720,7 +15720,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -15735,7 +15735,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -15781,7 +15781,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -16454,7 +16454,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -16469,7 +16469,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -16997,7 +16997,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -17012,7 +17012,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -17542,7 +17542,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -17557,7 +17557,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -18088,7 +18088,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -18103,7 +18103,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -18632,7 +18632,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -18647,7 +18647,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -18681,7 +18681,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -19361,7 +19361,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -19376,7 +19376,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -19410,7 +19410,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -20090,7 +20090,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -20105,7 +20105,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -20139,7 +20139,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -20821,7 +20821,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -20836,7 +20836,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -20870,7 +20870,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -21552,7 +21552,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -21567,7 +21567,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -21601,7 +21601,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -22202,7 +22202,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -22217,7 +22217,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -22251,7 +22251,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |
@@ -22854,7 +22854,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -22869,7 +22869,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
@@ -22903,7 +22903,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
             | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
@@ -23506,7 +23506,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -23521,7 +23521,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code_old#               |
@@ -23555,7 +23555,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | identificativoUnivocoVersamento   | 12$iuv                                           |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount                  |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                  |
             | identificativoStazioneIntermediarioPA | #id_station_old#                                 |
             | identificativoDominio                 | #creditor_institution_code_old#                  |

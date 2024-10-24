@@ -31,7 +31,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | $ccp                            |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -362,7 +362,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | $ccp                            |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -555,7 +555,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -878,7 +878,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -1523,7 +1523,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -2521,7 +2521,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | $ccp                            |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -2852,7 +2852,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | $ccp                            |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -3058,7 +3058,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
@@ -3393,7 +3393,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |

@@ -20,7 +20,7 @@ Feature: NMU flows con PA Old sessione scaduta
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 312$iuv      | 2000           | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -35,7 +35,7 @@ Feature: NMU flows con PA Old sessione scaduta
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code#                   |
@@ -432,7 +432,7 @@ Feature: NMU flows con PA Old sessione scaduta
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 312$iuv      | 2000           | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -447,7 +447,7 @@ Feature: NMU flows con PA Old sessione scaduta
             | identificativoUnivocoVersamento   | 12$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
-        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
             | identificativoStazioneIntermediarioPA | #id_station_old#                              |
             | identificativoDominio                 | #creditor_institution_code#                   |
