@@ -3034,7 +3034,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -3093,7 +3093,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #pspPoste#                          |
             | BROKER_PSP_ID              | #brokerPspPoste#                    |
             | CHANNEL_ID                 | #channelPoste#                      |
-            | IDEMPOTENCY_KEY            | None                                |
+            | IDEMPOTENCY_KEY            | NotNone                             |
             | AMOUNT                     | $activatePaymentNoticeV2.amount     |
             | FEE                        | None                                |
             | OUTCOME                    | None                                |
@@ -3123,7 +3123,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PM_INFO                    | None                                |
             | MBD                        | N                                   |
             | FEE_SPO                    | None                                |
-            | PAYMENT_NOTE               | None                                |
+            | PAYMENT_NOTE               | NotNone                             |
             | FLAG_STANDIN               | N                                   |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -3369,7 +3369,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -3428,7 +3428,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PSP_ID                     | #pspPoste#                          |
             | BROKER_PSP_ID              | #brokerPspPoste#                    |
             | CHANNEL_ID                 | #channelPoste#                      |
-            | IDEMPOTENCY_KEY            | None                                |
+            | IDEMPOTENCY_KEY            | NotNone                             |
             | AMOUNT                     | $activatePaymentNoticeV2.amount     |
             | FEE                        | None                                |
             | OUTCOME                    | None                                |
@@ -3458,7 +3458,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PM_INFO                    | None                                |
             | MBD                        | N                                   |
             | FEE_SPO                    | None                                |
-            | PAYMENT_NOTE               | None                                |
+            | PAYMENT_NOTE               | NotNone                             |
             | FLAG_STANDIN               | N                                   |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
