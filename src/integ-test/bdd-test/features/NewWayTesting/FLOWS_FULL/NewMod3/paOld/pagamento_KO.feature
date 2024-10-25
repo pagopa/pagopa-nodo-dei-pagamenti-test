@@ -8,7 +8,7 @@ Feature: NM3 flows PA Old con pagamento KO
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT spo- -> paaInviaRT- BIZ- (NM3-7)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -54,7 +54,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -139,14 +139,14 @@ Feature: NM3 flows PA Old con pagamento KO
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -168,8 +168,8 @@ Feature: NM3 flows PA Old con pagamento KO
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | NotNone                                     |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -417,7 +417,7 @@ Feature: NM3 flows PA Old con pagamento KO
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo-  nodoInviaRPT -> paaInviaRT- BIZ- (NM3-8)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -463,7 +463,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -548,14 +548,14 @@ Feature: NM3 flows PA Old con pagamento KO
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -577,8 +577,8 @@ Feature: NM3 flows PA Old con pagamento KO
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | NotNone                                     |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
