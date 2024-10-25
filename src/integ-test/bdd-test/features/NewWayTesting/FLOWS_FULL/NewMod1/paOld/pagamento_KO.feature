@@ -90,7 +90,7 @@ Feature: NMU flows PA Old con pagamento KO
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | NotNone                                       |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -105,7 +105,7 @@ Feature: NMU flows PA Old con pagamento KO
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
+            | COMPANY_NAME       | PA paolo                |
             | OFFICE_NAME        | None                    |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
