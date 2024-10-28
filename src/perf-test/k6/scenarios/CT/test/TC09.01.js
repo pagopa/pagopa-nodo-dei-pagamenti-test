@@ -3,12 +3,11 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';;
 import { nodoChiediListaPendentiRPT } from './api/nodoChiediListaPendentiRPT.js';
-import { RPT } from './api/RPT_Semplice.js';
 import { nodoChiediStatoRPT } from './api/nodoChiediStatoRPT.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
-
+import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -83,8 +82,7 @@ export const options = {
   discardResponseBodies: false,
   thresholds: {
     'http_req_duration{nodoChiediListaPendentiRPT:http_req_duration}': [],
-    'http_req_duration{RPT_Semplice:http_req_duration}': [],
-    'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
+    'http_req_duration{RPT_Carrello_1:http_req_duration}': [],
     'http_req_duration{ALL:http_req_duration}': [],
     'checks{nodoChiediListaPendentiRPT:over_sla300}': [],
     'checks{nodoChiediListaPendentiRPT:over_sla400}': [],
@@ -94,14 +92,14 @@ export const options = {
     'checks{nodoChiediListaPendentiRPT:over_sla1000}': [],
     'checks{nodoChiediListaPendentiRPT:ok_rate}': [],
     'checks{nodoChiediListaPendentiRPT:ko_rate}': [],
-    'checks{RPT_Semplice:over_sla300}': [],
-    'checks{RPT_Semplice:over_sla400}': [],
-    'checks{RPT_Semplice:over_sla500}': [],
-    'checks{RPT_Semplice:over_sla600}': [],
-    'checks{RPT_Semplice:over_sla800}': [],
-    'checks{RPT_Semplice:over_sla1000}': [],
-    'checks{RPT_Semplice:ok_rate}': [],
-    'checks{RPT_Semplice:ko_rate}': [],
+    'checks{RPT_Carrello_1:over_sla300}': [],
+    'checks{RPT_Carrello_1:over_sla400}': [],
+    'checks{RPT_Carrello_1:over_sla500}': [],
+    'checks{RPT_Carrello_1:over_sla600}': [],
+    'checks{RPT_Carrello_1:over_sla800}': [],
+    'checks{RPT_Carrello_1:over_sla1000}': [],
+    'checks{RPT_Carrello_1:ok_rate}': [],
+    'checks{RPT_Carrello_1:ko_rate}': [],
     'checks{nodoChiediStatoRPT:over_sla300}': [],
     'checks{nodoChiediStatoRPT:over_sla400}': [],
     'checks{nodoChiediStatoRPT:over_sla500}': [],
@@ -137,8 +135,9 @@ export function total() {
   let rndAnagPa = inputDataUtil.getAnagPa();
 
   let iuv = genIuv();
-
-  let res = RPT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
+  var iuvArray = [];
+  iuvArray.push(iuv);
+  let res = RPT_Carrello_1(baseSoapUrl, rndAnagPsp, rndAnagPa, iuvArray);
 
   res = nodoChiediListaPendentiRPT(baseSoapUrl, rndAnagPa);
 

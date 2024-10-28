@@ -2,13 +2,12 @@ import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
-import { RPT } from './api/RPT_Semplice.js';
 import { RT } from './api/RT.js';
 import { nodoChiediCopiaRT } from './api/nodoChiediCopiaRT.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
-
+import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -82,18 +81,18 @@ export const options = {
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.99)', 'p(100)', 'count'],
   discardResponseBodies: false,
   thresholds: {
-    'http_req_duration{RPT_Semplice:http_req_duration}': [],
+    'http_req_duration{RPT_Carrello_1:http_req_duration}': [],
     'http_req_duration{RT:http_req_duration}': [],
     'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
     'http_req_duration{ALL:http_req_duration}': [],
-    'checks{RPT_Semplice:over_sla300}': [],
-    'checks{RPT_Semplice:over_sla400}': [],
-    'checks{RPT_Semplice:over_sla500}': [],
-    'checks{RPT_Semplice:over_sla600}': [],
-    'checks{RPT_Semplice:over_sla800}': [],
-    'checks{RPT_Semplice:over_sla1000}': [],
-    'checks{RPT_Semplice:ok_rate}': [],
-    'checks{RPT_Semplice:ko_rate}': [],
+    'checks{RPT_Carrello_1:over_sla300}': [],
+    'checks{RPT_Carrello_1:over_sla400}': [],
+    'checks{RPT_Carrello_1:over_sla500}': [],
+    'checks{RPT_Carrello_1:over_sla600}': [],
+    'checks{RPT_Carrello_1:over_sla800}': [],
+    'checks{RPT_Carrello_1:over_sla1000}': [],
+    'checks{RPT_Carrello_1:ok_rate}': [],
+    'checks{RPT_Carrello_1:ko_rate}': [],
     'checks{RT:over_sla300}': [],
     'checks{RT:over_sla400}': [],
     'checks{RT:over_sla500}': [],
@@ -137,8 +136,9 @@ export function total() {
   let rndAnagPa = inputDataUtil.getAnagPa();
 
   let iuv = genIuv();
-
-  let res = RPT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
+  var iuvArray = [];
+  iuvArray.push(iuv);
+  let res = RPT_Carrello_1(baseSoapUrl, rndAnagPsp, rndAnagPa, iuvArray);
 
   res = RT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
 
