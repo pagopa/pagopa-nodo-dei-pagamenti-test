@@ -606,6 +606,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Then verify the HTTP status code of mod3CancelV2 response is 200
       And wait 5 seconds for expiration
   @test @lazy @dependentread @dependentwrite
+  Scenario: T_SPR_08 (closePayment)
       Given the T_SPR_08 (mod3CancelV2) scenario executed successfully
       And the closePayment scenario executed successfully
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
