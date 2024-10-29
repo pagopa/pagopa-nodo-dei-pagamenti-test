@@ -173,12 +173,21 @@ def leggi_dati_da_file(file_path):
         dati_canali_nodo = [] 
         
         with open(file_path, 'r') as file:
-            data = json.load(file)  # Carica il contenuto del file JSON in un dizionario o una lista
+            data = json.load(file)  # Carica il contenuto del file JSON in un dizionario
 
-        count_stazioni = len(data['stazioni'])
-        count_pa_stazione_pa = len(data['pa_stazione_pa'])
-        count_canali = len(data['canali'])
-        count_canali_nodo = len(data['canali_nodo'])
+        count_stazioni = 0
+        count_pa_stazione_pa = 0
+        count_canali = 0
+        count_canali_nodo = 0       
+
+        if 'stazioni' in data:
+            count_stazioni = len(data['stazioni'])
+        if 'pa_stazione_pa' in data:
+            count_pa_stazione_pa = len(data['pa_stazione_pa'])
+        if 'canali' in data:
+            count_canali = len(data['canali'])
+        if 'canali_nodo' in data:
+            count_canali_nodo = len(data['canali_nodo'])
 
         assert count_stazioni == count_pa_stazione_pa, f"Numero di records per stazioni non corretto!!!!"
         assert count_canali == count_canali_nodo, f"Numero di records per canali non corretto!!!!"
@@ -203,9 +212,12 @@ def leggi_dati_da_file(file_path):
         # Interrompiamo il test
         raise AssertionError(str(e))
 
+
 # Esecuzione dello script
 if __name__ == '__main__':
     file_dati_stazioni = "C:\\Users\\luca.acone\\OneDrive - Accenture\\Desktop\\pagopanew\\pagopa-nodo-dei-pagamenti-test\\config_insert_data_test\\data_to_insert.json"
     dati_stazioni,dati_pa_stazione_pa,dati_canali,dati_canali_nodo = leggi_dati_da_file(file_dati_stazioni)
-    insert_stazioni_data(dati_stazioni,dati_pa_stazione_pa)
-    insert_canali_data(dati_canali,dati_canali_nodo)
+    if len(dati_stazioni) != 0 and len(dati_pa_stazione_pa) != 0:
+        insert_stazioni_data(dati_stazioni,dati_pa_stazione_pa)
+    if len(dati_canali) != 0 and len(dati_canali_nodo) != 0:
+        insert_canali_data(dati_canali,dati_canali_nodo)
