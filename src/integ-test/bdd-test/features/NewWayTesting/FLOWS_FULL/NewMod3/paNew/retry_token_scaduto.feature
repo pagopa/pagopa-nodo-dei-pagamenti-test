@@ -119,10 +119,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -501,10 +501,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -881,10 +881,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -1261,10 +1261,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1643,10 +1643,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | KO                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -1987,10 +1987,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -2368,10 +2368,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -2750,10 +2750,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -3131,10 +3131,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -3516,10 +3516,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -4112,10 +4112,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -4702,10 +4702,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -5080,10 +5080,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -5460,10 +5460,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -5840,10 +5840,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6220,10 +6220,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -6604,10 +6604,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -6988,10 +6988,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                        |
-            | PAYMENT_CHANNEL            | app                                          |
-            | TRANSFER_DATE              | NotNone                                        |
-            | PAYER_ID                   | NotNone                                        |
+            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -7370,10 +7370,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7758,10 +7758,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -8411,10 +8411,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -9128,10 +9128,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -9614,10 +9614,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -10105,10 +10105,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -10831,10 +10831,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -11809,10 +11809,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -12787,10 +12787,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -13273,10 +13273,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -13769,10 +13769,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -14765,10 +14765,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -15755,10 +15755,10 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                          |
-            | PAYMENT_CHANNEL            | app                                            |
-            | TRANSFER_DATE              | NotNone                                          |
-            | PAYER_ID                   | NotNone                                          |
+            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
