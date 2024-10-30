@@ -110,7 +110,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
+            | FEE                        | 2                                           |
             | OUTCOME                    | $sendPaymentOutcome.outcome                 |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcome                          |
@@ -350,7 +350,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                       |
+            | FEE                        | 2                                             |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -590,7 +590,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
+            | FEE                        | 2                                           |
             | OUTCOME                    | $sendPaymentOutcome.outcome                 |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcome                          |
@@ -830,7 +830,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                       |
+            | FEE                        | 2                                             |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -1070,7 +1070,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
+            | FEE                        | 2                                           |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome               |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                        |
@@ -1309,7 +1309,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                       |
+            | FEE                        | 2                                             |
             | OUTCOME                    | $sendPaymentOutcome.outcome                   |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcome                            |
@@ -1549,7 +1549,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
+            | FEE                        | 2                                           |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome               |
             | INSERTED_BY                | activatePaymentNotice                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                        |
@@ -1789,7 +1789,7 @@ Feature: NM3 flows con pagamento fallito
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | #canale32#                                    |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                       |
+            | FEE                        | 2                                             |
             | OUTCOME                    | $sendPaymentOutcome.outcome                   |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
             | UPDATED_BY                 | sendPaymentOutcome                            |
