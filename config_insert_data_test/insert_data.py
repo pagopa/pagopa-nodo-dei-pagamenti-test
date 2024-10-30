@@ -2,7 +2,7 @@ import psycopg2
 import conf_postgres
 import json
 
-# Configurazione del database
+#DB CONFIGURATIONS
 db_config = {
     "host": "10.221.83.180",
     "database": "ndpspct",
@@ -24,7 +24,7 @@ def get_db_connection(db_name, db_cfg, db_conf):
 
 
 
-# Funzione per eseguire l'inserimento si stazioni
+# METHOD TO INSERT STATIONS
 def insert_stazioni_data(dati_stazioni, dati_pa_stazione_pa):
     try:
         conn = get_db_connection("nodo_cfg", conf_postgres, db_config)
@@ -56,20 +56,20 @@ def insert_stazioni_data(dati_stazioni, dati_pa_stazione_pa):
         """
     
         i = 0
-        #Prepara query stazioni
+        #PREPARE QUERY INSERT STAZIONI
         for record in dati_stazioni:
             query_stazioni = query_stazioni_template
             
             for keys,values in record.items():
                 query_stazioni = query_stazioni.replace(f"${keys}", f"'{str(values)}'" if values is not None else 'NULL', 1)
 
-        # Eseguire l'inserimento in batch per stazioni e replace obj_id
+        #EXECUTE INSERT AND REPLACE FK STAZIONE
             cursor.execute(query_stazioni)
             obj_id = cursor.fetchone()[0]
             dati_pa_stazione_pa[i]['fk_stazione'] = obj_id
             i += 1
 
-        #prepara query pa_stazione_pa
+        #PREPARE QUERY INSERT PA STAZIONE PA
         j = 0
         for record in dati_pa_stazione_pa:
             query_pa_stazione_pa = query_pa_stazione_pa_template
@@ -77,10 +77,10 @@ def insert_stazioni_data(dati_stazioni, dati_pa_stazione_pa):
             for keys,values in record.items():
                 query_pa_stazione_pa = query_pa_stazione_pa.replace(f"${keys}", f"'{str(values)}'" if values is not None else 'NULL', 1)
             j += 1
-        # Eseguire l'inserimento in batch per pa_stazione_pa
+        #EXECUTE INSER
             cursor.execute(query_pa_stazione_pa)
 
-        # Salvare le modifiche
+        #SAVE INSERT
         conn.commit()
         print("Dati inseriti con successo!")
 
@@ -97,8 +97,8 @@ def insert_stazioni_data(dati_stazioni, dati_pa_stazione_pa):
 
 
 
-# Funzione per eseguire l'inserimento si stazioni
-def insert_canali_data(dati_canali, dati_canali_nodo):
+#METHOD TO INSERT CANALI
+def insert_canali_data(dati_canali, dati_canali_nodo, dati_canale_tipo_versamento, dati_psp_canale_tipo_versamento):
     try:
         conn = get_db_connection("nodo_cfg", conf_postgres, db_config)
         cursor = conn.cursor()
@@ -123,40 +123,97 @@ def insert_canali_data(dati_canali, dati_canali_nodo):
         servizio_nmp, target_host, target_port, target_path, target_host_nmp, target_port_nmp, target_path_nmp)
         VALUES($id_canale, $enabled, $ip, $password, $porta, $protocollo, $servizio, $descrizione, $fk_intermediario_psp, $proxy_enabled,
         $proxy_host, $proxy_password, $proxy_port, $proxy_username, $fk_canali_nodo, $timeout, $num_thread, $use_new_fault_code, $timeout_a, $timeout_b, $timeout_c,
-        $servizio_nmp, $target_host, $target_port, $target_path, $target_host_nmp, $target_port_nmp, $target_path_nmp)
+        $servizio_nmp, $target_host, $target_port, $target_path, $target_host_nmp, $target_port_nmp, $target_path_nmp) RETURNING obj_id
+        """
+
+        # Query per la tabella canale_tipo_versamento
+        query_canale_tipo_versamento_template = """
+        INSERT INTO nodo4_cfg.canale_tipo_versamento (fk_canale, fk_tipo_versamento)
+        VALUES($fk_canale, $fk_tipo_versamento) RETURNING obj_id
+        """
+
+
+        # Query per la tabella psp_canale_tipo_versamento
+        query_psp_canale_tipo_versamento_template = """
+        INSERT INTO nodo4_cfg.psp_canale_tipo_versamento (fk_canale_tipo_versamento, fk_psp)
+        VALUES($fk_canale_tipo_versamento, $fk_psp)
         """
     
         i = 0
-        #Prepara query canali_nodo
+        #PREPARE QUERY INSERT CANALI NODO
         for record in dati_canali_nodo:
             query_canali_nodo = query_canali_nodo_template
             
             for keys,values in record.items():
                 query_canali_nodo = query_canali_nodo.replace(f"${keys}", f"'{str(values)}'" if values is not None else 'NULL', 1)
 
-        # Eseguire l'inserimento in batch per canali nodo e replace obj_id
+        #EXECUTE INSERT AND REPLACE FK CANALI NODO
             cursor.execute(query_canali_nodo)
             obj_id = cursor.fetchone()[0]
             dati_canali[i]['fk_canali_nodo'] = obj_id
             i += 1
 
-        #prepara query canali
-        j = 0
+        #PREPARE QUERY INSERT CANALI
+        i = 0
         for record in dati_canali:
             query_canali = query_canali_template
             
             for keys,values in record.items():
                 query_canali = query_canali.replace(f"${keys}", f"'{str(values)}'" if values is not None else 'NULL', 1)
-            j += 1
-        # Eseguire l'inserimento in batch per canali
-            cursor.execute(query_canali)
 
-        # Salvare le modifiche
+        #EXECUTE INSERT AND REPLACE FK CANALE
+            cursor.execute(query_canali)
+            obj_id = cursor.fetchone()[0]
+            for fk_canale in dati_canale_tipo_versamento[i]:
+                fk_canale['fk_canale'] = obj_id
+            i += 1
+
+
+        #PREPARE QUERY INSERT CANALE TIPO VERSAMENTO
+    
+        list_fk_canale_tipo_versamento = []
+        for list_json in dati_canale_tipo_versamento:
+            list_obj_id = []
+            for record in list_json:
+                query_canale_tipo_versamento = query_canale_tipo_versamento_template
+                
+                for keys,values in record.items():
+                    query_canale_tipo_versamento = query_canale_tipo_versamento.replace(f"${keys}", f"'{str(values)}'" if values is not None else 'NULL', 1)
+
+        #EXECUTE INSERT AND REPLACE FK CANALE TIPO VERSAMENTO
+                cursor.execute(query_canale_tipo_versamento)
+                obj_id = cursor.fetchone()[0]
+                list_obj_id.append(obj_id)
+
+            list_fk_canale_tipo_versamento.append(list_obj_id)
+
+        i = 0
+        for list_fk_canale_tv in dati_psp_canale_tipo_versamento:
+            j = 0
+            for record_fk_canale_tv in list_fk_canale_tv:
+                record_fk_canale_tv['fk_canale_tipo_versamento'] = list_fk_canale_tipo_versamento[i][j]
+                j += 1
+            i += 1
+
+
+
+        #PREPARE QUERY INSERT PSP CANALE TIPO VERSAMENTO
+        for list_json in dati_psp_canale_tipo_versamento:
+            for record in list_json:
+                query_psp_canale_tipo_versamento = query_psp_canale_tipo_versamento_template
+                
+                for keys,values in record.items():
+                    query_psp_canale_tipo_versamento = query_psp_canale_tipo_versamento.replace(f"${keys}", f"'{str(values)}'" if values is not None else 'NULL', 1)
+
+                #EXECUTE INSERT
+                cursor.execute(query_psp_canale_tipo_versamento)
+
+        # SAVE INSERT
         conn.commit()
         print("Dati inseriti con successo!")
-
         for canale in dati_canali:
-            print(f"Canale inserito -> fk_canali_nodo: {str(canale['fk_canali_nodo'])}")
+            print(f"Canale inserito -> id: {str(canale['id_canale'])}")
+
     except Exception as e:
         conn.rollback()
         print(f"Errore durante l'inserimento: {e}")
@@ -170,15 +227,19 @@ def leggi_dati_da_file(file_path):
         dati_stazioni = []
         dati_pa_stazione_pa = []
         dati_canali = []
-        dati_canali_nodo = [] 
+        dati_canali_nodo = []
+        dati_canale_tipo_versamento = []
+        dati_psp_canale_tipo_versamento = []
         
         with open(file_path, 'r') as file:
-            data = json.load(file)  # Carica il contenuto del file JSON in un dizionario
+            data = json.load(file)  #LOAD JSON IN DICT
 
         count_stazioni = 0
         count_pa_stazione_pa = 0
         count_canali = 0
-        count_canali_nodo = 0       
+        count_canali_nodo = 0
+        count_canale_tipo_versamento = 0
+        count_psp_canale_tipo_versamento = 0   
 
         if 'stazioni' in data:
             count_stazioni = len(data['stazioni'])
@@ -188,6 +249,10 @@ def leggi_dati_da_file(file_path):
             count_canali = len(data['canali'])
         if 'canali_nodo' in data:
             count_canali_nodo = len(data['canali_nodo'])
+        if 'canale_tipo_versamento' in data:
+            count_canale_tipo_versamento = len(data['canale_tipo_versamento'])
+        if 'psp_canale_tipo_versamento' in data:
+            count_psp_canale_tipo_versamento = len(data['psp_canale_tipo_versamento'])
 
         assert count_stazioni == count_pa_stazione_pa, f"Numero di records per stazioni non corretto!!!!"
         assert count_canali == count_canali_nodo, f"Numero di records per canali non corretto!!!!"
@@ -204,7 +269,15 @@ def leggi_dati_da_file(file_path):
         for i in range(0, count_canali_nodo):    
             dati_canali_nodo.append(data['canali_nodo'][i])
 
-        return dati_stazioni,dati_pa_stazione_pa,dati_canali,dati_canali_nodo
+        if count_canale_tipo_versamento != 0:
+            for keys,values in data['canale_tipo_versamento'].items():
+                dati_canale_tipo_versamento.append(values)
+
+        if count_psp_canale_tipo_versamento != 0:
+            for keys,values in data['psp_canale_tipo_versamento'].items():
+                dati_psp_canale_tipo_versamento.append(values)
+
+        return dati_stazioni,dati_pa_stazione_pa,dati_canali,dati_canali_nodo,dati_canale_tipo_versamento,dati_psp_canale_tipo_versamento
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
@@ -213,11 +286,13 @@ def leggi_dati_da_file(file_path):
         raise AssertionError(str(e))
 
 
-# Esecuzione dello script
+#MAIN
 if __name__ == '__main__':
     file_dati_stazioni = "C:\\Users\\luca.acone\\OneDrive - Accenture\\Desktop\\pagopanew\\pagopa-nodo-dei-pagamenti-test\\config_insert_data_test\\data_to_insert.json"
-    dati_stazioni,dati_pa_stazione_pa,dati_canali,dati_canali_nodo = leggi_dati_da_file(file_dati_stazioni)
+    dati_stazioni,dati_pa_stazione_pa,dati_canali,dati_canali_nodo,dati_canale_tipo_versamento,dati_psp_canale_tipo_versamento = leggi_dati_da_file(file_dati_stazioni)
     if len(dati_stazioni) != 0 and len(dati_pa_stazione_pa) != 0:
         insert_stazioni_data(dati_stazioni,dati_pa_stazione_pa)
     if len(dati_canali) != 0 and len(dati_canali_nodo) != 0:
-        insert_canali_data(dati_canali,dati_canali_nodo)
+        insert_canali_data(dati_canali,dati_canali_nodo,dati_canale_tipo_versamento,dati_psp_canale_tipo_versamento)
+
+    ### FARE REFRESH MANUALMENTE DALLA PAGINA DI MONITORING #############################################################################
