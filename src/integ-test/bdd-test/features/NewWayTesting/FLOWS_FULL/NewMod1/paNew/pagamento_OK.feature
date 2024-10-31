@@ -983,7 +983,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_3 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_3
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1016,7 +1016,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | PPAL                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -1030,14 +1030,12 @@ Feature: NMU flows con PA New pagamento OK
             | totalAmount1          | 12                                            |
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
@@ -1106,7 +1104,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -1329,7 +1327,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value PPAL in position 0
@@ -1389,7 +1387,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
         And from $sendPaymentOutcomeReq.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
@@ -1430,7 +1428,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -1463,7 +1461,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_4 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_4
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1496,7 +1494,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | BPAY                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -1512,14 +1510,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
@@ -1588,7 +1584,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -1811,7 +1807,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value BPAY in position 0
@@ -1875,7 +1871,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
         And from $sendPaymentOutcomeReq.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
@@ -1916,7 +1912,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -2442,7 +2438,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_6 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_6
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo c con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -2475,7 +2471,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | CP                                            |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -2491,14 +2487,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
@@ -2567,7 +2561,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -2790,7 +2784,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value CP in position 0
@@ -2854,7 +2848,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
         And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
@@ -2895,7 +2889,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -2927,7 +2921,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_7 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_7
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -2960,7 +2954,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | PPAL                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -2974,14 +2968,12 @@ Feature: NMU flows con PA New pagamento OK
             | totalAmount1          | 12                                            |
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
@@ -3050,7 +3042,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -3273,7 +3265,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value PPAL in position 0
@@ -3333,7 +3325,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
         And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
@@ -3374,7 +3366,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -3408,7 +3400,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_8 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_8
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -3441,7 +3433,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | BPAY                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -3457,14 +3449,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
@@ -3533,7 +3523,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -3756,7 +3746,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value BPAY in position 0
@@ -3820,7 +3810,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
         And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
@@ -3861,7 +3851,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -4391,7 +4381,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_10 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_10
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -4425,7 +4415,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | CP                                            |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -4441,14 +4431,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
@@ -4517,7 +4505,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -4740,7 +4728,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value CP in position 0
@@ -4804,7 +4792,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
         And from $sendPaymentOutcomeReq.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
@@ -4845,7 +4833,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -4880,7 +4868,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_11 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_11
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -4914,7 +4902,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | PPAL                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -4928,14 +4916,12 @@ Feature: NMU flows con PA New pagamento OK
             | totalAmount1          | 12                                            |
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
@@ -5004,7 +4990,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -5227,7 +5213,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value PPAL in position 0
@@ -5287,7 +5273,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
         And from $sendPaymentOutcomeReq.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
@@ -5328,7 +5314,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -5365,7 +5351,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_12 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_12
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -5399,7 +5385,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | BPAY                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -5415,14 +5401,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
@@ -5491,7 +5475,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -5714,7 +5698,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value BPAY in position 0
@@ -5778,7 +5762,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
         And from $sendPaymentOutcomeReq.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
@@ -5819,7 +5803,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -6349,7 +6333,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_14 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_14
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -6383,7 +6367,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | CP                                            |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -6399,14 +6383,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
@@ -6475,7 +6457,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -6698,7 +6680,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value CP in position 0
@@ -6762,7 +6744,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
         And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
@@ -6803,7 +6785,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -6836,7 +6818,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_15 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_15
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -6870,7 +6852,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | PPAL                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -6884,14 +6866,12 @@ Feature: NMU flows con PA New pagamento OK
             | totalAmount1          | 12                                            |
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
@@ -6960,7 +6940,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -7183,7 +7163,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value PPAL in position 0
@@ -7243,7 +7223,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
         And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
@@ -7284,7 +7264,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -7321,7 +7301,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_16 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_16
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -7355,7 +7335,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | paymentMethod         | BPAY                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -7371,14 +7351,12 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
@@ -7447,7 +7425,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO#  |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -7670,7 +7648,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
-        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $closePaymentv2Req.idPSP json check value #psp# in position 0
         And from $closePaymentv2Req.outcome json check value OK in position 0
         And from $closePaymentv2Req.paymentMethod json check value BPAY in position 0
@@ -7734,7 +7712,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
         And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
@@ -7775,7 +7753,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# in position 0
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
