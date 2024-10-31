@@ -288,8 +288,9 @@ def leggi_dati_da_file(file_path):
 
 #MAIN
 if __name__ == '__main__':
-    file_dati_stazioni = "C:\\Users\\luca.acone\\OneDrive - Accenture\\Desktop\\pagopanew\\pagopa-nodo-dei-pagamenti-test\\config_insert_data_test\\data_to_insert.json"
+    file_dati_stazioni = "config_insert_data_test/data_to_insert.json"
     dati_stazioni,dati_pa_stazione_pa,dati_canali,dati_canali_nodo,dati_canale_tipo_versamento,dati_psp_canale_tipo_versamento = leggi_dati_da_file(file_dati_stazioni)
+    print('Lettura json completata!')
     if len(dati_stazioni) != 0 and len(dati_pa_stazione_pa) != 0:
         insert_stazioni_data(dati_stazioni,dati_pa_stazione_pa)
     if len(dati_canali) != 0 and len(dati_canali_nodo) != 0:
