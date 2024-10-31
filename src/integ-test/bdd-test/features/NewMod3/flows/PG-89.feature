@@ -107,7 +107,8 @@ Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza 
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+        Then check outcome is KO of activatePaymentNoticeV2 response
+        And check description is iuv not contained in notice number of activatePaymentNoticeV2 response
 
     @runnable
     Scenario: second activatePaymentNotice request
