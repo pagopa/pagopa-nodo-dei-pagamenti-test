@@ -13,7 +13,7 @@
                 <!--Optional:-->
                 <lastPayment>1</lastPayment>
                 <description>$description</description>
-                <companyName>company</companyName>
+                <companyName>$companyName</companyName>
                 <!--Optional:-->
                 <officeName>office</officeName>
                 <debtor>
