@@ -8460,18 +8460,18 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                       |
       | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
       | PSP_ID                | #psp#                                         |
-      | IDEMPOTENCY_KEY       | None                                          |
+      | IDEMPOTENCY_KEY       | NotNone                                       |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
       | INSERTED_BY           | activatePaymentNoticeV2                       |
       | UPDATED_BY            | activatePaymentNoticeV2                       |
-      | PAYMENT_METHOD        | None                                          |
-      | TOUCHPOINT            | None                                          |
+      | PAYMENT_METHOD        | CP                                            |
+      | TOUCHPOINT            | POS                                           |
       | SUGGESTED_IDBUNDLE    | None                                          |
       | SUGGESTED_IDCIBUNDLE  | None                                          |
       | SUGGESTED_USER_FEE    | None                                          |
@@ -8487,7 +8487,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
       | COMPANY_NAME       | companyName                         |
-      | OFFICE_NAME        | None                                |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -8506,10 +8506,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -8530,14 +8530,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #intermediarioPSP2#                           |
       | CHANNEL_ID                 | #canale32#                                    |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -8559,8 +8559,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | Y                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -8590,7 +8590,7 @@ Feature: NM3 flows PA New con pagamento OK
       | REQ_TIPO_BOLLO           | None                                  |
       | REQ_HASH_DOCUMENTO       | None                                  |
       | REQ_PROVINCIA_RESIDENZA  | None                                  |
-      | COMPANY_NAME_SECONDARY   | None                                  |
+      | COMPANY_NAME_SECONDARY   | companySec                            |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8708,21 +8708,21 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_AMOUNT        | $activatePaymentNoticeV2.amount               |
       | DESCRIPTION           | pagamentoTest                                 |
       | COMPANY_NAME          | companyName                                   |
-      | OFFICE_NAME           | None                                          |
+      | OFFICE_NAME           | office                                        |
       | DEBTOR_ID             | NotNone                                       |
       | PSP_ID                | #psp#                                         |
       | PSP_FISCAL_CODE       | NotNone                                       |
       | PSP_VAT_NUMBER        | None                                          |
       | PSP_COMPANY_NAME      | NotNone                                       |
       | CHANNEL_ID            | #canale32#                                    |
-      | CHANNEL_DESCRIPTION   | NA                                            |
-      | PAYER_ID              | None                                          |
-      | FEE                   | None                                          |
-      | PAYMENT_METHOD        | None                                          |
+      | CHANNEL_DESCRIPTION   | app                                           |
+      | PAYER_ID              | NotNone                                       |
+      | FEE                   | 2.00                                          |
+      | PAYMENT_METHOD        | creditCard                                    |
       | PAYMENT_DATE_TIME     | NotNone                                       |
       | APPLICATION_DATE      | NotNone                                       |
-      | TRANSFER_DATE         | None                                          |
-      | METADATA              | None                                          |
+      | TRANSFER_DATE         | NotNone                                       |
+      | METADATA              | NotNone                                       |
       | RT_ID                 | None                                          |
       | FK_POSITION_PAYMENT   | NotNone                                       |
       | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -8970,18 +8970,18 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                       |
       | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
       | PSP_ID                | #psp#                                         |
-      | IDEMPOTENCY_KEY       | None                                          |
+      | IDEMPOTENCY_KEY       | NotNone                                       |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
       | INSERTED_BY           | activatePaymentNoticeV2                       |
       | UPDATED_BY            | activatePaymentNoticeV2                       |
-      | PAYMENT_METHOD        | None                                          |
-      | TOUCHPOINT            | None                                          |
+      | PAYMENT_METHOD        | CP                                            |
+      | TOUCHPOINT            | POS                                           |
       | SUGGESTED_IDBUNDLE    | None                                          |
       | SUGGESTED_IDCIBUNDLE  | None                                          |
       | SUGGESTED_USER_FEE    | None                                          |
@@ -8997,7 +8997,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
       | COMPANY_NAME       | companyName                         |
-      | OFFICE_NAME        | None                                |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -9016,10 +9016,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -9040,14 +9040,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #intermediarioPSP2#                           |
       | CHANNEL_ID                 | #canale32#                                    |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -9069,8 +9069,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | Y                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -9100,7 +9100,7 @@ Feature: NM3 flows PA New con pagamento OK
       | REQ_TIPO_BOLLO           | None                                  |
       | REQ_HASH_DOCUMENTO       | None                                  |
       | REQ_PROVINCIA_RESIDENZA  | None                                  |
-      | COMPANY_NAME_SECONDARY   | None                                  |
+      | COMPANY_NAME_SECONDARY   | companySec                            |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9218,21 +9218,21 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_AMOUNT        | $activatePaymentNoticeV2.amount               |
       | DESCRIPTION           | pagamentoTest                                 |
       | COMPANY_NAME          | companyName                                   |
-      | OFFICE_NAME           | None                                          |
+      | OFFICE_NAME           | office                                        |
       | DEBTOR_ID             | NotNone                                       |
       | PSP_ID                | #psp#                                         |
       | PSP_FISCAL_CODE       | NotNone                                       |
       | PSP_VAT_NUMBER        | None                                          |
       | PSP_COMPANY_NAME      | NotNone                                       |
       | CHANNEL_ID            | #canale32#                                    |
-      | CHANNEL_DESCRIPTION   | NA                                            |
-      | PAYER_ID              | None                                          |
-      | FEE                   | None                                          |
-      | PAYMENT_METHOD        | None                                          |
+      | CHANNEL_DESCRIPTION   | app                                           |
+      | PAYER_ID              | NotNone                                       |
+      | FEE                   | 2.00                                          |
+      | PAYMENT_METHOD        | creditCard                                    |
       | PAYMENT_DATE_TIME     | NotNone                                       |
       | APPLICATION_DATE      | NotNone                                       |
-      | TRANSFER_DATE         | None                                          |
-      | METADATA              | None                                          |
+      | TRANSFER_DATE         | NotNone                                       |
+      | METADATA              | NotNone                                       |
       | RT_ID                 | None                                          |
       | FK_POSITION_PAYMENT   | NotNone                                       |
       | INSERTED_TIMESTAMP    | NotNone                                       |
