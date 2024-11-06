@@ -3,9 +3,9 @@
 "Port": 80,
 "SSL": "http",
 
-"MaxThread": 500,
-"TolTh": 10,
-"TOTAL_TIME": 20,
+"MaxThread": 80,
+"TolTh": 30,
+"TOTAL_TIME": 30,
 
 "Scalino_CT_1": 400,
 "Scalino_CT_TIME_1": 120,
