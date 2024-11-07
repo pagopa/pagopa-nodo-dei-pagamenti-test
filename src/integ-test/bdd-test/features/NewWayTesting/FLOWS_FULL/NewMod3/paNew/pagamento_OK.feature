@@ -1672,7 +1672,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                            |
       | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
       | PSP_ID                | #psp#                                              |
-      | IDEMPOTENCY_KEY       | None                                               |
+      | IDEMPOTENCY_KEY       | NotNone                                            |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
@@ -2106,7 +2106,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                       |
       | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
       | PSP_ID                | #psp#                                         |
-      | IDEMPOTENCY_KEY       | None                                          |
+      | IDEMPOTENCY_KEY       | NotNone                                       |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
@@ -41536,17 +41536,12 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_76 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-157)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                                            |
+      | OBJ_ID          | ('4328','4329','11991','11993','13','15134','15133','16640','1340001')  |
+    And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values   |
+      | OBJ_ID          | ('7','15131')  |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
@@ -41601,7 +41596,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -41617,7 +41612,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
       | COMPANY_NAME       | companyName             |
-      | OFFICE_NAME        | None                    |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -41635,10 +41630,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -41659,12 +41654,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #brokerPspPoste#                              |
       | CHANNEL_ID                 | #channelPoste#                                |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -42472,17 +42467,12 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_77 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc!=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-161)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                                            |
+      | OBJ_ID          | ('4328','4329','11991','11993','13','15134','15133','16640','1340001')  |
+    And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values   |
+      | OBJ_ID          | ('7','15131')  |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
@@ -42525,7 +42515,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                     |
       | TOKEN_VALID_TO        | NotNone                                     |
-      | DUE_DATE              | None                                        |
+      | DUE_DATE              | NotNone                                     |
       | AMOUNT                | $activatePaymentNotice.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                     |
       | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -42541,7 +42531,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                 | NotNone               |
       | DESCRIPTION        | NotNone               |
       | COMPANY_NAME       | companyName           |
-      | OFFICE_NAME        | None                  |
+      | OFFICE_NAME        | office                |
       | DEBTOR_ID          | NotNone               |
       | INSERTED_TIMESTAMP | NotNone               |
       | UPDATED_TIMESTAMP  | NotNone               |
@@ -42559,10 +42549,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                       |
       | RETENTION_DATE        | None                          |
       | AMOUNT                | $activatePaymentNotice.amount |
-      | FLAG_FINAL_PAYMENT    | N                             |
+      | FLAG_FINAL_PAYMENT    | Y                             |
       | INSERTED_TIMESTAMP    | NotNone                       |
       | UPDATED_TIMESTAMP     | NotNone                       |
-      | METADATA              | None                          |
+      | METADATA              | NotNone                       |
       | FK_POSITION_SERVICE   | NotNone                       |
       | INSERTED_BY           | activatePaymentNotice         |
       | UPDATED_BY            | activatePaymentNotice         |
@@ -42583,12 +42573,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #brokerPspPoste#                            |
       | CHANNEL_ID                 | #channelPoste#                              |
       | AMOUNT                     | $activatePaymentNotice.amount               |
-      | FEE                        | None                                        |
+      | FEE                        | 2.00                                        |
       | OUTCOME                    | OK                                          |
-      | PAYMENT_METHOD             | None                                        |
-      | PAYMENT_CHANNEL            | NA                                          |
-      | TRANSFER_DATE              | None                                        |
-      | PAYER_ID                   | None                                        |
+      | PAYMENT_METHOD             | creditCard                                  |
+      | PAYMENT_CHANNEL            | app                                         |
+      | TRANSFER_DATE              | NotNone                                     |
+      | PAYER_ID                   | NotNone                                     |
       | INSERTED_TIMESTAMP         | NotNone                                     |
       | UPDATED_TIMESTAMP          | NotNone                                     |
       | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -43396,17 +43386,12 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_78 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-163)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                                            |
+      | OBJ_ID          | ('4328','4329','11991','11993','13','15134','15133','16640','1340001')  |
+    And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values   |
+      | OBJ_ID          | ('7','15131')  |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
@@ -43461,7 +43446,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -43477,7 +43462,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
       | COMPANY_NAME       | companyName             |
-      | OFFICE_NAME        | None                    |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -43495,10 +43480,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -43519,12 +43504,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #brokerPspPoste#                              |
       | CHANNEL_ID                 | #channelPoste#                                |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -44366,11 +44351,11 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                            |
       | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
       | PSP_ID                | #psp#                                              |
-      | IDEMPOTENCY_KEY       | None                                               |
+      | IDEMPOTENCY_KEY       | NotNone                                            |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -44390,8 +44375,8 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                 | NotNone                             |
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
-      | COMPANY_NAME       | None                                |
-      | OFFICE_NAME        | None                                |
+      | COMPANY_NAME       | company                             |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -44410,10 +44395,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -44434,14 +44419,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -44463,8 +44448,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -44741,7 +44726,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
@@ -44801,11 +44786,11 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                            |
       | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
       | PSP_ID                | #psp#                                              |
-      | IDEMPOTENCY_KEY       | None                                               |
+      | IDEMPOTENCY_KEY       | NotNone                                            |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -44826,7 +44811,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
       | COMPANY_NAME       | companyName                         |
-      | OFFICE_NAME        | None                                |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -44845,10 +44830,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -44869,14 +44854,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -44898,8 +44883,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -44929,7 +44914,7 @@ Feature: NM3 flows PA New con pagamento OK
       | REQ_TIPO_BOLLO           | None                                  |
       | REQ_HASH_DOCUMENTO       | None                                  |
       | REQ_PROVINCIA_RESIDENZA  | None                                  |
-      | COMPANY_NAME_SECONDARY   | None                                  |
+      | COMPANY_NAME_SECONDARY   | companySec                            |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -45236,11 +45221,11 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                            |
       | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
       | PSP_ID                | #psp#                                              |
-      | IDEMPOTENCY_KEY       | None                                               |
+      | IDEMPOTENCY_KEY       | NotNone                                            |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -45261,7 +45246,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
       | COMPANY_NAME       | companyName                         |
-      | OFFICE_NAME        | None                                |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -45280,10 +45265,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -45304,14 +45289,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -45333,8 +45318,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -45364,7 +45349,7 @@ Feature: NM3 flows PA New con pagamento OK
       | REQ_TIPO_BOLLO           | None                                  |
       | REQ_HASH_DOCUMENTO       | None                                  |
       | REQ_PROVINCIA_RESIDENZA  | None                                  |
-      | COMPANY_NAME_SECONDARY   | None                                  |
+      | COMPANY_NAME_SECONDARY   | companySec                            |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -45636,12 +45621,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_82 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, BIZ+ (NM3-58)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                          |
+      | OBJ_ID          | ('16640','1340001','16641','1380001','4328','11993')  |
     And update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
@@ -45683,7 +45665,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -45702,8 +45684,8 @@ Feature: NM3 flows PA New con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | None                    |
-      | OFFICE_NAME        | None                    |
+      | COMPANY_NAME       | company                 |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -45721,10 +45703,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -45745,12 +45727,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -46084,7 +46066,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -46154,7 +46136,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTSecReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTSecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTSecReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTSecReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -46224,7 +46206,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTV2SecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTV2SecReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTV2SecReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -46278,12 +46260,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_83 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-60)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                          |
+      | OBJ_ID          | ('16640','1340001','16641','1380001','4328','11993')  |
     And update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
@@ -46326,7 +46305,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -46346,7 +46325,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
       | COMPANY_NAME       | companyName             |
-      | OFFICE_NAME        | None                    |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -46364,10 +46343,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -46388,12 +46367,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -46992,12 +46971,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_84 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spo+ -> paSendRT principale, BIZ+ (NM3-105)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                          |
+      | OBJ_ID          | ('16640','1340001','16641','1380001','4328','11993')  |
     And update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
@@ -47039,7 +47015,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -47058,8 +47034,8 @@ Feature: NM3 flows PA New con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | None                    |
-      | OFFICE_NAME        | None                    |
+      | COMPANY_NAME       | company                 |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -47077,10 +47053,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -47101,12 +47077,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -47440,7 +47416,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -47510,7 +47486,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTSecReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTSecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTSecReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTSecReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -47580,7 +47556,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTV2SecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTV2SecReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTV2SecReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -47634,12 +47610,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_85 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate vp2 e PSP vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spo+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-107)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                          |
+      | OBJ_ID          | ('16640','1340001','16641','1380001','4328','11993')  |
     And update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
@@ -47682,7 +47655,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -47702,7 +47675,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
       | COMPANY_NAME       | companyName             |
-      | OFFICE_NAME        | None                    |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -47720,10 +47693,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -47744,12 +47717,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -48345,12 +48318,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_86 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-137)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                          |
+      | OBJ_ID          | ('16640','1340001','16641','1380001','4328','11993')  |
     And update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
@@ -48404,7 +48374,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -48423,8 +48393,8 @@ Feature: NM3 flows PA New con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | None                    |
-      | OFFICE_NAME        | None                    |
+      | COMPANY_NAME       | company                 |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -48442,10 +48412,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -48466,12 +48436,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #brokerPspPoste#                              |
       | CHANNEL_ID                 | #channelPoste#                                |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -48805,7 +48775,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 1000 in position 0
@@ -48875,7 +48845,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTSecReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTSecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTSecReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTSecReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1000 in position 0
@@ -48945,7 +48915,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTV2SecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTV2SecReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTV2SecReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1000 in position 0
@@ -49034,11 +49004,11 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                       |
       | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
       | PSP_ID                | #psp#                                         |
-      | IDEMPOTENCY_KEY       | None                                          |
+      | IDEMPOTENCY_KEY       | NotNone                                       |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -49061,7 +49031,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
       | COMPANY_NAME       | companyName                         |
-      | OFFICE_NAME        | None                                |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -49080,10 +49050,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -49104,14 +49074,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -49133,8 +49103,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -49164,7 +49134,7 @@ Feature: NM3 flows PA New con pagamento OK
       | REQ_TIPO_BOLLO           | None                                  |
       | REQ_HASH_DOCUMENTO       | None                                  |
       | REQ_PROVINCIA_RESIDENZA  | None                                  |
-      | COMPANY_NAME_SECONDARY   | None                                  |
+      | COMPANY_NAME_SECONDARY   | companySec                            |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -49448,11 +49418,11 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                       |
       | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
       | PSP_ID                | #psp#                                         |
-      | IDEMPOTENCY_KEY       | None                                          |
+      | IDEMPOTENCY_KEY       | NotNone                                       |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -49518,14 +49488,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -49547,8 +49517,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -49803,7 +49773,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
@@ -49863,11 +49833,11 @@ Feature: NM3 flows PA New con pagamento OK
       | ID                    | NotNone                                       |
       | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
       | PSP_ID                | #psp#                                         |
-      | IDEMPOTENCY_KEY       | None                                          |
+      | IDEMPOTENCY_KEY       | NotNone                                       |
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -49890,7 +49860,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
       | DESCRIPTION        | pagamentoTest                       |
       | COMPANY_NAME       | companyName                         |
-      | OFFICE_NAME        | None                                |
+      | OFFICE_NAME        | office                              |
       | DEBTOR_ID          | NotNone                             |
       | INSERTED_TIMESTAMP | NotNone                             |
       | UPDATED_TIMESTAMP  | NotNone                             |
@@ -49909,10 +49879,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                             |
       | RETENTION_DATE        | None                                |
       | AMOUNT                | $activatePaymentNoticeV2.amount     |
-      | FLAG_FINAL_PAYMENT    | N                                   |
+      | FLAG_FINAL_PAYMENT    | Y                                   |
       | INSERTED_TIMESTAMP    | NotNone                             |
       | UPDATED_TIMESTAMP     | NotNone                             |
-      | METADATA              | None                                |
+      | METADATA              | NotNone                             |
       | FK_POSITION_SERVICE   | NotNone                             |
       | INSERTED_BY           | activatePaymentNoticeV2             |
       | UPDATED_BY            | activatePaymentNoticeV2             |
@@ -49933,14 +49903,14 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
-      | OUTCOME                    | NotNone                                       |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | FEE                        | 2.00                                          |
+      | OUTCOME                    | OK                                            |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -49962,8 +49932,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -50243,17 +50213,12 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_90 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-59)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values                                                            |
+      | OBJ_ID          | ('4328','4329','11991','11993','13','15134','15133','16640','1340001')  |
+    And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+      | where_keys      | where_values   |
+      | OBJ_ID          | ('7','15131')  |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -50296,7 +50261,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
       | TOKEN_VALID_FROM      | NotNone                                            |
       | TOKEN_VALID_TO        | NotNone                                            |
-      | DUE_DATE              | None                                               |
+      | DUE_DATE              | NotNone                                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount                    |
       | INSERTED_TIMESTAMP    | NotNone                                            |
       | UPDATED_TIMESTAMP     | NotNone                                            |
@@ -50315,8 +50280,8 @@ Feature: NM3 flows PA New con pagamento OK
       | column             | value                   |
       | ID                 | NotNone                 |
       | DESCRIPTION        | NotNone                 |
-      | COMPANY_NAME       | None                    |
-      | OFFICE_NAME        | None                    |
+      | COMPANY_NAME       | company                 |
+      | OFFICE_NAME        | office                  |
       | DEBTOR_ID          | NotNone                 |
       | INSERTED_TIMESTAMP | NotNone                 |
       | UPDATED_TIMESTAMP  | NotNone                 |
@@ -50334,10 +50299,10 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                         |
       | RETENTION_DATE        | None                            |
       | AMOUNT                | $activatePaymentNoticeV2.amount |
-      | FLAG_FINAL_PAYMENT    | N                               |
+      | FLAG_FINAL_PAYMENT    | Y                               |
       | INSERTED_TIMESTAMP    | NotNone                         |
       | UPDATED_TIMESTAMP     | NotNone                         |
-      | METADATA              | None                            |
+      | METADATA              | NotNone                         |
       | FK_POSITION_SERVICE   | NotNone                         |
       | INSERTED_BY           | activatePaymentNoticeV2         |
       | UPDATED_BY            | activatePaymentNoticeV2         |
@@ -50358,12 +50323,12 @@ Feature: NM3 flows PA New con pagamento OK
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | app                                           |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
       | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -50692,7 +50657,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -50757,7 +50722,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRT_BC1Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRT_BC1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRT_BC1Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRT_BC1Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRT_BC1Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRT_BC1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRT_BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -50822,7 +50787,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRT_BC2Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRT_BC2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRT_BC2Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRT_BC2Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRT_BC2Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRT_BC2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRT_BC2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -50887,7 +50852,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRT_BC3Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRT_BC3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRT_BC3Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRT_BC3Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRT_BC3Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRT_BC3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRT_BC3Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -50952,7 +50917,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRT_BC4Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRT_BC4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRT_BC4Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRT_BC4Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRT_BC4Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRT_BC4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRT_BC4Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -51017,7 +50982,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2_BC5Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTV2_BC5Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTV2_BC5Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTV2_BC5Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRTV2_BC5Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -51082,7 +51047,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2_BC6Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTV2_BC6Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTV2_BC6Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTV2_BC6Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRTV2_BC6Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
@@ -51147,7 +51112,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2_BC7Req.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTV2_BC7Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTV2_BC7Req.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTV2_BC7Req.receipt.companyName xml check value NA in position 0
+    And from $paSendRTV2_BC7Req.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0

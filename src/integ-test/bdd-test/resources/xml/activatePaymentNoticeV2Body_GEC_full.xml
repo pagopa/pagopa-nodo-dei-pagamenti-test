@@ -6,6 +6,7 @@
 			<idBrokerPSP>$idBrokerPSP</idBrokerPSP>
 			<idChannel>$idChannel</idChannel>
 			<password>$password</password>
+			<idempotencyKey>#idempotency_key#</idempotencyKey>
 			<qrCode>
 				<fiscalCode>$fiscalCode</fiscalCode>
 				<noticeNumber>$noticeNumber</noticeNumber>
