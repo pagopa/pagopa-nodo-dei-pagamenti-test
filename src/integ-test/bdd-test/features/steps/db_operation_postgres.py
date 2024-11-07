@@ -53,7 +53,7 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
 
 
 
-def execute_read_query(context, connection, query):
+def execute_read_query(context, connection, query, as_dict:bool = False):
     print(f' Executing query [{query}] on PostgresDB instance...')
     cursor = connection.cursor()
     result = None

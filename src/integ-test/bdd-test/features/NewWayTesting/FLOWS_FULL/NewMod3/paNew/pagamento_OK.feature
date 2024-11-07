@@ -40617,17 +40617,12 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_75 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1, FLOW con broadcast paPrinc!=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-155)
-    Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+    Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+        | where_keys      | where_values                                                            |
+        | OBJ_ID          | ('4328','4329','11991','11993','13','15134','15133','16640','1340001')  |
+    And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+        | where_keys      | where_values   |
+        | OBJ_ID          | ('7','15131')  |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
     Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice

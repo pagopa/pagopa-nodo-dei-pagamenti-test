@@ -28,7 +28,7 @@ except ModuleNotFoundError:
     print(">>>>>>>>>>>>>>>>>No import CX_ORACLE for Postgres pipeline")
 
 # Decommentare per test in pipeline
-#from requests.packages.urllib3.util.retry import Retry 
+# from requests.packages.urllib3.util.retry import Retry
 
 # Commentare per test in pipeline
 from urllib3.util.retry import Retry
@@ -44,6 +44,7 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
     return strNumRand
+
 
 def genera_stringa():
     lunghezza = random.randint(2, 18)
@@ -117,18 +118,18 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediInformativaPSP": "/nodo-per-pa/v1",
         "nodoChiediElencoQuadraturePA": "/nodo-per-pa/v1",
         "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
-        #"nodoChiediSceltaWISP":"//v1"
+        # "nodoChiediSceltaWISP":"//v1"
     }
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service").strip() == "":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
-        return  context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
             + context.config.userdata.get("services").get(
                 "nodo-dei-pagamenti").get("soap_service")
 
-        
+
 def get_rest_url_nodo(context, primitive):
-    primitive_mapping = { 
+    primitive_mapping = {
         "avanzamentoPagamento": "/nodo-per-pm/v1",
         "checkPosition": "/nodo-per-pm/v1",
         "informazioniPagamento": "/nodo-per-pm/v1",
@@ -141,7 +142,7 @@ def get_rest_url_nodo(context, primitive):
         "v1/closepayment": "/nodo-per-pm",
         "v2/closepayment": "/nodo-per-pm",
         "v1/parkedList": "/nodo-per-pm"
-    }     
+    }
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
         if "avanzamentoPagamento" in primitive:
             primitive = "avanzamentoPagamento"
@@ -201,7 +202,8 @@ def get_refresh_config_url(context):
         return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service')
     else:
         return ""
-    
+
+
 def get_forcing_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('forcing_refresh_config_service') is not None:
         return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('forcing_refresh_config_service')
@@ -240,9 +242,11 @@ def save_soap_action(context, mock, primitive, soap_action, override=False):
 
     response = None
     if dbRun == "Postgres":
-        response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        response = requests.post(f"{mock}/response/{primitive}?override={override}",
+                                 soap_action, headers=headers, verify=False, proxies=getattr(context, 'proxies'))
     elif dbRun == "Oracle":
-        response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
+        response = requests.post(
+            f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
     print(response.content, response.status_code)
     return response.status_code
 
@@ -278,7 +282,8 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
+        node = my_document.getElementsByTagName(
+            elem)[0] if my_document.getElementsByTagName(elem) else None
 
         if node is None:
             # create
@@ -303,7 +308,7 @@ def replace_context_variables_for_query(body, context):
     match = pattern.findall(body)
 
     if len(match) > 0:
-        ###CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
+        # CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
         initial_indexes = [i for i, x in enumerate(body) if x == "$"]
         j = 0
         dict_values = {}
@@ -312,21 +317,22 @@ def replace_context_variables_for_query(body, context):
         for field in match:
             if j > 0:
                 new_indexes = []
-                ###RICALCULATE INDEX VALUE AFTER REPLAE $$
+                # RICALCULATE INDEX VALUE AFTER REPLAE $$
                 indexes = [i for i, x in enumerate(body) if x == "$"]
                 new_indexes = indexes[(4*j):]
 
-            dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
+            dict_values.update(
+                {field.replace('$', '').strip(): new_indexes[0]})
             saved_elem = getattr(context, field.replace('$', '').strip())
             value = str(saved_elem)
-            
+
             index_my_interest = dict_values[field.replace('$', '').strip()]-1
-            
+
             if body[index_my_interest] == " ":
                 body = replace_specific_string(body, field, f'$${value}$$')
             else:
                 body = replace_specific_string(body, field, value)
-            j+=1
+            j += 1
             print(f'Query in costruzione: step {j} per la query{body}')
     return body
 
@@ -363,7 +369,7 @@ def manipulate_json(data, key, value):
 
 def replace_context_variables(body, context):
     pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
-    #pattern = re.compile('\\$\\w+')
+    # pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
 
     if len(match) > 0:
@@ -376,7 +382,6 @@ def replace_context_variables(body, context):
             value = str(saved_elem)
             body = body.replace(field, value)
     return body
-
 
 
 def replace_local_variables_for_query(body, context):
@@ -397,11 +402,14 @@ def replace_local_variables_for_query(body, context):
             try:
                 if '-' in tag:
                     tag_finale = tag.split('-')[1]
-                    value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
+                    value = document.getElementsByTagNameNS(
+                        '*', tag.split('-')[0])[0].firstChild.data
                 else:
-                    value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+                    value = document.getElementsByTagNameNS(
+                        '*', tag)[0].firstChild.data
             except Exception as e:
-                raise Exception(f"Errore nel metodo replace_local_variables_for_query: il Tag '{tag}' non esiste nel contesto") from e
+                raise Exception(
+                    f"Errore nel metodo replace_local_variables_for_query: il Tag '{tag}' non esiste nel contesto") from e
         if len(tag_finale) > 1:
             body = body.replace(field, f'$${value}-{tag_finale}$$')
         else:
@@ -409,7 +417,7 @@ def replace_local_variables_for_query(body, context):
     return body
 
 
-#### position deve essere l'occorrenza (prima seconda terza...) del tag che si vuole controllare
+# position deve essere l'occorrenza (prima seconda terza...) del tag che si vuole controllare
 def replace_local_variables_with_position(body, position, context, type_body):
     list_tag = body.split(".")
     size_list = len(list_tag)
@@ -440,16 +448,17 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         modify_xmlns = True
 
                     if modify_xmlns:
-                        saved_elem = saved_elem.replace('psp','pfn')
+                        saved_elem = saved_elem.replace('psp', 'pfn')
                         document = parseString(saved_elem)
                 else:
                     if type_body == 'xml':
                         document = parseString(saved_elem.content)
                     elif type_body == 'json':
-                        jsonDict = json.loads(saved_elem[0][0].tobytes().decode('utf-8'))
+                        jsonDict = json.loads(
+                            saved_elem[0][0].tobytes().decode('utf-8'))
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
-                        payload = payload.replace('\n','').replace('\t','')
+                        payload = payload.replace('\n', '').replace('\t', '')
                         document = parseString(payload)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
@@ -460,7 +469,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         modify_xmlns = True
 
                     if modify_xmlns:
-                        saved_elem = saved_elem.replace('psp','pfn')
+                        saved_elem = saved_elem.replace('psp', 'pfn')
                         document = parseString(saved_elem)
                 elif isinstance(saved_elem, cx_Oracle.LOB):
                     document = parseString(saved_elem.read())
@@ -474,15 +483,16 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         jsonDict = json.loads(selected_element)
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
-                        payload = payload.replace('\n','').replace('\t','')
+                        payload = payload.replace('\n', '').replace('\t', '')
                         document = parseString(payload)
             try:
-                value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data
+                value = document.getElementsByTagNameNS(
+                    '*', tag)[int(position)].firstChild.data
             except Exception as e:
-                raise Exception(f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
+                raise Exception(
+                    f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
         body = body.replace(field, value)
     return body
-
 
 
 def replace_local_variables(body, context):
@@ -501,19 +511,19 @@ def replace_local_variables(body, context):
                     document = parseString(saved_elem.content)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
-                    document = parseString(saved_elem)  
+                    document = parseString(saved_elem)
                 elif isinstance(saved_elem, cx_Oracle.LOB):
                     document = parseString(saved_elem.read())
                 else:
                     document = parseString(saved_elem.content)
             try:
-                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+                value = document.getElementsByTagNameNS(
+                    '*', tag)[0].firstChild.data
             except Exception as e:
-                raise Exception(f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
+                raise Exception(
+                    f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
         body = body.replace(field, value)
     return body
-    
-
 
 
 def replace_global_variables(payload, context):
@@ -538,30 +548,36 @@ def query_json(context, name_query, name_macro):
     dbRun = getattr(context, "dbRun")
     query = ''
     if dbRun == "Postgres":
-        query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest_postgres.json")))
+        query = json.load(open(os.path.join(
+            context.config.base_dir + "/../resources/query_AutomationTest_postgres.json")))
     elif dbRun == "Oracle":
-        query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest_oracle.json")))
+        query = json.load(open(os.path.join(
+            context.config.base_dir + "/../resources/query_AutomationTest_oracle.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
         if dbRun == "Postgres":
-            selected_query = replace_local_variables_for_query(selected_query, context)
-            selected_query = replace_context_variables_for_query(selected_query, context)
+            selected_query = replace_local_variables_for_query(
+                selected_query, context)
+            selected_query = replace_context_variables_for_query(
+                selected_query, context)
         elif dbRun == "Oracle":
             selected_query = replace_local_variables(selected_query, context)
             selected_query = replace_context_variables(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
+
 def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
 
+
 def isNumeric(string: str) -> bool:
     return string.isnumeric()
 
+
 def isDecimal(string: str) -> bool:
     return string.isdecimal()
-
 
 
 def isDate(string: str):
@@ -569,8 +585,6 @@ def isDate(string: str):
         return string == datetime.datetime.strptime(string, '%Y-%m-%d')
     except ValueError:
         return False
-    
-
 
 
 def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel):
@@ -578,7 +592,8 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
 
     dbRun = getattr(context, "dbRun")
     myconfigfile = getattr(context, 'myconfigfile')
-    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+    flag_subscription = context.config.userdata.get("services").get(
+        "nodo-dei-pagamenti").get("subscription_key_name")
 
     db_online = ''
     db_offline = ''
@@ -604,12 +619,12 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         db_wfesp = db_operation_postgres
     elif dbRun == "Oracle":
         db_online = db_operation_oracle
-        db_offline =  db_operation_oracle
+        db_offline = db_operation_oracle
         db_re = db_operation_oracle
         db_wfesp = db_operation_oracle
 
     db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get("nodo_online")   
+    db_selected = db_config.get("nodo_online")
 
     print(f"primitives to launch in parallel: {primitive} with type: {tipo}")
 
@@ -622,9 +637,10 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             primitive_full = primitive
             primitive = primitive.split('_')[0]
             payload_support = primitive_full.split('_')[1]
-            payload_support = replace_context_variables(payload_support, context)
+            payload_support = replace_context_variables(
+                payload_support, context)
 
-            ### RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
+            # RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
             notice_number = ''
             fiscal_code = ''
 
@@ -641,14 +657,18 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
 
             db_name = 'nodo_online'
 
-            adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+            adopted_db, conn = get_db_connection(
+                db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-            exec_query = adopted_db.executeQuery(context, conn, select_get_token)
-            assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
+            exec_query = adopted_db.executeQuery(
+                context, conn, select_get_token)
+            assert exec_query != None and len(
+                exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
 
             payment_token = exec_query[0][0]
-            ### REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
-            payload_support = payload_support.replace('paymentToken', payment_token)
+            # REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
+            payload_support = payload_support.replace(
+                'paymentToken', payment_token)
 
             payload_b = bytes(payload_support, 'UTF-8')
             payload_uni = b64.b64encode(payload_b)
@@ -656,8 +676,8 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
 
             setattr(context, 'token_by_rptActivations', payment_token)
             setattr(context, 'rptAttachment', payload)
-    ###LANCIO DELLE PRIMITIVE
-    ###LANCIO GET
+    # LANCIO DELLE PRIMITIVE
+    # LANCIO GET
     if tipo == 'GET':
         if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
@@ -668,29 +688,34 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         header_host = estrapola_header_host(url_nodo)
         headers = ''
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                       'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
-        
+            headers = {'Content-Type': 'application/xml',
+                       'SOAPAction': primitive, 'Host': header_host}
+
         get_response = ''
-        if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-            get_response = requests.get(url_nodo, headers=headers, verify=False)
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False)
         else:
-            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         setattr(context, primitive + "Response", get_response)
-        
+
         print("get response: ", get_response.content)
         print(primitive + "Response")
-    ###LANCIO POST
+    # LANCIO POST
     elif tipo == 'POST':
         body = ''
         if 'nodoInviaRPT' in primitive:
             body = getattr(context, primitive)
-            body = body.replace('rptAttachment',getattr(context, 'rptAttachment')).replace('paymentToken',payment_token)
-        else:    
+            body = body.replace('rptAttachment', getattr(
+                context, 'rptAttachment')).replace('paymentToken', payment_token)
+        else:
             body = getattr(context, primitive)
-        
+
         response = ''
         url_nodo = ''
 
@@ -701,17 +726,21 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
             print(f"primitive: {primitive} ---> body: {body}")
 
-            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
-            if '<' in body: 
+            if '<' in body:
                 body = xmltodict.parse(body)
                 body = body["root"]
                 if body != None:
@@ -726,11 +755,13 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
                     if ('fee' in body.keys()) and (body["fee"] != None):
                         body["fee"] = float(body["fee"])
                     if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
-                        body["importoTotalePagato"] = float(body["importoTotalePagato"])
+                        body["importoTotalePagato"] = float(
+                            body["importoTotalePagato"])
                     if ('RRN' in body.keys()) and (body["RRN"] != None):
                         body["RRN"] = float(body["RRN"])
                     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                        body["primaryCiIncurredFee"] = float(
+                            body["primaryCiIncurredFee"])
                     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
                         body["positionslist"] = body["positionslist"]["position"]
                         if type(body["positionslist"]) != list:
@@ -742,7 +773,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
 
             if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
                 url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-            else:    
+            else:
                 url_nodo = get_rest_url_nodo(context, primitive)
 
             print(f"url: {url_nodo}")
@@ -750,19 +781,22 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
 
-            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(url_nodo, body, headers=headers, verify=False) 
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
-            
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
         setattr(context, primitive + "Response", response)
         print("response: ", response.content)
         print(primitive + "Response")
-     
 
 
 def single_thread_with_update(context, primitive, tipo, all_primitive_in_parallel):
@@ -770,7 +804,8 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
     dbRun = getattr(context, "dbRun")
     myconfigfile = getattr(context, 'myconfigfile')
-    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+    flag_subscription = context.config.userdata.get("services").get(
+        "nodo-dei-pagamenti").get("subscription_key_name")
 
     db_online = ''
     db_offline = ''
@@ -796,12 +831,12 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         db_wfesp = db_operation_postgres
     elif dbRun == "Oracle":
         db_online = db_operation_oracle
-        db_offline =  db_operation_oracle
+        db_offline = db_operation_oracle
         db_re = db_operation_oracle
         db_wfesp = db_operation_oracle
 
     db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get("nodo_online")   
+    db_selected = db_config.get("nodo_online")
 
     print(f"primitives to launch in parallel: {primitive} with type: {tipo}")
 
@@ -814,18 +849,19 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             primitive_full = primitive
             primitive = primitive.split('_')[0]
             payload_support = primitive_full.split('_')[1]
-            payload_support = replace_context_variables(payload_support, context)
+            payload_support = replace_context_variables(
+                payload_support, context)
 
-            ### RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
+            # RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
             notice_number = ''
             fiscal_code = ''
 
             for single_primitive_in_parallel in all_primitive_in_parallel:
-                
+
                 if 'activatePaymentNotice' in single_primitive_in_parallel:
                     notice_number = f"${single_primitive_in_parallel}.noticeNumber"
                     fiscal_code = f"${single_primitive_in_parallel}.fiscalCode"
-                    
+
                 elif 'activatePaymentNoticeV2' in single_primitive_in_parallel:
                     notice_number = f"${single_primitive_in_parallel}.noticeNumber"
                     fiscal_code = f"${single_primitive_in_parallel}.fiscalCode"
@@ -838,23 +874,28 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
             db_name = 'nodo_online'
 
-            adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+            adopted_db, conn = get_db_connection(
+                db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-            exec_query = adopted_db.executeQuery(context, conn, select_get_token)
-            assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
+            exec_query = adopted_db.executeQuery(
+                context, conn, select_get_token)
+            assert exec_query != None and len(
+                exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
 
             payment_token = exec_query[0][0]
-            ### REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
-            payload_support = payload_support.replace('paymentToken', payment_token)
-            
-            # UPDATE DELLA TABELLA RT 
+            # REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
+            payload_support = payload_support.replace(
+                'paymentToken', payment_token)
+
+            # UPDATE DELLA TABELLA RT
             update_table = f"UPDATE RT_GI SET CCP = '{payment_token}' WHERE IDENT_DOMINIO = '{fiscal_code}' AND IUV = '$iuv' AND CCP = '$ccp'"
-            
+
             update_query = replace_context_variables(update_table, context)
 
             db_name = 'nodo_online'
 
-            adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+            adopted_db, conn = get_db_connection(
+                db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
             exec_query = adopted_db.executeQuery(context, conn, update_query)
 
@@ -864,8 +905,8 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
             setattr(context, 'token_by_rptActivations', payment_token)
             setattr(context, 'rptAttachment', payload)
-    ###LANCIO DELLE PRIMITIVE
-    ###LANCIO GET
+    # LANCIO DELLE PRIMITIVE
+    # LANCIO GET
     if tipo == 'GET':
         if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
@@ -876,29 +917,34 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
         header_host = estrapola_header_host(url_nodo)
         headers = ''
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                       'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+            headers = {'Content-Type': 'application/xml',
+                       'SOAPAction': primitive, 'Host': header_host}
 
         get_response = ''
-        if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-            get_response = requests.get(url_nodo, headers=headers, verify=False)
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False)
         else:
-            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         setattr(context, primitive + "Response", get_response)
-        
+
         print("get response: ", get_response.content)
         print(primitive + "Response")
-    ###LANCIO POST
+    # LANCIO POST
     elif tipo == 'POST':
         body = ''
         if 'nodoInviaRPT' in primitive:
             body = getattr(context, primitive)
-            body = body.replace('rptAttachment',getattr(context, 'rptAttachment')).replace('paymentToken',payment_token)
-        else:    
+            body = body.replace('rptAttachment', getattr(
+                context, 'rptAttachment')).replace('paymentToken', payment_token)
+        else:
             body = getattr(context, primitive)
-        
+
         response = ''
         url_nodo = ''
 
@@ -909,17 +955,22 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
-            print(f"primitive: {primitive} ---> body: {body} headers: {headers}")
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
+            print(
+                f"primitive: {primitive} ---> body: {body} headers: {headers}")
 
-            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
-            if '<' in body: 
+            if '<' in body:
                 body = xmltodict.parse(body)
                 body = body["root"]
                 if body != None:
@@ -934,11 +985,13 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
                     if ('fee' in body.keys()) and (body["fee"] != None):
                         body["fee"] = float(body["fee"])
                     if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
-                        body["importoTotalePagato"] = float(body["importoTotalePagato"])
+                        body["importoTotalePagato"] = float(
+                            body["importoTotalePagato"])
                     if ('RRN' in body.keys()) and (body["RRN"] != None):
                         body["RRN"] = float(body["RRN"])
                     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                        body["primaryCiIncurredFee"] = float(
+                            body["primaryCiIncurredFee"])
                     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
                         body["positionslist"] = body["positionslist"]["position"]
                         if type(body["positionslist"]) != list:
@@ -950,7 +1003,7 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
 
             if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
                 url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-            else:    
+            else:
                 url_nodo = get_rest_url_nodo(context, primitive)
 
             print(f"url: {url_nodo}")
@@ -958,26 +1011,29 @@ def single_thread_with_update(context, primitive, tipo, all_primitive_in_paralle
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
 
-            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
-            
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
         setattr(context, primitive + "Response", response)
         print("response: ", response.content)
         print(primitive + "Response")
 
 
-
-
 def single_thread(context, soap_primitive, tipo):
     print("single_thread")
     myconfigfile = getattr(context, 'myconfigfile')
-    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+    flag_subscription = context.config.userdata.get("services").get(
+        "nodo-dei-pagamenti").get("subscription_key_name")
 
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
@@ -1002,19 +1058,24 @@ def single_thread(context, soap_primitive, tipo):
         header_host = estrapola_header_host(url_nodo)
         headers = ''
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                       'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
-        
+            headers = {'Content-Type': 'application/xml',
+                       'SOAPAction': primitive, 'Host': header_host}
+
         soap_response = ''
-        if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-            soap_response = requests.get(url_nodo, headers=headers, verify=False)
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            soap_response = requests.get(
+                url_nodo, headers=headers, verify=False)
         else:
-            soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+            soap_response = requests.get(
+                url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         print("response: ", soap_response.content)
 
         print(soap_primitive.split("_")[1] + "Response")
-        setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
+        setattr(context, soap_primitive.split(
+            "_")[1] + "Response", soap_response)
     elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
@@ -1030,14 +1091,18 @@ def single_thread(context, soap_primitive, tipo):
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
 
-            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
             url_nodo = f"{get_rest_url_nodo(context, primitive)}"
             print(f"url: {url_nodo}")
@@ -1045,11 +1110,13 @@ def single_thread(context, soap_primitive, tipo):
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/json', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+                headers = {'Content-Type': 'application/json', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
-                headers = {'Content-Type': 'application/json', 'SOAPAction': primitive, 'Host': header_host}
+                headers = {'Content-Type': 'application/json',
+                           'SOAPAction': primitive, 'Host': header_host}
 
-            if '<' in body: 
+            if '<' in body:
                 body = xmltodict.parse(body)
                 body = body["root"]
                 if body != None:
@@ -1064,11 +1131,13 @@ def single_thread(context, soap_primitive, tipo):
                     if ('fee' in body.keys()) and (body["fee"] != None):
                         body["fee"] = float(body["fee"])
                     if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
-                        body["importoTotalePagato"] = float(body["importoTotalePagato"])
+                        body["importoTotalePagato"] = float(
+                            body["importoTotalePagato"])
                     if ('RRN' in body.keys()) and (body["RRN"] != None):
                         body["RRN"] = float(body["RRN"])
                     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                        body["primaryCiIncurredFee"] = float(
+                            body["primaryCiIncurredFee"])
                     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
                         body["positionslist"] = body["positionslist"]["position"]
                         if type(body["positionslist"]) != list:
@@ -1080,20 +1149,21 @@ def single_thread(context, soap_primitive, tipo):
 
             if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
                 url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-            else:    
+            else:
                 url_nodo = get_rest_url_nodo(context, primitive)
 
             print(f"url: {url_nodo}")
 
-            if 'postgres_apim'  in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
-            
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
         setattr(context, soap_primitive.split("_")[1] + "Response", response)
         print("response: ", response.content)
         print(soap_primitive.split("_")[1] + "Response")
-
 
 
 def threading_evolution(context, primitive_list, list_of_type, delay):
@@ -1101,9 +1171,10 @@ def threading_evolution(context, primitive_list, list_of_type, delay):
 
     threads = list()
     all_primitive_in_parallel = primitive_list
-    
+
     while i < len(primitive_list):
-        t = Thread(target=single_thread_evolution, args=(context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
+        t = Thread(target=single_thread_evolution, args=(
+            context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
         threads.append(t)
         time.sleep(delay/1000)
         # Avvia il thread
@@ -1113,18 +1184,19 @@ def threading_evolution(context, primitive_list, list_of_type, delay):
     for thread in threads:
         # Attende che il thread completi l'esecuzione
         thread.join()
-        
+
     print('Thread completed!')
-    
-    
+
+
 def threading_update(context, primitive_list, list_of_type, delay):
     i = 0
 
     threads = list()
     all_primitive_in_parallel = primitive_list
-    
+
     while i < len(primitive_list):
-        t = Thread(target=single_thread_with_update, args=(context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
+        t = Thread(target=single_thread_with_update, args=(
+            context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
         threads.append(t)
         time.sleep(delay/1000)
         # Avvia il thread
@@ -1134,15 +1206,16 @@ def threading_update(context, primitive_list, list_of_type, delay):
     for thread in threads:
         # Attende che il thread completi l'esecuzione
         thread.join()
-        
+
     print('Thread completed!')
-    
+
 
 def threading(context, primitive_list, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(
+            context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         t.start()
         i += 1
@@ -1155,7 +1228,8 @@ def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(
+            context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()
@@ -1180,41 +1254,54 @@ def json2xml(json_obj, line_padding=""):
                 for key in sub_obj:
                     sub_sub_obj = sub_obj[key]
                     result_list.append("%s<%s>" % (line_padding, key))
-                    result_list.append(json2xml(sub_sub_obj, "\t" + line_padding))
+                    result_list.append(
+                        json2xml(sub_sub_obj, "\t" + line_padding))
                     result_list.append("%s</%s>" % (line_padding, key))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             elif type(sub_obj) is list:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
                 if tag_name == 'paymentTokens':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "paymentToken"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "paymentToken"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "paymentToken"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "paymentToken"))
                 if tag_name == 'positionslist':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "position"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "position"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "position"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "position"))
                 if tag_name == 'payments':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "payment"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "payment"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "payment"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "payment"))
                 if tag_name == 'idPspList':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "idPspListContent"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "idPspListContent"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "idPspListContent"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "idPspListContent"))
                 if tag_name == 'transferList':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "transferListContent"))
+                        result_list.append("%s<%s>" % (
+                            line_padding, "transferListContent"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "transferListContent"))
+                        result_list.append(
+                            "%s</%s>" % (line_padding, "transferListContent"))
                 if tag_name == 'bundleOptions':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "bundleOptionsContent"))
+                        result_list.append("%s<%s>" % (
+                            line_padding, "bundleOptionsContent"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "bundleOptionsContent"))
+                        result_list.append(
+                            "%s</%s>" % (line_padding, "bundleOptionsContent"))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             else:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
@@ -1228,40 +1315,39 @@ def parallel_executor(context, feature_name, scenario):
     # os.chdir(testenv.PARALLEACTIONS_PATH)
     behave_main(
         '-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
-    
+
 
 def searchValueTag(xml_string, path_tag, flag_all_value_tag):
-  list_tag = path_tag.split(".")
-  size_list = len(list_tag)
+    list_tag = path_tag.split(".")
+    size_list = len(list_tag)
 
-  tag_padre = list_tag[0]
-  tag = list_tag[size_list-1]
+    tag_padre = list_tag[0]
+    tag = list_tag[size_list-1]
 
-  tree = ET.ElementTree(ET.fromstring(xml_string))
-  root = tree.getroot()
-  list_value_tag = []
-  full_list_tag = []
-  for single_tag in root.findall('.//' + tag_padre):
-    list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
-    full_list_tag.append(list_value_tag)
-    if flag_all_value_tag == False:
-      if list_value_tag: 
-          break
-  return full_list_tag
+    tree = ET.ElementTree(ET.fromstring(xml_string))
+    root = tree.getroot()
+    list_value_tag = []
+    full_list_tag = []
+    for single_tag in root.findall('.//' + tag_padre):
+        list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
+        full_list_tag.append(list_value_tag)
+        if flag_all_value_tag == False:
+            if list_value_tag:
+                break
+    return full_list_tag
 
 
 def searchValueTagRecursive(tag_padre, tag, single_tag):
-  list_tag = []
+    list_tag = []
 
-  if tag_padre == tag:
-    list_tag = single_tag.text
-  else:
-    for next_tag in single_tag:
-      list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
-      if list_tag: break
-  return list_tag    
-
-
+    if tag_padre == tag:
+        list_tag = single_tag.text
+    else:
+        for next_tag in single_tag:
+            list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
+            if list_tag:
+                break
+    return list_tag
 
 
 def estrapola_header_host(url):
@@ -1277,16 +1363,17 @@ def estrapola_header_host(url):
 
 
 def replace_specific_string(original_string, target_string, replacement):
-# Verifica se la stringa di destinazione è presente nella stringa originale
+    # Verifica se la stringa di destinazione è presente nella stringa originale
     if target_string in original_string:
         # Verifica se la stringa di destinazione è una corrispondenza esatta
         start_index = original_string.find(target_string)
         end_index = start_index + len(target_string)
-        
+
         # Verifica che la sottostringa prima e dopo la target_string sia uno spazio o che sia alla fine della stringa
         if (original_string[start_index] == ' ') and (original_string.endswith('') or original_string[end_index] == ' '):
             # Effettua il replace solo se la condizione è soddisfatta
-            updated_string = original_string[:start_index] + replacement + original_string[end_index:]
+            updated_string = original_string[:start_index] + \
+                replacement + original_string[end_index:]
             return updated_string
         else:
             # Se la condizione non è soddisfatta, restituisci la stringa originale senza modifiche
@@ -1296,12 +1383,11 @@ def replace_specific_string(original_string, target_string, replacement):
         return original_string
 
 
-
 # def get_proxy_settings():
 #     try:
 #         # Apre la chiave di registro corrispondente alle impostazioni del proxy
 #         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings")
- 
+
 #         # Legge il valore dell'URL dello script PAC
 #         pac_url, _ = winreg.QueryValueEx(key, "AutoConfigURL")
 #         return pac_url if pac_url else None
@@ -1311,7 +1397,7 @@ def replace_specific_string(original_string, target_string, replacement):
 #     except Exception as e:
 #         print("Errore durante la lettura delle impostazioni del proxy:", e)
 #         return None
-    
+
 
 # # Funzione per ottenere l'URL del proxy da un file PAC
 # def get_proxy(pac_file):
@@ -1325,8 +1411,8 @@ def replace_specific_string(original_string, target_string, replacement):
 #     proxy_url = pac.find_proxy(pac_file)
 
 #     return proxy_url
-    
-#metodo override del get_db_connection per l'environment
+
+# metodo override del get_db_connection per l'environment
 def get_db_connection_for_env(db_name, db_cfg, db_selected):
     return get_db_connection(db_name, db_cfg, '', '', '', '', db_selected)
 
@@ -1356,9 +1442,11 @@ def get_db_connection(db_name, db_cfg, db_online, db_offline, db_re, db_wfesp, d
             'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     return db, conn
 
-#Ricerca chiavi in json
-#obj = oggetto json deserializzato
-#ricerca = chiave da cercare
+# Ricerca chiavi in json
+# obj = oggetto json deserializzato
+# ricerca = chiave da cercare
+
+
 def ricerca_chiavi(obj, ricerca, chiavi_trovate=None):
     if chiavi_trovate is None:
         chiavi_trovate = set()
@@ -1375,9 +1463,7 @@ def ricerca_chiavi(obj, ricerca, chiavi_trovate=None):
     return list(chiavi_trovate)
 
 
-
-
-###METODO PER VERIFICARE CHE LA STRINGA ABBIA CARATTERI SPECIALI
+# METODO PER VERIFICARE CHE LA STRINGA ABBIA CARATTERI SPECIALI
 def contiene_caratteri_speciali(stringa):
     caratteri_speciali = string.punctuation
     for carattere in stringa:
@@ -1386,7 +1472,7 @@ def contiene_caratteri_speciali(stringa):
     return False
 
 
-###METODO PER VERIFICARE CHE LA STRINGA ABBIA IL CARATTERE APICE
+# METODO PER VERIFICARE CHE LA STRINGA ABBIA IL CARATTERE APICE
 def contiene_carattere_apice(stringa):
     caratteri_apice = "'"
     for carattere in stringa:
@@ -1395,18 +1481,16 @@ def contiene_carattere_apice(stringa):
     return False
 
 
-
-
-###METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA TABLE
+# METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA TABLE
 def transpose_table(table):
     i = 0
     transposed_table_dict = {}
     for row in table:
         if i < 1:
-           transposed_table_dict[row.headings[0]] = row.headings[1] 
-        else:   
+            transposed_table_dict[row.headings[0]] = row.headings[1]
+        else:
             transposed_table_dict[row[0]] = row[1]
-        i+=1
+        i += 1
 
    # Ottiene le chiavi del dict come intestazioni delle colonne
     headers = list(transposed_table_dict.keys())
@@ -1416,20 +1500,22 @@ def transpose_table(table):
     return Table(headings=headers, rows=rows)
 
 
-###METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE TRANSPOSTA
+# METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE TRANSPOSTA
 def transpose_table_to_dict(table):
     i = 0
     transposed_table_dict = {}
     for row in table:
         if i < 1:
-           transposed_table_dict[row.headings[0]] = row.headings[1] 
-        else:   
+            transposed_table_dict[row.headings[0]] = row.headings[1]
+        else:
             transposed_table_dict[row[0]] = row[1]
-        i+=1
+        i += 1
 
     return transposed_table_dict
 
-###METODO PER CREARE UNA DICT DA UNA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE
+# METODO PER CREARE UNA DICT DA UNA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE
+
+
 def table_to_dict(table, type_table):
     dict_table = {}
     # Definisco i valori predefiniti
@@ -1446,21 +1532,22 @@ def table_to_dict(table, type_table):
     elif type_table == 'vertical':
         if len(table.rows) == 0:
             dict_table[table.headings[0]] = [table.headings[1]]
-        else:    
+        else:
             for row in table:
                 dict_table[row.headings[0]] = [row.headings[1]]
                 break
 
             for row in table:
                 dict_table[row[0]] = [row[1]]
-            
+
     else:
-        raise ValueError(f"Invalid value of type table: {type_table}. It should be one of {predefined_values}")
-    
+        raise ValueError(
+            f"Invalid value of type table: {type_table}. It should be one of {predefined_values}")
+
     return dict_table
 
 
-###METODO PER CREARE UNA SELECT CON WHERE
+# METODO PER CREARE UNA SELECT CON WHERE
 def generate_select(dict_fields_values):
     list_where_keys = []
     list_where_values = []
@@ -1475,6 +1562,45 @@ def generate_select(dict_fields_values):
             elif fields == 'where_values':
                 list_where_values.append(value)
 
+    for j in range(0, len(list_where_keys)):
+        dict_where[list_where_keys[j]] = list_where_values[j]
+
+    i = 0
+    for where_key, where_value in dict_where.items():
+        if i == 0:
+            if "(" in where_value:
+                selected_query += f" WHERE {where_key} IN {where_value}"
+            else:
+                selected_query += f" WHERE {where_key} = '{where_value}'"
+        else:
+            if where_key == 'INSERTED_TIMESTAMP':
+                selected_query += f" AND {where_key} > {where_value}"
+            elif where_key == 'ORDER BY':
+                selected_query += f" {where_key} {where_value}"
+            else:
+                if "(" in where_value:
+                    selected_query += f" AND {where_key} IN {where_value}"
+                else:
+                    selected_query += f" AND {where_key} = '{where_value}'"
+        i += 1
+
+    return selected_query
+
+
+# METODO PER CREARE UNA UPDATE CON WHERE
+def generate_update(dict_fields_values):
+    list_where_keys = []
+    list_where_values = []
+    dict_where = {}
+
+    upd_query = 'UPDATE table_name SET param'
+
+    for fields, values in dict_fields_values.items():
+        for value in values:
+            if fields == 'where_keys':
+                list_where_keys.append(value)
+            elif fields == 'where_values':
+                list_where_values.append(value)
 
     for j in range(0, len(list_where_keys)):
         dict_where[list_where_keys[j]] = list_where_values[j]
@@ -1482,25 +1608,21 @@ def generate_select(dict_fields_values):
     i = 0
     for where_key, where_value in dict_where.items():
         if i == 0:
-            if "(" in where_value :
-                selected_query += f" WHERE {where_key} IN {where_value}"
-            else :
-                selected_query += f" WHERE {where_key} = '{where_value}'"
+            if "(" in where_value:
+                upd_query += f" WHERE {where_key} IN {where_value}"
+            else:
+                upd_query += f" WHERE {where_key} = '{where_value}'"
         else:
-            if where_key == 'INSERTED_TIMESTAMP':
-                selected_query += f" AND {where_key} > {where_value}"
-            elif where_key == 'ORDER BY':
-                selected_query += f" {where_key} {where_value}"
-            else:    
-                if "(" in where_value :
-                    selected_query += f" AND {where_key} IN {where_value}"
-                else :
-                    selected_query += f" AND {where_key} = '{where_value}'"
+            if "(" in where_value:
+                upd_query += f" AND {where_key} IN {where_value}"
+            else:
+                upd_query += f" AND {where_key} = '{where_value}'"
         i += 1
-    
-    return selected_query
 
-###METODO PER CREARE UNA SELECT CON WHERE
+    return upd_query
+
+
+# METODO PER CREARE UNA SELECT CON WHERE
 def generate_string_column_table(list_col_split):
     i = 0
     columns = ''
@@ -1512,8 +1634,10 @@ def generate_string_column_table(list_col_split):
         i += 1
     return columns
 
-###METODO PER CREARE LIST VALUES EXPECTED E SIZE VALUE CON COMMA
-def generate_list_values_exp_and_size_value_comma(dict_fields_values_expected):   
+# METODO PER CREARE LIST VALUES EXPECTED E SIZE VALUE CON COMMA
+
+
+def generate_list_values_exp_and_size_value_comma(dict_fields_values_expected):
     count_comma_value = 0
     count_comma_value_max = 0
     list_values_expected = list()
@@ -1545,25 +1669,24 @@ def generate_list_values_exp_and_size_value_comma(dict_fields_values_expected):
     return list_values_expected, size_values_comma_expected
 
 
-###METODO PER CREARE LIST DI DICT VALUES EXPECTED BY SIZE
+# METODO PER CREARE LIST DI DICT VALUES EXPECTED BY SIZE
 def generate_list_dict_values_exp(list_col_split, size_dict_fields_values_expected, list_values_expected):
     list_dict_fields_values_expected = list()
-    
 
     for i in range(0, size_dict_fields_values_expected+1):
         dict_fields_values_expected_temp = {}
         for field, value_obt in zip(list_col_split, list_values_expected[i]):
             dict_fields_values_expected_temp[field] = value_obt
-        list_dict_fields_values_expected.append(dict_fields_values_expected_temp)
+        list_dict_fields_values_expected.append(
+            dict_fields_values_expected_temp)
 
     return list_dict_fields_values_expected
 
 
-
-###METODO PER CREARE LIST DI DICT VALUES OBTAINED
+# METODO PER CREARE LIST DI DICT VALUES OBTAINED
 def generate_list_dict_values_obt(list_col_split, exec_query):
     list_dict_fields_values_obtained = list()
-        
+
     size_result_query = len(exec_query)
 
     for i in range(0, size_result_query):
@@ -1627,12 +1750,12 @@ def find_file(filename, search_directory='.'):
         if filename in files:
             # Restituisce il percorso completo del file trovato
             return os.path.join(root, filename)
-    
+
     # Se il file non è trovato, restituisci None
     return None
 
 
-###METODO PER EFFETTUARE QUERY CON POLLING
+# METODO PER EFFETTUARE QUERY CON POLLING
 def query_with_polling(context, conn, adopted_db, selected_query, size_record_expected):
     exec_query = ''
     exec_query_updated = ''
@@ -1648,14 +1771,16 @@ def query_with_polling(context, conn, adopted_db, selected_query, size_record_ex
                 print(f"Results found after {sec} seconds!!!")
                 break
             else:
-                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+                print(
+                    f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
         else:
             if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
 
                 print(f"Results found after {sec} seconds!!!")
                 break
             else:
-                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+                print(
+                    f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
 
         sec += 1
         polling_time -= 1
@@ -1669,12 +1794,25 @@ def query_with_polling(context, conn, adopted_db, selected_query, size_record_ex
 
     return exec_query
 
+    # METODO PER EFFETTUARE QUERY CON POLLING
 
 
-###METODO PER EFFETTUARE QUERY ALLA CAHCE
+def update_query(context, conn, adopted_db, upd_query):
+    exec_query = ''
+
+    print(f"Updating query...")
+
+    exec_query = adopted_db.executeQuery(context, conn, upd_query, True)
+
+    print(f"Update query: {upd_query} completed")
+
+    return exec_query
+
+
+# METODO PER EFFETTUARE QUERY ALLA CAHCE
 def query_new_record_cache(context, conn, adopted_db, dbRun):
     new_record_cache = False
-    
+
     wait_time = 20
     print(f"Timeout new record refresh set to: {wait_time} seconds")
     sec = 0
@@ -1710,8 +1848,7 @@ def query_new_record_cache(context, conn, adopted_db, dbRun):
     return new_record_cache
 
 
-
-#Effettua una richiesta HTTP utilizzando un proxy configurato manualmente
+# Effettua una richiesta HTTP utilizzando un proxy configurato manualmente
 def make_request_with_manual_proxy():
 
     # Crea il dizionario delle configurazioni del proxy
@@ -1723,14 +1860,13 @@ def make_request_with_manual_proxy():
     proxies = None
 
     try:
-        response = requests.get('https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/monitor', proxies=proxies)
+        response = requests.get(
+            'https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/monitor', proxies=proxies)
         response.raise_for_status()  # Solleva un'eccezione se la richiesta non va a buon fine
         print("Richiesta effettuata con successo!")
         print(response)
     except requests.exceptions.RequestException as e:
         print(f"Errore durante la richiesta: {e}")
-
-
 
 
 def generate_uuid():
