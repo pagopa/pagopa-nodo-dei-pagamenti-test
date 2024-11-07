@@ -1740,7 +1740,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PSP_ID                     | #psp#                                         |
       | BROKER_PSP_ID              | #id_broker_psp#                               |
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-      | IDEMPOTENCY_KEY            | None                                          |
+      | IDEMPOTENCY_KEY            | NotNone                                       |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
       | FEE                        | 2                                             |
       | OUTCOME                    | OK                                            |
@@ -1769,8 +1769,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.0                                           |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -2110,7 +2110,7 @@ Feature: NM3 flows PA New con pagamento OK
       | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
       | TOKEN_VALID_FROM      | NotNone                                       |
       | TOKEN_VALID_TO        | NotNone                                       |
-      | DUE_DATE              | None                                          |
+      | DUE_DATE              | NotNone                                       |
       | AMOUNT                | $activatePaymentNoticeV2.amount               |
       | INSERTED_TIMESTAMP    | NotNone                                       |
       | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2178,12 +2178,12 @@ Feature: NM3 flows PA New con pagamento OK
       | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
       | IDEMPOTENCY_KEY            | None                                          |
       | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-      | FEE                        | None                                          |
+      | FEE                        | 2.00                                          |
       | OUTCOME                    | OK                                            |
-      | PAYMENT_METHOD             | None                                          |
-      | PAYMENT_CHANNEL            | NA                                            |
-      | TRANSFER_DATE              | None                                          |
-      | PAYER_ID                   | None                                          |
+      | PAYMENT_METHOD             | creditCard                                    |
+      | PAYMENT_CHANNEL            | office                                        |
+      | TRANSFER_DATE              | NotNone                                       |
+      | PAYER_ID                   | NotNone                                       |
       | APPLICATION_DATE           | NotNone                                       |
       | INSERTED_TIMESTAMP         | NotNone                                       |
       | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -2205,8 +2205,8 @@ Feature: NM3 flows PA New con pagamento OK
       | BUNDLE_PA_ID               | None                                          |
       | PM_INFO                    | None                                          |
       | MBD                        | N                                             |
-      | FEE_SPO                    | None                                          |
-      | PAYMENT_NOTE               | None                                          |
+      | FEE_SPO                    | 2.00                                          |
+      | PAYMENT_NOTE               | responseFull                                  |
       | FLAG_STANDIN               | N                                             |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
@@ -2461,7 +2461,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
     And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-    And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+    And from $paSendRTReq.receipt.companyName xml check value company in position 0
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
