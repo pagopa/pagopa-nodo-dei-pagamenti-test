@@ -10579,9 +10579,12 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_20 @after
     Scenario: NMU flow paNEW OK con broadcast paPrinc!=paSec MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-49)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values    |
+            | OBJ_ID     | ('4328','4329') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14           |
         And waiting after triggered refresh job ALL
         And MB generation MBD_generation with datatable vertical
             | CodiceFiscale | #creditor_institution_code#                  |
@@ -11246,7 +11249,9 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         Given update parameter station.stand-in on configuration keys with value 66666666666_01
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -11275,7 +11280,9 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -12324,21 +12331,15 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_22 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-38)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -13423,21 +13424,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_23 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-39)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -14523,21 +14521,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_24 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-40)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -15622,22 +15617,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_25 @after
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-41)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values            |
+            | OBJ_ID     | ('7','15131','1200001') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -16726,22 +16717,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_26 @after
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-42)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values            |
+            | OBJ_ID     | ('7','15131','1200001') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -17828,22 +17815,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_27 @after
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotifyV2 flag standin=true, spo+ -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-43)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values            |
+            | OBJ_ID     | ('7','15131','1200001') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -18930,14 +18913,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_28 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), BIZ+ e SPRv2+ (NMU-44)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('16640','1340001','16641','1380001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -19520,14 +19507,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_29 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotifyV2 con flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), BIZ+ e SPRv2+ (NMU-45)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('16640','1340001','16641','1380001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -20109,14 +20100,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_30 @after
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp2 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spo+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-46)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('16640','1340001','16641','1380001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -20842,14 +20837,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_31 @after
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-47)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('16640','1340001','16641','1380001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -21576,14 +21575,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_32 @after
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-48)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('16640','1340001','16641','1380001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -22311,22 +22314,21 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_33 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso CP: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-50)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16649        |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -23401,22 +23403,21 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_34 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-51)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16649        |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -24485,22 +24486,21 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_35 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-52)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16649        |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -25575,22 +25575,21 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_36 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true con Travaso CP: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-53)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16649        |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -26669,22 +26668,21 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_37 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true con Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-54)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16649        |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -27755,22 +27753,21 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_38 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true con Travaso BPAY: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-55)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                    |
+            | OBJ_ID     | ('13','14','11989','11990','7') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16649        |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -28846,14 +28843,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_39 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con 1 token e senza flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (anche broadcast principale che è anche secondaria?) tutte le receipt NON hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-37)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('16640','1340001','16641','1380001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_01
@@ -33532,13 +33533,18 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_48 @after
     Scenario: NMU flow paNEW OK con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 (flag standin in response in base a configurazione eCommerce)-> paGetPaymentV2 verso ACA con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD e flag standin, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-56)
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values    |
+            | OBJ_ID     | ('4328','4329') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('14','13')  |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 2000041      |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | OBJ_ID     | ('14','1200001') |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -34693,7 +34699,9 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         Given update parameter station.stand-in on configuration keys with value 66666666666_01
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -34722,7 +34730,9 @@ Feature: NMU flows con PA New pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |

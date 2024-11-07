@@ -605,7 +605,9 @@ Feature: NMU flows PA Old con pagamento OK
       | timestampOperation1   | 2021-07-09T17:06:03                           |
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+    And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | OBJ_ID     | 16649        |
     And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
@@ -1137,7 +1139,9 @@ Feature: NMU flows PA Old con pagamento OK
       | totalAmount1          | 12                                            |
       | fee1                  | 2                                             |
       | timestampOperation1   | 2021-07-09T17:06:03                           |
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+    And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | OBJ_ID     | 16649        |
     And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
@@ -1670,7 +1674,9 @@ Feature: NMU flows PA Old con pagamento OK
       | timestampOperation1   | 2021-07-09T17:06:03                           |
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+    And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | OBJ_ID     | 16649        |
     And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
@@ -2748,7 +2754,9 @@ Feature: NMU flows PA Old con pagamento OK
       | timestampOperation1   | 2021-07-09T17:06:03                           |
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+    And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | OBJ_ID     | 16649        |
     And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
@@ -3280,7 +3288,9 @@ Feature: NMU flows PA Old con pagamento OK
       | totalAmount1          | 12                                            |
       | fee1                  | 2                                             |
       | timestampOperation1   | 2021-07-09T17:06:03                           |
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+    And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | OBJ_ID     | 16649        |
     And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200
@@ -3811,7 +3821,9 @@ Feature: NMU flows PA Old con pagamento OK
       | timestampOperation1   | 2021-07-09T17:06:03                           |
       | authorizationCode     | 123456                                        |
       | paymentGateway        | 00                                            |
-    And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+    And update for table CANALI_NODO with parameter FLAG_TRAVASO = 'Y' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | OBJ_ID     | 16649        |
     And waiting after triggered refresh job ALL
     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
     Then verify the HTTP status code of v2/closepayment response is 200

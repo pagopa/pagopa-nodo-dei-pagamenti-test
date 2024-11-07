@@ -11145,9 +11145,11 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_01

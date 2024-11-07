@@ -63,7 +63,6 @@ Feature: NMU flows con PA New retry a token scaduto
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 12 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -520,7 +519,6 @@ Feature: NMU flows con PA New retry a token scaduto
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 12 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -948,8 +946,7 @@ Feature: NMU flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 5 seconds for expiration
-        When job mod3CancelV2 triggered after 3 seconds
+        When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
