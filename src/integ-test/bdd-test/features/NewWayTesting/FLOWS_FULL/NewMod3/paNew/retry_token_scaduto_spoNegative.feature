@@ -40,7 +40,6 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome

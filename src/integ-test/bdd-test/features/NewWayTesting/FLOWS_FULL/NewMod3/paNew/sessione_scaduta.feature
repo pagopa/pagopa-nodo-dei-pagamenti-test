@@ -40,7 +40,6 @@ Feature: NM3 flows con sessione scaduta
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 1 seconds for expiration
@@ -345,7 +344,6 @@ Feature: NM3 flows con sessione scaduta
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 1 seconds for expiration
@@ -650,7 +648,6 @@ Feature: NM3 flows con sessione scaduta
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 1 seconds for expiration
@@ -955,7 +952,6 @@ Feature: NM3 flows con sessione scaduta
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 1 seconds for expiration

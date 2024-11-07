@@ -5,7 +5,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given systems up
 
 
-
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_1 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRT, BIZ+ (NM3-4)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
@@ -40,7 +39,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -452,7 +450,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -862,7 +859,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -1272,7 +1268,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -1684,7 +1679,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -2058,7 +2052,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -2469,7 +2462,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -2881,7 +2873,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -3292,7 +3283,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -3670,15 +3660,18 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_10 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 e con broadcast paPrinc=paSec standin e flag invioReceiptStandin=true: activate -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2.(scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2 verso standin, 2 x paSendRTV2 a broadcast PA principale che è anche secondaria BIZ+ (NM3-125)
-        # Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                          |
+            | OBJ_ID     | ('1380001','16641','16640','1340001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('16647')    |
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
@@ -3709,7 +3702,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -4297,16 +4289,20 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_11 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 activate e PSP vp2 spo e con broadcast paPrinc=paSec standin e flag invioReceiptStandin=true: activate -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2.(scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2 verso standin, 2 x paSendRTV2 a broadcast PA principale che è anche secondaria BIZ+ (NM3-126)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('1380001','16641','16640','1340001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('16632','1160001') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('1200001') |
+        And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('16647') |
         And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
@@ -4335,7 +4331,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -4348,52 +4343,61 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId         |
             | PSP_ID                | #psp#                                       |
+            | IDEMPOTENCY_KEY       | NotNone                                     |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | NotNone                                     |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
             | INSERTED_BY           | activatePaymentNotice                       |
             | UPDATED_BY            | activatePaymentNotice                       |
+            | PAYMENT_METHOD        | None                                        |
+            | TOUCHPOINT            | None                                        |
+            | SUGGESTED_IDBUNDLE    | None                                        |
+            | SUGGESTED_IDCIBUNDLE  | None                                        |
+            | SUGGESTED_USER_FEE    | None                                        |
+            | SUGGESTED_PA_FEE      | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | companyName           |
-            | OFFICE_NAME        | NotNone               |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                             |
+            | ID                 | NotNone                           |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode |
+            | DESCRIPTION        | pagamentoTest                     |
+            | COMPANY_NAME       | companyName                       |
+            | OFFICE_NAME        | office                            |
+            | DEBTOR_ID          | NotNone                           |
+            | INSERTED_TIMESTAMP | NotNone                           |
+            | UPDATED_TIMESTAMP  | NotNone                           |
+            | INSERTED_BY        | activatePaymentNotice             |
+            | UPDATED_BY         | activatePaymentNotice             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                         |
-            | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                        |
-            | DUE_DATE              | NotNone                       |
-            | RETENTION_DATE        | None                          |
-            | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | Y                             |
-            | INSERTED_TIMESTAMP    | NotNone                       |
-            | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | NotNone                       |
-            | FK_POSITION_SERVICE   | NotNone                       |
-            | INSERTED_BY           | activatePaymentNotice         |
-            | UPDATED_BY            | activatePaymentNotice         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode   |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | 2021-12-31 00:00:00                 |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNotice.amount       |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNotice               |
+            | UPDATED_BY            | activatePaymentNotice               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4402,7 +4406,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
             | ID                         | NotNone                                     |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                      |
+            | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId         |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                             |
             | STATION_ID                 | standin                                     |
@@ -4410,13 +4415,15 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
-            | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                     |
+            | FEE                        | 2                                           |
+            | OUTCOME                    | NotNone                                     |
+            | PAYMENT_METHOD             | creditCard                                  |
             | PAYMENT_CHANNEL            | app                                         |
-            | TRANSFER_DATE              | NotNone                                     |
+            | TRANSFER_DATE              | 2021-12-11                                  |
             | PAYER_ID                   | NotNone                                     |
+            | APPLICATION_DATE           | 2021-12-12                                  |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -4426,31 +4433,49 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORIGINAL_PAYMENT_TOKEN     | None                                        |
             | FLAG_IO                    | N                                           |
             | RICEVUTA_PM                | None                                        |
-            | FLAG_PAYPAL                | None                                        |
             | FLAG_ACTIVATE_RESP_MISSING | None                                        |
+            | FLAG_PAYPAL                | None                                        |
+            | INSERTED_BY                | activatePaymentNotice                       |
+            | UPDATED_BY                 | sendPaymentOutcomeV2                        |
             | TRANSACTION_ID             | None                                        |
+            | CLOSE_VERSION              | None                                        |
+            | FEE_PA                     | None                                        |
+            | BUNDLE_ID                  | None                                        |
+            | BUNDLE_PA_ID               | None                                        |
+            | PM_INFO                    | None                                        |
+            | MBD                        | N                                           |
+            | FEE_SPO                    | None                                        |
+            | PAYMENT_NOTE               | responseFull                                |
+            | FLAG_STANDIN               | Y                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_TRANSFER
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                       |
-            | ID                       | NotNone                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                      |
-            | PA_FISCAL_CODE_SECONDARY | 66666666666                 |
-            | IBAN                     | IT45R0760103200000000001016 |
-            | AMOUNT                   | 10                          |
-            | REMITTANCE_INFORMATION   | NotNone                     |
-            | TRANSFER_CATEGORY        | NotNone                     |
-            | TRANSFER_IDENTIFIER      | 1,2,3,4,5                   |
-            | VALID                    | Y                           |
-            | FK_POSITION_PAYMENT      | NotNone                     |
-            | INSERTED_TIMESTAMP       | NotNone                     |
-            | UPDATED_TIMESTAMP        | NotNone                     |
-            | FK_PAYMENT_PLAN          | NotNone                     |
-            | INSERTED_BY              | activatePaymentNotice       |
-            | UPDATED_BY               | activatePaymentNotice       |
+            | column                   | value                               |
+            | ID                       | NotNone                             |
+            | NOTICE_ID                | $activatePaymentNotice.noticeNumber |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId |
+            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode   |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode   |
+            | IBAN                     | IT45R0760103200000000001016         |
+            | AMOUNT                   | 10                                  |
+            | REMITTANCE_INFORMATION   | testPaGetPayment                    |
+            | TRANSFER_CATEGORY        | paGetPaymentTest                    |
+            | TRANSFER_IDENTIFIER      | 1,2,3,4,5                           |
+            | VALID                    | Y                                   |
+            | FK_POSITION_PAYMENT      | NotNone                             |
+            | INSERTED_TIMESTAMP       | NotNone                             |
+            | UPDATED_TIMESTAMP        | NotNone                             |
+            | FK_PAYMENT_PLAN          | NotNone                             |
+            | INSERTED_BY              | activatePaymentNotice               |
+            | UPDATED_BY               | activatePaymentNotice               |
+            | METADATA                 | None                                |
+            | REQ_TIPO_BOLLO           | None                                |
+            | REQ_HASH_DOCUMENTO       | None                                |
+            | REQ_PROVINCIA_RESIDENZA  | None                                |
+            | COMPANY_NAME_SECONDARY   | None                                |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4893,9 +4918,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_12 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-146)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -4904,6 +4929,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
@@ -4924,7 +4952,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -4938,52 +4965,61 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId           |
             | PSP_ID                | #pspPoste#                                  |
+            | IDEMPOTENCY_KEY       | NotNone                                     |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | NotNone                                     |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
             | INSERTED_BY           | activatePaymentNotice                       |
             | UPDATED_BY            | activatePaymentNotice                       |
+            | PAYMENT_METHOD        | None                                        |
+            | TOUCHPOINT            | None                                        |
+            | SUGGESTED_IDBUNDLE    | None                                        |
+            | SUGGESTED_IDCIBUNDLE  | None                                        |
+            | SUGGESTED_USER_FEE    | None                                        |
+            | SUGGESTED_PA_FEE      | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | NotNone               |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                             |
+            | ID                 | NotNone                           |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode |
+            | DESCRIPTION        | pagamentoTest                     |
+            | COMPANY_NAME       | company                           |
+            | OFFICE_NAME        | office                            |
+            | DEBTOR_ID          | NotNone                           |
+            | INSERTED_TIMESTAMP | NotNone                           |
+            | UPDATED_TIMESTAMP  | NotNone                           |
+            | INSERTED_BY        | activatePaymentNotice             |
+            | UPDATED_BY         | activatePaymentNotice             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                         |
-            | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 02$iuv                        |
-            | DUE_DATE              | NotNone                       |
-            | RETENTION_DATE        | None                          |
-            | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | Y                             |
-            | INSERTED_TIMESTAMP    | NotNone                       |
-            | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | NotNone                       |
-            | FK_POSITION_SERVICE   | NotNone                       |
-            | INSERTED_BY           | activatePaymentNotice         |
-            | UPDATED_BY            | activatePaymentNotice         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | 2021-12-31 00:00:00               |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNotice.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNotice             |
+            | UPDATED_BY            | activatePaymentNotice             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4992,7 +5028,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
             | ID                         | NotNone                                     |
-            | CREDITOR_REFERENCE_ID      | 02$iuv                                      |
+            | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
             | STATION_ID                 | #id_station#                                |
@@ -5000,13 +5037,15 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
-            | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                     |
+            | FEE                        | 2                                           |
+            | OUTCOME                    | NotNone                                     |
+            | PAYMENT_METHOD             | creditCard                                  |
             | PAYMENT_CHANNEL            | app                                         |
-            | TRANSFER_DATE              | NotNone                                     |
+            | TRANSFER_DATE              | 2021-12-11                                  |
             | PAYER_ID                   | NotNone                                     |
+            | APPLICATION_DATE           | 2021-12-12                                  |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -5016,31 +5055,49 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORIGINAL_PAYMENT_TOKEN     | None                                        |
             | FLAG_IO                    | N                                           |
             | RICEVUTA_PM                | None                                        |
-            | FLAG_PAYPAL                | None                                        |
             | FLAG_ACTIVATE_RESP_MISSING | None                                        |
+            | FLAG_PAYPAL                | None                                        |
+            | INSERTED_BY                | activatePaymentNotice                       |
+            | UPDATED_BY                 | sendPaymentOutcome                          |
             | TRANSACTION_ID             | None                                        |
+            | CLOSE_VERSION              | None                                        |
+            | FEE_PA                     | None                                        |
+            | BUNDLE_ID                  | None                                        |
+            | BUNDLE_PA_ID               | None                                        |
+            | PM_INFO                    | None                                        |
+            | MBD                        | N                                           |
+            | FEE_SPO                    | None                                        |
+            | PAYMENT_NOTE               | responseFull                                |
+            | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_TRANSFER
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                             |
-            | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 02$iuv                            |
-            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
-            | IBAN                     | IT45R0760103200000000001016       |
-            | AMOUNT                   | $activatePaymentNotice.amount     |
-            | REMITTANCE_INFORMATION   | NotNone                           |
-            | TRANSFER_CATEGORY        | NotNone                           |
-            | TRANSFER_IDENTIFIER      | 1                                 |
-            | VALID                    | Y                                 |
-            | FK_POSITION_PAYMENT      | NotNone                           |
-            | INSERTED_TIMESTAMP       | NotNone                           |
-            | UPDATED_TIMESTAMP        | NotNone                           |
-            | FK_PAYMENT_PLAN          | NotNone                           |
-            | INSERTED_BY              | activatePaymentNotice             |
-            | UPDATED_BY               | activatePaymentNotice             |
+            | column                   | value                               |
+            | ID                       | NotNone                             |
+            | NOTICE_ID                | $activatePaymentNotice.noticeNumber |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId   |
+            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode   |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode   |
+            | IBAN                     | IT45R0760103200000000001016         |
+            | AMOUNT                   | $activatePaymentNotice.amount       |
+            | REMITTANCE_INFORMATION   | testPaGetPayment                    |
+            | TRANSFER_CATEGORY        | paGetPaymentTest                    |
+            | TRANSFER_IDENTIFIER      | 1                                   |
+            | VALID                    | Y                                   |
+            | FK_POSITION_PAYMENT      | NotNone                             |
+            | INSERTED_TIMESTAMP       | NotNone                             |
+            | UPDATED_TIMESTAMP        | NotNone                             |
+            | FK_PAYMENT_PLAN          | NotNone                             |
+            | INSERTED_BY              | activatePaymentNotice               |
+            | UPDATED_BY               | activatePaymentNotice               |
+            | METADATA                 | None                                |
+            | REQ_TIPO_BOLLO           | None                                |
+            | REQ_HASH_DOCUMENTO       | None                                |
+            | REQ_PROVINCIA_RESIDENZA  | None                                |
+            | COMPANY_NAME_SECONDARY   | None                                |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -5271,9 +5328,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_13 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-147)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -5282,6 +5339,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
@@ -5302,7 +5362,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -5316,7 +5375,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
             | ID                    | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PSP_ID                | #pspPoste#                                    |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
@@ -5336,8 +5395,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | NotNone                 |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -5349,19 +5408,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 02$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | NotNone                           |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNoticeV2.amount   |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNoticeV2           |
+            | UPDATED_BY            | activatePaymentNoticeV2           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -5381,7 +5440,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
             | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
             | PAYER_ID                   | NotNone                                       |
@@ -5651,9 +5710,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_14 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-148)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -5662,6 +5721,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
@@ -5682,7 +5744,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -5696,7 +5757,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId           |
             | PSP_ID                | #pspPoste#                                  |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
@@ -5716,8 +5777,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                 |
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | NotNone               |
+            | COMPANY_NAME       | company               |
+            | OFFICE_NAME        | office                |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -5729,19 +5790,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                         |
-            | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 02$iuv                        |
-            | DUE_DATE              | NotNone                       |
-            | RETENTION_DATE        | None                          |
-            | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | Y                             |
-            | INSERTED_TIMESTAMP    | NotNone                       |
-            | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | NotNone                       |
-            | FK_POSITION_SERVICE   | NotNone                       |
-            | INSERTED_BY           | activatePaymentNotice         |
-            | UPDATED_BY            | activatePaymentNotice         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | NotNone                           |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNotice.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNotice             |
+            | UPDATED_BY            | activatePaymentNotice             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -5750,7 +5811,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
             | ID                         | NotNone                                     |
-            | CREDITOR_REFERENCE_ID      | 02$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
             | STATION_ID                 | #id_station#                                |
@@ -5761,7 +5822,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNotice.amount               |
             | FEE                        | NotNone                                     |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_METHOD             | creditCard                                  |
             | PAYMENT_CHANNEL            | app                                         |
             | TRANSFER_DATE              | NotNone                                     |
             | PAYER_ID                   | NotNone                                     |
@@ -5785,7 +5846,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                             |
             | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 02$iuv                            |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016       |
             | AMOUNT                   | $activatePaymentNotice.amount     |
@@ -5828,7 +5889,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                       |
             | ID                    | NotNone                                     |
             | FK_POSITION_PAYMENT   | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTIFIED                                    |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -6031,17 +6092,20 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_15 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-149)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302#iuv#     |
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
-            | amount             | 10.00                       |
+            | amount             | 50.00                       |
             | options            | EQ                          |
             | allCCP             | false                       |
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
@@ -6062,7 +6126,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -6076,7 +6139,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
             | ID                    | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PSP_ID                | #pspPoste#                                    |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
@@ -6096,8 +6159,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | NotNone                 |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -6109,19 +6172,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 02$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | NotNone                           |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNoticeV2.amount   |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNoticeV2           |
+            | UPDATED_BY            | activatePaymentNoticeV2           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -6130,7 +6193,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 02$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
             | STATION_ID                 | #id_station#                                  |
@@ -6141,7 +6204,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
             | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
             | PAYER_ID                   | NotNone                                       |
@@ -6165,7 +6228,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                               |
             | ID                       | NotNone                             |
-            | CREDITOR_REFERENCE_ID    | 02$iuv                              |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId   |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016         |
             | AMOUNT                   | $activatePaymentNoticeV2.amount     |
@@ -6208,7 +6271,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTIFIED                                      |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -6410,9 +6473,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_16 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-150)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -6421,6 +6484,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
@@ -6442,7 +6508,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -6456,7 +6521,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId         |
             | PSP_ID                | #pspPoste#                                  |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
@@ -6477,7 +6542,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | company               |
-            | OFFICE_NAME        | NotNone               |
+            | OFFICE_NAME        | office                |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -6489,19 +6554,20 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                         |
-            | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                        |
-            | DUE_DATE              | NotNone                       |
-            | RETENTION_DATE        | None                          |
-            | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | Y                             |
-            | INSERTED_TIMESTAMP    | NotNone                       |
-            | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | NotNone                       |
-            | FK_POSITION_SERVICE   | NotNone                       |
-            | INSERTED_BY           | activatePaymentNotice         |
-            | UPDATED_BY            | activatePaymentNotice         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode   |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNotice.amount       |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNotice               |
+            | UPDATED_BY            | activatePaymentNotice               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -6510,21 +6576,24 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
             | ID                         | NotNone                                     |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                      |
+            | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId         |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
-            | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
+            | BROKER_PA_ID               | #intermediarioPA#                           |
             | STATION_ID                 | #stazione_versione_primitive_2#             |
             | STATION_VERSION            | 2                                           |
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_METHOD             | creditCard                                  |
             | PAYMENT_CHANNEL            | app                                         |
             | TRANSFER_DATE              | NotNone                                     |
             | PAYER_ID                   | NotNone                                     |
+            | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -6534,31 +6603,42 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORIGINAL_PAYMENT_TOKEN     | None                                        |
             | FLAG_IO                    | N                                           |
             | RICEVUTA_PM                | None                                        |
-            | FLAG_PAYPAL                | None                                        |
             | FLAG_ACTIVATE_RESP_MISSING | None                                        |
+            | FLAG_PAYPAL                | None                                        |
+            | INSERTED_BY                | activatePaymentNotice                       |
+            | UPDATED_BY                 | sendPaymentOutcome                          |
             | TRANSACTION_ID             | None                                        |
+            | CLOSE_VERSION              | None                                        |
+            | FEE_PA                     | None                                        |
+            | BUNDLE_ID                  | None                                        |
+            | BUNDLE_PA_ID               | None                                        |
+            | PM_INFO                    | None                                        |
+            | MBD                        | N                                           |
+            | FEE_SPO                    | None                                        |
+            | PAYMENT_NOTE               | responseFull                                |
+            | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_TRANSFER
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                             |
-            | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                            |
-            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
-            | IBAN                     | IT45R0760103200000000001016       |
-            | AMOUNT                   | $activatePaymentNotice.amount     |
-            | REMITTANCE_INFORMATION   | NotNone                           |
-            | TRANSFER_CATEGORY        | NotNone                           |
-            | TRANSFER_IDENTIFIER      | 1                                 |
-            | VALID                    | Y                                 |
-            | FK_POSITION_PAYMENT      | NotNone                           |
-            | INSERTED_TIMESTAMP       | NotNone                           |
-            | UPDATED_TIMESTAMP        | NotNone                           |
-            | FK_PAYMENT_PLAN          | NotNone                           |
-            | INSERTED_BY              | activatePaymentNotice             |
-            | UPDATED_BY               | activatePaymentNotice             |
+            | column                   | value                               |
+            | ID                       | NotNone                             |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode   |
+            | IBAN                     | IT45R0760103200000000001016         |
+            | AMOUNT                   | $activatePaymentNotice.amount       |
+            | REMITTANCE_INFORMATION   | NotNone                             |
+            | TRANSFER_CATEGORY        | NotNone                             |
+            | TRANSFER_IDENTIFIER      | 1                                   |
+            | VALID                    | Y                                   |
+            | FK_POSITION_PAYMENT      | NotNone                             |
+            | INSERTED_TIMESTAMP       | NotNone                             |
+            | UPDATED_TIMESTAMP        | NotNone                             |
+            | FK_PAYMENT_PLAN          | NotNone                             |
+            | INSERTED_BY              | activatePaymentNotice               |
+            | UPDATED_BY               | activatePaymentNotice               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -6588,7 +6668,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                       |
             | ID                    | NotNone                                     |
             | FK_POSITION_PAYMENT   | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTIFIED                                    |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -6794,9 +6874,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_17 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-151)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -6805,6 +6885,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
@@ -6826,7 +6909,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -6861,7 +6943,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -6873,19 +6955,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 10$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -6894,7 +6976,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
             | STATION_ID                 | #stazione_versione_primitive_2#               |
@@ -6905,7 +6987,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
             | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
             | PAYER_ID                   | NotNone                                       |
@@ -6929,7 +7011,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                               |
             | ID                       | NotNone                             |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                              |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016         |
             | AMOUNT                   | $activatePaymentNoticeV2.amount     |
@@ -6972,7 +7054,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTIFIED                                      |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -7178,9 +7260,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_18 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-152)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
+        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -7189,6 +7271,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
@@ -7210,7 +7295,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -7224,7 +7308,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId         |
             | PSP_ID                | #pspPoste#                                  |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
@@ -7245,7 +7329,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
             | COMPANY_NAME       | company               |
-            | OFFICE_NAME        | NotNone               |
+            | OFFICE_NAME        | office                |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -7257,19 +7341,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                         |
-            | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                        |
-            | DUE_DATE              | NotNone                       |
-            | RETENTION_DATE        | None                          |
-            | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | Y                             |
-            | INSERTED_TIMESTAMP    | NotNone                       |
-            | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | NotNone                       |
-            | FK_POSITION_SERVICE   | NotNone                       |
-            | INSERTED_BY           | activatePaymentNotice         |
-            | UPDATED_BY            | activatePaymentNotice         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNotice.amount       |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNotice               |
+            | UPDATED_BY            | activatePaymentNotice               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -7278,21 +7362,24 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
             | ID                         | NotNone                                     |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                      |
+            | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId         |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
-            | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
+            | BROKER_PA_ID               | #intermediarioPA#                           |
             | STATION_ID                 | #stazione_versione_primitive_2#             |
             | STATION_VERSION            | 2                                           |
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | NotNone                                     |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | OK                                          |
-            | PAYMENT_METHOD             | NotNone                                     |
+            | PAYMENT_METHOD             | creditCard                                  |
             | PAYMENT_CHANNEL            | app                                         |
             | TRANSFER_DATE              | NotNone                                     |
             | PAYER_ID                   | NotNone                                     |
+            | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -7302,31 +7389,42 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORIGINAL_PAYMENT_TOKEN     | None                                        |
             | FLAG_IO                    | N                                           |
             | RICEVUTA_PM                | None                                        |
-            | FLAG_PAYPAL                | None                                        |
             | FLAG_ACTIVATE_RESP_MISSING | None                                        |
+            | FLAG_PAYPAL                | None                                        |
+            | INSERTED_BY                | activatePaymentNotice                       |
+            | UPDATED_BY                 | sendPaymentOutcomeV2                        |
             | TRANSACTION_ID             | None                                        |
+            | CLOSE_VERSION              | None                                        |
+            | FEE_PA                     | None                                        |
+            | BUNDLE_ID                  | None                                        |
+            | BUNDLE_PA_ID               | None                                        |
+            | PM_INFO                    | None                                        |
+            | MBD                        | N                                           |
+            | FEE_SPO                    | None                                        |
+            | PAYMENT_NOTE               | responseFull                                |
+            | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_TRANSFER
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                             |
-            | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                            |
-            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
-            | IBAN                     | IT45R0760103200000000001016       |
-            | AMOUNT                   | $activatePaymentNotice.amount     |
-            | REMITTANCE_INFORMATION   | NotNone                           |
-            | TRANSFER_CATEGORY        | NotNone                           |
-            | TRANSFER_IDENTIFIER      | 1                                 |
-            | VALID                    | Y                                 |
-            | FK_POSITION_PAYMENT      | NotNone                           |
-            | INSERTED_TIMESTAMP       | NotNone                           |
-            | UPDATED_TIMESTAMP        | NotNone                           |
-            | FK_PAYMENT_PLAN          | NotNone                           |
-            | INSERTED_BY              | activatePaymentNotice             |
-            | UPDATED_BY               | activatePaymentNotice             |
+            | column                   | value                               |
+            | ID                       | NotNone                             |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode   |
+            | IBAN                     | IT45R0760103200000000001016         |
+            | AMOUNT                   | $activatePaymentNotice.amount       |
+            | REMITTANCE_INFORMATION   | NotNone                             |
+            | TRANSFER_CATEGORY        | NotNone                             |
+            | TRANSFER_IDENTIFIER      | 1                                   |
+            | VALID                    | Y                                   |
+            | FK_POSITION_PAYMENT      | NotNone                             |
+            | INSERTED_TIMESTAMP       | NotNone                             |
+            | UPDATED_TIMESTAMP        | NotNone                             |
+            | FK_PAYMENT_PLAN          | NotNone                             |
+            | INSERTED_BY              | activatePaymentNotice               |
+            | UPDATED_BY               | activatePaymentNotice               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -7356,7 +7454,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                       |
             | ID                    | NotNone                                     |
             | FK_POSITION_PAYMENT   | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                      |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTIFIED                                    |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -7560,9 +7658,9 @@ Feature: NM3 flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_19 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-153)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     |
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -7571,6 +7669,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
@@ -7592,7 +7693,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -7606,7 +7706,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
             | ID                    | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PSP_ID                | #pspPoste#                                    |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
@@ -7627,7 +7727,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | company                 |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -7639,19 +7739,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 10$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -7660,21 +7760,24 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                        |
+            | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
-            | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
+            | BROKER_PA_ID               | #intermediarioPA#                             |
             | STATION_ID                 | #stazione_versione_primitive_2#               |
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #pspPoste#                                    |
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                       |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
             | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
             | PAYER_ID                   | NotNone                                       |
+            | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -7684,9 +7787,20 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORIGINAL_PAYMENT_TOKEN     | None                                          |
             | FLAG_IO                    | N                                             |
             | RICEVUTA_PM                | None                                          |
-            | FLAG_PAYPAL                | None                                          |
             | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | FLAG_PAYPAL                | None                                          |
+            | INSERTED_BY                | activatePaymentNoticeV2                       |
+            | UPDATED_BY                 | sendPaymentOutcome                            |
             | TRANSACTION_ID             | None                                          |
+            | CLOSE_VERSION              | None                                          |
+            | FEE_PA                     | None                                          |
+            | BUNDLE_ID                  | None                                          |
+            | BUNDLE_PA_ID               | None                                          |
+            | PM_INFO                    | None                                          |
+            | MBD                        | N                                             |
+            | FEE_SPO                    | None                                          |
+            | PAYMENT_NOTE               | responseFull                                  |
+            | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -7695,7 +7809,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                               |
             | ID                       | NotNone                             |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                              |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016         |
             | AMOUNT                   | $activatePaymentNoticeV2.amount     |
@@ -7738,7 +7852,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTIFIED                                      |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -7940,16 +8054,15 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_20 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2, con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> paSendRT principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-117)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
         And update parameter gec.enabled on configuration keys with value true
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
@@ -7976,7 +8089,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -7990,8 +8102,9 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
             | PSP_ID                | #psp#                                              |
+            | IDEMPOTENCY_KEY       | NotNone                                            |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
             | TOKEN_VALID_TO        | NotNone                                            |
@@ -8011,35 +8124,37 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | NotNone                 |
-            | DEBTOR_ID          | NotNone                 |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
+            | DESCRIPTION        | pagamentoTest                       |
+            | COMPANY_NAME       | company                             |
+            | OFFICE_NAME        | office                              |
+            | DEBTOR_ID          | NotNone                             |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | INSERTED_BY        | activatePaymentNoticeV2             |
+            | UPDATED_BY         | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId   |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8048,7 +8163,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -8056,13 +8172,15 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | NotNone                                       |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
             | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
             | PAYER_ID                   | NotNone                                       |
+            | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
             | FK_PAYMENT_PLAN            | NotNone                                       |
@@ -8072,9 +8190,20 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORIGINAL_PAYMENT_TOKEN     | None                                          |
             | FLAG_IO                    | N                                             |
             | RICEVUTA_PM                | None                                          |
-            | FLAG_PAYPAL                | None                                          |
             | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | FLAG_PAYPAL                | None                                          |
+            | INSERTED_BY                | activatePaymentNoticeV2                       |
+            | UPDATED_BY                 | sendPaymentOutcomeV2                          |
             | TRANSACTION_ID             | None                                          |
+            | CLOSE_VERSION              | None                                          |
+            | FEE_PA                     | None                                          |
+            | BUNDLE_ID                  | None                                          |
+            | BUNDLE_PA_ID               | None                                          |
+            | PM_INFO                    | None                                          |
+            | MBD                        | N                                             |
+            | FEE_SPO                    | None                                          |
+            | PAYMENT_NOTE               | responseFull                                  |
+            | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8083,12 +8212,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | NOTICE_ID                | $activatePaymentNoticeV2.noticeNumber                       |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                           |
+            | PA_FISCAL_CODE           | $activatePaymentNoticeV2.fiscalCode                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
-            | AMOUNT                   | 2000                                                        |
-            | REMITTANCE_INFORMATION   | NotNone                                                     |
-            | TRANSFER_CATEGORY        | NotNone                                                     |
+            | AMOUNT                   | $activatePaymentNoticeV2.amount                             |
+            | REMITTANCE_INFORMATION   | testPaGetPayment                                            |
+            | TRANSFER_CATEGORY        | 0101101IM                                                   |
             | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
             | VALID                    | Y                                                           |
             | FK_POSITION_PAYMENT      | NotNone                                                     |
@@ -8097,6 +8228,11 @@ Feature: NM3 flows con PA New retry a token scaduto
             | FK_PAYMENT_PLAN          | NotNone                                                     |
             | INSERTED_BY              | activatePaymentNoticeV2                                     |
             | UPDATED_BY               | activatePaymentNoticeV2                                     |
+            | METADATA                 | None                                                        |
+            | REQ_TIPO_BOLLO           | None                                                        |
+            | REQ_HASH_DOCUMENTO       | None                                                        |
+            | REQ_PROVINCIA_RESIDENZA  | None                                                        |
+            | COMPANY_NAME_SECONDARY   | None                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8127,7 +8263,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_SENT                                   |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -8590,17 +8726,17 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_21 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2, con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> paSendRT principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-119)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2', FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('100')      |
         And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
@@ -8609,7 +8745,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
-            | creditorReferenceId         | 47$iuv                              |
+            | creditorReferenceId         | $paGetPaymentV2.creditorReferenceId |
             | paymentAmount               | 10000.00                            |
             | dueDate                     | 2021-12-31                          |
             | description                 | pagamentoTest                       |
@@ -8629,7 +8765,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -8643,7 +8778,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -8668,7 +8803,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -8680,19 +8815,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8701,7 +8836,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -8712,7 +8847,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | NotNone                                       |
             | OUTCOME                    | OK                                            |
-            | PAYMENT_METHOD             | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
             | PAYMENT_CHANNEL            | app                                           |
             | TRANSFER_DATE              | NotNone                                       |
             | PAYER_ID                   | NotNone                                       |
@@ -8736,7 +8871,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -8780,7 +8915,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_SENT                                   |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -9310,16 +9445,15 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_22 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 con broadcast paPrinc=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-121)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
         And update parameter gec.enabled on configuration keys with value true
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
@@ -9360,7 +9494,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -9384,8 +9518,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | NotNone                 |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9397,19 +9531,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | NotNone                           |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNoticeV2.amount   |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNoticeV2           |
+            | UPDATED_BY            | activatePaymentNoticeV2           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9418,7 +9552,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -9453,7 +9587,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                           |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -9497,7 +9631,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_GENERATED                              |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -9793,17 +9927,17 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_23 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 con broadcast paPrinc=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-123)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y', VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('100')      |
         And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
@@ -9832,7 +9966,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -9846,7 +9979,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -9871,7 +10004,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -9883,19 +10016,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9904,7 +10037,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -9939,7 +10072,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -9983,7 +10116,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_GENERATED                              |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -10284,17 +10417,17 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_24 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 activate e PSP vp1 spo, con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spo+ -> paSendRTV2 principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-127)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                         |
+            | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y', VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('100')      |
         And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
@@ -10303,7 +10436,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
-            | creditorReferenceId         | 47$iuv                              |
+            | creditorReferenceId         | $paGetPaymentV2.creditorReferenceId |
             | paymentAmount               | 10000.00                            |
             | dueDate                     | 2021-12-31                          |
             | description                 | pagamentoTest                       |
@@ -10323,7 +10456,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -10362,7 +10494,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -10374,19 +10506,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -10395,7 +10527,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -10430,7 +10562,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -10474,7 +10606,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_SENT                                   |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -11007,22 +11139,17 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_25 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2, con broadcast paPrinc!=paSec con GEC e standin: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> invio paSendRT verso stazione principale standin, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso broadcast PA principale. BIZ+ (NM3-118)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
@@ -11049,7 +11176,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -11063,7 +11189,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -11087,8 +11213,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | NotNone                 |
+            | COMPANY_NAME       | company                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -11100,19 +11226,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | NotNone                           |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNoticeV2.amount   |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNoticeV2           |
+            | UPDATED_BY            | activatePaymentNoticeV2           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -11121,7 +11247,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -11156,7 +11282,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                           |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -11200,7 +11326,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_SENT                                   |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -11983,23 +12109,19 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_26 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2, con broadcast paPrinc!=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, paSendRTV2 verso bradcast PA principale con vp2. BIZ+ (NM3-120)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y', VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
@@ -12027,7 +12149,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -12041,7 +12162,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -12066,7 +12187,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -12078,19 +12199,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -12099,7 +12220,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -12134,7 +12255,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -12178,7 +12299,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_SENT                                   |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -12963,22 +13084,19 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_27 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 con broadcast paPrinc!=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-122)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
@@ -13005,7 +13123,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -13019,7 +13136,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -13043,8 +13160,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | NotNone                 |
+            | COMPANY_NAME       | comapny                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -13056,19 +13173,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                             |
+            | ID                    | NotNone                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId |
+            | DUE_DATE              | NotNone                           |
+            | RETENTION_DATE        | None                              |
+            | AMOUNT                | $activatePaymentNoticeV2.amount   |
+            | FLAG_FINAL_PAYMENT    | Y                                 |
+            | INSERTED_TIMESTAMP    | NotNone                           |
+            | UPDATED_TIMESTAMP     | NotNone                           |
+            | METADATA              | NotNone                           |
+            | FK_POSITION_SERVICE   | NotNone                           |
+            | INSERTED_BY           | activatePaymentNoticeV2           |
+            | UPDATED_BY            | activatePaymentNoticeV2           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -13077,7 +13194,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -13112,7 +13229,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                           |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -13156,7 +13273,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_GENERATED                              |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -13447,23 +13564,19 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_28 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 con broadcast paPrinc!=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-124)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | ('1200001')  |
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y', VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
@@ -13491,7 +13604,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -13505,7 +13617,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #psp#                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -13530,7 +13642,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -13542,19 +13654,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 47$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -13563,7 +13675,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | irraggiungibile                               |
             | STATION_ID                 | standin                                       |
@@ -13598,7 +13710,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -13642,7 +13754,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_GENERATED                              |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -13935,18 +14047,13 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_29 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spoV2+ Poste ->  paSendRTV2 verso stazione principale, paSendRTV2 a broadcast PA principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-128)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
@@ -13962,32 +14069,33 @@ Feature: NM3 flows con PA New retry a token scaduto
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 5000.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
-            | outcome                     | OK                          |
-            | creditorReferenceId         | 10$iuv                      |
-            | paymentAmount               | 5000.00                     |
-            | dueDate                     | 2021-12-31                  |
-            | description                 | pagamentoTest               |
-            | entityUniqueIdentifierType  | G                           |
-            | entityUniqueIdentifierValue | 77777777777                 |
-            | fullName                    | Massimo Benvegnù            |
-            | transferAmount              | 1000.00                     |
-            | IBAN                        | IT45R0760103200000000001016 |
-            | fiscalCodePA1               | 90000000001                 |
-            | fiscalCodePA2               | 90000000002                 |
-            | fiscalCodePA3               | 90000000003                 |
-            | fiscalCodePA4               | 88888888888                 |
-            | fiscalCodePA5               | 88888888888                 |
-            | remittanceInformation       | testPaGetPayment            |
-            | transferCategory            | paGetPaymentTest            |
-            | companyName                 | companyName                 |
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | $paGetPaymentV2.creditorReferenceId |
+            | paymentAmount               | 5000.00                             |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 1000.00                             |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | fiscalCodePA1               | 90000000001                         |
+            | fiscalCodePA2               | 90000000002                         |
+            | fiscalCodePA3               | 90000000003                         |
+            | fiscalCodePA4               | 88888888888                         |
+            | fiscalCodePA5               | 88888888888                         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+            | companyName                 | companyName                         |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
@@ -14001,7 +14109,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #pspPoste#                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -14026,7 +14134,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -14038,19 +14146,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 10$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -14059,7 +14167,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | #intermediarioPA#                             |
             | STATION_ID                 | #stazione_versione_primitive_2#               |
@@ -14094,7 +14202,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 1000                                                        |
@@ -14138,7 +14246,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTIFIED                                      |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -14931,18 +15039,13 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_30 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spo+ Poste ->  paSendRTV2 verso stazione principale, paSendRTV2 a broadcast PA principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-134)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values  |
+            | OBJ_ID     | ('7','15131') |
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
@@ -14958,7 +15061,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 5000.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
@@ -14983,7 +15088,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -14997,7 +15101,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #pspPoste#                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -15022,7 +15126,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -15034,19 +15138,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 10$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -15055,7 +15159,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | #intermediarioPA#                             |
             | STATION_ID                 | #stazione_versione_primitive_2#               |
@@ -15090,7 +15194,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 1000                                                        |
@@ -15134,7 +15238,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTIFIED                                      |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -15927,13 +16031,10 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_31 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, mod3cancelV2 (scadenza sessione), spo+ Poste ->  paSendRTV2 verso stazione principale, paSendRTV2 a broadcast PA principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-131)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                                           |
+            | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
@@ -15948,7 +16049,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
-        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 10000.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
@@ -15973,7 +16076,6 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given wait 10 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -15987,7 +16089,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                              |
             | ID                    | NotNone                                            |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId                |
             | PSP_ID                | #pspPoste#                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
             | TOKEN_VALID_FROM      | NotNone                                            |
@@ -16012,7 +16114,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
             | COMPANY_NAME       | companyName             |
-            | OFFICE_NAME        | NotNone                 |
+            | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
             | UPDATED_TIMESTAMP  | NotNone                 |
@@ -16024,19 +16126,19 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                           |
-            | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 10$iuv                          |
-            | DUE_DATE              | NotNone                         |
-            | RETENTION_DATE        | None                            |
-            | AMOUNT                | $activatePaymentNoticeV2.amount |
-            | FLAG_FINAL_PAYMENT    | Y                               |
-            | INSERTED_TIMESTAMP    | NotNone                         |
-            | UPDATED_TIMESTAMP     | NotNone                         |
-            | METADATA              | NotNone                         |
-            | FK_POSITION_SERVICE   | NotNone                         |
-            | INSERTED_BY           | activatePaymentNoticeV2         |
-            | UPDATED_BY            | activatePaymentNoticeV2         |
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | NotNone                             |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -16045,7 +16147,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                         |
             | ID                         | NotNone                                       |
-            | CREDITOR_REFERENCE_ID      | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | #intermediarioPA#                             |
             | STATION_ID                 | #stazione_versione_primitive_2#               |
@@ -16080,7 +16182,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                                                       |
             | ID                       | NotNone                                                     |
-            | CREDITOR_REFERENCE_ID    | 10$iuv                                                      |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
             | AMOUNT                   | 2000                                                        |
@@ -16124,7 +16226,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | FK_POSITION_PAYMENT   | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 10$iuv                                        |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2.creditorReferenceId           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTIFIED                                      |
             | INSERTED_TIMESTAMP    | NotNone                                       |
