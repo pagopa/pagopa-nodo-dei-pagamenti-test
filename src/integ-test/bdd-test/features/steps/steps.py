@@ -2505,13 +2505,13 @@ def step_impl(context, job_name, seconds):
             print(f">>>>>>>>>>>>>>>>>> {url_nodo}jobs/trigger/{job_name} with proxies {getattr(context,'proxies')}")
         elif dbRun == "Oracle":
             #RUN DA LOCALE
-            # if user_profile != None:
-            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
-            print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+            if user_profile != None:
+                nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+                print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
             #RUN DA REMOTO
-            # else:
-            #     nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
-            #     print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
+            else:
+                nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+                print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
 
         setattr(context, job_name + RESPONSE, nodo_response)
 
@@ -4140,49 +4140,6 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
-
-
-
-
-
-
-
-@step(u"update for table {table_name} with parameter {param} on db {db_name} with where datatable {type_table}")
-def step_impl(context, table_name, param, db_name, type_table): 
-    try:
-        db_config = context.config.userdata.get("db_configuration")
-        db_selected = db_config.get(db_name)
-
-        assert context.table is not None, f"Datatable non inserita!!!"
-        # Legge la datatable per le where conditions e la mette in una dict
-        dict_fields_values = utils.table_to_dict(context.table, type_table)
-        # Costruisce la query a partire dalla where
-        upd_query = utils.generate_update(dict_fields_values)
-
-        upd_query = upd_query.replace("table_name", table_name).replace("param", param)
-        upd_query = utils.replace_global_variables(upd_query, context)
-        upd_query = utils.replace_local_variables(upd_query, context)
-        upd_query = utils.replace_context_variables(upd_query, context)
-
-        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-
-        # EXECUTE UPDATE WITH POLLING SET TO 60 SEC
-        exec_query = utils.update_query(context, conn, adopted_db, upd_query)
-            
-        adopted_db.closeConnection(conn)
-
-    except AssertionError as e:
-        # Stampiamo il messaggio di errore dell'assert
-        print(f"----->>>> Assertion Error: {e}")
-        # Interrompiamo il test
-        raise AssertionError(str(e))
-    except Exception as e:
-        # Gestione di tutte le altre eccezioni
-        print(f"----->>>> Exception: {e}")
-        # Interrompiamo il test
-        raise e
-
-
 
 
 @step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
