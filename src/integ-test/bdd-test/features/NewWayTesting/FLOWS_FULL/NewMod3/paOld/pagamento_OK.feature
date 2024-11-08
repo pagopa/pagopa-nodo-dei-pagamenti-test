@@ -4,14 +4,12 @@ Feature: NM3 flows PA Old con pagamento OK
         Given systems up
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_1 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+  nodoInviaRPT -> paaInviaRT+ (subito, senza job paInviaRT) BIZ+ (NM3-2)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+        Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     |
-        And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     |
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
             | options            | EQ                          |
@@ -22,9 +20,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -38,18 +36,18 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of sendPaymentOutcome response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#             |
-            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#               |
             | dataOraMessaggioRichiesta         | #timedate#                                  |
             | dataEsecuzionePagamento           | #date#                                      |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
-            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | identificativoUnivocoVersamento   | 05$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#               |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | identificativoUnivocoVersamento       | 05$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
             | password                              | #password#                                  |
             | identificativoPSP                     | #pspFittizio#                               |
@@ -63,12 +61,12 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PSP_ID                | #psp#                                       |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -80,16 +78,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -98,7 +96,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                         |
             | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 12$iuv                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                        |
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
@@ -117,7 +115,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                             |
             | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 12$iuv                            |
+            | CREDITOR_REFERENCE_ID    | 05$iuv                            |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016       |
             | AMOUNT                   | $activatePaymentNotice.amount     |
@@ -145,22 +143,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -182,8 +180,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -197,7 +195,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                             |
             | STATUS                | PAYING,PAID_NORPT,PAID,NOTICE_GENERATED,NOTICE_STORED                           |
             | INSERTED_TIMESTAMP    | NotNone                                                                         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                          |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                          |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                     |
             | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcome,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -215,7 +213,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -239,25 +237,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -267,10 +265,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -307,7 +305,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -320,8 +318,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -379,8 +377,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -411,8 +409,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
         And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaInviaRTReq.rt xml check value NotNone in position 0
         # paaInviaRT RESP
@@ -429,13 +427,11 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_2 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_2
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: verify -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (subito, senza job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-1)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+        Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
@@ -444,9 +440,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -455,18 +451,18 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNotice response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#             |
-            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#               |
             | dataOraMessaggioRichiesta         | #timedate#                                  |
             | dataEsecuzionePagamento           | #date#                                      |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
-            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | identificativoUnivocoVersamento   | 05$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#               |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | identificativoUnivocoVersamento       | 05$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
             | password                              | #password#                                  |
             | identificativoPSP                     | #pspFittizio#                               |
@@ -482,10 +478,10 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of sendPaymentOutcome response
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#               |
             | password                              | #password#                                  |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | identificativoUnivocoVersamento       | 05$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_PARCHEGGIATA_NODO_MOD3 of nodoChiediStatoRPT response
@@ -497,7 +493,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | password                              | #password#                                  |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | identificativoUnivocoVersamento       | 05$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
@@ -507,12 +503,12 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PSP_ID                | #psp#                                       |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -524,16 +520,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -542,7 +538,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                         |
             | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 12$iuv                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                        |
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
@@ -561,7 +557,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                             |
             | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 12$iuv                            |
+            | CREDITOR_REFERENCE_ID    | 05$iuv                            |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016       |
             | AMOUNT                   | $activatePaymentNotice.amount     |
@@ -589,22 +585,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -626,8 +622,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -641,7 +637,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                         |
             | STATUS                | PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                       |
             | INSERTED_TIMESTAMP    | NotNone                                                                                     |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                                 |
             | INSERTED_BY           | activatePaymentNotice,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -659,7 +655,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -681,25 +677,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -709,10 +705,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -749,7 +745,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -762,8 +758,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -821,8 +817,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -853,8 +849,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
         And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaInviaRTReq.rt xml check value NotNone in position 0
         # paaInviaRT RESP
@@ -920,7 +916,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -932,16 +928,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | NotNone                 |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1005,14 +1001,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #intermediarioPSP2#                           |
             | CHANNEL_ID                 | #canale32#                                    |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -1034,8 +1030,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -1251,13 +1247,11 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_4 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_4
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-28)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -1271,18 +1265,18 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of sendPaymentOutcomeV2 response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#               |
-            | identificativoStazioneRichiedente | #id_station_old#                              |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#                 |
             | dataOraMessaggioRichiesta         | #timedate#                                    |
             | dataEsecuzionePagamento           | #date#                                        |
             | importoTotaleDaVersare            | $activatePaymentNoticeV2.amount               |
-            | identificativoUnivocoVersamento   | 12$iuv                                        |
+            | identificativoUnivocoVersamento   | 05$iuv                                        |
             | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                               |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                              |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#                 |
             | identificativoDominio                 | #creditor_institution_code_old#               |
-            | identificativoUnivocoVersamento       | 12$iuv                                        |
+            | identificativoUnivocoVersamento       | 05$iuv                                        |
             | codiceContestoPagamento               | $activatePaymentNoticeV2Response.paymentToken |
             | password                              | #password#                                    |
             | identificativoPSP                     | #pspFittizio#                                 |
@@ -1296,12 +1290,12 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
             | ID                    | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                        |
             | PSP_ID                | #psp#                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -1313,16 +1307,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | NotNone                 |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1331,7 +1325,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                           |
             | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                          |
+            | CREDITOR_REFERENCE_ID | 05$iuv                          |
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
@@ -1350,7 +1344,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                               |
             | ID                       | NotNone                             |
-            | CREDITOR_REFERENCE_ID    | 12$iuv                              |
+            | CREDITOR_REFERENCE_ID    | 05$iuv                              |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016         |
             | AMOUNT                   | $activatePaymentNoticeV2.amount     |
@@ -1378,22 +1372,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                         |
             | ID                         | NotNone                                       |
             | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                        |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                              |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#                 |
             | STATION_VERSION            | 1                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #intermediarioPSP2#                           |
             | CHANNEL_ID                 | #canale32#                                    |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -1415,8 +1409,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -1430,7 +1424,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                               |
             | STATUS                | PAYING,PAID_NORPT,PAID,NOTICE_GENERATED,NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                                                             |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                              |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                              |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                       |
             | INSERTED_BY           | activatePaymentNoticeV2,sendPaymentOutcomeV2,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -1448,7 +1442,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                       |
             | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                        |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_STORED                                 |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -1472,25 +1466,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNoticeV2.fiscalCode                                                                                           |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
             | ID_SESSIONE        | NotNone                                       |
             | ID_DOMINIO         | $activatePaymentNoticeV2.fiscalCode           |
-            | IUV                | 12$iuv                                        |
+            | IUV                | 05$iuv                                        |
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
@@ -1500,10 +1494,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNoticeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -1540,7 +1534,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -1553,8 +1547,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
@@ -1612,8 +1606,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -1644,8 +1638,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
         And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $paaInviaRTReq.rt xml check value NotNone in position 0
         # paaInviaRT RESP
@@ -1662,12 +1656,13 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
+
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_5
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-4)
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -1675,7 +1670,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -1744,7 +1739,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -1756,16 +1751,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -1829,14 +1824,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | $activatePaymentNotice.idPSP                |
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | $activatePaymentNotice.idChannel            |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -1858,8 +1853,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -2077,12 +2072,14 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_6 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-30)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -2159,7 +2156,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2171,16 +2168,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | NotNone                 |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -2244,14 +2241,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | $activatePaymentNoticeV2.idPSP                |
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | $activatePaymentNoticeV2.idChannel            |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -2273,8 +2270,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -2492,12 +2489,14 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_7 @after
     Scenario: NM3 flow OK, FLOW con PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-73)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -2576,7 +2575,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -2588,16 +2587,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | NotNone                 |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -2661,14 +2660,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | $activatePaymentNoticeV2.idPSP                |
             | BROKER_PSP_ID              | $activatePaymentNoticeV2.idBrokerPSP          |
             | CHANNEL_ID                 | $activatePaymentNoticeV2.idChannel            |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -2690,8 +2689,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -2912,7 +2911,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -2920,7 +2919,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -2951,7 +2950,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
@@ -2991,7 +2992,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -3076,14 +3077,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | $activatePaymentNotice.idPSP                |
             | BROKER_PSP_ID              | $activatePaymentNotice.idBrokerPSP          |
             | CHANNEL_ID                 | $activatePaymentNotice.idChannel            |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -3105,8 +3106,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -3323,31 +3324,29 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_9 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_9
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-12)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old#                |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#   |
             | dataOraMessaggioRichiesta         | #timedate#                      |
             | dataEsecuzionePagamento           | #date#                          |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount   |
-            | identificativoUnivocoVersamento   | 12$iuv                          |
+            | identificativoUnivocoVersamento   | 05$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | identificativoUnivocoVersamento       | 05$iuv                          |
             | codiceContestoPagamento               | paymentToken                    |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -3369,12 +3368,12 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
             | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PSP_ID                | #psp#                                       |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -3386,16 +3385,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -3404,7 +3403,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                         |
             | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 12$iuv                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                        |
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
@@ -3423,7 +3422,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                             |
             | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 12$iuv                            |
+            | CREDITOR_REFERENCE_ID    | 05$iuv                            |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016       |
             | AMOUNT                   | $activatePaymentNotice.amount     |
@@ -3451,22 +3450,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -3488,8 +3487,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -3503,7 +3502,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                            |
             | STATUS                | PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                 |
             | INSERTED_TIMESTAMP    | NotNone                                                                        |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                         |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                    |
             | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -3521,7 +3520,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -3543,25 +3542,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -3571,10 +3570,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -3611,7 +3610,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -3624,8 +3623,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -3683,8 +3682,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -3706,31 +3705,29 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_10 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_10
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ -> paaInviaRT+ BIZ+ (NM3-38)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2400  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
-            | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old#                |
-            | dataOraMessaggioRichiesta         | #timedate#                      |
-            | dataEsecuzionePagamento           | #date#                          |
-            | importoTotaleDaVersare            | $activatePaymentNoticeV2.amount |
-            | identificativoUnivocoVersamento   | 12$iuv                          |
-            | codiceContestoPagamento           | paymentToken                    |
-            | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
+            | identificativoDominio             | #creditor_institution_code_old#     |
+            | identificativoStazioneRichiedente | #id_staid_station_old_invio_rt_ist# |
+            | dataOraMessaggioRichiesta         | #timedate#                          |
+            | dataEsecuzionePagamento           | #date#                              |
+            | importoTotaleDaVersare            | $activatePaymentNoticeV2.amount     |
+            | identificativoUnivocoVersamento   | 05$iuv                              |
+            | codiceContestoPagamento           | paymentToken                        |
+            | importoSingoloVersamento          | $activatePaymentNoticeV2.amount     |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | identificativoUnivocoVersamento       | 05$iuv                          |
             | codiceContestoPagamento               | paymentToken                    |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -3752,12 +3749,12 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
             | ID                    | NotNone                                       |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                        |
             | PSP_ID                | #psp#                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -3787,7 +3784,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                           |
             | ID                    | NotNone                         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                          |
+            | CREDITOR_REFERENCE_ID | 05$iuv                          |
             | DUE_DATE              | NotNone                         |
             | RETENTION_DATE        | None                            |
             | AMOUNT                | $activatePaymentNoticeV2.amount |
@@ -3806,7 +3803,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                               |
             | ID                       | NotNone                             |
-            | CREDITOR_REFERENCE_ID    | 12$iuv                              |
+            | CREDITOR_REFERENCE_ID    | 05$iuv                              |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode |
             | IBAN                     | IT45R0760103200000000001016         |
             | AMOUNT                   | $activatePaymentNoticeV2.amount     |
@@ -3834,22 +3831,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                         |
             | ID                         | NotNone                                       |
             | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                        |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                              |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#                 |
             | STATION_VERSION            | 1                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #intermediarioPSP2#                           |
             | CHANNEL_ID                 | #canale32#                                    |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -3871,8 +3868,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -3886,7 +3883,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                  |
             | STATUS                | PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                         |
             | INSERTED_TIMESTAMP    | NotNone                                                                                |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                                 |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                                 |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                          |
             | INSERTED_BY           | activatePaymentNoticeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -3904,7 +3901,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                       |
             | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                        |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_STORED                                 |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -3926,25 +3923,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNoticeV2.fiscalCode                                                                                           |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paaInviaRT              |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
             | ID_SESSIONE        | NotNone                                       |
             | ID_DOMINIO         | $activatePaymentNoticeV2.fiscalCode           |
-            | IUV                | 12$iuv                                        |
+            | IUV                | 05$iuv                                        |
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
@@ -3954,10 +3951,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNoticeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -3994,7 +3991,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -4007,8 +4004,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
@@ -4066,8 +4063,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -4088,31 +4085,29 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_11 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_11
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ -> paaInviaRT+ BIZ+ (NM3-61)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old#                |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#   |
             | dataOraMessaggioRichiesta         | #timedate#                      |
             | dataEsecuzionePagamento           | #date#                          |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount   |
-            | identificativoUnivocoVersamento   | 12$iuv                          |
+            | identificativoUnivocoVersamento   | 05$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | identificativoUnivocoVersamento       | 05$iuv                          |
             | codiceContestoPagamento               | paymentToken                    |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -4140,22 +4135,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -4177,8 +4172,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -4192,7 +4187,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                  |
             | STATUS                | PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                       |
             | INSERTED_TIMESTAMP    | NotNone                                                                              |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                               |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                               |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                          |
             | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -4210,7 +4205,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -4232,25 +4227,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paaInviaRT              |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -4260,10 +4255,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -4300,7 +4295,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -4313,8 +4308,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -4372,8 +4367,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -4394,31 +4389,29 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_12 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_12
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-78)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2400  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old#                |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#   |
             | dataOraMessaggioRichiesta         | #timedate#                      |
             | dataEsecuzionePagamento           | #date#                          |
             | importoTotaleDaVersare            | $activatePaymentNoticeV2.amount |
-            | identificativoUnivocoVersamento   | 12$iuv                          |
+            | identificativoUnivocoVersamento   | 05$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNoticeV2.amount |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | identificativoUnivocoVersamento       | 05$iuv                          |
             | codiceContestoPagamento               | paymentToken                    |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -4446,22 +4439,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                         |
             | ID                         | NotNone                                       |
             | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                        |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                              |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#                 |
             | STATION_VERSION            | 1                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #intermediarioPSP2#                           |
             | CHANNEL_ID                 | #canale32#                                    |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | NotNone                                       |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -4483,8 +4476,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -4498,7 +4491,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                            |
             | STATUS                | PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                   |
             | INSERTED_TIMESTAMP    | NotNone                                                                          |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                           |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                           |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                    |
             | INSERTED_BY           | activatePaymentNoticeV2,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -4516,7 +4509,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                       |
             | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                        |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                        |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | STATUS                | NOTICE_STORED                                 |
             | INSERTED_TIMESTAMP    | NotNone                                       |
@@ -4538,25 +4531,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNoticeV2.fiscalCode                                                                                           |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeV2Response.paymentToken                                                                                 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                         |
             | ID_SESSIONE        | NotNone                                       |
             | ID_DOMINIO         | $activatePaymentNoticeV2.fiscalCode           |
-            | IUV                | 12$iuv                                        |
+            | IUV                | 05$iuv                                        |
             | CCP                | $activatePaymentNoticeV2Response.paymentToken |
             | STATO              | RT_ACCETTATA_PA                               |
             | INSERTED_BY        | nodoInviaRPT                                  |
@@ -4566,10 +4559,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNoticeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -4606,7 +4599,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -4619,8 +4612,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNoticeV2.amount in position 0
@@ -4678,8 +4671,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -4701,14 +4694,12 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_13 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_13
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-93)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 305#iuv#     |
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -4716,27 +4707,27 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 305$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old#                |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#   |
             | dataOraMessaggioRichiesta         | #timedate#                      |
             | dataEsecuzionePagamento           | #date#                          |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount   |
-            | identificativoUnivocoVersamento   | 12$iuv                          |
+            | identificativoUnivocoVersamento   | 05$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | identificativoUnivocoVersamento       | 05$iuv                          |
             | codiceContestoPagamento               | paymentToken                    |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -4764,22 +4755,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -4801,8 +4792,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -4816,7 +4807,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                            |
             | STATUS                | PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                 |
             | INSERTED_TIMESTAMP    | NotNone                                                                        |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                         |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                    |
             | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -4834,7 +4825,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -4856,25 +4847,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -4884,10 +4875,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -4924,7 +4915,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -4937,8 +4928,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -4996,8 +4987,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -5021,13 +5012,17 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_14 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-96)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16635        |
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -5091,14 +5086,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                    |
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -5120,8 +5115,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -5340,12 +5335,14 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_15 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-99)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
+        Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16635        |
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -5353,7 +5350,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
@@ -5385,7 +5382,9 @@ Feature: NM3 flows PA Old con pagamento OK
         When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
         Then check outcome is OK of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
@@ -5411,14 +5410,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -5440,8 +5439,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -5660,8 +5659,12 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_16 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp2 activate e PSP POSTE vp1 spo: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-100)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16635        |
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -5732,14 +5735,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                    |
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -5761,8 +5764,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -5979,13 +5982,11 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_17 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_17
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+ REQ -> lock nodoInviaRPT REQ -> aspetta lock spo+ RESP nodoInviaRPT RESP -> paaInviaRT+ BIZ+ (NM3-105)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
@@ -5994,18 +5995,18 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNotice response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#             |
-            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#               |
             | dataOraMessaggioRichiesta         | #timedate#                                  |
             | dataEsecuzionePagamento           | #date#                                      |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
-            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | identificativoUnivocoVersamento   | 05$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#               |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | identificativoUnivocoVersamento       | 05$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
             | password                              | #password#                                  |
             | identificativoPSP                     | #pspFittizio#                               |
@@ -6031,22 +6032,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -6068,8 +6069,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -6083,7 +6084,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                             |
             | STATUS                | PAYING,PAID_NORPT,PAID,NOTICE_GENERATED,NOTICE_STORED                           |
             | INSERTED_TIMESTAMP    | NotNone                                                                         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                          |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                          |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                     |
             | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcome,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -6101,7 +6102,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -6123,25 +6124,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -6151,10 +6152,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -6191,7 +6192,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -6204,8 +6205,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -6263,8 +6264,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -6286,13 +6287,11 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_18 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_18
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT   nodoInviaRPT REQ -> lock spo+ REQ -> aspetta lock nodoInviaRPT RESP spo+ RESP -> paaInviaRT+ BIZ+ (NM3-106)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
             | 2550  | OK    | 10.00                    |
@@ -6301,18 +6300,18 @@ Feature: NM3 flows PA Old con pagamento OK
         Then check outcome is OK of activatePaymentNotice response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#             |
-            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#               |
             | dataOraMessaggioRichiesta         | #timedate#                                  |
             | dataEsecuzionePagamento           | #date#                                      |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
-            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | identificativoUnivocoVersamento   | 05$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#               |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | identificativoUnivocoVersamento       | 05$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
             | password                              | #password#                                  |
             | identificativoPSP                     | #pspFittizio#                               |
@@ -6338,22 +6337,22 @@ Feature: NM3 flows PA Old con pagamento OK
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old#                            |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -6375,8 +6374,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -6390,7 +6389,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                         |
             | STATUS                | PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED                                       |
             | INSERTED_TIMESTAMP    | NotNone                                                                                     |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                                                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                                                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                                 |
             | INSERTED_BY           | activatePaymentNotice,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -6408,7 +6407,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | NOTICE_STORED                               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -6430,25 +6429,25 @@ Feature: NM3 flows PA Old con pagamento OK
             | ID_SESSIONE           | NotNone                                                                                                                       |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                                       |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                                             |
-            | IUV                   | 12$iuv                                                                                                                        |
+            | IUV                   | 05$iuv                                                                                                                        |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                                   |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 12$iuv                                      |
+            | IUV                | 05$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -6458,10 +6457,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -6498,7 +6497,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -6511,8 +6510,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -6570,8 +6569,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -6595,7 +6594,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_19
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+ (NM3-3)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -6645,14 +6644,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -6674,8 +6673,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -6884,14 +6883,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #intermediarioPSP2#                           |
             | CHANNEL_ID                 | #canale32#                                    |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -6913,8 +6912,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -7076,7 +7075,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -7084,7 +7083,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -7134,14 +7133,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -7163,8 +7162,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -7321,14 +7320,16 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_22 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_22
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spoV2+ (NM3-32)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -7360,7 +7361,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -7372,16 +7373,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | None                    |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | None                        |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -7462,14 +7463,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                    |
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -7491,8 +7492,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -7669,7 +7670,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_23
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate PSP vp2 spo: activate -> paaAttivaRPT  spoV2+ (NM3-55)
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -7693,7 +7694,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -7705,16 +7706,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | None                  |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | None                        |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -7814,14 +7815,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -7843,8 +7844,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -8001,12 +8002,12 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_24 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_24
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spoV2+ (NM3-58)
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -8014,7 +8015,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -8040,7 +8041,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -8052,16 +8053,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | None                  |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | None                        |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -8142,14 +8143,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -8171,8 +8172,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -8373,7 +8374,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -8385,16 +8386,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | None                    |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | None                        |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8494,14 +8495,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #intermediarioPSP2#                           |
             | CHANNEL_ID                 | #canale32#                                    |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -8523,8 +8524,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -8683,12 +8684,14 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_26 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spo+ (NM3-75)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -8705,7 +8708,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
@@ -8722,7 +8727,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -8734,16 +8739,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | None                    |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | None                        |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8824,14 +8829,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                    |
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -8853,8 +8858,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -9034,7 +9039,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
-        And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
@@ -9042,7 +9047,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -9089,7 +9094,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                     |
             | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | None                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                         |
             | AMOUNT                | $activatePaymentNotice.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
@@ -9101,16 +9106,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                 |
-            | ID                 | NotNone               |
-            | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | NotNone               |
-            | OFFICE_NAME        | None                  |
-            | DEBTOR_ID          | NotNone               |
-            | INSERTED_TIMESTAMP | NotNone               |
-            | UPDATED_TIMESTAMP  | NotNone               |
-            | INSERTED_BY        | activatePaymentNotice |
-            | UPDATED_BY         | activatePaymentNotice |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNotice       |
+            | UPDATED_BY         | activatePaymentNotice       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -9174,14 +9179,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                  |
             | BROKER_PSP_ID              | #brokerPspPoste#                            |
             | CHANNEL_ID                 | #channelPoste#                              |
-            | IDEMPOTENCY_KEY            | None                                        |
+            | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
             | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
@@ -9203,8 +9208,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | None                                        |
+            | FEE_SPO                    | 2                                           |
+            | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -9424,8 +9429,12 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_28 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ (tramite job paInviaRT) BIZ+ (NM3-31)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16635        |
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -9485,7 +9494,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
-            | DUE_DATE              | None                                          |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
             | AMOUNT                | $activatePaymentNoticeV2.amount               |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
@@ -9497,16 +9506,16 @@ Feature: NM3 flows PA Old con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                   |
-            | ID                 | NotNone                 |
-            | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | NotNone                 |
-            | OFFICE_NAME        | None                    |
-            | DEBTOR_ID          | NotNone                 |
-            | INSERTED_TIMESTAMP | NotNone                 |
-            | UPDATED_TIMESTAMP  | NotNone                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | UPDATED_BY         | activatePaymentNoticeV2 |
+            | column             | value                       |
+            | ID                 | NotNone                     |
+            | DESCRIPTION        | pagamento multibeneficiario |
+            | COMPANY_NAME       | PA paolo                    |
+            | OFFICE_NAME        | None                        |
+            | DEBTOR_ID          | NotNone                     |
+            | INSERTED_TIMESTAMP | NotNone                     |
+            | UPDATED_TIMESTAMP  | NotNone                     |
+            | INSERTED_BY        | activatePaymentNoticeV2     |
+            | UPDATED_BY         | activatePaymentNoticeV2     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9570,14 +9579,14 @@ Feature: NM3 flows PA Old con pagamento OK
             | PSP_ID                     | #pspPoste#                                    |
             | BROKER_PSP_ID              | #brokerPspPoste#                              |
             | CHANNEL_ID                 | #channelPoste#                                |
-            | IDEMPOTENCY_KEY            | None                                          |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
             | APPLICATION_DATE           | NotNone                                       |
             | INSERTED_TIMESTAMP         | NotNone                                       |
             | UPDATED_TIMESTAMP          | NotNone                                       |
@@ -9599,8 +9608,8 @@ Feature: NM3 flows PA Old con pagamento OK
             | BUNDLE_PA_ID               | None                                          |
             | PM_INFO                    | None                                          |
             | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
+            | FEE_SPO                    | 2                                             |
+            | PAYMENT_NOTE               | responseFull                                  |
             | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
