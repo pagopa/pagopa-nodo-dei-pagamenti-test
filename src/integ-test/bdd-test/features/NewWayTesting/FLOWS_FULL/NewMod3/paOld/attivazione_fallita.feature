@@ -535,31 +535,29 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.esito xml check value KO in position 0
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_3 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ+ (NM3-13)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And waiting after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_delay_KO initial XML paaAttivaRPT
             | delay | faultCode              | faultString         | id                          | description                            | esito |
             | 2550  | PAA_SEMANTICA_EXTRAXSD | errore semantico PA | #creditor_institution_code# | Errore semantico emesso dalla PA esito | KO    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old#                |
+            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#   |
             | dataOraMessaggioRichiesta         | #timedate#                      |
             | dataEsecuzionePagamento           | #date#                          |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount   |
-            | identificativoUnivocoVersamento   | 12$iuv                          |
+            | identificativoUnivocoVersamento   | 05$iuv                          |
             | codiceContestoPagamento           | paymentToken                    |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | identificativoUnivocoVersamento       | 05$iuv                          |
             | codiceContestoPagamento               | paymentToken                    |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -582,10 +580,10 @@ Feature: NM3 flows PA Old con attivazione fallita
             | column                     | value                             |
             | ID                         | NotNone                           |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode |
-            | CREDITOR_REFERENCE_ID      | 12$iuv                            |
+            | CREDITOR_REFERENCE_ID      | 05$iuv                            |
             | PAYMENT_TOKEN              | $token_by_rptActivations          |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode |
-            | STATION_ID                 | #id_station_old#                  |
+            | STATION_ID                 | #id_station_old_invio_rt_ist#     |
             | STATION_VERSION            | 1                                 |
             | PSP_ID                     | #psp#                             |
             | BROKER_PSP_ID              | #id_broker_psp#                   |
@@ -634,7 +632,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
             | STATUS                | PAYING_RPT,CANCELLED                        |
             | INSERTED_TIMESTAMP    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
             | PAYMENT_TOKEN         | $token_by_rptActivations                    |
             | INSERTED_BY           | activatePaymentNotice,activatePaymentNotice |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -652,7 +650,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ID                    | NotNone                             |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode   |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber |
-            | CREDITOR_REFERENCE_ID | 12$iuv                              |
+            | CREDITOR_REFERENCE_ID | 05$iuv                              |
             | PAYMENT_TOKEN         | $token_by_rptActivations            |
             | STATUS                | CANCELLED                           |
             | INSERTED_TIMESTAMP    | NotNone                             |
@@ -674,25 +672,25 @@ Feature: NM3 flows PA Old con attivazione fallita
             | ID_SESSIONE           | NotNone                                                                                                        |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
-            | IUV                   | 12$iuv                                                                                                         |
+            | IUV                   | 05$iuv                                                                                                         |
             | CCP                   | $token_by_rptActivations                                                                                       |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,activatePaymentNotice,activatePaymentNotice,paaInviaRT                  |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 12$iuv                    |
+            | IUV        | 05$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                             |
             | ID_SESSIONE        | NotNone                           |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode |
-            | IUV                | 12$iuv                            |
+            | IUV                | 05$iuv                            |
             | CCP                | $token_by_rptActivations          |
             | STATO              | RT_ACCETTATA_PA                   |
             | INSERTED_BY        | nodoInviaRPT                      |
@@ -702,23 +700,23 @@ Feature: NM3 flows PA Old con attivazione fallita
             | PUSH               | None                              |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 12$iuv       |
+            | IUV        | 05$iuv       |
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                      | value                             |
             | ID_SESSIONE                 | NotNone                           |
             | IDENT_DOMINIO               | $activatePaymentNotice.fiscalCode |
-            | IUV                         | 12$iuv                            |
+            | IUV                         | 05$iuv                            |
             | CCP                         | $token_by_rptActivations          |
             | BIC_ADDEBITO                | NotNone                           |
             | DATA_MSG_RICH               | NotNone                           |
             | FLAG_CANC                   | N                                 |
             | IBAN_ADDEBITO               | NotNone                           |
             | ID_MSG_RICH                 | NotNone                           |
-            | STAZ_INTERMEDIARIOPA        | #id_station_old#                  |
+            | STAZ_INTERMEDIARIOPA        | #id_station_old_invio_rt_ist#     |
             | INTERMEDIARIOPA             | #id_broker_old#                   |
             | CANALE                      | #canaleFittizio#                  |
             | PSP                         | #pspFittizio#                     |
@@ -737,12 +735,12 @@ Feature: NM3 flows PA Old con attivazione fallita
             | FLAG_IO                     | N                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                      |
-            | IUV           | 12$iuv                            |
+            | IUV           | 05$iuv                            |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode |
             | CCP           | $token_by_rptActivations          |
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                      |
-            | IUV           | 12$iuv                            |
+            | IUV           | 05$iuv                            |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode |
             | CCP           | $token_by_rptActivations          |
         # RT
@@ -750,7 +748,7 @@ Feature: NM3 flows PA Old con attivazione fallita
             | column              | value                             |
             | ID_SESSIONE         | NotNone                           |
             | IDENT_DOMINIO       | $activatePaymentNotice.fiscalCode |
-            | IUV                 | 12$iuv                            |
+            | IUV                 | 05$iuv                            |
             | CCP                 | $token_by_rptActivations          |
             | COD_ESITO           | 1                                 |
             | ESITO               | NON_ESEGUITO                      |
@@ -766,12 +764,12 @@ Feature: NM3 flows PA Old con attivazione fallita
             | GENERATA_DA         | NMP                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                      |
-            | IUV           | 12$iuv                            |
+            | IUV           | 05$iuv                            |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode |
             | CCP           | $token_by_rptActivations          |
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                      |
-            | IUV           | 12$iuv                            |
+            | IUV           | 05$iuv                            |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode |
             | CCP           | $token_by_rptActivations          |
         # RE #####
@@ -816,8 +814,8 @@ Feature: NM3 flows PA Old con attivazione fallita
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $token_by_rptActivations in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -835,8 +833,8 @@ Feature: NM3 flows PA Old con attivazione fallita
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $token_by_rptActivations in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -3028,8 +3026,12 @@ Feature: NM3 flows PA Old con attivazione fallita
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_11 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ- (NM3-97)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16635        |
+        And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
