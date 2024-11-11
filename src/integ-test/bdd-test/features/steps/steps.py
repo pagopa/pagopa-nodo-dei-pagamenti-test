@@ -11,6 +11,7 @@ from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
+import traceback
 
 import db_operation_postgres
 import db_operation_oracle
@@ -4148,6 +4149,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
 @step(u"update for table {table_name} with parameter {param} on db {db_name} with where datatable {type_table}")
 def step_impl(context, table_name, param, db_name, type_table): 
     try:
+        1 / 0
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
 
@@ -4177,6 +4179,8 @@ def step_impl(context, table_name, param, db_name, type_table):
     except Exception as e:
         # Gestione di tutte le altre eccezioni
         print(f"----->>>> Exception: {e}")
+        print("Stack trace:")
+        traceback.print_tb(e.__traceback__)  # Stampa lo stack trace direttamente dall'eccezione
         # Interrompiamo il test
         raise e
 

@@ -239,6 +239,7 @@ stages:
               sudo pip3 install xmltodict
               sudo pip3 install python-dotenv
               sudo pip3 install lxml
+              sudo pip3 install traceback2
               echo python version
               python3 -V
               whereis behave
