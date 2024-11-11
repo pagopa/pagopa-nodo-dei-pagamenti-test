@@ -1800,7 +1800,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PSP                         | #pspFittizio#                               |
             | INTERMEDIARIOPSP            | #brokerFittizio#                            |
             | TIPO_VERSAMENTO             | PO                                          |
-            | NUM_VERSAMENTI              | 1                   retr                        |
+            | NUM_VERSAMENTI              | 1                                           |
             | RT_SIGNATURE_CODE           | 0                                           |
             | SOMMA_VERSAMENTI            | 10                                          |
             | PARAMETRI_PROFILO_PAGAMENTO | None                                        |
