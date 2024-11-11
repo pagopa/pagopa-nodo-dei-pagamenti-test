@@ -875,6 +875,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
+        And waiting after triggered refresh job ALL
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -1255,6 +1256,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
+        And waiting after triggered refresh job ALL
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -1667,6 +1669,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | importoSingoloVersamento | 10.00                       |
             | ibanAccredito            | IT45R0760103200000000001016 |
             | causaleVersamento        | pagamentoTest               |
+        And waiting after triggered refresh job ALL
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
@@ -7320,7 +7323,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_22
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_22 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT activateV2 -> paaAttivaRPT  spoV2+ (NM3-32)
         Given update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
@@ -8002,7 +8005,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_24
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_24 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  spoV2+ (NM3-58)
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
