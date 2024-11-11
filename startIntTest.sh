@@ -23,12 +23,12 @@ echo "replace config file $file START"
 
 ######################## PUNTAMENTI VIA APIM #####################
 
-replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo"
-replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
-replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
-replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
-replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/config/refresh/ALL"
-replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
+# replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo"
+# replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
+# replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
+# replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
+# replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/config/refresh/ALL"
+# replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
 
 # replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
 # replace $file ".services.\"mock-ec\".healthcheck"   "/info"
@@ -66,12 +66,12 @@ replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
 
 
 #replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://nodo-p-sit.tst-npc.sia.eu"
-# replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com"
-# replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
-# replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
-# replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "rest"
-# replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/config/refresh/ALL"
-# replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
+replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com"
+replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
+replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
+replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "rest"
+replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/config/refresh/ALL"
+replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
 
 
 replace $file ".services.\"mock-ec\".url"           "https://test.nexi.ndp.pagopa.it/mock-ec-primary-sit.nexigroup.com/servizi/PagamentiTelematiciRPT"
