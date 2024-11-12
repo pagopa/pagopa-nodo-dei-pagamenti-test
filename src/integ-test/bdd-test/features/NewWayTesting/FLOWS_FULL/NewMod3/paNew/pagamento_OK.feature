@@ -31804,30 +31804,40 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
     And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 0
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 0
     ### TRANSFER 2
     And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
     And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
     And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
     And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
     And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 1
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 1
     ### TRANSFER 3
     And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
     And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
     And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
     And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
     And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 2
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 2
     ### TRANSFER 4
     And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
     And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
     And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
     And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
     And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 3
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 3
     ### TRANSFER 5
     And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
     And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
     And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
     And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
     And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 4
+    And from $paSendRTV2Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 4
 
     And from $paSendRTV2Req.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
     # paSendRTV2 RESP 1
@@ -32129,30 +32139,40 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 0
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 0
     ### TRANSFER 2
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 1
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 1
     ### TRANSFER 3
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 2
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 2
     ### TRANSFER 4
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 3
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 3
     ### TRANSFER 5
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
     And from $paSendRTV2_BC5Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 4
+    And from $paSendRTV2_BC5Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 4
 
     And from $paSendRTV2_BC5Req.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
     # paSendRTV2 RESP BC5
@@ -32194,30 +32214,40 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 0
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 0
     ### TRANSFER 2
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 1
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 1
     ### TRANSFER 3
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 2
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 2
     ### TRANSFER 4
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 3
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 3
     ### TRANSFER 5
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
     And from $paSendRTV2_BC6Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 4
+    And from $paSendRTV2_BC6Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 4
 
     And from $paSendRTV2_BC6Req.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
     # paSendRTV2 RESP BC6
@@ -32259,30 +32289,40 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 0
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 0
     ### TRANSFER 2
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 1
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 1
     ### TRANSFER 3
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 2
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 2
     ### TRANSFER 4
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 3
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 3
     ### TRANSFER 5
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
     And from $paSendRTV2_BC7Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.key xml check value 1 in position 4
+    And from $paSendRTV2_BC7Req.receipt.transferList.transfer.metadata.mapEntry.value xml check value 22 in position 4
 
     And from $paSendRTV2_BC7Req.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
     # paSendRTV2 RESP BC7
