@@ -4496,7 +4496,7 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-    And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
+    And from body with datatable vertical paGetPaymentV2_lastPayment=0_full initial XML paGetPaymentV2
       | outcome                     | OK                                |
       | creditorReferenceId         | 10$iuv                            |
       | paymentAmount               | 10.00                             |
@@ -31412,7 +31412,7 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 50.00  |
-    And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
+    And from body with datatable vertical paGetPaymentV2_5transferWithMetadata_full initial XML paGetPaymentV2
       | outcome                     | OK                          |
       | creditorReferenceId         | 10$iuv                      |
       | paymentAmount               | 50.00                       |
@@ -31547,6 +31547,7 @@ Feature: NM3 flows PA New con pagamento OK
       | FK_PAYMENT_PLAN          | NotNone                                                     |
       | INSERTED_BY              | activatePaymentNotice                                       |
       | UPDATED_BY               | activatePaymentNotice                                       |
+      | METADATA                 | NotNone,NotNone,NotNone,NotNone,NotNone                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |

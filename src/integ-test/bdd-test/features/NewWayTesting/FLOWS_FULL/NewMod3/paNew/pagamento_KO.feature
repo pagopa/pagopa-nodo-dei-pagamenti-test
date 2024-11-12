@@ -624,6 +624,12 @@ Feature: NM3 flows con pagamento fallito
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | INSERTED_TIMESTAMP ASC              |
+        And verify 0 record for the table POSITION_RECEIPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | NOTICE_ID  | $activatePaymentNoticeResponse.paymentToken |
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | NOTICE_ID  | $activatePaymentNoticeResponse.paymentToken |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
