@@ -4,7 +4,7 @@ Feature: NM3 flows PA New con pagamento OK
     Given systems up
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_1
+  @FLOW_NOOPT @NM3PANEWPAGOK_1
   Scenario: NM3 flow OK, FLOW: verify -> paVerify activate -> paGetPayment --> spo+ -> paSendRT BIZ+ (NM3-1)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -413,7 +413,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_2
+  @FLOW_NOOPT @NM3PANEWPAGOK_2
   Scenario: NM3 flow OK, FLOW: verificaBollettino  -> paVerify activate -> paGetPayment --> spo+ -> paSendRT BIZ+ (NM3-2)
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -824,7 +824,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_3
+  @FLOW_NOOPT @NM3PANEWPAGOK_3
   Scenario: NM3 flow OK, FLOW: verify -> paVerify activateV2 -> paGetPayment --> spoV2+ -> paSendRT BIZ+ (NM3-9)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber |
@@ -1229,7 +1229,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_4 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_4 @after
   Scenario: NM3 flow OK, FLOW con PA New vp1 e PSP POSTE vp2: verificaBollettino -> paVerify activateV2 -> paGetPayment spoV2+ -> paSendRT BIZ+ (NM3-10)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
     And waiting after triggered refresh job ALL
@@ -1636,7 +1636,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_5 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_5 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK, spoV2+ -> paSendRT BIZ+ (NM3-16)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -2070,7 +2070,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_6 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_6 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con GEC KO: activateV2 -> paGetPayment --> getFees KO spoV2+ -> paSendRT BIZ+ (NM3-17)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -2484,7 +2484,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_7 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPayment standin spo+ -> paSendRT con flagStandin BIZ+ (NM3-19)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And update parameter invioReceiptStandin on configuration keys with value true
@@ -2988,7 +2988,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_8 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_8 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPayment standin --> resp activate con flag standin spo+ -> paSendRT senza flag standin BIZ+ (NM3-20)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
     And update parameter invioReceiptStandin on configuration keys with value true
@@ -3494,7 +3494,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_9 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_9 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT con flag standin BIZ+ (NM3-21)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
@@ -4001,7 +4001,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_10 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_10 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1, FLOW con broadcast paPrinc=paSec: activate -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spo+ -> paSendRT principale, BIZ+ (NM3-22)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -4451,7 +4451,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_14
+  @FLOW_NOOPT @NM3PANEWPAGOK_14
   Scenario: NM3 flow OK, FLOW: verify -> paVerify, activate -> paGetPaymentV2 --> spo+ -> paSendRTV2 BIZ+ (NM3-24)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -4828,7 +4828,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_15 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_15 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activateV2 -> paGetPayment standin spoV2+ -> paSendRT con flagStandin BIZ+ (NM3-25)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -5335,7 +5335,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_16 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_16 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin activateV2 -> paGetPayment standin spoV2+ -> paSendRT con flagStandin BIZ+ (NM3-26)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -5843,7 +5843,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_17 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_17 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin activateV2 -> paGetPayment standin spoV2+ -> paSendRT con flagStandin BIZ+ (NM3-27)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -6353,7 +6353,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_18 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_18 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spo+ -> paSendRTV2 con flagStandin BIZ+ (NM3-48)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -6862,7 +6862,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_19 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_19 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT senza flag standin BIZ+ (NM3-49)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -7369,7 +7369,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_20 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_20 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT con flag standin BIZ+ (NM3-50)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -7879,7 +7879,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_21 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_21 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activateV2 -> paGetPaymentV2 standin spoV2+ -> paSendRTV2 con flagStandin BIZ+ (NM3-53)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -8387,7 +8387,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_22 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_22 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spo+ -> paSendRTV2 con flagStandin BIZ+ (NM3-54)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -8896,7 +8896,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_23 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_23 @after
   Scenario: NM3 flow OK, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spo+ -> paSendRTV2 con flagStandin BIZ+ (NM3-55)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -9405,7 +9405,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_24 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_24 @after
   Scenario: NM3 flow OK, FLOW con PSP vp1 activate, PSP vp2 spo e standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spoV2+ -> paSendRTV2 con flagStandin BIZ+ (NM3-95)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -9914,7 +9914,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_25 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_25 @after
   Scenario: NM3 flow OK, FLOW with PSP vp1 activate, PSP vp2 spo e standin flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spoV2+ -> paSendRTV2 con flagStandin BIZ+ (NM3-96)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
@@ -10422,7 +10422,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_26 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_26 @after
   Scenario: NM3 flow OK, FLOW con PSP vp1 activate, PSP vp2 spo e standin con flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spoV2+ -> paSendRTV2 con flagStandin BIZ+ (NM3-97)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -10932,7 +10932,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_27
+  @FLOW_NOOPT @NM3PANEWPAGOK_27
   Scenario: NM3 flow OK, FLOW: verify -> paVerify activateV2 -> paGetPaymentV2 spoV2+ -> paSendRTV2 BIZ+ (NM3-30)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -11433,7 +11433,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_29
+  @FLOW_NOOPT @NM3PANEWPAGOK_29
   Scenario: NM3 flow OK, FLOW con PA New vp2 e PSP POSTE vp1: verificaBollettino -> paVerify activate -> paGetPaymentV2 spo+ -> paSendRTV2 BIZ+ (NM3-31)
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -11934,7 +11934,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_30 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_30 @after
   Scenario: NM3 flow OK, FLOW con Pa New vp2 e PSP POSTE vp2: verificaBollettino -> paVerify activateV2 -> paGetPaymentV2 spoV2+ -> paSendRTV2 BIZ+ (NM3-38)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
     And waiting after triggered refresh job ALL
@@ -12435,7 +12435,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_31
+  @FLOW_NOOPT @NM3PANEWPAGOK_31
   Scenario: NM3 flow OK, FLOW con PSP activate vp1 e PSP spo vp2: verify -> paVerify activate -> paGetPayment --> spoV2+ -> paSendRT BIZ+ (NM3-62)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -12933,7 +12933,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_32 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_32 @after
   Scenario: NM3 flow OK, FLOW con PSP activate POSTE vp1 e PSP spo POSTE vp2 : verificaBollettino -> paVerify activate -> paGetPayment spoV2+ -> paSendRT BIZ+ (NM3-63)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
     And waiting after triggered refresh job ALL
@@ -13433,7 +13433,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_33
+  @FLOW_NOOPT @NM3PANEWPAGOK_33
   Scenario: NM3 flow OK, FLOW con PSP activate vp2 PSP spo vp1: verify -> paVerify activateV2 -> paGetPayment spo+ -> paSendRT BIZ+ (NM3-66)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -13931,7 +13931,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_34 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_34 @after
   Scenario: NM3 flow OK, FLOW con PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paVerify activateV2 -> paGetPayment spo+ -> paSendRT BIZ+ (NM3-67)
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -14433,7 +14433,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_35 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_35 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1 activate e PSP vp2 spo, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin, activate -> paGetPayment standin, spoV2+ -> paSendRT con flagStandin BIZ+ (NM3-73)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And update parameter invioReceiptStandin on configuration keys with value true
@@ -14938,7 +14938,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_36 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_36 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1 activate e PSP vp2 spo, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin, activate -> paGetPayment standin --> resp activate con flag standin spoV2+ -> paSendRT senza flag standin BIZ+ (NM3-74)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
     And update parameter invioReceiptStandin on configuration keys with value true
@@ -15442,7 +15442,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_37 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_37 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1 activate e PSP vp2 spo, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPayment standin --> resp activate con flag standin spoV2+ -> paSendRT con flag standin BIZ+ (NM3-75)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
@@ -15948,7 +15948,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_38 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_38 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin, activateV2 -> paGetPayment standin, spo+ -> paSendRT con flagStandin BIZ+ (NM3-79)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -16454,7 +16454,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_39 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_39 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin, activateV2 -> paGetPayment standin, spo+ -> paSendRT con flagStandin BIZ+ (NM3-80)
     Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -16960,7 +16960,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.idChannel xml check value #canale32# in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_40 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_40 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify senza flag standin, activateV2 -> paGetPayment standin --> resp activate con flag standin, spo+ -> paSendRT con flagStandin BIZ+ (NM3-81)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -17468,7 +17468,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTReq.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_41 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_41 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin, activateV2 -> paGetPaymentV2 standin, spo+ -> paSendRTV2 con flagStandin BIZ+ (NM3-100)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -17976,7 +17976,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_42 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_42 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin, activateV2 -> paGetPaymentV2 standin -> resp activateV2 con flag standin, spo+ -> paSendRTV2 senza flagStandin BIZ+ (NM3-101)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '100' under macro update_query on db nodo_cfg
@@ -18484,7 +18484,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.idChannel xml check value #canale32# in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_43 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_43 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin, activateV2 -> paGetPaymentV2 standin -> resp activateV2 con flag standin, spo+ -> paSendRTV2 con flagStandin BIZ+ (NM3-102)
     Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -18994,7 +18994,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_44
+  @FLOW_NOOPT @NM3PANEWPAGOK_44
   Scenario: NM3 flow OK con PA New vp2 e PSP vp1 activate e PSP vp2 spo, FLOW: verify -> paVerify, activate -> paGetPaymentV2 --> spoV2+ -> paSendRTV2 BIZ+ (NM3-78)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -19487,7 +19487,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_45
+  @FLOW_NOOPT @NM3PANEWPAGOK_45
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW: verify -> paVerify, activateV2 -> paGetPaymentV2, spo+ -> paSendRTV2 BIZ+ (NM3-84)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -19980,7 +19980,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_46 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_46 @after
   Scenario: NM3 flow OK con PA New vp2 e con PSP activate POSTE vp1 e PSP spo POSTE vp2, FLOW: verificaBollettino -> paVerify, activate -> paGetPaymentV2, spoV2+ -> paSendRTV2 BIZ+ (NM3-85)
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -20475,7 +20475,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_47 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_47 @after
   Scenario: NM3 flow OK con PA New vp2 e con PSP activate POSTE vp2 e PSP spo POSTE vp1, FLOW: verificaBollettino -> paVerify, activateV2 -> paGetPaymentV2, spo+ -> paSendRTV2 BIZ+ (NM3-89)
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -20972,7 +20972,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_48 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_48 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc=paSec: activateV2 -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, BIZ+ (NM3-28)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -21564,7 +21564,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_49 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_49 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp1, FLOW con broadcast paPrinc=paSec: activate -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spo+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-51)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -22083,7 +22083,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2BC1Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_50 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_50 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc=paSec: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spoV2+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-56)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -22744,7 +22744,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_51 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_51 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1 activate e PSP vp2 spo, FLOW con broadcast paPrinc=paSec: activate -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spoV2+ -> paSendRT principale, BIZ+ (NM3-76)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -23194,7 +23194,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_52 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_52 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc=paSec: activateV2 -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spo+ -> paSendRT principale, BIZ+ (NM3-82)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -23786,7 +23786,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_53 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_53 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp1 activate e PSP vp2 spo, FLOW con broadcast paPrinc=paSec: activate -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spoV2+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-98)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -24305,7 +24305,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2BC1Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_54 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_54 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate vp2 e PSP vp1 spo, FLOW con broadcast paPrinc=paSec: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spo+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-103)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -24966,7 +24966,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_55 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_55 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp1, FLOW con broadcast paPrinc=paSec: verificaBollettino -> paVerify, activate Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spo+ Poste -> paSendRT principale, BIZ+ (NM3-138)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -25428,7 +25428,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_56 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_56 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc=paSec: verificaBollettino -> paVerify, activate Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, spoV2+ Poste -> paSendRT principale, BIZ+ (NM3-140)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -25890,7 +25890,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_57 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_57 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-142)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -26494,7 +26494,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_58 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_58 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2, FLOW con broadcast paPrinc=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spoV2+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-144)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -27098,7 +27098,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_59 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_59 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1, FLOW con broadcast paPrinc=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spo+ Poste -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-154)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -27617,7 +27617,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2BC1Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_60 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_60 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2, FLOW con broadcast paPrinc=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spoV2+ Poste -> paSendRTV2 principale e paSendRTV2 broadcast principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-156)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -28290,7 +28290,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_61 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_61 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spoV2+ Poste -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-160)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -28809,7 +28809,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2BC1Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_62 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_62 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spo+ Poste -> paSendRTV2 principale e paSendRTV2 broadcast principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-162)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -29482,7 +29482,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_63 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_63 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1, FLOW con broadcast paPrinc!=paSec: activate -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-23)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -30405,7 +30405,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_64 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_64 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc!=paSec: activateV2 -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-29)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -31328,7 +31328,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_65 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_65 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp1, FLOW con broadcast paPrinc!=paSec: activate -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-52)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -32252,7 +32252,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_66 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_66 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc!=paSec: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-57)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -33176,7 +33176,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_67 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_67 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1 activate e PSP vp2 spo, FLOW con broadcast paPrinc!=paSec: activate -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-77)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -34099,7 +34099,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_68 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_68 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc!=paSec: activateV2 -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-83)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -35022,7 +35022,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_69 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_69 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp1 activate e PSP vp2 spo, FLOW con broadcast paPrinc!=paSec: activate -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-99)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -35946,7 +35946,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_70 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_70 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc!=paSec: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-104)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -36870,7 +36870,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_71 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_71 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp1, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activate Poste-> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-139)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -37805,7 +37805,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_72 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_72 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activate Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-141)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -38740,7 +38740,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_73 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_73 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-143)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -39675,7 +39675,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_74 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_74 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2, FLOW con broadcast paPrinc!=paSec: activateV2 Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-145)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -40598,7 +40598,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_75 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_75 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1, FLOW con broadcast paPrinc!=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-155)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -41522,7 +41522,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_76 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_76 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-157)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -42458,7 +42458,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_77 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_77 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc!=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-161)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -43382,7 +43382,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_78 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_78 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-163)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -44318,7 +44318,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_79 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_79 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK, spo+ -> paSendRT BIZ+ (NM3-70)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -44752,7 +44752,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_80 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_80 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con GEC: activateV2 -> paGetPaymentV2 --> getFees OK, spoV2+ -> paSendRTV2 BIZ+ (NM3-45)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -45187,7 +45187,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_81 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_81 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC: activateV2 -> paGetPaymentV2 --> getFees OK, spo+ -> paSendRTV2 BIZ+ (NM3-92)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -45622,7 +45622,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_82 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_82 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, BIZ+ (NM3-58)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -46264,7 +46264,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_83 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_83 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-60)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -46978,7 +46978,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_84 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_84 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2. spo+ -> paSendRT principale, BIZ+ (NM3-105)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -47620,7 +47620,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_85 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_85 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate vp2 e PSP vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spo+ -> paSendRTV2 principale e paSendRTV2 sulla broadcast della principale, BIZ+ (NM3-107)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -48331,7 +48331,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_86 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_86 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-137)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -48985,7 +48985,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_87 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_87 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con GEC KO: activateV2 -> paGetPaymentV2 --> getFees KO spoV2+ -> paSendRTV2 BIZ+ (NM3-46)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -49400,7 +49400,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_88 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_88 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO: activateV2 -> paGetPayment --> getFees KO spo+ -> paSendRT BIZ+ (NM3-71)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -49814,7 +49814,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTResp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_89 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_89 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO: activateV2 -> paGetPaymentV2 --> getFees KO spo+ -> paSendRTV2 BIZ+ (NM3-93)
     Given update parameter gec.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
@@ -50229,7 +50229,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_90 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_90 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-59)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -51202,7 +51202,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_91 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_91 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-61)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -52176,7 +52176,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_92 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_92 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc!=paSec con GEC: activateV2 -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spo+ -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-106)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -53149,7 +53149,7 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_93 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_93 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con broadcast paPrinc!=paSec con GEC: activateV2 -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spo+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-108)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -54125,7 +54125,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_94 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_94 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2, FLOW con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-132)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -54781,7 +54781,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_95 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_95 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2, FLOW con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ Poste -> paSendRTV2 principale e paSendRTV2 broadcast principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-158)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -55506,7 +55506,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_96 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_96 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spo+ Poste -> paSendRTV2 principale e paSendRTV2 broadcast principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-164)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -56232,7 +56232,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_97 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_97 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-136)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -57219,7 +57219,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_98 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_98 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2, FLOW con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-159)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -58207,7 +58207,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_99 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_99 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec con GEC: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-165)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -59196,7 +59196,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_100 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_100 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> paSendRT principale standin,  paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-109)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -59835,7 +59835,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_101 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_101 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> paSendRTV2 principale standin e paSendRTV2 sulla broadcast della principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie BIZ+ (NM3-111)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -60545,7 +60545,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_102 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_102 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPayment standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ ->  no invio receipt (solo receipt, no recipient) (NM3-113)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -61021,7 +61021,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_103 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_103 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2 -> getFees, spoV2+ -> no invio receipt (solo receipt, no recipient) BIZ+ (NM3-115)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
@@ -61500,7 +61500,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_104 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_104 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC e standin: activateV2 -> paGetPayment standin con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> paSendRT principale standin, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-110)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -62468,7 +62468,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_105 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_105 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC e standin: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-112)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -63438,7 +63438,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_106 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_106 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPayment standin con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> no invio receipt (solo receipt, no recipient) (NM3-114)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -63913,7 +63913,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @FLOW_NOOPT @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_107 @after
+  @FLOW_NOOPT @NM3PANEWPAGOK_107 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con broadcast paPrinc!=paSec con GEC, standin e invioReceiptStandin = false: activateV2 -> paGetPaymentV2 standin con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast -> getFees, spoV2+ -> no invio receipt (solo receipt, no recipient) (NM3-116)
     Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
