@@ -1932,7 +1932,7 @@ Feature: NM3 flows con pagamento fallito
 
     #Posizione non pagabile spov1 KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_9
-    Scenario: NM3 flow OK, FLOW: activatePaymentNotice -> mod3CancelV2 ->sendPaymentOutcome (OLD_NM3-10)
+    Scenario: NM3 flow OK, FLOW: activatePaymentNotice -> mod3CancelV2 ->sendPaymentOutcome (OLD_NM3-7)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
