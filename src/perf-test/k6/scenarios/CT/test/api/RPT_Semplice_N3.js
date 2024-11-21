@@ -7,6 +7,7 @@ import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 export const RPT_Semplice_N3_Trend = new Trend('RPT_Semplice_N3');
 export const All_Trend = new Trend('ALL');
+export const ELAPSED_Trend = new Trend('RPT_Semplice_N3_el', true);
 
 export function rptSempliceN3ReqBody(pa, intpa, stazpa, paymentToken, creditorReferenceId, rptEncoded){
 
@@ -53,7 +54,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
 		 getBasePath(baseUrl, "nodoInviaRPT"),
     rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' }) ,
-	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRPT"}
+	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRPT", RPT_Semplice_N3_el: 'elapsed'}
 	}
   );
   
@@ -103,6 +104,9 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
 
   let outcome='';
   try{
+	let elapsed = res.headers['Nodo-Elapsed']
+	console.debug('elapsed '+ elapsed);
+	ELAPSED_Trend.add(elapsed);
   let doc = parseHTML(res.body);
   let script = doc.find('esito');
   outcome = script.text();

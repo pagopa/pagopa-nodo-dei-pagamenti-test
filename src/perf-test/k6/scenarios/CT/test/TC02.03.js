@@ -106,6 +106,7 @@ export const options = {
     // we can reference the scenario names as well
     'http_req_duration{activatePaymentNotice:http_req_duration}': [],
 	'http_req_duration{RPT_Semplice_N3:http_req_duration}': [],
+	'http_req_duration{RPT_Semplice_N3_el:elapsed}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
 	//'checks{webtest:ok_rate}': ['rate>0.85'],
 	'checks{sendPaymentOutcome:over_sla300}': [],
