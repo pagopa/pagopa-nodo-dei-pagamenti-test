@@ -50,8 +50,8 @@ deployments:
             - all
           readOnlyRootFilesystem: true
 
-        nodeSelector:
-          envnodopa: prf
+        #nodeSelector:
+        #  envnodopa: prf
         
         tolerations:
         - key: "envnodopa"
