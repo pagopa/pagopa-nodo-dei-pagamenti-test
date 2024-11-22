@@ -1573,7 +1573,7 @@ def generate_select(dict_fields_values):
             else:
                 selected_query += f" WHERE {where_key} = '{where_value}'"
         else:
-            if where_key == 'INSERTED_TIMESTAMP':
+            if 'INSERTED_TIMESTAMP' in where_key:
                 selected_query += f" AND {where_key} > {where_value}"
             elif where_key == 'ORDER BY':
                 selected_query += f" {where_key} {where_value}"
