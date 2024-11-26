@@ -6,6 +6,7 @@ import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const sendPaymentOutcome_Trend = new Trend('sendPaymentOutcome');
+export const sendPaymentOutcome_elapsed_Trend = new Trend('sendPaymentOutcome_elapsed', true);
 export const All_Trend = new Trend('ALL');
 
 
@@ -56,7 +57,7 @@ export function sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken) {
     getBasePath(baseUrl, "sendPaymentOutcome"),
     sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' }) ,
-	tags: { sendPaymentOutcome: 'http_req_duration', ALL: 'http_req_duration',primitiva:"sendPaymentOutcome"}
+	tags: { sendPaymentOutcome: 'http_req_duration', sendPaymentOutcome_elapsed: 'elapsed', ALL: 'http_req_duration',primitiva:"sendPaymentOutcome"}
 	}
   );
   
@@ -108,6 +109,9 @@ export function sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken) {
   let doc = parseHTML(res.body);
   let script = doc.find('outcome');
   outcome = script.text();
+  let elapsed = res.headers['Nodo-Elapsed']
+  console.debug('elapsed '+ elapsed);
+  sendPaymentOutcome_elapsed_Trend.add(elapsed == undefined ? 0 : elapsed);
   }catch(error){}
   /*if(outcome=='KO'){
   console.debug("sendPaymentOutcome REq----------------"+sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
