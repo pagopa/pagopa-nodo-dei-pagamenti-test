@@ -6,6 +6,7 @@ import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const activatePaymentNoticeIdp_NN_Trend = new Trend('activatePaymentNoticeIdp_NN');
+export const activatePaymentNoticeIdp_elapsed_NN_Trend = new Trend('activatePaymentNoticeIdp_elapsed_NN');
 export const All_Trend = new Trend('ALL');
 
 export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey, paymentNote) {
@@ -45,7 +46,7 @@ export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeN
  let res=http.post(getBasePath(baseUrl, "activatePaymentNotice"),
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' }) ,
-	tags: { activatePaymentNoticeIdp_NN: 'http_req_duration' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}
+	tags: { activatePaymentNoticeIdp_NN: 'http_req_duration' , activatePaymentNoticeIdp_elapsed_NN: 'elapsed' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}
 	}
   );
   
@@ -98,6 +99,9 @@ export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeN
   let result={};
   result.paymentToken=paymentToken;
   try{
+  let elapsed = res.headers['Nodo-Elapsed']
+  console.debug('elapsed '+ elapsed);
+  activatePaymentNoticeIdp_elapsed_NN_Trend.add(elapsed == undefined ? 0 : elapsed);
   let doc = parseHTML(res.body);
   let script = doc.find('outcome');
   outcome = script.text();

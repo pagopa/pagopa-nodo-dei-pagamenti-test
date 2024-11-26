@@ -6,6 +6,7 @@ import { getBasePath, getHeaders } from "../util/base_path_util.js";
 
 
 export const ActivateIOPayment_Trend = new Trend('ActivateIOPayment');
+export const ActivateIOPayment_elapsed_Trend = new Trend('ActivateIOPayment_elapsed');
 export const All_Trend = new Trend('ALL');
 
 export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, idempotencyKey) {
@@ -46,7 +47,7 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
  let res=http.post(getBasePath(baseUrl, "activateIOPayment"),
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment'}) ,
-	tags: { ActivateIOPayment: 'http_req_duration' , ALL: 'http_req_duration', primitiva: "activateIOPayment"}
+	tags: { ActivateIOPayment: 'http_req_duration', ActivateIOPayment_elapsed: 'elapsed' , ALL: 'http_req_duration', primitiva: "activateIOPayment"}
 	}
   );
   
@@ -102,6 +103,9 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
     result.paymentToken=paymentToken;
     result.creditorReferenceId = creditorReferenceId;
     try{
+	let elapsed = res.headers['Nodo-Elapsed']
+	console.debug('elapsed '+ elapsed);
+	ActivateIOPayment_elapsed_Trend.add(elapsed == undefined ? 0 : elapsed);
     let doc = parseHTML(res.body);
     let script = doc.find('outcome');
     outcome = script.text();
