@@ -17621,7 +17621,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     #Posizione non pagabile spov2 KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_35
-    Scenario: NM3 flow OK, FLOW: activatePaymentNotice -> mod3CancelV2 ->sendPaymentOutcomeV2 (OLD_NM3-17)
+    Scenario: NM3 flow OK, FLOW: activatePaymentNotice -> mod3CancelV2 -> sendPaymentOutcomeV2 (outcome OK) & activatePaymentNotice -> mod3CancelV2 -> sendPaymentOutcomeV2 (outcome KO) (OLD_NM3-17)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
