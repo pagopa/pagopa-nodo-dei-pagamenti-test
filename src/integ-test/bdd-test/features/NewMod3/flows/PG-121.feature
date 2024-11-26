@@ -1,13 +1,14 @@
 Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza IUV e NAV
 
-# Solo per activateV2 verificare quando effettuare il controllo creditorReferenceId contenuto nel NAV
-    # - se paGetPaymentV2: non si fa il controllo , questo qual che sia il modello di pagamento
-    # - se paGetPaymentV1 il controllo va fatto
+# TOBE
+# activatePaymentNoticeV2
+# NM3 + paGetPaymentV1 --> controllo
+# NM3 + paGetPaymentV2 --> controllo
 
     Background:
         Given systems up
 
-    @runnable
+    @runnable  
     Scenario: first activatePaymentNoticeV2 request
         Given initial XML activatePaymentNoticeV2
             """
@@ -110,7 +111,7 @@ Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza 
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check description is iuv not contained in notice number of activatePaymentNoticeV2 response
 
-    @runnable
+    @runnable 
     Scenario: second activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
@@ -212,7 +213,7 @@ Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza 
         Then check outcome is KO of activatePaymentNotice response
         And check description is iuv not contained in notice number of activatePaymentNotice response
 
-    @runnable
+    @runnable 
     Scenario: third activatePaymentNoticeV2 request
         Given initial XML activatePaymentNoticeV2
             """

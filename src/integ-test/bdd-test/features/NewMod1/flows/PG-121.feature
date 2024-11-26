@@ -1,8 +1,9 @@
 Feature: activateV2 with noticeID != creditorReferenceId: Controllo di coerenza IUV e NAV
 
-# Solo per activateV2 verificare quando effettuare il controllo creditorReferenceId contenuto nel NAV
-    # - se paGetPaymentV2: non si fa il controllo , questo qual che sia il modello di pagamento
-    # - se paGetPaymentV1 il controllo va fatto
+# TOBE
+# activatePaymentNoticeV2
+# NMU + paGetPaymentV1 --> no controllo
+# NMU + paGetPaymentV2 --> no controllo
 
     Background:
         Given systems up
