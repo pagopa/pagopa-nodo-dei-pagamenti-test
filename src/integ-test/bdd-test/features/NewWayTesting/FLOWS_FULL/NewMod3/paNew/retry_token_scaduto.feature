@@ -9458,17 +9458,17 @@ Feature: NM3 flows con PA New retry a token scaduto
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
-            | paymentAmount               | 10000.00                            |
+            | paymentAmount               | 7001.00                             |
             | dueDate                     | 2021-12-31                          |
             | description                 | pagamentoTest                       |
             | entityUniqueIdentifierType  | G                                   |
             | entityUniqueIdentifierValue | 77777777777                         |
             | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 2000.00                             |
+            | transferAmount              | 1400.20                             |
             | IBAN                        | IT45R0760103200000000001016         |
             | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
             | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
@@ -9506,9 +9506,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | INSERTED_BY           | activatePaymentNoticeV2                            |
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
-            | SUGGESTED_IDCIBUNDLE  | None                                               |
-            | SUGGESTED_USER_FEE    | 50                                                 |
-            | SUGGESTED_PA_FEE      | 0                                                  |
+            | SUGGESTED_IDCIBUNDLE  | 1                                                  |
+            | SUGGESTED_USER_FEE    | 130                                                |
+            | SUGGESTED_PA_FEE      | 20                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9590,7 +9590,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                           |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
-            | AMOUNT                   | 2000                                                        |
+            | AMOUNT                   | 1400                                                        |
             | REMITTANCE_INFORMATION   | NotNone                                                     |
             | TRANSFER_CATEGORY        | NotNone                                                     |
             | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
@@ -9710,41 +9710,41 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeResp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeResp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeResp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $activatePaymentNoticeResp.suggestedUserFee xml check value 130 in position 0
+        And from $activatePaymentNoticeResp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeResp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ### TRANSFER 2
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $activatePaymentNoticeResp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ### TRANSFER 3
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $activatePaymentNoticeResp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ### TRANSFER 4
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $activatePaymentNoticeResp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ### TRANSFER 5
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 5
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $activatePaymentNoticeResp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
 
         And from $activatePaymentNoticeResp.creditorReferenceId xml check value 47$iuv in position 0
-        And from $activatePaymentNoticeResp.suggestedUserFee xml check value 50 in position 0
-        And from $activatePaymentNoticeResp.suggestedPaFee xml check value 0 in position 0
-        And from $activatePaymentNoticeResp.suggestedIdBundle xml check value NotNone in position 0
         # paGetPayment REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -9778,35 +9778,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
         ###TRANSFER 1
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ###TRANSFER 2
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ###TRANSFER 3
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ###TRANSFER 4
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ###TRANSFER 5
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -9848,14 +9848,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesResp
         And from $feesResp.belowThreshold json check value False in position 0
         And from $feesResp.bundleOptions.abi json check value NotNone in position 0
-        And from $feesResp.bundleOptions.bundleDescription json check value Pacchetto utile all'esecuzione degli integration test del Nodo. in position 0
-        And from $feesResp.bundleOptions.bundleName json check value Test NDP in position 0
+        And from $feesResp.bundleOptions.bundleDescription json check value bundle description 1 in position 0
+        And from $feesResp.bundleOptions.bundleName json check value bundle 1 in position 0
         And from $feesResp.bundleOptions.idBrokerPsp json check value #id_broker_psp# in position 0
-        And from $feesResp.bundleOptions.idBundle json check value NotNone in position 0
+        And from $feesResp.bundleOptions.idBundle json check value 1 in position 0
         And from $feesResp.bundleOptions.idChannel json check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $feesResp.bundleOptions.idPsp json check value #psp# in position 0
-        And from $feesResp.bundleOptions.pspBusinessName json check value Test NDP in position 0
-        And from $feesResp.bundleOptions.taxPayerFee json check value 50 in position 0
+        And from $feesResp.bundleOptions.onUs json check value False in position 0
+        And from $feesResp.bundleOptions.taxPayerFee json check value 130 in position 0
         # sendPaymentOutcomeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -9943,17 +9943,17 @@ Feature: NM3 flows con PA New retry a token scaduto
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
-            | paymentAmount               | 10000.00                            |
+            | paymentAmount               | 7001.00                             |
             | dueDate                     | 2021-12-31                          |
             | description                 | pagamentoTest                       |
             | entityUniqueIdentifierType  | G                                   |
             | entityUniqueIdentifierValue | 77777777777                         |
             | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 2000.00                             |
+            | transferAmount              | 1400.20                             |
             | IBAN                        | IT45R0760103200000000001016         |
             | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
             | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
@@ -9991,9 +9991,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | INSERTED_BY           | activatePaymentNoticeV2                            |
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
-            | SUGGESTED_IDCIBUNDLE  | None                                               |
-            | SUGGESTED_USER_FEE    | 50                                                 |
-            | SUGGESTED_PA_FEE      | 0                                                  |
+            | SUGGESTED_IDCIBUNDLE  | 1                                                  |
+            | SUGGESTED_USER_FEE    | 130                                                |
+            | SUGGESTED_PA_FEE      | 20                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -10075,7 +10075,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
-            | AMOUNT                   | 2000                                                        |
+            | AMOUNT                   | 1400                                                        |
             | REMITTANCE_INFORMATION   | NotNone                                                     |
             | TRANSFER_CATEGORY        | NotNone                                                     |
             | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
@@ -10195,41 +10195,41 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ### TRANSFER 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ### TRANSFER 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ### TRANSFER 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ### TRANSFER 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
 
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 47$iuv in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 50 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value NotNone in position 0
         # paGetPaymentV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -10263,35 +10263,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
         ###TRANSFER 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ###TRANSFER 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ###TRANSFER 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ###TRANSFER 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ###TRANSFER 5
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -10333,14 +10333,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesResp
         And from $feesResp.belowThreshold json check value False in position 0
         And from $feesResp.bundleOptions.abi json check value NotNone in position 0
-        And from $feesResp.bundleOptions.bundleDescription json check value Pacchetto utile all'esecuzione degli integration test del Nodo. in position 0
-        And from $feesResp.bundleOptions.bundleName json check value Test NDP in position 0
+        And from $feesResp.bundleOptions.bundleDescription json check value bundle description 1 in position 0
+        And from $feesResp.bundleOptions.bundleName json check value bundle 1 in position 0
         And from $feesResp.bundleOptions.idBrokerPsp json check value #id_broker_psp# in position 0
-        And from $feesResp.bundleOptions.idBundle json check value NotNone in position 0
+        And from $feesResp.bundleOptions.idBundle json check value 1 in position 0
         And from $feesResp.bundleOptions.idChannel json check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $feesResp.bundleOptions.idPsp json check value #psp# in position 0
-        And from $feesResp.bundleOptions.pspBusinessName json check value Test NDP in position 0
-        And from $feesResp.bundleOptions.taxPayerFee json check value 50 in position 0
+        And from $feesResp.bundleOptions.onUs json check value False in position 0
+        And from $feesResp.bundleOptions.taxPayerFee json check value 130 in position 0
         # sendPaymentOutcomeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -10433,17 +10433,17 @@ Feature: NM3 flows con PA New retry a token scaduto
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
-            | creditorReferenceId         | $paGetPaymentV2.creditorReferenceId |
-            | paymentAmount               | 10000.00                            |
+            | creditorReferenceId         | 47$iuv                              |
+            | paymentAmount               | 7001.00                             |
             | dueDate                     | 2021-12-31                          |
             | description                 | pagamentoTest                       |
             | entityUniqueIdentifierType  | G                                   |
             | entityUniqueIdentifierValue | 77777777777                         |
             | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 2000.00                             |
+            | transferAmount              | 1400.20                             |
             | IBAN                        | IT45R0760103200000000001016         |
             | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
             | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
@@ -10481,9 +10481,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | INSERTED_BY           | activatePaymentNoticeV2                            |
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
-            | SUGGESTED_IDCIBUNDLE  | None                                               |
-            | SUGGESTED_USER_FEE    | 50                                                 |
-            | SUGGESTED_PA_FEE      | 0                                                  |
+            | SUGGESTED_IDCIBUNDLE  | 1                                                  |
+            | SUGGESTED_USER_FEE    | 130                                                |
+            | SUGGESTED_PA_FEE      | 20                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -10565,7 +10565,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 66666666666,66666666666,66666666666,88888888888,90000000001 |
             | IBAN                     | IT45R0760103200000000001016                                 |
-            | AMOUNT                   | 2000                                                        |
+            | AMOUNT                   | 1400                                                        |
             | REMITTANCE_INFORMATION   | NotNone                                                     |
             | TRANSFER_CATEGORY        | NotNone                                                     |
             | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
@@ -10685,41 +10685,41 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ### TRANSFER 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ### TRANSFER 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ### TRANSFER 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ### TRANSFER 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
 
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 47$iuv in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 50 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value NotNone in position 0
         # paGetPaymentV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -10753,35 +10753,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
         ###TRANSFER 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ###TRANSFER 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ###TRANSFER 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ###TRANSFER 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ###TRANSFER 5
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -10823,14 +10823,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesResp
         And from $feesResp.belowThreshold json check value False in position 0
         And from $feesResp.bundleOptions.abi json check value NotNone in position 0
-        And from $feesResp.bundleOptions.bundleDescription json check value Pacchetto utile all'esecuzione degli integration test del Nodo. in position 0
-        And from $feesResp.bundleOptions.bundleName json check value Test NDP in position 0
+        And from $feesResp.bundleOptions.bundleDescription json check value bundle description 1 in position 0
+        And from $feesResp.bundleOptions.bundleName json check value bundle 1 in position 0
         And from $feesResp.bundleOptions.idBrokerPsp json check value #id_broker_psp# in position 0
-        And from $feesResp.bundleOptions.idBundle json check value NotNone in position 0
+        And from $feesResp.bundleOptions.idBundle json check value 1 in position 0
         And from $feesResp.bundleOptions.idChannel json check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $feesResp.bundleOptions.idPsp json check value #psp# in position 0
-        And from $feesResp.bundleOptions.pspBusinessName json check value Test NDP in position 0
-        And from $feesResp.bundleOptions.taxPayerFee json check value 50 in position 0
+        And from $feesResp.bundleOptions.onUs json check value False in position 0
+        And from $feesResp.bundleOptions.taxPayerFee json check value 130 in position 0
         # sendPaymentOutcome REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -10885,35 +10885,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2Req.receipt.companyName xml check value companyName in position 0
         ### TRANSFER 1
         And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
         And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
         And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
         And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
         And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -10944,35 +10944,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2BC1Req.receipt.companyName xml check value companyName in position 0
         ### TRANSFER 1
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paSendRTV2BC1Req.receipt.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paSendRTV2BC1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -11013,35 +11013,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paSendRTSecReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paSendRTSecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paSendRTSecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paSendRTSecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paSendRTSecReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paSendRTSecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paSendRTSecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paSendRTSecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paSendRTSecReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paSendRTSecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paSendRTSecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paSendRTSecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paSendRTSecReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paSendRTSecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paSendRTSecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -11083,35 +11083,35 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paSendRTV2SecReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
         And from $paSendRTV2SecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paSendRTV2SecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paSendRTV2SecReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paSendRTV2SecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paSendRTV2SecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paSendRTV2SecReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 4
         And from $paSendRTV2SecReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paSendRTV2SecReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -13109,17 +13109,17 @@ Feature: NM3 flows con PA New retry a token scaduto
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
-            | paymentAmount               | 10000.00                    |
+            | paymentAmount               | 7001.00                     |
             | dueDate                     | 2021-12-31                  |
             | description                 | pagamentoTest               |
             | entityUniqueIdentifierType  | G                           |
             | entityUniqueIdentifierValue | 77777777777                 |
             | fullName                    | Massimo Benvegnù            |
-            | transferAmount              | 2000.00                     |
+            | transferAmount              | 1400.20                     |
             | IBAN                        | IT45R0760103200000000001016 |
             | fiscalCodePA1               | 90000000001                 |
             | fiscalCodePA2               | 90000000002                 |
@@ -13156,9 +13156,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | INSERTED_BY           | activatePaymentNoticeV2                            |
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
-            | SUGGESTED_IDCIBUNDLE  | None                                               |
-            | SUGGESTED_USER_FEE    | 50                                                 |
-            | SUGGESTED_PA_FEE      | 0                                                  |
+            | SUGGESTED_IDCIBUNDLE  | 1                                                  |
+            | SUGGESTED_USER_FEE    | 130                                                |
+            | SUGGESTED_PA_FEE      | 20                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -13168,7 +13168,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | column             | value                   |
             | ID                 | NotNone                 |
             | DESCRIPTION        | NotNone                 |
-            | COMPANY_NAME       | comapny                 |
+            | COMPANY_NAME       | company                 |
             | OFFICE_NAME        | office                  |
             | DEBTOR_ID          | NotNone                 |
             | INSERTED_TIMESTAMP | NotNone                 |
@@ -13240,7 +13240,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                           |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
-            | AMOUNT                   | 2000                                                        |
+            | AMOUNT                   | 1400                                                        |
             | REMITTANCE_INFORMATION   | NotNone                                                     |
             | TRANSFER_CATEGORY        | NotNone                                                     |
             | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
@@ -13360,33 +13360,36 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ### TRANSFER 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ### TRANSFER 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ### TRANSFER 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ### TRANSFER 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -13425,31 +13428,31 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
         ###TRANSFER 1
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ###TRANSFER 2
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ###TRANSFER 3
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ###TRANSFER 4
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ###TRANSFER 5
         And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -13490,14 +13493,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesResp
         And from $feesResp.belowThreshold json check value False in position 0
         And from $feesResp.bundleOptions.abi json check value NotNone in position 0
-        And from $feesResp.bundleOptions.bundleDescription json check value Pacchetto utile all'esecuzione degli integration test del Nodo. in position 0
-        And from $feesResp.bundleOptions.bundleName json check value Test NDP in position 0
+        And from $feesResp.bundleOptions.bundleDescription json check value bundle description 1 in position 0
+        And from $feesResp.bundleOptions.bundleName json check value bundle 1 in position 0
         And from $feesResp.bundleOptions.idBrokerPsp json check value #id_broker_psp# in position 0
-        And from $feesResp.bundleOptions.idBundle json check value NotNone in position 0
+        And from $feesResp.bundleOptions.idBundle json check value 1 in position 0
         And from $feesResp.bundleOptions.idChannel json check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $feesResp.bundleOptions.idPsp json check value #psp# in position 0
-        And from $feesResp.bundleOptions.pspBusinessName json check value Test NDP in position 0
-        And from $feesResp.bundleOptions.taxPayerFee json check value 50 in position 0
+        And from $feesResp.bundleOptions.onUs json check value False in position 0
+        And from $feesResp.bundleOptions.taxPayerFee json check value 130 in position 0
         # sendPaymentOutcomeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -13575,10 +13578,10 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                                                           |
             | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
-        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
+        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y', VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('1200001')  |
-        And update for table STAZIONI with parameter FLAG_STANDIN = 'Y', VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+        And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
         And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
@@ -13589,17 +13592,17 @@ Feature: NM3 flows con PA New retry a token scaduto
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 10000.00 | PO            | PSP        | 2000           |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
-            | paymentAmount               | 10000.00                    |
+            | paymentAmount               | 7001.00                     |
             | dueDate                     | 2021-12-31                  |
             | description                 | pagamentoTest               |
             | entityUniqueIdentifierType  | G                           |
             | entityUniqueIdentifierValue | 77777777777                 |
             | fullName                    | Massimo Benvegnù            |
-            | transferAmount              | 2000.00                     |
+            | transferAmount              | 1400.20                     |
             | IBAN                        | IT45R0760103200000000001016 |
             | fiscalCodePA1               | 90000000001                 |
             | fiscalCodePA2               | 90000000002                 |
@@ -13637,9 +13640,9 @@ Feature: NM3 flows con PA New retry a token scaduto
             | INSERTED_BY           | activatePaymentNoticeV2                            |
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
-            | SUGGESTED_IDCIBUNDLE  | None                                               |
-            | SUGGESTED_USER_FEE    | 50                                                 |
-            | SUGGESTED_PA_FEE      | 0                                                  |
+            | SUGGESTED_IDCIBUNDLE  | 1                                                  |
+            | SUGGESTED_USER_FEE    | 130                                                |
+            | SUGGESTED_PA_FEE      | 20                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -13721,7 +13724,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                         |
             | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
             | IBAN                     | IT45R0760103200000000001016                                 |
-            | AMOUNT                   | 2000                                                        |
+            | AMOUNT                   | 1400                                                        |
             | REMITTANCE_INFORMATION   | NotNone                                                     |
             | TRANSFER_CATEGORY        | NotNone                                                     |
             | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
@@ -13841,33 +13844,36 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ### TRANSFER 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ### TRANSFER 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ### TRANSFER 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ### TRANSFER 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 5
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -13906,31 +13912,31 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
         ###TRANSFER 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 0
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
         ###TRANSFER 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 1
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
         ###TRANSFER 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 2
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
         ###TRANSFER 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 3
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
         ###TRANSFER 5
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 2000 in position 4
+        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value 1400 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
@@ -13971,14 +13977,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesResp
         And from $feesResp.belowThreshold json check value False in position 0
         And from $feesResp.bundleOptions.abi json check value NotNone in position 0
-        And from $feesResp.bundleOptions.bundleDescription json check value Pacchetto utile all'esecuzione degli integration test del Nodo. in position 0
-        And from $feesResp.bundleOptions.bundleName json check value Test NDP in position 0
+        And from $feesResp.bundleOptions.bundleDescription json check value bundle description 1 in position 0
+        And from $feesResp.bundleOptions.bundleName json check value bundle 1 in position 0
         And from $feesResp.bundleOptions.idBrokerPsp json check value #id_broker_psp# in position 0
-        And from $feesResp.bundleOptions.idBundle json check value NotNone in position 0
+        And from $feesResp.bundleOptions.idBundle json check value 1 in position 0
         And from $feesResp.bundleOptions.idChannel json check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $feesResp.bundleOptions.idPsp json check value #psp# in position 0
-        And from $feesResp.bundleOptions.pspBusinessName json check value Test NDP in position 0
-        And from $feesResp.bundleOptions.taxPayerFee json check value 50 in position 0
+        And from $feesResp.bundleOptions.onUs json check value False in position 0
+        And from $feesResp.bundleOptions.taxPayerFee json check value 130 in position 0
         # sendPaymentOutcomeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
