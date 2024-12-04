@@ -5,7 +5,7 @@
 
 "MaxThread": 500,
 "TolTh": 10,
-"TOTAL_TIME": 50,
+"TOTAL_TIME": 90,
 
 "Scalino_CT_1": 50,
 "Scalino_CT_TIME_1": 300,
@@ -20,12 +20,12 @@
 "Scalino_CT_6": 300,
 "Scalino_CT_TIME_6": 300,
 "Scalino_CT_7": 350,
-"Scalino_CT_TIME_7": 300,
+"Scalino_CT_TIME_7": 900,
 "Scalino_CT_8": 400,
-"Scalino_CT_TIME_8": 300,
+"Scalino_CT_TIME_8": 900,
 "Scalino_CT_9": 450,
-"Scalino_CT_TIME_9": 300,
+"Scalino_CT_TIME_9": 900,
 "Scalino_CT_10": 500,
-"Scalino_CT_TIME_10": 300
+"Scalino_CT_TIME_10": 900
 }
 ]

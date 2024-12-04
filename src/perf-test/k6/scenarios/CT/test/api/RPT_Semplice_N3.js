@@ -106,7 +106,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
   try{
 	let elapsed = res.headers['Nodo-Elapsed']
 	console.debug('elapsed '+ elapsed);
-	ELAPSED_Trend.add(elapsed);
+	ELAPSED_Trend.add(elapsed == undefined ? 0 : elapsed);
   let doc = parseHTML(res.body);
   let script = doc.find('esito');
   outcome = script.text();
