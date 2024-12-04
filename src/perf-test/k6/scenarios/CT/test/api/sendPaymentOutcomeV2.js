@@ -6,6 +6,7 @@ import { getBasePath, getHeaders } from "../util/base_path_util.js";
 
 
 export const sendPaymentOutcome_Trend = new Trend('sendPaymentOutcomeV2');
+export const sendPaymentOutcome_multi_Trend = new Trend('sendPaymentOutcomeV2_multi');
 export const All_Trend = new Trend('ALL');
 
 
@@ -66,10 +67,10 @@ export function sendPaymentOutcomeV2ReqBody(psp, intpsp, chpsp, paymentToken) {
 export function sendPaymentOutcomeV2MultiToken(baseUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken) {
 	
 	let payTokens = [paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken];
-	sendPaymentOutcomeV2(baseUrl, rndAnagPsp, payTokens);
+	sendPaymentOutcomeV2(baseUrl, rndAnagPsp, payTokens, true);
 }
 
-export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken) {
+export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken,  isMulti) {
   //console.debug("VERIFY="+noticeNmbr);
   console.log(sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken))
   const res = http.post(
@@ -84,7 +85,15 @@ export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken) {
   console.debug("sendPaymentOutcomeV2 RES");
   console.debug(JSON.stringify(res));
 
-  sendPaymentOutcome_Trend.add(res.timings.duration);
+	if(isMulti){
+		sendPaymentOutcome_multi_Trend.add(res.timings.duration);
+	}
+	else
+	{
+		sendPaymentOutcome_Trend.add(res.timings.duration);
+	}
+  
+  
   All_Trend.add(res.timings.duration);
 
   check(res, {
