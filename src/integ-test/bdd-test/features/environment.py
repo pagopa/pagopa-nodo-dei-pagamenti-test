@@ -22,8 +22,8 @@ def before_all(context):
     context.config.update_userdata(more_userdata)
     proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
     proxies = {
-            'http': 'http://10.79.20.33:80',
-            'https': 'http://10.79.20.33:80',
+            'http': 'http://10.79.20.33:81',
+            'https': 'http://10.79.20.33:81',
         }
 	
     if proxyEnabled == False:
