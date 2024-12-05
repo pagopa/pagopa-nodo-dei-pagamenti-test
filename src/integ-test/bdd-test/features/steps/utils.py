@@ -1621,6 +1621,40 @@ def generate_update(dict_fields_values):
 
     return upd_query
 
+# METODO PER CREARE UNA DELETE CON WHERE
+def generate_delete(dict_fields_values):
+    list_where_keys = []
+    list_where_values = []
+    dict_where = {}
+
+    delete_query = 'DELETE FROM table_name'
+
+    for fields, values in dict_fields_values.items():
+        for value in values:
+            if fields == 'where_keys':
+                list_where_keys.append(value)
+            elif fields == 'where_values':
+                list_where_values.append(value)
+
+    for j in range(0, len(list_where_keys)):
+        dict_where[list_where_keys[j]] = list_where_values[j]
+
+    i = 0
+    for where_key, where_value in dict_where.items():
+        if i == 0:
+            if "(" in where_value:
+                delete_query += f" WHERE {where_key} IN {where_value}"
+            else:
+                delete_query += f" WHERE {where_key} = '{where_value}'"
+        else:
+            if "(" in where_value:
+                delete_query += f" AND {where_key} IN {where_value}"
+            else:
+                delete_query += f" AND {where_key} = '{where_value}'"
+        i += 1
+
+    return delete_query
+
 
 # METODO PER CREARE UNA SELECT CON WHERE
 def generate_string_column_table(list_col_split):
@@ -1805,6 +1839,17 @@ def update_query(context, conn, adopted_db, upd_query):
     exec_query = adopted_db.executeQuery(context, conn, upd_query, True)
 
     print(f"Update query: {upd_query} completed")
+
+    return exec_query
+
+def delete_query(context, conn, adopted_db, del_query):
+    exec_query = ''
+
+    print(f"Deleting record...")
+
+    exec_query = adopted_db.executeQuery(context, conn, del_query, True)
+
+    print(f"Delete query: {del_query} completed")
 
     return exec_query
 

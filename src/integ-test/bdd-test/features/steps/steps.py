@@ -4179,6 +4179,42 @@ def step_impl(context, table_name, param, db_name, type_table):
         print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
+    
+
+@step(u"delete from table {table_name} the record on db {db_name} with datatable type {type_table}")
+def step_impl(context, table_name, db_name, type_table): 
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        del_query = utils.generate_delete(dict_fields_values)
+
+        del_query = del_query.replace("table_name", table_name)
+        del_query = utils.replace_global_variables(del_query, context)
+        del_query = utils.replace_local_variables(del_query, context)
+        del_query = utils.replace_context_variables(del_query, context)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        # EXECUTE DELETE WITH POLLING SET TO 60 SEC
+        exec_query = utils.delete_query(context, conn, adopted_db, del_query)
+            
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
 
 
 

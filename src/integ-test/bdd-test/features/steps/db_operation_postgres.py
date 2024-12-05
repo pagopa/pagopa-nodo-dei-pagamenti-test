@@ -73,6 +73,10 @@ def execute_read_query(context, connection, query, as_dict:bool = False):
             connection.commit() 
             print("Insert executed successfully")
             
+        elif query.startswith('DELETE'):
+            connection.commit() 
+            print("Delete executed successfully")
+                        
     except OperationalError as e:
         print(f"The error '{e}' occurred")
 
