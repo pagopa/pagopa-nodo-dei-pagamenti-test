@@ -2255,7 +2255,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_15
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment --> spoV2+ -> KO con PPT_PAGAMENTO_SCONOSCIUTO (OLD_NM3-92)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> upd POSITION_STATUS_SNAPSHOT NOTICE_ID rand NOTIFIED -> spoV2+ -> KO con PPT_PAGAMENTO_SCONOSCIUTO (OLD_NM3-92)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -2306,7 +2306,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_16
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment --> spoV2+ -> KO con PPT_SEMANTICA  && description is Outcome non accettabile per stato pagamento (OLD_NM3-94)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> upd POSITION_STATUS_SNAPSHOT ACTIVATION_PENDING Y -> spoV2+ -> KO con PPT_SEMANTICA  && description is Outcome non accettabile per stato pagamento (OLD_NM3-94)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -2356,7 +2356,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_17
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment --> spoV2+ -> KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-95)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> upd POSITION_STATUS_SNAPSHOT STATUS PAID -> spoV2+ -> KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-95)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
