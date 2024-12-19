@@ -2995,7 +2995,7 @@ Feature: NM3 flows con pagamento fallito
     
     
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_25
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> spoV2+ -> with 2 token ->  KO con PPT_SEMANTICA (OLD_NM3-97)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> activate -> spoV2+ -> with 2 token ->  KO con PPT_SEMANTICA (OLD_NM3-97)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -3046,3 +3046,45 @@ Feature: NM3 flows con pagamento fallito
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
         And check description is Outcome non accettabile per token multipli attivati presso il PSP of sendPaymentOutcomeV2 response
+
+
+
+
+        @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_26
+        Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> activate random noticeNumber -> spoV2+ -> spoV2+ ->  KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-98)
+        Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
+            | outcome            | OK                          |
+            | amount             | 1.00                        |
+            | options            | EQ                          |
+            | allCCP             | false                       |
+            | paymentDescription | Pagamento di Test           |
+            | fiscalCodePA       | #creditor_institution_code# |
+            | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | 60000          |
+        And idempotencyKey with None in activatePaymentNotice
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
+            | outcome                     | OK                                |
+            | creditorReferenceId         | 02$iuv                            |
+            | paymentAmount               | 10.00                             |
+            | dueDate                     | 2021-12-31                        |
+            | description                 | pagamentoTest                     |
+            | entityUniqueIdentifierType  | G                                 |
+            | entityUniqueIdentifierValue | 77777777777                       |
+            | fullName                    | Massimo Benvegnù                  |
+            | transferAmount              | 10.00                             |
+            | fiscalCodePA                | $activatePaymentNotice.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016       |
+            | remittanceInformation       | testPaGetPayment                  |
+            | transferCategory            | paGetPaymentTest                  |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And save activatePaymentNotice response in activatePaymentNotice_1
