@@ -4119,15 +4119,15 @@ Feature: NM3 flows PA Old con pagamento KO
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     | 10.00  | 60000          |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
-            | esito                     | importoSingoloVersamento      |
-            | OK                        | $activatePaymentNotice.amount |
+            | esito | importoSingoloVersamento      |
+            | OK    | $activatePaymentNotice.amount |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
         Given from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
-            | esito                     | importoSingoloVersamento      |
-            | OK                        | $activatePaymentNotice.amount |
+            | esito | importoSingoloVersamento      |
+            | OK    | $activatePaymentNotice.amount |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -4144,3 +4144,54 @@ Feature: NM3 flows PA Old con pagamento KO
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
         And check description is Outcome non accettabile per token multipli attivati presso il PSP of sendPaymentOutcomeV2 response
+
+
+
+
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_15
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paaAttivaRPT  activate random noticeNumber -> paaAttivaRPT -> spoV2+ ->  KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-112)
+        Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
+        And from body with datatable vertical paaVerificaRPT_full initial XML paVerifyPaymentNotice
+            | esito                    | OK                          |
+            | importoSingoloVersamento | 1.00                        |
+            | ibanAccredito            | IT45R0760103200000000001016 |
+            | causaleVersamento        | pagamentoTest               |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002$iuv      | 10.00  | 60000          |
+        And idempotencyKey with None in activatePaymentNotice
+        And from body with datatable horizontal paaAttivaRPT_beneficiario_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento      | denominazioneBeneficiario | codiceUnitOperBeneficiario |
+            | OK    | $activatePaymentNotice.amount | #broker_AGID#             | #canale_AGID_02#           |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNoticeRequest1
+        And save activatePaymentNotice response in activatePaymentNotice_1
+        And random iuv in context
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002$iuv      | 10.00  | 60000          |
+        And idempotencyKey with None in activatePaymentNotice
+        And from body with datatable horizontal paaAttivaRPT_beneficiario_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento      | denominazioneBeneficiario | codiceUnitOperBeneficiario |
+            | OK    | $activatePaymentNotice.amount | #broker_AGID#             | #canale_AGID_02#           |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNoticeRequest2
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice_1Response.paymentToken | OK      |
+        And updates through the query update_noticeid_activate2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest1.noticeNumber under macro NewMod1 on db nodo_online
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        And updates through the query update_noticeid_activate1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest2.noticeNumber under macro NewMod1 on db nodo_online
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
