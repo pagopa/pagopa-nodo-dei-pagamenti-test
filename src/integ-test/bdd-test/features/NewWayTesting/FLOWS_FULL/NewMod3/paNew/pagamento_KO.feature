@@ -3189,7 +3189,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_28
-    Scenario: NM3 flow KO, FLOW: verify -> paVerifyPayment activate -> paGetPayment -> UPDB STATUS with CANCELLED activate -> paGetPayment -> spoV2+ paymentToken 2 -> OK  spoV2+ paymentToken 1 ->  KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-127)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerifyPayment activate -> paGetPayment -> updDB STATUS with CANCELLED activate -> paGetPayment -> spoV2+ paymentToken_2 -> OK spoV2+ paymentToken_1 -> KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-127)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -3228,9 +3228,9 @@ Feature: NM3 flows con pagamento fallito
         And updates through the query update_activate of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
         And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
         And wait 3 seconds for expiration
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | None           | 10.00  |
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
