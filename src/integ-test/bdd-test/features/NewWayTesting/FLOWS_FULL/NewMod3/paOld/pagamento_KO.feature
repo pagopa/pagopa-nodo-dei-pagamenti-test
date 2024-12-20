@@ -4103,7 +4103,7 @@ Feature: NM3 flows PA Old con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_14
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> activate -> paGetPayment -> SPOV2+ KO con PPT_SEMANTICA (OLD_NM3-111)
+    Scenario: NM3 flow KO, FLOW: verify ->  paaVerificaRPT activate -> paaAttivaRPT -> activate -> paaAttivaRPT -> SPOV2+ KO con PPT_SEMANTICA (OLD_NM3-111)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
@@ -4151,7 +4151,7 @@ Feature: NM3 flows PA Old con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_15
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paaAttivaRPT  activate random noticeNumber -> paaAttivaRPT -> spoV2+ ->  KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-112)
+    Scenario: NM3 flow KO, FLOW: verify -> paaVerificaRPT activate -> paaAttivaRPT  activate random noticeNumber -> paaAttivaRPT -> spoV2+ ->  KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-112)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
