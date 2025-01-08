@@ -12644,3 +12644,59 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+
+
+
+
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_36
+    Scenario: NM3 flow OK, FLOW: verify -> paVerify activate -> paGetPayment -> spoV2+ -> spoV2+ -> OK (OLD_NM3-132)
+        Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
+        And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
+            | esito                    | OK                          |
+            | importoSingoloVersamento | 1.00                        |
+            | ibanAccredito            | IT45R0760103200000000001016 |
+            | causaleVersamento        | pagamentoTest               |
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002$iuv      | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento      |
+            | OK    | $activatePaymentNotice.amount |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey    |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And saving sendPaymentOutcomeV2 request in sendPaymentOutcomeV2_1
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        # IDEMPOTENCY_CACHE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | PRIMITIVA          | sendPaymentOutcomeV2                        |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP                 |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
+            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
+            | VALID_TO           | NotNone                                     |
+            | HASH_REQUEST       | NotNone                                     |
+            | RESPONSE           | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                         |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
+            #| ORDER BY        | INSERTED_TIMESTAMP ASC              |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                         |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |

@@ -65856,6 +65856,7 @@ Feature: NM3 flows PA New con pagamento OK
       | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey    |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
     And update parameter useIdempotency on configuration keys with value false
+    And waiting after triggered refresh job ALL
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
     # IDEMPOTENCY_CACHE NO record
@@ -65864,6 +65865,7 @@ Feature: NM3 flows PA New con pagamento OK
       | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
       | PRIMITIVA       | activatePaymentNotice                 |
     And update parameter useIdempotency on configuration keys with value true
+    And waiting after triggered refresh job ALL
 
 
 
@@ -65917,13 +65919,11 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys      | where_values                          |
       | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
       | PRIMITIVA       | activatePaymentNotice                 |
-    And update parameter useIdempotency on configuration keys with value true
     # IDEMPOTENCY_CACHE NO record sendPaymentOutcomeV2
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys      | where_values                          |
       | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
       | PRIMITIVA       | sendPaymentOutcomeV2                  |
-    And update parameter useIdempotency on configuration keys with value true
 
 
 
