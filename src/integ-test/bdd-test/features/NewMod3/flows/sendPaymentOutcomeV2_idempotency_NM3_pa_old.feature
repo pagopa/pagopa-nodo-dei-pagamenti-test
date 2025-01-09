@@ -470,7 +470,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2 1303
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_activate on db nodo_online under macro NewMod1
-    @test 
+    @test
     Scenario: IDMP_SPO_20 (part 2)
         Given the IDMP_SPO_20 (part 1) scenario executed successfully
         And nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -494,7 +494,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2 1303
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test
     Scenario: IDMP_SPO_22 (part 3)
         Given the IDMP_SPO_22 (part 2) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -510,14 +510,14 @@ Feature: idempotency checks for sendPaymentOutcomeV2 1303
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test 
+    @test
     Scenario: IDMP_SPO_26 (part 2)
         Given the IDMP_SPO_26 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
         And idempotencyKey with None in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_activate on db nodo_online under macro NewMod1
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_spov2 on db nodo_online under macro NewMod1
 
     # IDMP_SPO_27
 
