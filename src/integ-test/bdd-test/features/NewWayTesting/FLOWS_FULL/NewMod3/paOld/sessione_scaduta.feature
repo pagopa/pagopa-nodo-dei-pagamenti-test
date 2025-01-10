@@ -7,7 +7,6 @@ Feature: NM3 flows PA Old sessione scaduta
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_FULL_1 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> paaInviaRT- BIZ- (NM3-9)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        # And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -381,7 +380,6 @@ Feature: NM3 flows PA Old sessione scaduta
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_FULL_2 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  nodoInviaRPT -> paaInviaRT- BIZ- (NM3-10)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        # And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -754,7 +752,6 @@ Feature: NM3 flows PA Old sessione scaduta
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_FULL_3 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> paaInviaRT- BIZ- (NM3-35)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        # And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
