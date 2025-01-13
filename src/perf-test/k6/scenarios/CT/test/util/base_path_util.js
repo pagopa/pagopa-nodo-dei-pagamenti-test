@@ -64,8 +64,8 @@ export function getBasePath(baseUrl, primitive) {
 			"nodoInviaRPT": "/nodo-per-pa/v1",
 			"nodoInviaRT": "/nodo-per-psp/v1",
 			"nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
-			"checkPosition": "/checkPosition",
-			"closePaymentV2": "/v2/closepayment",
+			"checkPosition": "/nodo-per-pm/checkPosition",
+			"closePaymentV2": "/nodo-per-pm/v2/closepayment",
 
 			"nodoPerPMv1": "/nodo-per-pm/v1",
 			"nodoPerPMv2": "/nodo-per-pm/v2"
