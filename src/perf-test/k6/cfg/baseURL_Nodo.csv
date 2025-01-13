@@ -8,3 +8,4 @@ pagoPA_PERF_apim_Oracle;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc
 pagoPA_PERF_loadB_Oracle;http://localhost:83/nodo-prf;http://localhost:83/nodo-prf;http://localhost:83/nodo-prf;http://localhost:83/nodo-prf
 pagoPA_PERF_loadB_Oracle_azure;http://10.70.74.200:80/nodo-prf;http://10.70.74.200:80/nodo-prf;http://10.70.74.200:80/nodo-prf;http://10.70.74.200:80/nodo-prf
 pagoPA_PERF_apim_pg;https://api.prf.platform.pagopa.it/nodo;;https://api.prf.platform.pagopa.it/nodo;https://api.prf.platform.pagopa.it/nodo
+pagoPA_PRF_apim_REAL;https://api.uat.platform.pagopa.it/nodo-ndp;;https://api.uat.platform.pagopa.it/nodo-ndp;https://api.uat.platform.pagopa.it/nodo-ndp
