@@ -4424,7 +4424,6 @@ Feature: NM3 flows PA Old con pagamento KO
             | ID_SESSIONE         | NotNone                                     |
             | IDENT_DOMINIO       | $activatePaymentNotice.fiscalCode           |
             | IUV                 | $iuv                                        |
-
             | COD_ESITO           | 1                                           |
             | ESITO               | NON_ESEGUITO                                |
             | DATA_RICEVUTA       | NotNone                                     |
