@@ -4246,7 +4246,7 @@ Feature: NM3 flows PA Old con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_17
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate PSP vp2 spo: verify -> paaVerificaRPT -> activate -> paaAttivaRPT  nodoInviaRPT spoV2- -> paaInviaRT-  (NM3-147)
+    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1 activate PSP vp2 spo: verify -> paaVerificaRPT -> activate -> paaAttivaRPT  nodoInviaRPT spoV2- -> paaInviaRT-  (NM3-147)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
