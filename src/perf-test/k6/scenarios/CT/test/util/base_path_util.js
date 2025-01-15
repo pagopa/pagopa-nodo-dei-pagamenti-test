@@ -53,7 +53,7 @@ export function getBasePath(baseUrl, primitive) {
 			"nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
 			"nodoChiediElencoFlussiRendicontazione": "/nodo-per-pa/v1",
 			"nodoChiediFlussoRendicontazione": "/nodo-per-pa/v1",
-			"demandPaymentNotice": "/nodo-per-psp/v1",
+			"demandPaymentNotice": "/node-for-psp/v1",
 			"nodoChiediCatalogoServizi": "/nodo-per-psp-richiesta-avvisi/v1",
 			"nodoChiediCatalogoServiziV2": "/nodo-per-psp/v1",
 			"nodoChiediCopiaRT": "/nodo-per-pa/v1",
