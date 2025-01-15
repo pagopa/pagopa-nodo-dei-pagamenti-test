@@ -12663,12 +12663,12 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
-            | esito | importoSingoloVersamento      |
-            | OK    | $activatePaymentNotice.amount |
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002$iuv      | 10.00  | 60000          |
+        And from body with datatable horizontal paaAttivaRPT_beneficiario_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento      | denominazioneBeneficiario | codiceUnitOperBeneficiario |
+            | OK    | $activatePaymentNotice.amount | #broker_AGID#             | #canale_AGID_02#           |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
