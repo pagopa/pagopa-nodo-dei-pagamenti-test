@@ -2,7 +2,7 @@ Feature: process tests for retryAtokenScaduto 1166
 
   Background:
     Given systems up
-  
+
   Scenario: Execute verifyPaymentNotice request
     Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
     And initial XML verifyPaymentNotice
@@ -52,6 +52,42 @@ Feature: process tests for retryAtokenScaduto 1166
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    And initial XML paaAttivaRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:paaAttivaRPTRisposta>
+      <paaAttivaRPTRisposta>
+      <esito>OK</esito>
+      <datiPagamentoPA>
+      <importoSingoloVersamento>$activatePaymentNotice.amount</importoSingoloVersamento>
+      <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+      <bicAccredito>BSCTCH22</bicAccredito>
+      <enteBeneficiario>
+      <pag:identificativoUnivocoBeneficiario>
+      <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+      <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
+      </pag:identificativoUnivocoBeneficiario>
+      <pag:denominazioneBeneficiario>#broker_AGID#</pag:denominazioneBeneficiario>
+      <pag:codiceUnitOperBeneficiario>#canale_AGID_02#</pag:codiceUnitOperBeneficiario>
+      <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+      <pag:indirizzoBeneficiario>"paaAttivaRPT"</pag:indirizzoBeneficiario>
+      <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+      <pag:capBeneficiario>gt</pag:capBeneficiario>
+      <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+      <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+      <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+      </enteBeneficiario>
+      <credenzialiPagatore>i</credenzialiPagatore>
+      <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $1iuv</causaleVersamento>
+      </datiPagamentoPA>
+      </paaAttivaRPTRisposta>
+      </ws:paaAttivaRPTRisposta>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 

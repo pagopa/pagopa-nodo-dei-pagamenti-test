@@ -35,6 +35,8 @@ from urllib3.util.retry import Retry
 
 import xml.etree.ElementTree as ET
 
+RESPONSE = "Response"
+
 
 def random_s():
     import random
@@ -676,6 +678,61 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
 
             setattr(context, 'token_by_rptActivations', payment_token)
             setattr(context, 'rptAttachment', payload)
+    # LANCIO JOB
+    if tipo == 'JOB':
+        try:
+            user_profile = None
+
+            try:
+                user_profile = getattr(context, "user_profile")
+            except AttributeError as e:
+                print(f"User Profile None: {e} ->>> remote run!")
+
+            dbRun = getattr(context, "dbRun")
+
+            url_nodo = ''
+            if dbRun == "Postgres":
+                url_nodo = (context.config.userdata.get("services").get("nodo-dei-pagamenti").get("refresh_config_service")).split("config")[0]
+            elif dbRun == 'Oracle':
+                url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")       
+
+            flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+            headers = ''
+            header_host = estrapola_header_host(url_nodo)
+
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'Host': header_host}
+
+            nodo_response = None 
+            
+            if dbRun == "Postgres":
+                nodo_response = requests.get(f"{url_nodo}jobs/trigger/{primitive}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                print(f">>>>>>>>>>>>>>>>>> {url_nodo}jobs/trigger/{primitive} with proxies {getattr(context,'proxies')}")
+            elif dbRun == "Oracle":
+                #RUN DA LOCALE
+                if user_profile != None:
+                    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{primitive}", headers=headers, verify=False)
+                    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{primitive}")
+                #RUN DA REMOTO
+                else:
+                    nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{primitive}", headers=headers, verify=False)
+                    print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{primitive}")
+
+            setattr(context, primitive + RESPONSE, nodo_response)
+
+        except AssertionError as e:
+            # Stampiamo il messaggio di errore dell'assert
+            print("----->>>> Assertion Error: ", e)
+            # Interrompiamo il test
+            raise AssertionError(str(e))
+        except Exception as e:
+            # Gestione di tutte le altre eccezioni
+            print("----->>>> Exception:", e)
+            # Interrompiamo il test
+            raise e
     # LANCIO DELLE PRIMITIVE
     # LANCIO GET
     if tipo == 'GET':
