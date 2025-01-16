@@ -8066,8 +8066,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
@@ -8741,8 +8741,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
@@ -9457,8 +9457,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
@@ -9942,8 +9942,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
@@ -10432,8 +10432,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter gec.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 47$iuv                              |
@@ -11155,8 +11155,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
@@ -12130,8 +12130,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
@@ -13108,8 +13108,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
@@ -13591,8 +13591,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                          |
             | creditorReferenceId         | 47$iuv                      |
@@ -14089,24 +14089,24 @@ Feature: NM3 flows con PA New retry a token scaduto
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
-            | outcome                     | OK                                  |
-            | creditorReferenceId         | 10$iuv                              |
-            | paymentAmount               | 7001.00                             |
-            | dueDate                     | 2021-12-31                          |
-            | description                 | pagamentoTest                       |
-            | entityUniqueIdentifierType  | G                                   |
-            | entityUniqueIdentifierValue | 77777777777                         |
-            | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 1400.20                             |
-            | IBAN                        | IT45R0760103200000000001016         |
-            | fiscalCodePA1               | 90000000001                         |
-            | fiscalCodePA2               | 90000000002                         |
-            | fiscalCodePA3               | 90000000003                         |
-            | fiscalCodePA4               | 88888888888                         |
-            | fiscalCodePA5               | 88888888888                         |
-            | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory            | paGetPaymentTest                    |
-            | companyName                 | companyName                         |
+            | outcome                     | OK                          |
+            | creditorReferenceId         | 10$iuv                      |
+            | paymentAmount               | 7001.00                     |
+            | dueDate                     | 2021-12-31                  |
+            | description                 | pagamentoTest               |
+            | entityUniqueIdentifierType  | G                           |
+            | entityUniqueIdentifierValue | 77777777777                 |
+            | fullName                    | Massimo Benvegnù            |
+            | transferAmount              | 1400.20                     |
+            | IBAN                        | IT45R0760103200000000001016 |
+            | fiscalCodePA1               | 90000000001                 |
+            | fiscalCodePA2               | 90000000002                 |
+            | fiscalCodePA3               | 90000000003                 |
+            | fiscalCodePA4               | 88888888888                 |
+            | fiscalCodePA5               | 88888888888                 |
+            | remittanceInformation       | testPaGetPayment            |
+            | transferCategory            | paGetPaymentTest            |
+            | companyName                 | companyName                 |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -16072,8 +16072,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
-            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount   | paymentMethod | touchPoint | expirationTime |
-            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 7001.00  | PO            | PSP        | 2000           |
+            | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310$iuv      | 7001.00 | PO            | PSP        | 2000           |
         And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
@@ -17430,14 +17430,14 @@ Feature: NM3 flows con PA New retry a token scaduto
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice2
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                 | outcome |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                 | outcome |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         # POSITION_PAYMENT_STATUS

@@ -2997,22 +2997,22 @@ Feature: NM3 flows con pagamento fallito
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_25
     Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment   activate -> paGetPayment -> spoV2+ -> with 2 token ->  KO con PPT_SEMANTICA (OLD_NM3-97)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
-            | outcome            | OK                          |
-            | amount             | 1.00                        |
-            | options            | EQ                          |
-            | allCCP             | false                       |
-            | paymentDescription | Pagamento di Test           |
-            | fiscalCodePA       | #creditor_institution_code# |
-            | companyName        | companyName                 |
+            | outcome            | OK                              |
+            | amount             | 1.00                            |
+            | options            | EQ                              |
+            | allCCP             | false                           |
+            | paymentDescription | Pagamento di Test               |
+            | fiscalCodePA       | $verifyPaymentNotice.fiscalCode |
+            | companyName        | companyName                     |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
@@ -3068,22 +3068,22 @@ Feature: NM3 flows con pagamento fallito
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_26
     Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment  activate random noticeNumber -> paGetPayment -> spoV2+ ->  KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-98)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
-            | outcome            | OK                          |
-            | amount             | 1.00                        |
-            | options            | EQ                          |
-            | allCCP             | false                       |
-            | paymentDescription | Pagamento di Test           |
-            | fiscalCodePA       | #creditor_institution_code# |
-            | companyName        | companyName                 |
+            | outcome            | OK                              |
+            | amount             | 1.00                            |
+            | options            | EQ                              |
+            | allCCP             | false                           |
+            | paymentDescription | Pagamento di Test               |
+            | fiscalCodePA       | $verifyPaymentNotice.fiscalCode |
+            | companyName        | companyName                     |
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | 60000          |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | 60000          |
         And idempotencyKey with None in activatePaymentNotice
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
@@ -3106,8 +3106,8 @@ Feature: NM3 flows con pagamento fallito
         And save activatePaymentNotice response in activatePaymentNotice_1
         And random iuv in context
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | 60000          |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  | 60000          |
         And idempotencyKey with None in activatePaymentNotice
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
@@ -3267,7 +3267,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_29
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate with 2000 expirationTime-> paGetPayment ->  spoV2- -> KO  (OLD_NM3-144)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate with 2000 expirationTime-> paGetPayment ->  spoV2- -> KO  (OLD_NM3-145)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
