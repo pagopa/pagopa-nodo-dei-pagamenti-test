@@ -6,7 +6,7 @@ Feature: BUG PROD
     
     # process tests for generazioneRicevute 1337
     @ALL @FLOW @FLOW_FULL @BUG @BUG_2 @after
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: verify -> activate -> nodoInviaRPT  mod3CancelV1 -> activate -> nodoInviaRPT -> spo+ (NM3-84)
+    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp1 spo: verify -> activate -> nodoInviaRPT  mod3CancelV1 -> activate -> nodoInviaRPT -> spo+ (NM3-84)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     |
