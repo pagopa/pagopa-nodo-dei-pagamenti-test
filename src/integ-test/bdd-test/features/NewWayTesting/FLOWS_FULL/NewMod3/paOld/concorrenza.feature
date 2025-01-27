@@ -20,13 +20,17 @@ Feature: NM3 flows PA Old con concorrenza
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber                                 | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $activatePaymentNotice_1Request.noticeNumber | 8.00   |
+        And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
+            | delay | esito | importoSingoloVersamento |
+            | 1000  | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
-        When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 10 ms delay
+        When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 750 ms delay
         Then check outcome is OK of activatePaymentNotice response
-        And check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+        And check outcome is KO Aof sendPaymentOutcome response
+        And check faultCode is PPT_SEMANTIC of sendPaymentOutcome response
         And check description is Activation pending on position of sendPaymentOutcome response
 
 
@@ -85,10 +89,14 @@ Feature: NM3 flows PA Old con concorrenza
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber                                 | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | $activatePaymentNotice_1Request.noticeNumber | 8.00   |
+        And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
+            | delay | esito | importoSingoloVersamento |
+            | 1000  | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | KO      |
-        When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 50 ms delay
+        When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 750 ms delay
         Then check outcome is OK of activatePaymentNotice response
         And check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
