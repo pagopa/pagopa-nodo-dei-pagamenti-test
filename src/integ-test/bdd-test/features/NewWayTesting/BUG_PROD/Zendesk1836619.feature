@@ -5,7 +5,7 @@ Feature: BUG PROD
         Given systems up
 
 
-    @ALL @FLOW @FLOW_FULL @BUG @BUG_1 @after
+    @ALL @FLOW @FLOW_FULL @BUG @BUG_ZEN @after
     Scenario: NMU flow sessione scaduta, FLOW con PA New vp1 e PSP na: checkPosition con 1 nav activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 in parallelo con closeV2+ con resp KO perché token scaduto (BUG-1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
