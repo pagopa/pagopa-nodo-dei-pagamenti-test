@@ -8,7 +8,7 @@ Feature: NM3 flows PA New con concorrenza
     # AccessiConcorrenziali 3c_ACT_SPO
     # ACT -> SPO+ (ACT: OK SPO+: KO PPT_SEMANTICA Activation pending on position)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_1
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo+ in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-3A)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo+ in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-3A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
@@ -114,7 +114,7 @@ Feature: NM3 flows PA New con concorrenza
     # AccessiConcorrenziali 3d_ACT_SPO
     # ACT -> SPO- (ACT: OK - SPO+ -> KO PPT_SEMANTICA Activation pending on position )
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_3
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo- in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-4A)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo- in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-4A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
@@ -160,7 +160,7 @@ Feature: NM3 flows PA New con concorrenza
     # AccessiConcorrenziali 3d_ACT_SPO
     # SPO- -> ACT (ACT: OK - SPO-: KO PPT_TOKEN_SCADUTO_KO Activation pending on position)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_4
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment -> mod3CancelV1 -> spo- & activate in pararallel mode-> KO PPT_TOKEN_SCADUTO_KO  (OLD_NM3-4A)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 -> spo- & activate in pararallel mode-> KO PPT_TOKEN_SCADUTO_KO  (OLD_NM3-4A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
@@ -204,7 +204,7 @@ Feature: NM3 flows PA New con concorrenza
    # AccessiConcorrenziali 3f_ACT_SPO
     # ACT -> SPO+ (ACT: KO - SPO- -> KO PPT_SEMANTICA Activation pending on position)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_5
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo- in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-6A)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo- in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-6A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
@@ -251,7 +251,7 @@ Feature: NM3 flows PA New con concorrenza
     # AccessiConcorrenziali 3f_ACT_SPO
     # SPO+ -> ACT (ACT: KO - SPO- -> PPT_TOKEN_SCADUTO_KO)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_6
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment -> mod3CancelV1 ->  spo- & activate in pararallel mode-> KO PPT_TOKEN_SCADUTO_KO  (OLD_NM3-6A)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 ->  spo- & activate in pararallel mode-> KO PPT_TOKEN_SCADUTO_KO  (OLD_NM3-6A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 2000           |
