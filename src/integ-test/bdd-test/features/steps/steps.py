@@ -4217,7 +4217,59 @@ def step_impl(context, table_name, db_name, type_table):
         raise e
 
 
+@step(u"verify datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
+def step_impl(context, column, table_name, db_name, type_table, number):
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        selected_query = utils.generate_select(dict_fields_values)
+
+        selected_query = selected_query.replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        if number == 'default_token_duration_validity_millis':
+            default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
+            value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        elif number == 'default_idempotency_key_validity_minutes':
+            default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
+            value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        elif number == 'default_durata_estensione_token_IO':
+            default = int(getattr(context, 'default_durata_estensione_token_IO')) / 60000
+            value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        elif number == 'Today':
+            value = (datetime.datetime.today()).strftime('%Y-%m-%d')
+        elif 'minutes:' in number:
+            min = int(number.split(':')[1]) / 60000
+            value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
+        else:
+            number = int(number)
+            value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
+
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M' if 'minutes:' in number or 'default_' in number else '%Y-%m-%d')
+
+        adopted_db.closeConnection(conn)
+
+        print(f"check expected element: {value}, obtained: {elem}")
+        assert elem == value
+
+    except AssertionError as e:
+        print("----->>>> Assertion Error: ", e)
+        raise AssertionError(str(e))
+    except Exception as e:
+        print("----->>>> Exception:", e)
+        raise e
 
 
 
