@@ -3928,7 +3928,7 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print(f"----->>>> Exception: {e}")
+        print(f"----->>>> Exception: {e} for table: {table_name}")
         # Interrompiamo il test
         raise e
 
