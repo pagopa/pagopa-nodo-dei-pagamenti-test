@@ -201,8 +201,8 @@ Feature: NM3 flows PA New con concorrenza
 
 
 
-   # AccessiConcorrenziali 3f_ACT_SPO
-    # ACT -> SPO+ (ACT: KO - SPO- -> KO PPT_SEMANTICA Activation pending on position)
+    # AccessiConcorrenziali 3f_ACT_SPO
+    # ACT -> SPO+ (ACT: KO - SPO- KO PPT_SEMANTICA Activation pending on position)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_5
     Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 -> activate & spo- in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-6A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
@@ -217,7 +217,7 @@ Feature: NM3 flows PA New con concorrenza
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber                                 | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $activatePaymentNotice_1Request.noticeNumber | 10.00   |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $activatePaymentNotice_1Request.noticeNumber | 10.00  |
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | KO      |
@@ -246,10 +246,10 @@ Feature: NM3 flows PA New con concorrenza
 
 
 
-    
+
 
     # AccessiConcorrenziali 3f_ACT_SPO
-    # SPO+ -> ACT (ACT: KO - SPO- -> PPT_TOKEN_SCADUTO_KO)
+    # SPO- -> ACT (ACT: KO - SPO: KO PPT_TOKEN_SCADUTO_KO)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_6
     Scenario: NM3 flow KO, FLOW: activate -> paGetPayment -> mod3CancelV1 ->  spo- & activate in pararallel mode-> KO PPT_TOKEN_SCADUTO_KO  (OLD_NM3-6A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
@@ -264,7 +264,7 @@ Feature: NM3 flows PA New con concorrenza
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber                                 | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $activatePaymentNotice_1Request.noticeNumber | 10.00   |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $activatePaymentNotice_1Request.noticeNumber | 10.00  |
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | KO      |
@@ -287,3 +287,40 @@ Feature: NM3 flows PA New con concorrenza
         Then check outcome is KO of activatePaymentNotice response
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+
+
+
+
+
+
+
+    # AccessiConcorrenziali DoppiaACT_PA_NEW
+    # ACT-> ACT (ACT: KO - ACT- KO PPT_ATTIVAZIONE_IN_CORSO E' in corso un'altra attivazione per lo stesso avviso)
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PNEW @NM3PANEWPARALLEL @NM3PANEWPARALLEL_FULL_7
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment   activate in pararallel mode-> KO PPT_ATTIVAZIONE_IN_CORSO (OLD_NM3-11A)
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
+            | outcome                     | OK                              |
+            | creditorReferenceId         | 02$iuv                          |
+            | paymentAmount               | 10.00                           |
+            | dueDate                     | 2021-12-31                      |
+            | description                 | pagamentoTest                   |
+            | entityUniqueIdentifierType  | G                               |
+            | entityUniqueIdentifierValue | #creditor_institution_code_old# |
+            | fullName                    | Massimo Benvegnù                |
+            | transferAmount              | 10.00                           |
+            | fiscalCodePA                | #creditor_institution_code_old# |
+            | IBAN                        | IT45R0760103200000000001016     |
+            | remittanceInformation       | testPaGetPayment                |
+            | transferCategory            | paGetPaymentTest                |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And saving activatePaymentNotice request in activatePaymentNotice_1Request
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                                 | noticeNumber                                 | amount |
+             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice_1Request.fiscalCode | $activatePaymentNotice_1Request.noticeNumber | 10.00  |
+        And saving activatePaymentNotice request in activatePaymentNotice_2Request
+        When calling primitive evolution activatePaymentNotice_1Request and activatePaymentNotice_2Request with POST and POST in parallel with 80 ms delay
+        Then check outcome is OK of activatePaymentNotice_1Request response
+        Then check outcome is KO of activatePaymentNotice_2Request response

@@ -247,7 +247,7 @@ Feature: NM3 flows PA Old con concorrenza
 
 
     # accessi_concorrenziali_1c_RPT_SPO
-    # SPO+ -> nodoInviaRPT  (ACT:OK - SPO+:KO PPT_SINTASSI_EXTRAXSD)
+    # SPO+ -> nodoInviaRPT  (nodoInviaRPT:OK - SPO+:KO PPT_SINTASSI_EXTRAXSD)
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPARALLEL @NM3PAOLDPARALLEL_FULL_8
     Scenario: NM3 flow KO, FLOW: activate -> spo+ con paymentMethod sconosciuto & nodoInviaRPT in pararallel mode-> KO PPT_SINTASSI_EXTRAXSD (OLD_NM9-A)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
@@ -282,5 +282,51 @@ Feature: NM3 flows PA Old con concorrenza
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      | creditCar     |
         When calling primitive evolution sendPaymentOutcome and nodoInviaRPT with POST and POST in parallel with 10 ms delay
         Then check esito is OK of nodoInviaRPT response
-        And check outcome is KO of sendPaymentOutcome response   
-        And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcome response  
+        And check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcome response
+
+
+
+
+
+
+
+    # accessi_concorrenziali_1d_RPT_SPO
+    # SPO+ -> nodoInviaRPT  (nodoInviaRPT:KO PPT_SINTASSI_XSD - SPO+:OK)
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPARALLEL @NM3PAOLDPARALLEL_FULL_9
+    Scenario: NM3 flow KO, FLOW: activate -> spo+ & nodoInviaRPT con tipoVersamento = 'TE' in pararallel mode-> KO PPT_SINTASSI_EXTRAXSD (OLD_NM10-A)
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  |
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNotice_1Request
+        And save activatePaymentNotice response in activatePaymentNotice1
+        Given RPT generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#             |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | dataOraMessaggioRichiesta         | #timedate#                                  |
+            | dataEsecuzionePagamento           | #date#                                      |
+            | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
+            | identificativoUnivocoVersamento   | $iuv                                        |
+            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | importoSingoloVersamento          | $activatePaymentNotice.amount               |
+            | tipoVersamento                    | TE                                          |
+        And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#             |
+            | identificativoUnivocoVersamento       | $iuv                                        |
+            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
+            | password                              | #password#                                  |
+            | identificativoPSP                     | #psp#                                       |
+            | identificativoIntermediarioPSP        | #psp#                                       |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#                |
+            | rpt                                   | $rptAttachment                              |
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
+        When calling primitive evolution sendPaymentOutcome and nodoInviaRPT with POST and POST in parallel with 10 ms delay
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
+        And check outcome is OK of sendPaymentOutcome response

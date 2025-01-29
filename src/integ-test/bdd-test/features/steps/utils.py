@@ -592,6 +592,11 @@ def isDate(string: str):
 def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel):
     print("single_thread_evolution")
 
+    if '_' in primitive: 
+        soap_action = primitive.split("_")[0]
+    else:
+        soap_action = primitive
+
     dbRun = getattr(context, "dbRun")
     myconfigfile = getattr(context, 'myconfigfile')
     flag_subscription = context.config.userdata.get("services").get(
@@ -745,11 +750,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         header_host = estrapola_header_host(url_nodo)
         headers = ''
         if flag_subscription == 'Y':
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_action,
                        'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
         else:
             headers = {'Content-Type': 'application/xml',
-                       'SOAPAction': primitive, 'Host': header_host}
+                       'SOAPAction': soap_action, 'Host': header_host}
 
         get_response = ''
         if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
@@ -783,11 +788,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_action,
                            'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
                 headers = {'Content-Type': 'application/xml',
-                           'SOAPAction': primitive, 'Host': header_host}
+                           'SOAPAction': soap_action, 'Host': header_host}
             print(f"primitive: {primitive} ---> body: {body}")
 
             if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
@@ -838,11 +843,11 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             header_host = estrapola_header_host(url_nodo)
             headers = ''
             if flag_subscription == 'Y':
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_action,
                            'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
             else:
                 headers = {'Content-Type': 'application/xml',
-                           'SOAPAction': primitive, 'Host': header_host}
+                           'SOAPAction': soap_action, 'Host': header_host}
 
             if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
                 response = requests.post(
