@@ -4257,7 +4257,12 @@ def step_impl(context, column, table_name, db_name, type_table, number):
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-        elem = query_result[0].strftime('%Y-%m-%d %H:%M' if 'minutes:' in number or 'default_' in number else '%Y-%m-%d')
+        
+        try:
+            number = int(number)
+            elem = query_result[0].strftime('%Y-%m-%d')
+        except ValueError:
+            elem = query_result[0].strftime('%Y-%m-%d %H:%M' if 'minutes:' in number or 'default_' in number else '%Y-%m-%d')
 
         adopted_db.closeConnection(conn)
 
