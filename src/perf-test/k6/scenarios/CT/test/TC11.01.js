@@ -78,6 +78,13 @@ import scenario3 from './TC03.05.js';
    
   
 };*/
+export const getScalini = new SharedArray('scalini', function () {
+	
+  // here you can open files, and then do additional processing or generate the array with data dynamically
+  const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
+  //console.debug(f);
+  return f; // f must be an array[]
+});
 
 export const options = {
 	
