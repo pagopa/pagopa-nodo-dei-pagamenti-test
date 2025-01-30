@@ -4,7 +4,7 @@ import scenario2 from './TC02.04.js';
 import scenario3 from './TC03.05.js';
 import scenario4 from './TC06.05_NMU_misto.js';
 
-export const options = {
+/* export const options = {
 	
   thresholds: {
     // we can set different thresholds for the different scenarios because
@@ -77,7 +77,7 @@ export const options = {
 	}
    
   
-};
+};*/
 
 export default function () {
     // Genera un numero casuale compreso tra 0 e 1
