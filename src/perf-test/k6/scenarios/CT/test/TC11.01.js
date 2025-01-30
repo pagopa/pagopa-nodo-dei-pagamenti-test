@@ -2,7 +2,7 @@ import { group } from 'k6';
 import scenario1 from './TC02.03.js';
 import scenario2 from './TC02.04.js';
 import scenario3 from './TC03.05.js';
-import scenario4 from './TC06.05_NMU_misto.js';
+//import scenario4 from './TC06.05_NMU_misto.js';
 
 /* export const options = {
 	
@@ -98,7 +98,7 @@ export default function () {
         });
     } else {
         group('ScenarioMisto: scenario4', () => {
-            scenario4();
+            scenario1();
         });
     }
 }
