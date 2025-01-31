@@ -48,7 +48,7 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
   );
 
   console.debug("RPT (semplice) RES");
-  console.log(JSON.stringify(res));
+  console.debug(JSON.stringify(res));
 
    RPT_Semplice_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);

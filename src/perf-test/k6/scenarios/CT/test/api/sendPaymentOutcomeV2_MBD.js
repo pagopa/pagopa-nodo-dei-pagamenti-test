@@ -78,7 +78,7 @@ export function sendPaymentOutcomeV2MultiToken(baseUrl, rndAnagPsp, paymentToken
 
 export function sendPaymentOutcomeV2MBD(baseUrl, rndAnagPsp, paymentToken, mbdEncoded) {
   //console.debug("VERIFY="+noticeNmbr);
-  console.log(sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken, mbdEncoded))
+  console.debug(sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken, mbdEncoded))
   const res = http.post(
     getBasePath(baseUrl, "sendPaymentOutcomeV2"),
     sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken, mbdEncoded),

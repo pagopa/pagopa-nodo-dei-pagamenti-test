@@ -22,7 +22,7 @@ export function checkPositionBody(cfpa, noticeNmbr) {
 
 export function checkPosition(baseUrl, rndAnagPa, noticeNmbr) {
 
-    console.log(checkPositionBody(rndAnagPa.CF, noticeNmbr));
+    console.debug(checkPositionBody(rndAnagPa.CF, noticeNmbr));
     const res = http.post(
         getBasePath(baseUrl, "checkPosition"),
         checkPositionBody(rndAnagPa.CF, noticeNmbr),

@@ -108,7 +108,7 @@ export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, trans
                 }
               };*/
 
-  console.log(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount));
+  console.debug(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount));
   const res = http.post(
     getBasePath(baseUrl, "closePaymentV2"),
     //JSON.stringify(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),

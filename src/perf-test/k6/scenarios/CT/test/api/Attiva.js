@@ -73,7 +73,7 @@ return `
 
 export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
  
-console.log(AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp));
+console.debug(AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp));
  const res = http.post(
 	 getBasePath(baseUrl, "nodoAttivaRPT"),
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),

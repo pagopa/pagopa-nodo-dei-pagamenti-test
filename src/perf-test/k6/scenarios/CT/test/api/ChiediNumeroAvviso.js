@@ -30,7 +30,7 @@ return `
 
 export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
  
-  console.log(numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA))
+  console.debug(numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA))
  const res = http.post(
 		 getBasePath(baseUrl, "nodoChiediNumeroAvviso"),
     numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA),

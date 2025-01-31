@@ -31,7 +31,7 @@ return `
 export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  //console.debug("VERIFY="+noticeNmbr);
  
- console.log(verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr));
+ console.debug(verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr));
  
  const res = http.post(
 		 getBasePath(baseUrl, "verifyPaymentNotice"),
