@@ -857,7 +857,8 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
                     url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
 
         setattr(context, primitive + "Response", response)
-        print("response: ", response.content)
+        print(f'response content: {response.content}')
+        print(f'response content header: {response.headers}')
         print(primitive + "Response")
 
 
