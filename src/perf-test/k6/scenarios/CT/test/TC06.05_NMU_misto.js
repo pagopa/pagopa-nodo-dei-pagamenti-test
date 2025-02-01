@@ -1,10 +1,53 @@
 import { group } from 'k6';
+import { SharedArray } from 'k6/data';
 import scenario1 from './TC06.01_new_new.js';
 import scenario2 from './TC06.02_new_old.js';
 import scenario3 from './TC06.03_new_new.js';
 import scenario4 from './TC06.04_new_old.js';
 
+export const getScalini = new SharedArray('scalini', function () {
+	
+	// here you can open files, and then do additional processing or generate the array with data dynamically
+	const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
+	//console.debug(f);
+	return f; // f must be an array[]
+  });
+
 export const options = {
+  scenarios: {
+        total: {
+          timeUnit: '3s',
+          preAllocatedVUs: 1, // how large the initial pool of VUs would be
+          executor: 'ramping-arrival-rate',
+          //executor: 'ramping-vus',
+          maxVUs: 1500,
+          stages: [
+            { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+            { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+            { target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+            { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+            { target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+            { target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+           ],
+          tags: { test_type: 'ALL', scenarioName: 'misto' },
+          //exec: 'total',
+        }
+
+      },
     summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.99)', 'p(100)', 'count'],
     discardResponseBodies: false,
     thresholds: {
@@ -64,8 +107,6 @@ export const options = {
         'checks{ALL:ok_rate}': [],
         'checks{ALL:ko_rate}': [],
     },
-
-
 };
 
 export default function () {

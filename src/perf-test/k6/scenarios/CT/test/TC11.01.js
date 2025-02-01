@@ -1,7 +1,5 @@
 import { group } from 'k6';
 import { SharedArray } from 'k6/data';
-// import {total as t1} from './TC02.03.js';
-
 import scenario1 from './TC02.03.js';
 import scenario2 from './TC02.04.js';
 import scenario3 from './TC03.05.js';
