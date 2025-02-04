@@ -711,12 +711,13 @@ Feature: NM3 flows PA Old con concorrenza
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | $activatePaymentNotice_1Request.noticeNumber | 8.00   |
         And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
             | delay | esito | importoSingoloVersamento |
-            | 1000  | OK    | 10.00                    |
+            | 1000  | OK    | 8.00                     |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | KO      |
         When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 750 ms delay
+        And saving activatePaymentNotice request in activatePaymentNotice_2Request
         And save activatePaymentNotice response in activatePaymentNotice2
         Then check outcome is OK of activatePaymentNotice response
         And check outcome is KO of sendPaymentOutcome response
@@ -761,41 +762,41 @@ Feature: NM3 flows PA Old con concorrenza
             | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                  |
-            | ID                    | NotNone                                |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                 |
-            | DUE_DATE              | NotNone                                |
-            | RETENTION_DATE        | None                                   |
-            | AMOUNT                | $activatePaymentNotice_1Request.amount |
-            | FLAG_FINAL_PAYMENT    | Y                                      |
-            | INSERTED_TIMESTAMP    | NotNone                                |
-            | UPDATED_TIMESTAMP     | NotNone                                |
-            | METADATA              | None                                   |
-            | FK_POSITION_SERVICE   | NotNone                                |
-            | INSERTED_BY           | activatePaymentNotice                  |
-            | UPDATED_BY            | activatePaymentNotice                  |
+            | column                | value                                                                         |
+            | ID                    | NotNone                                                                       |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                                                        |
+            | DUE_DATE              | NotNone                                                                       |
+            | RETENTION_DATE        | None                                                                          |
+            | AMOUNT                | $activatePaymentNotice_1Request.amount,$activatePaymentNotice_2Request.amount |
+            | FLAG_FINAL_PAYMENT    | Y                                                                             |
+            | INSERTED_TIMESTAMP    | NotNone                                                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                                                       |
+            | METADATA              | None                                                                          |
+            | FK_POSITION_SERVICE   | NotNone                                                                       |
+            | INSERTED_BY           | activatePaymentNotice                                                         |
+            | UPDATED_BY            | activatePaymentNotice                                                         |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                                 |
             | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
         # POSITION_TRANSFER
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                                      |
-            | ID                       | NotNone                                    |
-            | CREDITOR_REFERENCE_ID    | 12$iuv                                     |
-            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice_1Request.fiscalCode |
-            | IBAN                     | IT45R0760103200000000001016                |
-            | AMOUNT                   | $activatePaymentNotice_1Request.amount     |
-            | REMITTANCE_INFORMATION   | NotNone                                    |
-            | TRANSFER_CATEGORY        | None                                       |
-            | TRANSFER_IDENTIFIER      | 1                                          |
-            | VALID                    | Y,N                                        |
-            | FK_POSITION_PAYMENT      | NotNone                                    |
-            | INSERTED_TIMESTAMP       | NotNone                                    |
-            | UPDATED_TIMESTAMP        | NotNone                                    |
-            | FK_PAYMENT_PLAN          | NotNone                                    |
-            | INSERTED_BY              | activatePaymentNotice                      |
-            | UPDATED_BY               | activatePaymentNotice                      |
+            | column                   | value                                                                         |
+            | ID                       | NotNone                                                                       |
+            | CREDITOR_REFERENCE_ID    | 12$iuv                                                                        |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice_1Request.fiscalCode                                    |
+            | IBAN                     | IT45R0760103200000000001016                                                   |
+            | AMOUNT                   | $activatePaymentNotice_2Request.amount,$activatePaymentNotice_1Request.amount |
+            | REMITTANCE_INFORMATION   | NotNone                                                                       |
+            | TRANSFER_CATEGORY        | None                                                                          |
+            | TRANSFER_IDENTIFIER      | 1                                                                             |
+            | VALID                    | Y                                                                             |
+            | FK_POSITION_PAYMENT      | NotNone                                                                       |
+            | INSERTED_TIMESTAMP       | NotNone                                                                       |
+            | UPDATED_TIMESTAMP        | NotNone                                                                       |
+            | FK_PAYMENT_PLAN          | NotNone                                                                       |
+            | INSERTED_BY              | activatePaymentNotice                                                         |
+            | UPDATED_BY               | activatePaymentNotice                                                         |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                                 |
             | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
@@ -805,7 +806,7 @@ Feature: NM3 flows PA Old con concorrenza
         Given verify 1 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                 |
             | PAYMENT_TOKEN | $activatePaymentNotice1Response.paymentToken |
-            | ORDER BY      | INSERTED_TIMESTAMP ASC                       |
+            | ORDER BY      | INSERTED_TIMESTAMP DESC                      |
         # POSITION_PAYMENT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                                                                     |
@@ -820,7 +821,7 @@ Feature: NM3 flows PA Old con concorrenza
             | BROKER_PSP_ID              | #psp#                                                                                     |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                                                              |
             | IDEMPOTENCY_KEY            | NotNone                                                                                   |
-            | AMOUNT                     | $activatePaymentNotice_1Request.amount                                                    |
+            | AMOUNT                     | $activatePaymentNotice_1Request.amount,$activatePaymentNotice_2Request.amount             |
             | FEE                        | None                                                                                      |
             | OUTCOME                    | None                                                                                      |
             | PAYMENT_METHOD             | None                                                                                      |
