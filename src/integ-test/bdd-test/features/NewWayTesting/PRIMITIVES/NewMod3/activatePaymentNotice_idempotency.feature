@@ -2743,3 +2743,250 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
             | where_keys | where_values                                 |
             | NOTICE_ID  | $activatePaymentNotice_1Request.noticeNumber |
             | ORDER BY   | ID ASC                                       |
+
+
+    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_15 @after
+    Scenario: NM3 flow OK, FLOW: activatePaymentNotice  (OLD_NM3-15B)
+        Given update parameter useIdempotency on configuration keys with value true
+        And waiting after triggered refresh job ALL
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 002#iuv#     | 10.00  | 60000          |
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNotice_1Request
+        And replace $iuv content with IUV content
+        And save activatePaymentNotice response in activatePaymentNotice_1
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_idempotency_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                        | fiscalCode                      | noticeNumber | expirationTime | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice.idempotencyKey | #creditor_institution_code_old# | 002#iuv#     | 60000          | 10.00  |
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
+        # IDEMPOTENCY_CACHE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                          |
+            | ID                 | NotNone                                        |
+            | PRIMITIVA          | activatePaymentNotice                          |
+            | PSP_ID             | $activatePaymentNotice_1Request.idPSP          |
+            | PA_FISCAL_CODE     | $activatePaymentNotice_1Request.fiscalCode     |
+            | NOTICE_ID          | $activatePaymentNotice_1Request.noticeNumber   |
+            | TOKEN              | $activatePaymentNotice_1Response.paymentToken  |
+            | IDEMPOTENCY_KEY    | $activatePaymentNotice_1Request.idempotencyKey |
+            | VALID_TO           | NotNone                                        |
+            | HASH_REQUEST       | NotNone                                        |
+            | RESPONSE           | NotNone                                        |
+            | INSERTED_TIMESTAMP | NotNone                                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                                   |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice_1Request.idempotencyKey |
+            | PA_FISCAL_CODE  | $activatePaymentNotice_1Request.fiscalCode     |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                                   |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice_1Request.idempotencyKey |
+        # POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                          |
+            | ID                    | NotNone                                        |
+            | CREDITOR_REFERENCE_ID | NotNone                                        |
+            | PSP_ID                | #psp#                                          |
+            | IDEMPOTENCY_KEY       | $activatePaymentNotice_1Request.idempotencyKey |
+            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken  |
+            | TOKEN_VALID_FROM      | NotNone                                        |
+            | TOKEN_VALID_TO        | NotNone                                        |
+            | DUE_DATE              | 2021-12-31 00:00:00                            |
+            | AMOUNT                | $activatePaymentNotice_1Request.amount         |
+            | INSERTED_TIMESTAMP    | NotNone                                        |
+            | UPDATED_TIMESTAMP     | NotNone                                        |
+            | INSERTED_BY           | activatePaymentNotice                          |
+            | UPDATED_BY            | activatePaymentNotice                          |
+            | PAYMENT_METHOD        | None                                           |
+            | TOUCHPOINT            | None                                           |
+            | SUGGESTED_IDBUNDLE    | None                                           |
+            | SUGGESTED_IDCIBUNDLE  | None                                           |
+            | SUGGESTED_USER_FEE    | None                                           |
+            | SUGGESTED_PA_FEE      | None                                           |
+            | PAYMENT_NOTE          | responseFull                                   |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+        # POSITION_SERVICE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                        |
+            | ID                 | NotNone                                      |
+            | PA_FISCAL_CODE     | $activatePaymentNotice_1Request.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice_1Request.noticeNumber |
+            | DESCRIPTION        | NotNone                                      |
+            | COMPANY_NAME       | NotNone                                      |
+            | OFFICE_NAME        | None                                         |
+            | DEBTOR_ID          | None                                         |
+            | INSERTED_TIMESTAMP | NotNone                                      |
+            | UPDATED_TIMESTAMP  | NotNone                                      |
+            | INSERTED_BY        | activatePaymentNotice                        |
+            | UPDATED_BY         | activatePaymentNotice                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+        # POSITION_PAYMENT_PLAN
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                      |
+            | ID                    | NotNone                                    |
+            | PA_FISCAL_CODE        | $activatePaymentNotice_1Request.fiscalCode |
+            | CREDITOR_REFERENCE_ID | NotNone                                    |
+            | DUE_DATE              | NotNone                                    |
+            | RETENTION_DATE        | None                                       |
+            | AMOUNT                | $activatePaymentNotice_1Request.amount     |
+            | FLAG_FINAL_PAYMENT    | Y                                          |
+            | INSERTED_TIMESTAMP    | NotNone                                    |
+            | UPDATED_TIMESTAMP     | NotNone                                    |
+            | METADATA              | None                                       |
+            | FK_POSITION_SERVICE   | NotNone                                    |
+            | INSERTED_BY           | activatePaymentNotice                      |
+            | UPDATED_BY            | activatePaymentNotice                      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+        # POSITION_PAYMENT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                     | value                                          |
+            | ID                         | NotNone                                        |
+            | PA_FISCAL_CODE             | $activatePaymentNotice_1Request.fiscalCode     |
+            | CREDITOR_REFERENCE_ID      | NotNone                                        |
+            | PAYMENT_TOKEN              | $activatePaymentNotice_1Response.paymentToken  |
+            | BROKER_PA_ID               | $activatePaymentNotice_1Request.fiscalCode     |
+            | STATION_ID                 | #id_station_old#                               |
+            | STATION_VERSION            | 1                                              |
+            | PSP_ID                     | #psp#                                          |
+            | BROKER_PSP_ID              | #id_broker_psp#                                |
+            | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                   |
+            | IDEMPOTENCY_KEY            | $activatePaymentNotice_1Request.idempotencyKey |
+            | AMOUNT                     | $activatePaymentNotice_1Request.amount         |
+            | FEE                        | None                                           |
+            | OUTCOME                    | None                                           |
+            | PAYMENT_METHOD             | None                                           |
+            | PAYMENT_CHANNEL            | NA                                             |
+            | TRANSFER_DATE              | None                                           |
+            | PAYER_ID                   | None                                           |
+            | APPLICATION_DATE           | None                                           |
+            | INSERTED_TIMESTAMP         | NotNone                                        |
+            | UPDATED_TIMESTAMP          | NotNone                                        |
+            | FK_PAYMENT_PLAN            | NotNone                                        |
+            | RPT_ID                     | None                                           |
+            | PAYMENT_TYPE               | MOD3                                           |
+            | CARRELLO_ID                | None                                           |
+            | ORIGINAL_PAYMENT_TOKEN     | None                                           |
+            | FLAG_IO                    | N                                              |
+            | RICEVUTA_PM                | None                                           |
+            | FLAG_ACTIVATE_RESP_MISSING | None                                           |
+            | FLAG_PAYPAL                | None                                           |
+            | INSERTED_BY                | activatePaymentNotice                          |
+            | UPDATED_BY                 | activatePaymentNotice                          |
+            | TRANSACTION_ID             | None                                           |
+            | CLOSE_VERSION              | None                                           |
+            | FEE_PA                     | None                                           |
+            | BUNDLE_ID                  | None                                           |
+            | BUNDLE_PA_ID               | None                                           |
+            | PM_INFO                    | None                                           |
+            | MBD                        | N                                              |
+            | FEE_SPO                    | None                                           |
+            | PAYMENT_NOTE               | responseFull                                   |
+            | FLAG_STANDIN               | N                                              |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | PA_FISCAL_CODE        | $activatePaymentNotice_1Request.fiscalCode    |
+            | NOTICE_ID             | $activatePaymentNotice_1Request.noticeNumber  |
+            | CREDITOR_REFERENCE_ID | NotNone                                       |
+            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken |
+            | STATUS                | PAYING                                        |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+            | FK_POSITION_PAYMENT   | NotNone                                       |
+            | INSERTED_BY           | activatePaymentNotice                         |
+            | UPDATED_BY            | activatePaymentNotice                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC                    |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                 |
+            | NOTICE_ID  | $activatePaymentNotice_1Request.noticeNumber |
+            | ORDER BY   | ID ASC                                       |
+        # POSITION_TRANSFER
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                        |
+            | ID                       | NotNone                                      |
+            | NOTICE_ID                | $activatePaymentNotice_1Request.noticeNumber |
+            | CREDITOR_REFERENCE_ID    | NotNone                                      |
+            | PA_FISCAL_CODE           | $activatePaymentNotice_1Request.fiscalCode   |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice_1Request.fiscalCode   |
+            | IBAN                     | IT45R0760103200000000001016                  |
+            | AMOUNT                   | $activatePaymentNotice_1Request.amount       |
+            | REMITTANCE_INFORMATION   | NotNone                                      |
+            | TRANSFER_CATEGORY        | None                                         |
+            | TRANSFER_IDENTIFIER      | 1                                            |
+            | VALID                    | Y                                            |
+            | FK_POSITION_PAYMENT      | NotNone                                      |
+            | INSERTED_TIMESTAMP       | NotNone                                      |
+            | UPDATED_TIMESTAMP        | NotNone                                      |
+            | FK_PAYMENT_PLAN          | NotNone                                      |
+            | INSERTED_BY              | activatePaymentNotice                        |
+            | UPDATED_BY               | activatePaymentNotice                        |
+            | METADATA                 | None                                         |
+            | REQ_TIPO_BOLLO           | None                                         |
+            | REQ_HASH_DOCUMENTO       | None                                         |
+            | REQ_PROVINCIA_RESIDENZA  | None                                         |
+            | COMPANY_NAME_SECONDARY   | None                                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+        # POSITION_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                        |
+            | ID                 | NotNone                                      |
+            | PA_FISCAL_CODE     | $activatePaymentNotice_1Request.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice_1Request.noticeNumber |
+            | STATUS             | PAYING                                       |
+            | INSERTED_TIMESTAMP | NotNone                                      |
+            | INSERTED_BY        | activatePaymentNotice                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC                       |
+        And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                 |
+            | NOTICE_ID  | $activatePaymentNotice_1Request.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                       |
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                                        |
+            | ID                  | NotNone                                      |
+            | PA_FISCAL_CODE      | $activatePaymentNotice_1Request.fiscalCode   |
+            | NOTICE_ID           | $activatePaymentNotice_1Request.noticeNumber |
+            | STATUS              | PAYING                                       |
+            | INSERTED_TIMESTAMP  | NotNone                                      |
+            | UPDATED_TIMESTAMP   | NotNone                                      |
+            | FK_POSITION_SERVICE | NotNone                                      |
+            | ACTIVATION_PENDING  | N                                            |
+            | INSERTED_BY         | activatePaymentNotice                        |
+            | UPDATED_BY          | activatePaymentNotice                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                                 |
+            | NOTICE_ID      | $activatePaymentNotice_1Request.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice_1Request.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC                    |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                 |
+            | NOTICE_ID  | $activatePaymentNotice_1Request.noticeNumber |
+            | ORDER BY   | ID ASC                                       |
