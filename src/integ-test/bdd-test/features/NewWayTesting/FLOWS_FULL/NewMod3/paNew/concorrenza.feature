@@ -61,7 +61,6 @@ Feature: NM3 flows PA New con concorrenza
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And check description is Activation pending on position of sendPaymentOutcome response
- 
 
 
 
@@ -70,7 +69,8 @@ Feature: NM3 flows PA New con concorrenza
 
 
 
-        
+
+
 
     # AccessiConcorrenziali 3c_ACT_SPO
     # SPO+ -> ACT (ACT: KO PPT_PAGAMENTO_DUPLICATO - SPO+: KO PPT_TOKEN_SCADUTO)
@@ -327,10 +327,11 @@ Feature: NM3 flows PA New con concorrenza
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         And saving activatePaymentNotice request in activatePaymentNotice_1Request
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                                 | noticeNumber                                 | amount |
-             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice_1Request.fiscalCode | $activatePaymentNotice_1Request.noticeNumber | 10.00  |
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                                 | noticeNumber                                 | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice_1Request.fiscalCode | $activatePaymentNotice_1Request.noticeNumber | 10.00  |
         And saving activatePaymentNotice request in activatePaymentNotice_2Request
         When calling primitive evolution activatePaymentNotice_1Request and activatePaymentNotice_2Request with POST and POST in parallel with 80 ms delay
         Then check outcome is OK of activatePaymentNotice_1Request response
         Then check outcome is KO of activatePaymentNotice_2Request response
-        vAnd check faultCode is PPT_ATTIVAZIONE_IN_CORSO of sendPaymentOutcome response
+        And check faultCode is PPT_ATTIVAZIONE_IN_CORSO of sendPaymentOutcome response
+
