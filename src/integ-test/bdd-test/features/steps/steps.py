@@ -2512,7 +2512,8 @@ def step_impl(context, job_name, seconds):
             else:
                 nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
                 print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
-
+                
+        assert nodo_response.status_code == 200, f"Expected status code 200 but got {nodo_response.status_code}" 
         setattr(context, job_name + RESPONSE, nodo_response)
 
     except AssertionError as e:
