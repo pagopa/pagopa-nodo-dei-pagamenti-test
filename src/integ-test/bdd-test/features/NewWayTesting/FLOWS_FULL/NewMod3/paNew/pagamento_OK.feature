@@ -69351,3 +69351,4 @@ Feature: NM3 flows PA New con pagamento OK
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                            |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
+
