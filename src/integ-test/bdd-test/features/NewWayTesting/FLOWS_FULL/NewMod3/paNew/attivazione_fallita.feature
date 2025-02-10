@@ -20,6 +20,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
@@ -39,7 +42,7 @@ Feature: NM3 flows con attivazione fallita
             | transferCategory            | paGetPaymentTest                  |
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
+        Then check outcome is OK of activatePaymentNotice response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -189,6 +192,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
@@ -327,6 +333,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
@@ -494,6 +503,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
@@ -628,6 +640,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
@@ -796,6 +811,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
@@ -931,6 +949,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
@@ -1100,6 +1121,9 @@ Feature: NM3 flows con attivazione fallita
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
