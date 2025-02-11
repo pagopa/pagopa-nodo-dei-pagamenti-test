@@ -17,7 +17,7 @@ export const options = {
     mixed_scenario: {
       preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
-          //executor: 'ramping-vus',
+          timeUnit: '4s',
           maxVUs: 1500,
                 stages: [
             { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
@@ -41,6 +41,7 @@ export const options = {
             { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
             { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
            ],
+           tags: { test_type: 'ALL', scenarioName: 'TC06.05_NMU_misto' }
     }
   }
 };
