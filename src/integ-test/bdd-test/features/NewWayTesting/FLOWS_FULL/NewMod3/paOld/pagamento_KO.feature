@@ -6566,7 +6566,7 @@ Feature: NM3 flows PA Old con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_24
-    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  nodoInviaRPT, mod3CancelV1 -> activate -> paaAttivaRPT,  nodoInviaRPT -> KO  PPT_STAZIONE_INT_PA_TIMEOUT nodoChiediCopiaRT, nodoChiediCopiaRT BIZ- (NM3-21H)
+    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT -> nodoInviaRPT, mod3CancelV1 ->paInviaRt,  activate -> paaAttivaRPT, nodoInviaRPT -> KO  PPT_STAZIONE_INT_PA_TIMEOUT -> paInviaRt,  nodoChiediCopiaRT, nodoChiediCopiaRT BIZ- (NM3-22H)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 2000           |
@@ -6604,6 +6604,9 @@ Feature: NM3 flows PA Old con pagamento KO
         When job mod3CancelV1 triggered after 10 seconds
         Then wait 5 seconds for expiration
         And verify the HTTP status code of mod3CancelV1 response is 200
+        When job paInviaRt triggered after 15 seconds
+        And wait 5 seconds for expiration
+        Then verify the HTTP status code of paInviaRt response is 200
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber                        | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | $activatePaymentNotice.noticeNumber | 11.00  | 2000           |
@@ -7105,3 +7108,21 @@ Feature: NM3 flows PA Old con pagamento KO
             | ESITO              | INVIATA             |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)    |
             | ORDER BY           | DATA_ORA_EVENTO ASC |
+        # nodoChiediCopiaRT REQ
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $paymentToken       |
+            | TIPO_EVENTO               | nodoChiediCopiaRT   |
+            | SOTTO_TIPO_EVENTO         | REQ                 |
+            | ESITO                     | RICEVUTA            |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
+        # nodoChiediCopiaRT RESP
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $paymentToken       |
+            | TIPO_EVENTO               | nodoChiediCopiaRT   |
+            | SOTTO_TIPO_EVENTO         | RESP                |
+            | ESITO                     | INVIATA             |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
