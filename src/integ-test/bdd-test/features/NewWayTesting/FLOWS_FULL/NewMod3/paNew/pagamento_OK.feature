@@ -70182,3 +70182,8 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+
+
+
+
+  
