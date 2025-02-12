@@ -15273,7 +15273,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-@ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_43
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_43
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: verify -> paaVerificaRPT -> activate -> paaAttivaRPT  -> nodoInviaRPT -> spo- -> paaInviaRT+ (subito, senza job paInviaRT) -> verify  (OLD_NM3-10N)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -15498,13 +15498,13 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                       |
-            | ID                    | NotNone                                     |
-            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
-            | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | STATUS                | PAYING,INSERTED                             |
-            | INSERTED_TIMESTAMP    | NotNone                                     |
-            | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcome    |
+            | column             | value                                    |
+            | ID                 | NotNone                                  |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode        |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber      |
+            | STATUS             | PAYING,INSERTED                          |
+            | INSERTED_TIMESTAMP | NotNone                                  |
+            | INSERTED_BY        | activatePaymentNotice,sendPaymentOutcome |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -15709,7 +15709,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-        
+
 
 
 
@@ -16620,7 +16620,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-        
+
 
 
 
@@ -16675,6 +16675,27 @@ Feature: NM3 flows PA Old con pagamento OK
         Then verify the HTTP status code of paInviaRt response is 200
         And check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
+        # RETRY_PA_INVIA_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | ID_SESSIONE        | NotNone                                     |
+            | ID_STAZIONE        | #id_station_old#                            |
+            | CCP                | $activatePaymentNoticeResponse.paymentToken |
+            | RETRY              | 0                                           |
+            | STATO              | TO_RETRY                                    |
+            | INSERTED_BY        | paInviaRt                                   |
+            | UPDATED_BY         | paInviaRt                                   |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+            | UPDATED_TIMESTAMP  | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                                                 |
@@ -16711,6 +16732,11 @@ Feature: NM3 flows PA Old con pagamento OK
         When job paRetryPaInviaRtNegative triggered after 0 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 1 seconds for expiration
+        # RETRY_PA_INVIA_RT
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
