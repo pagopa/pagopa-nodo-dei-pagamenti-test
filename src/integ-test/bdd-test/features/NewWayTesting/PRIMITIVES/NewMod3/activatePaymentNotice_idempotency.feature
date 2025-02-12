@@ -7036,7 +7036,7 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
 
 
 
-    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_38 @after @prova
+    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_38 @after
     Scenario: NM3 flow OK, FLOW: activatePaymentNotice  (OLD_NM3-38B)
         Given update parameter useIdempotency on configuration keys with value false
         And waiting after triggered refresh job ALL
@@ -7050,8 +7050,8 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_idempotency_noExpiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                        | fiscalCode                      | noticeNumber |  amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice.idempotencyKey | #creditor_institution_code_old# | 002$iuv      |  10.00  |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                        | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice.idempotencyKey | #creditor_institution_code_old# | 002$iuv      | 10.00  |
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
@@ -7062,13 +7062,13 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
-    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_39 @after @prova
+    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_39 @after
     Scenario: NM3 flow OK, FLOW: activatePaymentNotice  (OLD_NM3-39B)
         Given update parameter useIdempotency on configuration keys with value false
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 302#iuv#     | 10.00  |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
@@ -7089,8 +7089,8 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
         And saving activatePaymentNotice request in activatePaymentNotice_1Request
         And save activatePaymentNotice response in activatePaymentNotice_1
         Given from body with datatable horizontal activatePaymentNoticeBody_with_idempotency_noExpiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                        | fiscalCode                      | noticeNumber |  amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice.idempotencyKey | #creditor_institution_code_old# | 302$iuv      |  10.00  |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                        | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice.idempotencyKey | #creditor_institution_code_old# | 302$iuv      | 10.00  |
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
@@ -7101,7 +7101,7 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
-    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_40 @prova
+    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_40
     Scenario: NM3 flow OK, FLOW: activatePaymentNotice  (OLD_NM3-40B)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
@@ -7113,8 +7113,8 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   |  fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# |  #creditor_institution_code# | 302#iuv#     | 2000           | 10.00  |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
@@ -7140,11 +7140,11 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
-    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_41 @prova
+    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_41
     Scenario: NM3 flow OK, FLOW: activatePaymentNotice  (OLD_NM3-41B)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     | 6000           | 10.00  |
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | expirationTime | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 002#iuv#     | 6000           | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -7158,7 +7158,7 @@ Feature: NM3 primitives activatePaymentNotice with idempotency
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
-    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_42 @prova
+    @ALL @PRIMITIVE @NM3 @NM3ACTIVIDMP_42
     Scenario: NM3 flow OK, FLOW: activatePaymentNotice  (OLD_NM3-42B)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
