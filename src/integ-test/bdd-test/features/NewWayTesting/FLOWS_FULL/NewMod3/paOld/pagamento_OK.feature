@@ -17901,7 +17901,6 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | #creditor_institution_code_old# |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
