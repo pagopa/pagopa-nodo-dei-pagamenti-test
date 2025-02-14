@@ -69770,7 +69770,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_124
-  Scenario: NM3 flow OK, FLOW: verify -> paVerify activate -> paGetPayment --> mod3cancelV2 -> spo+ -> paSendRT BIZ+ -> verify ko con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-15N)
+  Scenario: NM3 flow OK, FLOW: verify -> paVerify activate -> paGetPayment --> mod3cancelV2 -> spo+ -> paSendRT BIZ+ -> verify ko con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-19N)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
