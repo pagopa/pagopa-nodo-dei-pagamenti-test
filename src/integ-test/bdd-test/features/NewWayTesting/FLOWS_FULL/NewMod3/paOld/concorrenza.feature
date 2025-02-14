@@ -330,7 +330,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNotice1Response.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
@@ -674,7 +674,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNotice1Response.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
@@ -1019,7 +1019,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNotice1Response.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
@@ -1356,7 +1356,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNotice1Response.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
@@ -1700,7 +1700,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNotice1Response.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
@@ -2042,7 +2042,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNotice1Response.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
@@ -2419,7 +2419,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
@@ -2772,7 +2772,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
@@ -3115,7 +3115,7 @@ Feature: NM3 flows PA Old con concorrenza
         And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
-        # # paaInviaRT RESP
+        # # paaInviaRPT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
