@@ -114,15 +114,15 @@ export default function () {
     const randomNumber = Math.random();
 
 
-    if (randomNumber < 0.1) { //10%
+    if (randomNumber < 0.05) { //10%
         group('ScenarioMisto: scenario1', () => {
             scenario4();
         });
-    } else if (randomNumber < 0.25) { //15%
+    } else if (randomNumber < 0.1) { //15%
         group('ScenarioMisto: scenario2', () => {
             scenario3();
         });
-    } else if (randomNumber < 0.5) { // 25%
+    } else if (randomNumber < 0.15) { // 25%
         group('ScenarioMisto: scenario3', () => {
             scenario2();
         });
