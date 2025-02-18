@@ -54,7 +54,7 @@ export function sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken) {
  //console.debug("VERIFY="+noticeNmbr);
  console.debug(sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken))
  const res = http.post(
-    getBasePath(baseUrl, "sendPaymentOutcome"),
+    getBasePath(baseUrl, "sendPaymentOutcome")+'?primitiva=sendPaymentOutcome',
     sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' }) ,
 	tags: { sendPaymentOutcome: 'http_req_duration', sendPaymentOutcome_elapsed: 'elapsed', ALL: 'http_req_duration',primitiva:"sendPaymentOutcome"}
