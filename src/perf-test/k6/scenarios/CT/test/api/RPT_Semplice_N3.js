@@ -51,7 +51,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
   let rptEncoded = rptUtil.getRptEncoded(rndAnagPaNew.PA, rndAnagPaNew.STAZPA, creditorReferenceId, paymentToken, importoTotaleDaVersare);
   
  const res = http.post(
-		 getBasePath(baseUrl, "nodoInviaRPT")+'?primnitiva=nodoInviaRPT',
+		 getBasePath(baseUrl, "nodoInviaRPT")+'?primitiva=nodoInviaRPT',
     rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' }) ,
 	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRPT", RPT_Semplice_N3_el: 'elapsed'}
