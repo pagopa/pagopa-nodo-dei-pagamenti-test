@@ -1,8 +1,8 @@
 import { group } from 'k6';
-import scenario1 from './TC06.01_new_new.js';
-import scenario2 from './TC06.02_new_old.js';
-import scenario3 from './TC06.03_new_new.js';
-import scenario4 from './TC06.04_new_old.js';
+import TC0601_new_new from './TC06.01_new_new.js';
+import TC0602_new_old from './TC06.02_new_old.js';
+import TC0603_new_new from './TC06.03_new_new.js';
+import TC0604_new_old from './TC06.04_new_old.js';
 import { SharedArray } from 'k6/data';
 
 export const getScalini = new SharedArray('scalini', function () {
@@ -51,21 +51,21 @@ export default function () {
     const randomNumber = Math.random();
 
 
-    if (randomNumber < 0.1) { //10%
-        group('ScenarioMisto: scenario1', () => {
-            scenario4();
+    if (randomNumber < 0.05) { //5%
+        group('ScenarioMisto: TC0602_new_old', () => {
+            TC0602_new_old();
         });
-    } else if (randomNumber < 0.25) { //25 - 10 = 15%
-        group('ScenarioMisto: scenario2', () => {
-            scenario3();
+    } else if (randomNumber < 0.1) { //10 - 5 = 5%
+        group('ScenarioMisto: TC0603_new_new', () => {
+            TC0603_new_new();
         });
-    } else if (randomNumber < 0.5) { // 25 - 10 - 15 = 25%
-        group('ScenarioMisto: scenario3', () => {
-            scenario2();
+    } else if (randomNumber < 0.15) { // 15 - 5 - 5 = 5%
+        group('ScenarioMisto: TC0604_new_old', () => {
+            TC0604_new_old();
         });
-    } else { //50%
-        group('ScenarioMisto: scenario4', () => {
-            scenario1();
+    } else { //85%
+        group('ScenarioMisto: TC0601_new_new', () => {
+            TC0601_new_new();
         });
     }
 }

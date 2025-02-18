@@ -1,8 +1,8 @@
 import { group } from 'k6';
-import scenario1 from './TC02.03.js';
-import scenario2 from './TC02.04.js';
-import scenario3 from './TC03.05.js';
-import scenario4 from './TC06.05_NMU_misto.js';
+import TC02_03 from './TC02.03.js';
+import TC02_04 from './TC02.04.js';
+import TC03_05 from './TC03.05.js';
+import TC06_05_NMU_misto from './TC06.05_NMU_misto.js';
 import { SharedArray } from 'k6/data';
 
 export const getScalini = new SharedArray('scalini', function () {
@@ -51,21 +51,21 @@ export default function () {
     const randomNumber = Math.random();
 
     // Utilizza la probabilità specificata per chiamare gli scenari appropriati
-    if (randomNumber < 0.1) {
-        group('ScenarioMisto: scenario1', () => {
-            scenario1();
+    if (randomNumber < 0.1) { //10%
+        group('ScenarioMisto: TC0203', () => {
+            TC02_03();
         });
-    } else if (randomNumber < 0.2) {
-        group('ScenarioMisto: scenario2', () => {
-            scenario2();
+    } else if (randomNumber < 0.2) { //20 - 10 = 10%
+        group('ScenarioMisto: TC0204', () => {
+            TC02_04();
         });
-    } else if (randomNumber < 0.5) {
-        group('ScenarioMisto: scenario3', () => {
-            scenario3();
+    } else if (randomNumber < 0.8) { // 80 - 10 - 10 = 60%
+        group('ScenarioMisto: TC0305', () => {
+            TC03_05();
         });
-    } else {
-        group('ScenarioMisto: scenario4', () => {
-            scenario4();
+    } else { //100 - 60 - 10 - 10 = 20%
+        group('ScenarioMisto: TC0605_NMU_misto', () => {
+            TC06_05_NMU_misto();
         });
     }
 }
