@@ -1,4 +1,4 @@
-Feature: process tests for pspInviaRT[IRPTRES2] 349
+Feature: process tests for pspInviaRT[IRPTRES8] 351
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -82,19 +82,18 @@ Feature: process tests for pspInviaRT[IRPTRES2] 349
             </pay_i:RPT>
             """
 
-    @runnable
+    @ALL @PRIMITIVE @MOD1
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
             And initial XML pspInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soappppppp/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
             </soapenv:Header>
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
             <!--<identificativoCarrello>?</identificativoCarrello>
             <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
             <listaErroriRPT>
@@ -102,8 +101,8 @@ Feature: process tests for pspInviaRT[IRPTRES2] 349
                   <faultCode>CANALE_BUSTA_ERRATA</faultCode>
                   <faultString>Errore di sintassi</faultString>
                   <id>IDPSPFNZ</id>
-                  <!--<description>boh</description>
-                  <serial>1</serial>-->
+                  <description>boh</description>
+                  <serial>1</serial>
                </fault>
             </listaErroriRPT>
             </pspInviaRPTResponse>
