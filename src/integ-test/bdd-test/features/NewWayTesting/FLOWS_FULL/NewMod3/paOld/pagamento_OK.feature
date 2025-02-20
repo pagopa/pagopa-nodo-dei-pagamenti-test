@@ -230,6 +230,46 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | ID ASC                              |
+        # POSITION_RECEIPT_XML
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                       |
+            | ID                       | NotNone                                     |
+            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID                | $activatePaymentNotice.noticeNumber         |
+            | CREDITOR_REFERENCE_ID    | 05$iuv                                      |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeResponse.paymentToken |
+            | XML                      | NotNone                                     |
+            | INSERTED_TIMESTAMP       | NotNone                                     |
+            | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode           |
+            | RECIPIENT_BROKER_PA_ID   | $activatePaymentNotice.fiscalCode           |
+            | RECIPIENT_STATION_ID     | #id_station_old_invio_rt_ist#               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | ID ASC                              |
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | ID ASC                              |
+        # RT_XML
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | ID_SESSIONE        | NotNone                                     |
+            | IDENT_DOMINIO      | $activatePaymentNotice.fiscalCode           |
+            | IUV                | 05$iuv                                      |
+            | CCP                | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_FIRMA         |                                             |
+            | XML_CONTENT        | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+            | UPDATED_TIMESTAMP  | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 05$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                                         |
@@ -13682,6 +13722,23 @@ Feature: NM3 flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+        # RT_XML
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | ID_SESSIONE        | NotNone                                     |
+            | IDENT_DOMINIO      | $activatePaymentNotice.fiscalCode           |
+            | IUV                | 05$iuv                                      |
+            | CCP                | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_FIRMA         | None                                        |
+            | XML_CONTENT        | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+            | UPDATED_TIMESTAMP  | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 05$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                                         |
@@ -15125,6 +15182,23 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
             | ORDER BY   | ID ASC                              |
+        # RT_XML
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                        |
+            | ID                 | NotNone                                      |
+            | ID_SESSIONE        | NotNone                                      |
+            | IDENT_DOMINIO      | $activatePaymentNotice.fiscalCode            |
+            | IUV                | 12$iuv                                       |
+            | CCP                | $activatePaymentNotice1Response.paymentToken |
+            | TIPO_FIRMA         | None                                         |
+            | XML_CONTENT        | NotNone                                      |
+            | INSERTED_TIMESTAMP | NotNone                                      |
+            | UPDATED_TIMESTAMP  | NotNone                                      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                 |
+            | IUV           | 12$iuv                                       |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode            |
+            | CCP           | $activatePaymentNotice1Response.paymentToken |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                                                                                                                                                                                                                                                                                                                                |
