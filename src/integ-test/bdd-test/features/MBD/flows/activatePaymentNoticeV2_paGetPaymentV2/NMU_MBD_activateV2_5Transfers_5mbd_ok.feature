@@ -85,7 +85,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

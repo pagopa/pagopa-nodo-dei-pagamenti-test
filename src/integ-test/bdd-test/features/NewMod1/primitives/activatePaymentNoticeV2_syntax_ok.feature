@@ -67,7 +67,7 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request 959
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -169,7 +169,7 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request 959
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

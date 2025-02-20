@@ -414,7 +414,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO] 1336
                     <city>city</city>              
                     <stateProvinceRegion>state</stateProvinceRegion>              
                     <country>IT</country>             
-                    <e-mail>prova@test.it</e-mail>
+                    <e-mail>prova@provatest.it</e-mail>
                     </payer>
                     <applicationDate>2021-12-12</applicationDate>
                     <transferDate>2021-12-11</transferDate>

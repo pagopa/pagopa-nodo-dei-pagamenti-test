@@ -284,7 +284,7 @@ Feature: NM3 flows PA New con pagamento OK
       | su.CITY                           | paGetPaymentCity      |
       | su.STATE_PROVINCE_REGION          | paGetPaymentState     |
       | su.COUNTRY                        | IT                    |
-      | su.EMAIL                          | paGetPayment@test.it  |
+      | su.EMAIL                          | paGetPayment@provatest.it  |
       | su.INSERTED_TIMESTAMP             | NotNone               |
       | su.UPDATED_TIMESTAMP              | NotNone               |
       | su.INSERTED_BY                    | activatePaymentNotice |
@@ -64611,7 +64611,7 @@ Feature: NM3 flows PA New con pagamento OK
       | su.CITY                           | paGetPaymentCity        |
       | su.STATE_PROVINCE_REGION          | paGetPaymentState       |
       | su.COUNTRY                        | IT                      |
-      | su.EMAIL                          | paGetPayment@test.it    |
+      | su.EMAIL                          | paGetPayment@provatest.it    |
       | su.INSERTED_TIMESTAMP             | NotNone                 |
       | su.UPDATED_TIMESTAMP              | NotNone                 |
       | su.INSERTED_BY                    | activatePaymentNoticeV2 |
@@ -65023,7 +65023,7 @@ Feature: NM3 flows PA New con pagamento OK
       | su.CITY                           | paGetPaymentCity      |
       | su.STATE_PROVINCE_REGION          | paGetPaymentState     |
       | su.COUNTRY                        | IT                    |
-      | su.EMAIL                          | paGetPayment@test.it  |
+      | su.EMAIL                          | paGetPayment@provatest.it  |
       | su.INSERTED_TIMESTAMP             | NotNone               |
       | su.UPDATED_TIMESTAMP              | NotNone               |
       | su.INSERTED_BY                    | activatePaymentNotice |

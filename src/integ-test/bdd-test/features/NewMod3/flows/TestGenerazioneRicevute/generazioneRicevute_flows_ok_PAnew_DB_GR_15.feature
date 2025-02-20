@@ -100,7 +100,7 @@ Feature: process tests for generazioneRicevute [DB_GR_15] 1317
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>paGetPayment@test.it</e-mail>
+      <e-mail>paGetPayment@provatest.it</e-mail>
       </debtor>
       <!--Optional:-->
       <transferList>

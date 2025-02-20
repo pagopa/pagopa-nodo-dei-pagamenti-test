@@ -91,7 +91,7 @@ Feature: process tests for generazioneRicevute 1308
         <!--Optional:-->
         <country>IT</country>
         <!--Optional:-->
-        <e-mail>paGetPayment@test.it</e-mail>
+        <e-mail>paGetPayment@provatest.it</e-mail>
         </debtor>
         <!--Optional:-->
         <transferList>
@@ -154,7 +154,7 @@ Feature: process tests for generazioneRicevute 1308
                     <city>city</city>
                     <stateProvinceRegion>state</stateProvinceRegion>
                     <country>IT</country>
-                    <e-mail>prova@test.it</e-mail>
+                    <e-mail>prova@provatest.it</e-mail>
                     </payer>
                     <applicationDate>2021-12-12</applicationDate>
                     <transferDate>2021-12-11</transferDate>

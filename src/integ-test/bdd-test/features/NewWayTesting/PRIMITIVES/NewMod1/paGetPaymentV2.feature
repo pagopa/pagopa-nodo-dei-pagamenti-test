@@ -63,7 +63,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -138,7 +138,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -258,7 +258,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -429,7 +429,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -600,7 +600,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -692,7 +692,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -765,7 +765,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -838,7 +838,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -905,7 +905,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -978,7 +978,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -1048,7 +1048,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -1134,7 +1134,7 @@ Feature: response tests for paGetPaymentV2 967
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -1236,7 +1236,7 @@ Feature: response tests for paGetPaymentV2 967
             | country                     | ITA                                                                                                                                                                                                                                                               |
             | country                     | de                                                                                                                                                                                                                                                                |
             | e-mail                      | Empty                                                                                                                                                                                                                                                             |
-            | e-mail                      | @test.it                                                                                                                                                                                                                                                         |
+            | e-mail                      | @provatest.it                                                                                                                                                                                                                                                         |
             | e-mail                      | noei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e375sanoei38932nfdiou%&ncdoaifer9eukvmptu.it |
             | transferAmount              | None                                                                                                                                                                                                                                                              |
             | transferAmount              | Empty                                                                                                                                                                                                                                                             |

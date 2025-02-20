@@ -104,7 +104,7 @@ Feature: process tests for generazioneRicevute [DB_GR_16] 1318
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>paGetPayment@test.it</e-mail>
+      <e-mail>paGetPayment@provatest.it</e-mail>
       </debtor>
       <!--Optional:-->
       <transferList>
@@ -175,7 +175,7 @@ Feature: process tests for generazioneRicevute [DB_GR_16] 1318
       <city>city</city>
       <stateProvinceRegion>MI</stateProvinceRegion>
       <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
+      <e-mail>john.doe@provatest.it</e-mail>
       </payer>
       <applicationDate>2021-10-01</applicationDate>
       <transferDate>2021-10-02</transferDate>

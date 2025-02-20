@@ -206,7 +206,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_04] 1224
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>

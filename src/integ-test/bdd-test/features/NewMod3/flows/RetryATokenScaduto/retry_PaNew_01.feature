@@ -94,7 +94,7 @@ Feature: Process tests for retry a token scaduto 1151
                      <city>city</city>
                      <stateProvinceRegion>MI</stateProvinceRegion>
                      <country>IT</country>
-                     <e-mail>john.doe@test.it</e-mail>
+                     <e-mail>john.doe@provatest.it</e-mail>
                   </payer>
                   <applicationDate>2021-10-01</applicationDate>
                   <transferDate>2021-10-02</transferDate>
@@ -135,7 +135,7 @@ Feature: Process tests for retry a token scaduto 1151
     And checks the value $sendPaymentOutcome.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.country of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #$sendPaymentOutcome.e-mail
-    And checks the value john.doe@test.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+    And checks the value john.doe@provatest.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
     #verifica un solo risultato

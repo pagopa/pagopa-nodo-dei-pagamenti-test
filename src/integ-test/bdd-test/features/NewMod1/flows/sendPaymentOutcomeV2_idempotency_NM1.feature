@@ -85,7 +85,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2 948
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -201,7 +201,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2 948
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
@@ -254,7 +254,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2 948
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
