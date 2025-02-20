@@ -1979,3 +1979,20 @@ def make_request_with_manual_proxy():
 
 def generate_uuid():
     return str(uuid.uuid4())
+
+
+
+def replace_placeholders(value):
+
+    if isinstance(value, str) and "#CURRENTDATE#" in value:
+        match = re.search(r"#CURRENTDATE#\s*(\+(\d+))?\s*(\d{2}:\d{2}:\d{2})?", value)
+        
+        if match:
+            offset = int(match.group(2)) if match.group(2) else 0  
+            time = match.group(3) if match.group(3) else "00:00:00" 
+            
+            new_date = (datetime.date.today() + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
+            new_date_with_time = new_date + " " + time
+            return value.replace(match.group(0), new_date_with_time)
+    
+    return value

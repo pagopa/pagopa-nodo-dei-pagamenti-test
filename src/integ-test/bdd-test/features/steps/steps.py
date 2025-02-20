@@ -3822,7 +3822,7 @@ def step_impl(context, columns, fields_values_expected, type_table):
         dict_fields_values_expected = {}
 
         for field, value in zip(dict_fields_values['column'], dict_fields_values['value']):
-                dict_fields_values_expected[field] = value
+            dict_fields_values_expected[field] = utils.replace_placeholders(value)
 
 
         for field, value in dict_fields_values_expected.items():

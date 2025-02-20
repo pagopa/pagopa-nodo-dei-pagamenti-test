@@ -270,6 +270,31 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys | where_values                        |
       | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
       | ORDER BY   | ID ASC                              |
+    # POSITION_SUBJECT JOIN POSITION_SERVICE #Massimo Benvegnù
+    And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+      | column                            | value                 |
+      | su.ID                             | NotNone               |
+      | su.SUBJECT_TYPE                   | DEBTOR                |
+      | su.ENTITY_UNIQUE_IDENTIFIER_TYPE  | G                     |
+      | su.ENTITY_UNIQUE_IDENTIFIER_VALUE | 77777777777           |
+      | su.FULL_NAME                      | NotNone               |
+      | su.STREET_NAME                    | paGetPaymentStreet    |
+      | su.CIVIC_NUMBER                   | paGetPayment99        |
+      | su.POSTAL_CODE                    | 20155                 |
+      | su.CITY                           | paGetPaymentCity      |
+      | su.STATE_PROVINCE_REGION          | paGetPaymentState     |
+      | su.COUNTRY                        | IT                    |
+      | su.EMAIL                          | paGetPayment@test.it  |
+      | su.INSERTED_TIMESTAMP             | NotNone               |
+      | su.UPDATED_TIMESTAMP              | NotNone               |
+      | su.INSERTED_BY                    | activatePaymentNotice |
+      | su.UPDATED_BY                     | activatePaymentNotice |
+    And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SUBJECT su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID retrived by the query on db nodo_online with where datatable horizontal
+      | where_keys            | where_values                        |
+      | se.NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+      | se.PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+      | su.SUBJECT_TYPE       | DEBTOR                              |
+      | su.INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |  
     # RE #####
     # activatePaymentNotice REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
