@@ -3,7 +3,7 @@ Feature: Syntax checks for nodoChiediCopiaRT - KO 1426
     Background:
         Given systems up
 
-@runnable
+@ALL @PRIMITIVE
     # [CCRTSIN1]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive
         Given initial XML nodoChiediCopiaRT
@@ -27,7 +27,7 @@ Feature: Syntax checks for nodoChiediCopiaRT - KO 1426
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCopiaRT response
 
-@runnable
+@ALL @PRIMITIVE
     # [CCRTSIN5]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive
         Given initial XML nodoChiediCopiaRT
@@ -49,7 +49,7 @@ Feature: Syntax checks for nodoChiediCopiaRT - KO 1426
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCopiaRT response
 
-@runnable
+@ALL @PRIMITIVE
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive
         Given initial XML nodoChiediCopiaRT
             """
