@@ -1,10 +1,8 @@
-Feature: process tests for pspInviaCarrelloRPT[CRPTRES15] 340
+Feature: process tests for pspInviaRT 352
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-
-    Scenario: RPT generation
-        Given RPT generation
+        And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -81,52 +79,76 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES15] 340
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML pspInviaCarrelloRPT
+            And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
+            <soapenv:Header>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            </soapenv:Header>
             <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
+            <!--<identificativoCarrello>?</identificativoCarrello>
+            <parametriPagamentoImmediato>?</parametriPagamentoImmediato>-->
+            <listaErroriRPT>
+               <fault>
+                  <faultCode>CANALE_BUSTA_ERRATA</faultCode>
+                  <faultString>Errore di sintassi</faultString>
+                  <id>IDPSPFNZ</id>
+                  <description>boh</description>
+                  <serial>1</serial>
+               </fault>
+            </listaErroriRPT>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML nodoInviaCarrelloRPT
+            And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
+                <ppt:intestazionePPT>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
-            <listaRPT>
-            <!--1 or more repetitions:-->
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
+                <ws:nodoInviaRPT>
+                    <password>pwdpwdpwd</password>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
+                    <tipoFirma></tipoFirma>
+                    <rpt>$rptAttachment</rpt>
+                </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
+            And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+
+        @ALL @PRIMITIVE @MOD1
+        Scenario Outline: Check faultCode error on non-existent or invalid field
+            Given <field> with <value> in pspInviaRPT
+            When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+            Then check faultCode is <resp_error> of nodoInviaRPT response
+            Examples:
+                | field                          | value                                             | resp_error                   | soapUI test 
+                | soapenv:Body                   | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES3
+                | soapenv:Body                   | None                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES4
+                | ws:pspInviaRPTResponse         | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES5
+                | esitoComplessivoOperazione     | None                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES6
+                | listaErroriRPT                 | None                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES7
+                | esitoComplessivoOperazione     | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES9
+                | identificativoCarrello         | aaaaaaaaalaaaaaaaaalaaaaaaaaalaaaaaa              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES10
+                | listaErroriRPT                 | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES12
+                | fault                          | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES13
+                | faultCode                      | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES15
+                | faultCode                      | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES16
+                | faultString                    | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES17
+                | id                             | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES18
+                | serial                         | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | IRPTRES19

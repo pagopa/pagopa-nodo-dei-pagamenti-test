@@ -1,18 +1,16 @@
-Feature: process tests for pspInviaCarrelloRPTCarte 345
+Feature: process tests for pspInviaCarrelloRPT[CRPTRES7] 342
     Background:
         Given systems up
-
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
 
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
-        And RPT generation
-
+        Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#intermediarioPA#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -84,28 +82,57 @@ Feature: process tests for pspInviaCarrelloRPTCarte 345
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaCarrelloRPT request
+    @ALL @PRIMITIVE @MOD1
+    Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <!--<fault>-->
+            <faultCode>CANALE_BUSTA_ERRATA</faultCode>
+            <faultString>La busta non è corretta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            <!--</fault>-->
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
+            <faultString>La firma è sconosciuta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1iuv</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <listaRPT>
             <!--1 or more repetitions:-->
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
@@ -115,78 +142,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte 345
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
-    @runnable @test
-    Scenario Outline: Execution Esito Carta
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And initial XML pspInviaCarrelloRPTCarte
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
-            <pspInviaCarrelloRPTResponse>
-            <fault>
-            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
-            <faultString>bgdhbazhyt</faultString>
-            <id>idPsp1</id>
-            </fault>
-            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And <tag> with <value> in pspInviaCarrelloRPTCarte
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-            """
-            {
-                "idPagamento": "$sessionToken",
-                "RRN": 123456789,
-                "identificativoPsp": "#psp#",
-                "tipoVersamento": "CP",
-                "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
-                "esitoTransazioneCarta": "123456",
-                "importoTotalePagato": 11.11,
-                "timestampOperazione": "2012-04-23T18:25:43.001Z",
-                "codiceAutorizzativo": "123212"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/carta response is <status>
-        And check <description> is <response_tagvalue> of inoltroEsito/carta response
-        Examples:
-            | tag                                 | value | status | description | response_tagvalue            | soapUI test |
-            | soapenv:Body                        | Empty | 408    | error       | Operazione in timeout        | CRPTCRES3   |
-            | soapenv:Body                        | None  | 408    | error       | Operazione in timeout        | CRPTCRES4   |
-            | ws:pspInviaCarrelloRPTCarteResponse | Empty | 408    | error       | Operazione in timeout        | CRPTCRES5   |
-            | fault                               | Empty | 408    | error       | Operazione in timeout        | CRPTCRES6   |
-            | faultCode                           | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES8   |
-            | faultCode                           | CIAO  | 200    | descrizione | Risposta negativa del Canale | CRPTCRES9   |
-            | faultString                         | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES10  |
-            | id                                  | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES11  |
-            | esitoComplessivoOperazione          | None  | 408    | error       | Operazione in timeout        | CRPTCRES12  |
-            | fault                               | None  | 408    | error       | Operazione in timeout        | CRPTCRES13  |
-            | esitoComplessivoOperazione          | CIAO  | 408    | error       | Operazione in timeout        | CRPTCRES15  |
-
-
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
