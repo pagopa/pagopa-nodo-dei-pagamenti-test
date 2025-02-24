@@ -6,7 +6,7 @@ Feature: NM3 flows con PA New retry a token scaduto
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_1 @after
-    Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRT, BIZ+ (NM3-4)
+    Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ PPT_TOKEN_SCADUTO -> paSendRT, BIZ+ -> activate PPT_PAGAMENTO_DUPLICATO (NM3-4)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -21,7 +21,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | companyName        | companyName                 |
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 1000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
@@ -39,37 +39,44 @@ Feature: NM3 flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        When job mod3CancelV2 triggered after 4 seconds
+        And save activatePaymentNotice response in activatePaymentNotice_1
+        When job mod3CancelV2 triggered after 2 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
         And check description is paymentToken is expired of sendPaymentOutcome response
-        And wait 1 seconds for expiration
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 1000           | 10.00  |
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice response
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                       |
-            | ID                    | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId           |
-            | PSP_ID                | #psp#                                       |
-            | IDEMPOTENCY_KEY       | NotNone                                     |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
-            | TOKEN_VALID_FROM      | NotNone                                     |
-            | TOKEN_VALID_TO        | NotNone                                     |
-            | DUE_DATE              | 2021-12-31 00:00:00                         |
-            | AMOUNT                | $activatePaymentNotice.amount               |
-            | INSERTED_TIMESTAMP    | NotNone                                     |
-            | UPDATED_TIMESTAMP     | NotNone                                     |
-            | INSERTED_BY           | activatePaymentNotice                       |
-            | UPDATED_BY            | activatePaymentNotice                       |
-            | PAYMENT_METHOD        | None                                        |
-            | TOUCHPOINT            | None                                        |
-            | SUGGESTED_IDBUNDLE    | None                                        |
-            | SUGGESTED_IDCIBUNDLE  | None                                        |
-            | SUGGESTED_USER_FEE    | None                                        |
-            | SUGGESTED_PA_FEE      | None                                        |
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
+            | PSP_ID                | #psp#                                         |
+            | IDEMPOTENCY_KEY       | NotNone                                       |
+            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken |
+            | TOKEN_VALID_FROM      | NotNone                                       |
+            | TOKEN_VALID_TO        | NotNone                                       |
+            | DUE_DATE              | 2021-12-31 00:00:00                           |
+            | AMOUNT                | $activatePaymentNotice.amount                 |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+            | INSERTED_BY           | activatePaymentNotice                         |
+            | UPDATED_BY            | activatePaymentNotice                         |
+            | PAYMENT_METHOD        | None                                          |
+            | TOUCHPOINT            | None                                          |
+            | SUGGESTED_IDBUNDLE    | None                                          |
+            | SUGGESTED_IDCIBUNDLE  | None                                          |
+            | SUGGESTED_USER_FEE    | None                                          |
+            | SUGGESTED_PA_FEE      | None                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -113,49 +120,49 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                     | value                                       |
-            | ID                         | NotNone                                     |
-            | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId           |
-            | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
-            | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station#                                |
-            | STATION_VERSION            | 2                                           |
-            | PSP_ID                     | #psp#                                       |
-            | BROKER_PSP_ID              | #id_broker_psp#                             |
-            | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
-            | IDEMPOTENCY_KEY            | NotNone                                     |
-            | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | 2                                           |
-            | OUTCOME                    | NotNone                                     |
-            | PAYMENT_METHOD             | creditCard                                  |
-            | PAYMENT_CHANNEL            | app                                         |
-            | TRANSFER_DATE              | 2021-12-11                                  |
-            | PAYER_ID                   | NotNone                                     |
-            | APPLICATION_DATE           | 2021-12-12                                  |
-            | INSERTED_TIMESTAMP         | NotNone                                     |
-            | UPDATED_TIMESTAMP          | NotNone                                     |
-            | FK_PAYMENT_PLAN            | NotNone                                     |
-            | RPT_ID                     | None                                        |
-            | PAYMENT_TYPE               | MOD3                                        |
-            | CARRELLO_ID                | None                                        |
-            | ORIGINAL_PAYMENT_TOKEN     | None                                        |
-            | FLAG_IO                    | N                                           |
-            | RICEVUTA_PM                | None                                        |
-            | FLAG_ACTIVATE_RESP_MISSING | None                                        |
-            | FLAG_PAYPAL                | None                                        |
-            | INSERTED_BY                | activatePaymentNotice                       |
-            | UPDATED_BY                 | sendPaymentOutcome                          |
-            | TRANSACTION_ID             | None                                        |
-            | CLOSE_VERSION              | None                                        |
-            | FEE_PA                     | None                                        |
-            | BUNDLE_ID                  | None                                        |
-            | BUNDLE_PA_ID               | None                                        |
-            | PM_INFO                    | None                                        |
-            | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
-            | PAYMENT_NOTE               | responseFull                                |
-            | FLAG_STANDIN               | N                                           |
+            | column                     | value                                         |
+            | ID                         | NotNone                                       |
+            | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode             |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
+            | PAYMENT_TOKEN              | $activatePaymentNotice_1Response.paymentToken |
+            | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode             |
+            | STATION_ID                 | #id_station#                                  |
+            | STATION_VERSION            | 2                                             |
+            | PSP_ID                     | #psp#                                         |
+            | BROKER_PSP_ID              | #id_broker_psp#                               |
+            | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
+            | IDEMPOTENCY_KEY            | NotNone                                       |
+            | AMOUNT                     | $activatePaymentNotice.amount                 |
+            | FEE                        | 2                                             |
+            | OUTCOME                    | NotNone                                       |
+            | PAYMENT_METHOD             | creditCard                                    |
+            | PAYMENT_CHANNEL            | app                                           |
+            | TRANSFER_DATE              | 2021-12-11                                    |
+            | PAYER_ID                   | NotNone                                       |
+            | APPLICATION_DATE           | 2021-12-12                                    |
+            | INSERTED_TIMESTAMP         | NotNone                                       |
+            | UPDATED_TIMESTAMP          | NotNone                                       |
+            | FK_PAYMENT_PLAN            | NotNone                                       |
+            | RPT_ID                     | None                                          |
+            | PAYMENT_TYPE               | MOD3                                          |
+            | CARRELLO_ID                | None                                          |
+            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
+            | FLAG_IO                    | N                                             |
+            | RICEVUTA_PM                | None                                          |
+            | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | FLAG_PAYPAL                | None                                          |
+            | INSERTED_BY                | activatePaymentNotice                         |
+            | UPDATED_BY                 | sendPaymentOutcome                            |
+            | TRANSACTION_ID             | None                                          |
+            | CLOSE_VERSION              | None                                          |
+            | FEE_PA                     | None                                          |
+            | BUNDLE_ID                  | None                                          |
+            | BUNDLE_PA_ID               | None                                          |
+            | PM_INFO                    | None                                          |
+            | MBD                        | N                                             |
+            | FEE_SPO                    | None                                          |
+            | PAYMENT_NOTE               | responseFull                                  |
+            | FLAG_STANDIN               | N                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -198,7 +205,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | STATUS                | PAYING,CANCELLED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED                                          |
             | INSERTED_TIMESTAMP    | NotNone                                                                                              |
             | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                    |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                                          |
+            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken                                                        |
             | INSERTED_BY           | activatePaymentNotice,mod3CancelV2,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paSendRT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -211,14 +218,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                       |
-            | ID                    | NotNone                                     |
-            | FK_POSITION_PAYMENT   | NotNone                                     |
-            | CREDITOR_REFERENCE_ID | 02$iuv                                      |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
-            | STATUS                | NOTIFIED                                    |
-            | INSERTED_TIMESTAMP    | NotNone                                     |
-            | UPDATED_TIMESTAMP     | NotNone                                     |
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | FK_POSITION_PAYMENT   | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 02$iuv                                        |
+            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken |
+            | STATUS                | NOTIFIED                                      |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -262,18 +269,18 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY   | ID ASC                              |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys  | where_values                                |
-            | ID_SESSIONE | $activatePaymentNoticeResponse.paymentToken |
+            | where_keys  | where_values                                  |
+            | ID_SESSIONE | $activatePaymentNotice_1Response.paymentToken |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | activatePaymentNotice                       |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNotice                         |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeReq
         And from $activatePaymentNoticeReq.idPSP xml check value #psp# in position 0
         And from $activatePaymentNoticeReq.idBrokerPSP xml check value #psp# in position 0
@@ -284,19 +291,19 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeReq.amount xml check value $activatePaymentNotice.amount in position 0
         # activatePaymentNotice RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | activatePaymentNotice                       |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNotice                         |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeResp
         And from $activatePaymentNoticeResp.outcome xml check value OK in position 0
         And from $activatePaymentNoticeResp.totalAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeResp.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $activatePaymentNoticeResp.paymentToken xml check value $activatePaymentNoticeResponse.paymentToken in position 0
+        And from $activatePaymentNoticeResp.paymentToken xml check value $activatePaymentNotice_1Response.paymentToken in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 1
@@ -305,13 +312,13 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeResp.creditorReferenceId xml check value 02$iuv in position 0
         # paGetPayment REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
         And from $paGetPaymentReq.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -321,13 +328,13 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentReq.amount xml check value $activatePaymentNotice.amount in position 0
         # paGetPayment RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
         And from $paGetPaymentResp.outcome xml check value OK in position 0
         And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
@@ -342,29 +349,29 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         # sendPaymentOutcome REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcome                          |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
-        And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNoticeResponse.paymentToken in position 0
+        And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNotice_1Response.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
         # sendPaymentOutcome RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcome                          |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
         And from $sendPaymentOutcomeResp.outcome xml check value KO in position 0
         And from $sendPaymentOutcomeResp.fault.faultCode xml check value PPT_TOKEN_SCADUTO in position 0
@@ -373,13 +380,13 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $sendPaymentOutcomeResp.fault.description xml check value paymentToken is expired in position 0
         # paSendRT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
         And from $paSendRTReq.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paSendRTReq.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -400,13 +407,13 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTReq.receipt.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_1Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
 
