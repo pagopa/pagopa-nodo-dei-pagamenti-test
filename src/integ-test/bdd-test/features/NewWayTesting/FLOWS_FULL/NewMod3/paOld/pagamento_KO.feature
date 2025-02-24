@@ -8955,14 +8955,12 @@ Feature: NM3 flows PA Old con pagamento KO
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey    | paymentToken                      | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | 798c6a817ed9482fa5659c45f4a25f286 | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
-
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey                     | paymentToken                                | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $sendPaymentOutcome.idempotencyKey | $activatePaymentNoticeResponse.paymentToken | OK      |
@@ -8970,7 +8968,6 @@ Feature: NM3 flows PA Old con pagamento KO
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response
         And wait 1 seconds for expiration
-
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                       |
@@ -9034,7 +9031,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | IBAN                     | IT45R0760103200000000001016       |
             | AMOUNT                   | $activatePaymentNotice.amount     |
             | REMITTANCE_INFORMATION   | NotNone                           |
-            | TRANSFER_CATEGORY        | None                           |
+            | TRANSFER_CATEGORY        | None                              |
             | TRANSFER_IDENTIFIER      | 1                                 |
             | VALID                    | Y                                 |
             | FK_POSITION_PAYMENT      | NotNone                           |
@@ -9169,6 +9166,44 @@ Feature: NM3 flows PA Old con pagamento KO
         And verify 0 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
+        # IDEMPOTENCY_CACHE activatePaymentNotice
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | PRIMITIVA          | activatePaymentNotice                       |
+            | PSP_ID             | $activatePaymentNotice.idPSP                |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
+            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
+            | VALID_TO           | NotNone                                     |
+            | HASH_REQUEST       | NotNone                                     |
+            | RESPONSE           | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                          |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                          |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
+        # IDEMPOTENCY_CACHE sendPaymentOutcome
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                             |
+            | ID                 | NotNone                           |
+            | PRIMITIVA          | sendPaymentOutcome                |
+            | PSP_ID             | $activatePaymentNotice.idPSP      |
+            | PA_FISCAL_CODE     | None                              |
+            | NOTICE_ID          | None                              |
+            | TOKEN              | 798c6a817ed9482fa5659c45f4a25f286 |
+            | VALID_TO           | #CURRENTDATE# +2 00:00:00         |
+            | HASH_REQUEST       | NotNone                           |
+            | RESPONSE           | NotNone                           |
+            | INSERTED_TIMESTAMP | NotNone                           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                       |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                       |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal

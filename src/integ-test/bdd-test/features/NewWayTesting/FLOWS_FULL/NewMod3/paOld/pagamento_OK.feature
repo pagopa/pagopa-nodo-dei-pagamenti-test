@@ -19452,6 +19452,30 @@ Feature: NM3 flows PA Old con pagamento OK
         And verify 0 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
+        # IDEMPOTENCY_CACHE activatePaymentNotice
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                          |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
+        # IDEMPOTENCY_CACHE sendPaymentOutcome
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                    |
+            | ID                 | NotNone                                  |
+            | PRIMITIVA          | sendPaymentOutcome                       |
+            | PSP_ID             | empty,$activatePaymentNotice.idPSP       |
+            | PA_FISCAL_CODE     | None,$activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | None,$activatePaymentNotice.noticeNumber |
+            | TOKEN              | $sendPaymentOutcome.paymentToken         |
+            | VALID_TO           | #CURRENTDATE# +2 00:00:00                |
+            | HASH_REQUEST       | NotNone                                  |
+            | RESPONSE           | NotNone                                  |
+            | INSERTED_TIMESTAMP | NotNone                                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                       |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
+            | ORDER BY        | INSERTED_TIMESTAMP,ID ASC          |
+        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                       |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
