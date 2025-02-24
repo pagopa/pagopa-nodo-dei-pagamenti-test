@@ -29,7 +29,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK 127
                         <city>city</city>
                         <stateProvinceRegion>MI</stateProvinceRegion>
                         <country>IT</country>
-                        <e-mail>john.doe@test.it</e-mail>
+                        <e-mail>john.doe@provatest.it</e-mail>
                     </debtor>
                     <transferList>
                         <transfer>

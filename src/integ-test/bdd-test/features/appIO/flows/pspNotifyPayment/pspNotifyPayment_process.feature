@@ -116,7 +116,7 @@ Feature: process checks for pspNotifyPayment 114
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>paGetPayment@test.it</e-mail>
+      <e-mail>paGetPayment@provatest.it</e-mail>
       </debtor>
       <!--Optional:-->
       <transferList>

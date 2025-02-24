@@ -119,7 +119,7 @@ Feature: FLUSSO_APIO_13_PPALOLD 190
          <!--Optional:-->
          <country>IT</country>
          <!--Optional:-->
-         <e-mail>paGetPayment@test.it</e-mail>
+         <e-mail>paGetPayment@provatest.it</e-mail>
          </debtor>
          <!--Optional:-->
          <transferList>

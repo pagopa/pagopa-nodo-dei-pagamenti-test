@@ -206,7 +206,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_err] 990
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>SPOprova@test.it</e-mail>
+            <e-mail>SPOprova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>

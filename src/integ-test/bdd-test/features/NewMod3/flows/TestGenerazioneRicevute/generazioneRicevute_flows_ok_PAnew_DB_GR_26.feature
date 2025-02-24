@@ -94,7 +94,7 @@ Feature: process tests for generazioneRicevute [DB_GR_26] 1325
       <!--Optional:-->
       <country>DE</country>
       <!--Optional:-->
-      <e-mail>paGetPayment@test.it</e-mail>
+      <e-mail>paGetPayment@provatest.it</e-mail>
       </debtor>
       <!--Optional:-->
       <transferList>
@@ -157,7 +157,7 @@ Feature: process tests for generazioneRicevute [DB_GR_26] 1325
       <city>city</city>
       <stateProvinceRegion>MI</stateProvinceRegion>
       <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
+      <e-mail>john.doe@provatest.it</e-mail>
       </payer>
       <applicationDate>2021-10-01</applicationDate>
       <transferDate>2021-10-02</transferDate>
@@ -234,7 +234,7 @@ Feature: process tests for generazioneRicevute [DB_GR_26] 1325
       <!--Optional:-->
       <country>DE</country>
       <!--Optional:-->
-      <e-mail>paGetPayment@test.it</e-mail>
+      <e-mail>paGetPayment@provatest.it</e-mail>
       </debtor>
       <!--Optional:-->
       <transferList>
@@ -318,7 +318,7 @@ Feature: process tests for generazioneRicevute [DB_GR_26] 1325
     And checks the value paGetPaymentCity of the record at column CITY of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
     And checks the value paGetPaymentState of the record at column STATE_PROVINCE_REGION of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
     And checks the value DE of the record at column COUNTRY of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
-    And checks the value paGetPayment@test.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+    And checks the value paGetPayment@provatest.it of the record at column EMAIL of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
 

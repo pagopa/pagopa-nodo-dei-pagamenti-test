@@ -67,7 +67,7 @@ Feature: Syntax checks for paGetPaymentRes - OK 1538
 								<!--Optional:-->
 								<country>IT</country>
 								<!--Optional:-->
-								<e-mail>paGetPayment@test.it</e-mail>
+								<e-mail>paGetPayment@provatest.it</e-mail>
 							</debtor>
 							<!--Optional:-->
 							<transferList>

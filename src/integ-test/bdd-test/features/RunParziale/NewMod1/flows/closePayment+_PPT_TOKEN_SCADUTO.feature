@@ -84,7 +84,7 @@ Feature: flow with closePayment + and PPT_TOKEN_SCADUTO 1504
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

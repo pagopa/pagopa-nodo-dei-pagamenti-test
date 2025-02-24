@@ -122,7 +122,7 @@ Feature: flow tests for closePaymentV2
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -218,7 +218,7 @@ Feature: flow tests for closePaymentV2
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -373,7 +373,7 @@ Feature: flow tests for closePaymentV2
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

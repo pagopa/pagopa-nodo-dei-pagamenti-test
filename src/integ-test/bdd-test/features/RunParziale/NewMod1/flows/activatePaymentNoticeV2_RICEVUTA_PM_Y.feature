@@ -93,7 +93,7 @@ Feature: verification of the record present in RECEVUTA_PM in the POSITION_PAYME
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

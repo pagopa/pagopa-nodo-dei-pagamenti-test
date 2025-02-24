@@ -55,7 +55,7 @@ Feature: PRO_ANNULLO_12_PPALNEW 38
             <city>city</city>
             <stateProvinceRegion>MI</stateProvinceRegion>
             <country>IT</country>
-            <e-mail>john.doe@test.it</e-mail>
+            <e-mail>john.doe@provatest.it</e-mail>
             </debtor>
             <transferList>
             <transfer>
@@ -190,7 +190,7 @@ Feature: PRO_ANNULLO_12_PPALNEW 38
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>

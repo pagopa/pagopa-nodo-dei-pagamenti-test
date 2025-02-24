@@ -67,7 +67,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request 932
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -159,7 +159,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request 932
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

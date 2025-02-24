@@ -83,7 +83,7 @@ Feature: flow with pspNptifyPaymentKO 1505
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

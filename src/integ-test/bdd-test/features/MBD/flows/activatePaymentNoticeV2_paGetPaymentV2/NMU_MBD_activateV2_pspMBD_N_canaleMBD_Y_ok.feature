@@ -95,7 +95,7 @@ Feature: activatePaymentNoticeV2Request with psp NO MBD and canale MBD
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPaymentV2@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>

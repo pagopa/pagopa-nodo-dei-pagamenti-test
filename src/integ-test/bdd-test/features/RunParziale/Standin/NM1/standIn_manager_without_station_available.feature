@@ -67,7 +67,7 @@ Feature: stand in manager without station available for stand in for NMU 1564
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->

@@ -117,7 +117,7 @@ Feature:  block checks for verificaBollettino - position status in INSERTED [Ver
                   <city>city</city>
                   <stateProvinceRegion>MI</stateProvinceRegion>
                   <country>IT</country>
-                  <e-mail>john.doe@test.it</e-mail>
+                  <e-mail>john.doe@provatest.it</e-mail>
                </payer>
                <applicationDate>2021-10-01</applicationDate>
                <transferDate>2021-10-02</transferDate>

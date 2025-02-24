@@ -67,7 +67,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -159,7 +159,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -259,7 +259,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -359,7 +359,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -459,7 +459,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -559,7 +559,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -659,7 +659,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -759,7 +759,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -1135,7 +1135,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
         And checks the value $paGetPaymentV2.city of the record at column CITY of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And checks the value $paGetPaymentV2.stateProvinceRegion of the record at column STATE_PROVINCE_REGION of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And checks the value $paGetPaymentV2.country of the record at column COUNTRY of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
-        And checks the value paGetPayment@test.it of the record at column EMAIL of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
+        And checks the value paGetPayment@provatest.it of the record at column EMAIL of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column POSITION_SUBJECT.INSERTED_TIMESTAMP of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column POSITION_SUBJECT.UPDATED_TIMESTAMP of the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_SERVICE JOIN POSITION_SUBJECT ON (POSITION_SERVICE.DEBTOR_ID = POSITION_SUBJECT.ID) retrived by the query position_service on db nodo_online under macro NewMod1

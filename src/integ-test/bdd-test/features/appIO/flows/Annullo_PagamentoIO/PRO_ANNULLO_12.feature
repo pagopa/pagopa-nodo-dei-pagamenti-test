@@ -142,7 +142,7 @@ Feature: PRO_ANNULLO_12 37
                 <!--Optional:-->
                 <country>IT</country>
                 <!--Optional:-->
-                <e-mail>prova@test.it</e-mail>
+                <e-mail>prova@provatest.it</e-mail>
                 </payer>
                 <applicationDate>2021-12-12</applicationDate>
                 <transferDate>2021-12-11</transferDate>

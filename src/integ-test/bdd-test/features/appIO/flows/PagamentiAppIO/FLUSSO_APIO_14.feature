@@ -55,7 +55,7 @@ Feature: FLUSSO_APIO_14 84
             <city>city</city>
             <stateProvinceRegion>MI</stateProvinceRegion>
             <country>IT</country>
-            <e-mail>john.doe@test.it</e-mail>
+            <e-mail>john.doe@provatest.it</e-mail>
             </debtor>
             <transferList>
             <transfer>
@@ -246,7 +246,7 @@ Feature: FLUSSO_APIO_14 84
                 <!--Optional:-->
                 <country>IT</country>
                 <!--Optional:-->
-                <e-mail>prova@test.it</e-mail>
+                <e-mail>prova@provatest.it</e-mail>
                 </payer>
                 <applicationDate>2021-12-12</applicationDate>
                 <transferDate>2021-12-11</transferDate>

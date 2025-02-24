@@ -71,7 +71,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -192,7 +192,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -315,7 +315,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
@@ -368,7 +368,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
@@ -498,7 +498,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -587,7 +587,7 @@ Feature: hotfix stazione vp 1 2 1494
             <city>city</city>
             <stateProvinceRegion>MI</stateProvinceRegion>
             <country>IT</country>
-            <e-mail>john.doe@test.it</e-mail>
+            <e-mail>john.doe@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-10-01</applicationDate>
             <transferDate>2021-10-02</transferDate>
@@ -672,7 +672,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <transferList>
             <!--1 to 5 repetitions:-->
@@ -769,7 +769,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
@@ -855,7 +855,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@provatest.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -931,7 +931,7 @@ Feature: hotfix stazione vp 1 2 1494
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@provatest.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>

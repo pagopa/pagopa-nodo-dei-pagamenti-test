@@ -123,7 +123,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_07] 1352
                     <city>city</city>
                     <stateProvinceRegion>state</stateProvinceRegion>
                     <country>IT</country>
-                    <e-mail>prova@test.it</e-mail>
+                    <e-mail>prova@provatest.it</e-mail>
                 </payer>
                 <applicationDate>2021-12-12</applicationDate>
                 <transferDate>2021-12-11</transferDate>

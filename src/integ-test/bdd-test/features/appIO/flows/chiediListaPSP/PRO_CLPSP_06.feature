@@ -117,7 +117,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                         <!--Optional:-->
                         <country>IT</country>
                         <!--Optional:-->
-                        <e-mail>paGetPayment@test.it</e-mail>
+                        <e-mail>paGetPayment@provatest.it</e-mail>
                      </debtor>
                      <!--Optional:-->
                      <transferList>
@@ -265,7 +265,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
                         <!--Optional:-->
                         <country>IT</country>
                         <!--Optional:-->
-                        <e-mail>paGetPayment@test.it</e-mail>
+                        <e-mail>paGetPayment@provatest.it</e-mail>
                      </debtor>
                      <!--Optional:-->
                      <transferList>
