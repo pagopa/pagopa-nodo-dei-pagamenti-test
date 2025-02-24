@@ -6,6 +6,7 @@
 			<idBrokerPSP>$idBrokerPSP</idBrokerPSP>
 			<idChannel>$idChannel</idChannel>
 			<password>$password</password>
+			<idempotencyKey>$idempotencyKey</idempotencyKey>
 			<paymentToken>$paymentToken</paymentToken>
 			<outcome>$outcome</outcome>
 			<!--Optional:-->

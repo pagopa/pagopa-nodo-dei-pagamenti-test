@@ -2465,9 +2465,9 @@ Feature: NM3 flows PA Old con concorrenza
             | identificativoIntermediarioPSP        | #psp#                                       |
             | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#                |
             | rpt                                   | $rptAttachment                              |
-        And from body with datatable horizontal sendPaymentOutcomeBody_paymentMethod_full copy initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | paymentMethod |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | creditCar     |
+        And from body with datatable horizontal sendPaymentOutcomeBody_paymentMethod_full initial XML sendPaymentOutcome
+            | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                | outcome | paymentMethod |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNoticeResponse.paymentToken | OK      | creditCar     |
         When calling primitive evolution sendPaymentOutcome and nodoInviaRPT with POST and POST in parallel with 10 ms delay
         Then check esito is OK of nodoInviaRPT response
         And check outcome is KO of sendPaymentOutcome response
