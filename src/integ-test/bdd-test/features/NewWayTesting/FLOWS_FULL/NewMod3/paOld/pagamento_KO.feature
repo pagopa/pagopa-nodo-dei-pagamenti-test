@@ -9304,10 +9304,6 @@ Feature: NM3 flows PA Old con pagamento KO
 
 
 
-
-
-
-
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_31
     Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT , spo+ -> OK, spo+ with SPO1 idempotency key and different request -> KO with PPT_TOKEN_SCONOSCIUTO (NM3-14K)
         Given update parameter useIdempotency on configuration keys with value true
