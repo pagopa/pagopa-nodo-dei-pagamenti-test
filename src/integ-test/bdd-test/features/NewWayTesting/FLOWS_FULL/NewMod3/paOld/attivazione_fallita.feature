@@ -3856,7 +3856,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
 
-     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_14 @after
+     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_14
     Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT -> KO PPT_ERRORE_EMESSO_DA_PAA, nodoInviaRPT -> paaInviaRT ->  nodoChiediStatoRPT -> RESP KO RPT_RIFIUTATA_NODO (NM3-15H)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber |

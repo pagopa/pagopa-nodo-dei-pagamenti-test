@@ -14940,7 +14940,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_42 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_42
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT, mod3cancelV1 -> paInviaRT, activate -> upd RPT fields -> nodoInviaRPT (OLD_NM3-20H)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -15805,7 +15805,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_44
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_44 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> activate -> sendPaymentOutcome+ -> paaInviaRT in timeout OK  BIZ+ (OLD_NM3-23H)
         Given update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
@@ -18905,8 +18905,6 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_50
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+ -> OK and check date of idempotency valid_to field BIZ+ (NM3-5K)
-        Given update parameter useIdempotency on configuration keys with value true
-        When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  | 12000          |
@@ -19242,8 +19240,6 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_51
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT , spo+ with empty idPSP -> KO, spo+ with idempotency key -> OK  BIZ+ (NM3-11K)
-        Given update parameter useIdempotency on configuration keys with value true
-        When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
@@ -19591,8 +19587,6 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_52
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT , spo+ -> OK, spo+ with SPO1 idempotency key -> same response  (NM3-13K)
-        Given update parameter useIdempotency on configuration keys with value true
-        When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |

@@ -3530,7 +3530,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_30
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_30 @after
     Scenario: NM3 flow KO con PA New vp1 e PSP vp1, FLOW : verify -> activate -> paGetPayment with 3 transfer, mod3CancelV2, spo+ -> Override paSendRT with delay 10000 , BIZ- (OLD_NM3-23F)
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
