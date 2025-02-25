@@ -10079,7 +10079,6 @@ Feature: NM3 flows PA Old con pagamento KO
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        And save sendPaymentOutcome response in sendPaymentOutcome1
         # IDEMPOTENCY_CACHE activatePaymentNotice
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                          |
@@ -10110,7 +10109,6 @@ Feature: NM3 flows PA Old con pagamento KO
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $sendPaymentOutcome.idempotencyKey | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
-        And save sendPaymentOutcome response in sendPaymentOutcome2
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
