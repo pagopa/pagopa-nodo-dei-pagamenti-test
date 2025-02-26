@@ -10481,7 +10481,7 @@ Feature: NM3 flows PA Old con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_34
-    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, activate ->OK, spo- -> OK, check records in idempotency ccache for first and second activate  (NM3-21K)
+    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, activate ->OK, spo- -> OK, check records in idempotency cache for first and second activate  (NM3-21K)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
@@ -10533,5 +10533,51 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys      | where_values                           |
             | IDEMPOTENCY_KEY | $activatePaymentNotice2.idempotencyKey |
 
+
+
+
+
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_35
+    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, activate ->OK, spo- -> OK, check record idempotency cache after and before spo  (NM3-22K)
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        # IDEMPOTENCY_CACHE activatePaymentNotice
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | PRIMITIVA          | activatePaymentNotice                       |
+            | PSP_ID             | $activatePaymentNotice.idPSP                |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
+            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
+            | VALID_TO           | NotNone                                     |
+            | HASH_REQUEST       | NotNone                                     |
+            | RESPONSE           | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                          |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                          |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
+        Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+            | idPSP       | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                | outcome |
+            | 40000000003 | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNoticeResponse.paymentToken | KO      |
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
+        # IDEMPOTENCY_CACHE activatePaymentNotice
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                          |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
 
 
