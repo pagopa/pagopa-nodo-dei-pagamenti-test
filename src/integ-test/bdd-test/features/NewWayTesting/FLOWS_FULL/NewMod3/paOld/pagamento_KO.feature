@@ -10422,13 +10422,13 @@ Feature: NM3 flows PA Old con pagamento KO
         And from $activatePaymentNoticeReq.amount xml check value $activatePaymentNotice.amount in position 0
         # sendPaymentOutcome 1 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                                                 | where_values                                |
-            | PAYMENT_TOKEN                                              | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO                                                | sendPaymentOutcome                          |
-            | SOTTO_TIPO_EVENTO                                          | REQ                                         |
-            | ESITO                                                      | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP                                         | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                                   | DATA_ORA_EVENTO ASC LIMIT 1                 |
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcome                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | RICEVUTA                                    |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC LIMIT 1                 |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $activatePaymentNoticeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
@@ -10474,4 +10474,64 @@ Feature: NM3 flows PA Old con pagamento KO
             | ORDER BY           | DATA_ORA_EVENTO DESC LIMIT 1                |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
         And from $sendPaymentOutcomeResp.outcome xml check value KO in position 0
+
+
+
+
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_34
+    Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, activate ->OK, spo- -> OK, check records in idempotency ccache for first and second activate  (NM3-21K)
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNotice1
+        And save activatePaymentNotice response in activatePaymentNotice1
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
+        And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNotice2
+        And save activatePaymentNotice response in activatePaymentNotice2
+        Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+            | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                 | outcome |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNotice2Response.paymentToken | KO      |
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        # IDEMPOTENCY_CACHE activatePaymentNotice 1
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                        |
+            | ID                 | NotNone                                      |
+            | PRIMITIVA          | activatePaymentNotice                        |
+            | PSP_ID             | $activatePaymentNotice1.idPSP                |
+            | PA_FISCAL_CODE     | $activatePaymentNotice1.fiscalCode           |
+            | NOTICE_ID          | $activatePaymentNotice1.noticeNumber         |
+            | TOKEN              | $activatePaymentNotice1Response.paymentToken |
+            | VALID_TO           | NotNone                                      |
+            | HASH_REQUEST       | NotNone                                      |
+            | RESPONSE           | NotNone                                      |
+            | INSERTED_TIMESTAMP | NotNone                                      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                           |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice1.idempotencyKey |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                           |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice1.idempotencyKey |
+        # IDEMPOTENCY_CACHE activatePaymentNotice 2
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                           |
+            | IDEMPOTENCY_KEY | $activatePaymentNotice2.idempotencyKey |
+
+
 
