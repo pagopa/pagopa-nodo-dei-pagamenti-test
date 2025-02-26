@@ -21860,6 +21860,23 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | where_keys | where_values                                   |
             | IUV        | 05$iuv                                         |
             | CCP        | $activatePaymentNoticeResponse.paymentToken-v2 |
+        # RETRY_PA_ATTIVA_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                          |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode              |
+            | TOKEN              | $activatePaymentNoticeResponse.paymentToken-v2 |
+            | RETRY              | 0                                              |
+            | IUV                | 05$iuv                                         |
+            | READY              | N                                              |
+            #  | INSERTED_BY        | nodoInviaRPT                                |
+            #  | UPDATED_BY         | paaInviaRT                                  |
+            | INSERTED_TIMESTAMP | NotNone                                        |
+            | UPDATED_TIMESTAMP  | NotNone                                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RETRY_PA_ATTIVA_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                      |
+            | IUV            | 05$iuv                            |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC         |
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                      | value                                       |
