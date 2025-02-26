@@ -21868,8 +21868,6 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | RETRY              | 0                                              |
             | IUV                | 05$iuv                                         |
             | READY              | N                                              |
-            #  | INSERTED_BY        | nodoInviaRPT                                |
-            #  | UPDATED_BY         | paaInviaRT                                  |
             | INSERTED_TIMESTAMP | NotNone                                        |
             | UPDATED_TIMESTAMP  | NotNone                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RETRY_PA_ATTIVA_RPT retrived by the query on db nodo_online with where datatable horizontal
