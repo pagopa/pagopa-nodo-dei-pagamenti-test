@@ -20493,7 +20493,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_58 @after
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1:  activate -> paaAttivaRPT, activate, useIdempotency false spo- -> OK check before and after for idempotency cache for activate (OLD_NM3-22K)
+    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1:  activate -> paaAttivaRPT, activate, useIdempotency false spo+ -> OK check before and after for idempotency cache for activate (OLD_NM3-23K)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
