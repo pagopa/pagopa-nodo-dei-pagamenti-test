@@ -20493,7 +20493,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_58 @after
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: useIdempotency false, activate -> paaAttivaRPT, activate -> spo- -> OK check idempotency cache for first and second activate (OLD_NM3-22K)
+    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1:  activate -> paaAttivaRPT, activate, useIdempotency false spo- -> OK check before and after for idempotency cache for activate (OLD_NM3-22K)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
@@ -20557,8 +20557,8 @@ Feature: NM3 flows PA Old con pagamento OK
         Given nodo-dei-pagamenti has config parameter useIdempotency set to false
         When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice2Response.paymentToken | KO      |
+            | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                 | outcome |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNotice2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         #IDEMPOTENCY_CACHE activatePaymentNotice 1
@@ -20584,24 +20584,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                           |
             | IDEMPOTENCY_KEY | $activatePaymentNotice2.idempotencyKey |
-        #IDEMPOTENCY_CACHE sendPaymentOutcome 
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                        |
-            | ID                 | NotNone                                      |
-            | PRIMITIVA          | sendPaymentOutcome                           |
-            | PSP_ID             | $activatePaymentNotice2.idPSP                |
-            | PA_FISCAL_CODE     | $activatePaymentNotice2.fiscalCode           |
-            | NOTICE_ID          | $activatePaymentNotice2.noticeNumber         |
-            | TOKEN              | $activatePaymentNotice2Response.paymentToken |
-            | VALID_TO           | NotNone                                      |
-            | HASH_REQUEST       | NotNone                                      |
-            | RESPONSE           | NotNone                                      |
-            | INSERTED_TIMESTAMP | NotNone                                      |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                           |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                           |
+        # #IDEMPOTENCY_CACHE sendPaymentOutcome
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
 
 
