@@ -10585,7 +10585,7 @@ Feature: NM3 flows PA Old con pagamento KO
     Scenario: NM3 flow OK, FLOW: activate -> paGetPayment PPT_ERRORE_EMESSO_DA_PAA (OLD_NM3-87B)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable vertical paGetPayment_Errore_emesso_da_pa initial XML paGetPayment
             | outcome | KO |
         And EC replies to nodo-dei-pagamenti with the paGetPayment
@@ -10598,7 +10598,7 @@ Feature: NM3 flows PA Old con pagamento KO
     Scenario: NM3 flow OK, FLOW: activate -> paGetPayment PPT_STAZIONE_INT_PA_TIMEOUT (OLD_NM3-88B)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable vertical paGetPayment_timeout initial XML paGetPayment
             | delay | 10000 |
         And EC replies to nodo-dei-pagamenti with the paGetPayment
