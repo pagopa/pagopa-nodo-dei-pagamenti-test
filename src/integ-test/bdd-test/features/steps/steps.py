@@ -3137,14 +3137,14 @@ def step_impl(context, field, field_value, elem, value, primitive):
 @step('save {primitive} response in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
     soap_response = getattr(context, primitive + RESPONSE)
-    print(new_primitive + RESPONSE)
+    print(f"RESPONSE of primitive {primitive} with payload {soap_response.content} saving in {new_primitive + RESPONSE}")
     setattr(context, new_primitive + RESPONSE, soap_response)
 
 
 @step('saving {primitive} request in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
     soap_request = getattr(context, primitive)
-    print("###########################################################################", soap_request)
+    print(f"REQUEST of primitive {primitive} with payload {soap_request} saving in {new_primitive}")
     setattr(context, new_primitive, soap_request)
 
 
@@ -3731,42 +3731,71 @@ def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, posit
 
 @Step("call the {elem} of {primitive} response as {name}")
 def step_impl(context, elem, primitive, name):
-    payload = getattr(context, primitive + RESPONSE)
-    my_document = parseString(payload.content)
-    if len(my_document.getElementsByTagName(elem)) > 0:
-        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        setattr(context, name, elem_value)
-    else:
-        assert False
-
+    try:
+        payload = getattr(context, primitive + RESPONSE)
+        my_document = parseString(payload.content)
+        if len(my_document.getElementsByTagName(elem)) > 0:
+            elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+            setattr(context, name, elem_value)
+        else:
+            assert False, f"the field {elem} doesn't exist into the response"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 @then("verify the {elem} of the {primitive} response is equals to {name}")
 def step_impl(context, elem, primitive, name):
-    payload = getattr(context, primitive + RESPONSE)
-    my_document = parseString(payload.content)
-    if len(my_document.getElementsByTagName(elem)) > 0:
-        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        target = getattr(context, name)
-        print(
-            f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
-        assert elem_value == target
-    else:
-        assert False
+    try:
+        payload = getattr(context, primitive + RESPONSE)
+        my_document = parseString(payload.content)
+        if len(my_document.getElementsByTagName(elem)) > 0:
+            elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+            target = getattr(context, name)
+            print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+            assert elem_value == target
+        else:
+            assert False, f"the field {elem} doesn't exist into the response"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then("verify the {elem} of the {primitive} response is not equals to {name}")
 def step_impl(context, elem, primitive, name):
-    payload = getattr(context, primitive + RESPONSE)
-    my_document = parseString(payload.content)
-    if len(my_document.getElementsByTagName(elem)) > 0:
-        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        target = getattr(context, name)
-        print(
-            f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
-        assert elem_value != target
-    else:
-        assert False
-
+    try:
+        payload = getattr(context, primitive + RESPONSE)
+        my_document = parseString(payload.content)
+        if len(my_document.getElementsByTagName(elem)) > 0:
+            elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
+            target = getattr(context, name)
+            print(f'check tag "{elem}" - expected: {target}, obtained: {elem_value}')
+            assert elem_value != target
+        else:
+            assert False, f"the field {elem} doesn't exist into the response"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 @given("PSP waits {elem} of {primitive} expires")
 def step_impl(context, elem, primitive):

@@ -71835,7 +71835,7 @@ Feature: NM3 flows PA New con pagamento OK
       | TIPO_EVENTO                              | sendPaymentOutcome                          |
       | SOTTO_TIPO_EVENTO                        | REQ                                         |
       | ESITO                                    | RICEVUTA                                    |
-      | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | None                               |
+      | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | None                                        |
       | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
       | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
