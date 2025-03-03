@@ -5,7 +5,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_1
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spo-, BIZ- (NM3-3)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment, spo-, BIZ- (NM3-3)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -270,7 +270,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_2
-    Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPayment, spoV2-, BIZ- (NM3-11)
+    Scenario: NM3 flow KO, FLOW: activateV2 -> paGetPayment, spoV2-, BIZ- (NM3-11)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -509,7 +509,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_3
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPaymentV2 -> spo- BIZ- (NM3-32)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPaymentV2 -> spo- BIZ- (NM3-32)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
@@ -755,7 +755,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_4
-    Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPaymentV2, spoV2-, BIZ- (NM3-39)
+    Scenario: NM3 flow KO, FLOW: activateV2 -> paGetPaymentV2, spoV2-, BIZ- (NM3-39)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
@@ -996,7 +996,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_5
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spoV2-, BIZ- (NM3-64)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment, spoV2-, BIZ- (NM3-64)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -1235,7 +1235,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_6
-    Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPayment, spo-, BIZ- (NM3-68)
+    Scenario: NM3 flow KO, FLOW: activateV2 -> paGetPayment, spo-, BIZ- (NM3-68)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -1474,7 +1474,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_7
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPaymentV2, spoV2-, BIZ- (NM3-86)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPaymentV2, spoV2-, BIZ- (NM3-86)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
@@ -1714,7 +1714,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_8
-    Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPaymentV2, spo-, BIZ- (NM3-90)
+    Scenario: NM3 flow KO, FLOW: activateV2 -> paGetPaymentV2, spo-, BIZ- (NM3-90)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
@@ -1956,7 +1956,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_10
-    Scenario: NM3 flow OK, FLOW: activateV2 -> paGetPayment, spoV2-, spoV2- PPT_ESITO_GIA_ACQUISITO (OLD_NM3-15)
+    Scenario: NM3 flow KO, FLOW: activateV2 -> paGetPayment, spoV2-, spoV2- PPT_ESITO_GIA_ACQUISITO (OLD_NM3-15)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -4402,7 +4402,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_32
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment, spo- -> activate BIZ- (OLD_NM3-72B)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment, spo- -> activate BIZ- (OLD_NM3-72B)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -4952,7 +4952,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_34
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment  -> spo+ with empty idPsp -> KO PPT_SINTASSI_EXTRAXSD check idempotency cache table for activate and spo (OLD_NM3-25K)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment  -> spo+ with empty idPsp -> KO PPT_SINTASSI_EXTRAXSD check idempotency cache table for activate and spo (OLD_NM3-25K)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -5250,7 +5250,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_35
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment  -> spo+ with random paymentToken -> KO with PPT_TOKEN_SCONOSCIUTO (OLD_NM3-26K)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment  -> spo+ with random paymentToken -> KO with PPT_TOKEN_SCONOSCIUTO (OLD_NM3-26K)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -5568,7 +5568,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_36
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment  -> spo+ with fake idBrokerPSP -> KO with PPT_AUTORIZZAZIONE (OLD_NM3-27K)
+    Scenario: NM3 flow KO, FLOW: activate -> paGetPayment  -> spo+ with fake idBrokerPSP -> KO with PPT_AUTORIZZAZIONE (OLD_NM3-27K)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
@@ -5868,7 +5868,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_37
-    Scenario: NM3 flow OK, FLOW: activate 1 -> paGetPayment -> activate 2 -> pagetPayment, spo-, activate 1 -> activate 2 (OLD_NM3-29K)
+    Scenario: NM3 flow KO, FLOW: activate 1 -> paGetPayment -> activate 2 -> pagetPayment, spo-, activate 1 -> activate 2 (OLD_NM3-29K)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
