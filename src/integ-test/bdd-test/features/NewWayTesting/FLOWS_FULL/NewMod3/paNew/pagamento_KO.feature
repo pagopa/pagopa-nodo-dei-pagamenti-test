@@ -6177,7 +6177,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_38
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment --> spo+ -> spo+ KO con PPT_ESITO_GIA_ACQUISITO ->  paSendRT BIZ+ (OLD_NM3-31K)
+    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment --> spo+ -> spo+ KO con PPT_ESITO_GIA_ACQUISITO -> paSendRT (OLD_NM3-31K)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
