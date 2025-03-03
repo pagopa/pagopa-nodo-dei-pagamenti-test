@@ -1633,6 +1633,8 @@ def generate_select(dict_fields_values):
         if i == 0:
             if "(" in where_value:
                 selected_query += f" WHERE {where_key} IN {where_value}"
+            elif "None" in where_value:
+                selected_query += f" WHERE {where_key} IS NULL"
             else:
                 selected_query += f" WHERE {where_key} = '{where_value}'"
         else:
@@ -1643,6 +1645,8 @@ def generate_select(dict_fields_values):
             else:
                 if "(" in where_value:
                     selected_query += f" AND {where_key} IN {where_value}"
+                elif "None" in where_value:
+                    selected_query += f" AND {where_key} IS NULL"
                 else:
                     selected_query += f" AND {where_key} = '{where_value}'"
         i += 1

@@ -71711,6 +71711,25 @@ Feature: NM3 flows PA New con pagamento OK
       | se.PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
       | su.SUBJECT_TYPE       | DEBTOR                              |
       | su.INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+    # IDEMPOTENCY_CACHE sendPaymentOutcome
+    And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+      | column             | value                               |
+      | ID                 | NotNone                             |
+      | PRIMITIVA          | sendPaymentOutcome                  |
+      | PSP_ID             | $activatePaymentNotice.idPSP        |
+      | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+      | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+      | TOKEN              | $sendPaymentOutcome.paymentToken    |
+      | VALID_TO           | #CURRENTDATE# +2 00:00:00           |
+      | HASH_REQUEST       | NotNone                             |
+      | RESPONSE           | NotNone                             |
+      | INSERTED_TIMESTAMP | NotNone                             |
+    And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+      | where_keys      | where_values                       |
+      | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+      | where_keys      | where_values                       |
+      | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
     # RE #####
     # activatePaymentNotice REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -71782,13 +71801,14 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     # sendPaymentOutcome REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-      | where_keys         | where_values                                |
-      | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-      | TIPO_EVENTO        | sendPaymentOutcome                          |
-      | SOTTO_TIPO_EVENTO  | REQ                                         |
-      | ESITO              | RICEVUTA                                    |
-      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-      | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+      | where_keys                               | where_values                                |
+      | PAYMENT_TOKEN                            | $activatePaymentNoticeResponse.paymentToken |
+      | TIPO_EVENTO                              | sendPaymentOutcome                          |
+      | SOTTO_TIPO_EVENTO                        | REQ                                         |
+      | ESITO                                    | RICEVUTA                                    |
+      | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station#                                |
+      | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
+      | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
     And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
     And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
@@ -71798,13 +71818,43 @@ Feature: NM3 flows PA New con pagamento OK
     And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
     # sendPaymentOutcome RESP
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-      | where_keys         | where_values                                |
-      | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-      | TIPO_EVENTO        | sendPaymentOutcome                          |
-      | SOTTO_TIPO_EVENTO  | RESP                                        |
-      | ESITO              | INVIATA                                     |
-      | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-      | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+      | where_keys                               | where_values                                |
+      | PAYMENT_TOKEN                            | $activatePaymentNoticeResponse.paymentToken |
+      | TIPO_EVENTO                              | sendPaymentOutcome                          |
+      | SOTTO_TIPO_EVENTO                        | RESP                                        |
+      | ESITO                                    | INVIATA                                     |
+      | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station#                                |
+      | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
+      | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
+    And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
+    # sendPaymentOutcome 2 REQ
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys                               | where_values                                |
+      | PAYMENT_TOKEN                            | $activatePaymentNoticeResponse.paymentToken |
+      | TIPO_EVENTO                              | sendPaymentOutcome                          |
+      | SOTTO_TIPO_EVENTO                        | REQ                                         |
+      | ESITO                                    | RICEVUTA                                    |
+      | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | None                               |
+      | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
+      | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
+    And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
+    And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
+    And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
+    And from $sendPaymentOutcomeReq.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
+    And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
+    And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNoticeResponse.paymentToken in position 0
+    And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
+    # sendPaymentOutcome 2 RESP
+    And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+      | where_keys                               | where_values                                |
+      | PAYMENT_TOKEN                            | $activatePaymentNoticeResponse.paymentToken |
+      | TIPO_EVENTO                              | sendPaymentOutcome                          |
+      | SOTTO_TIPO_EVENTO                        | RESP                                        |
+      | ESITO                                    | INVIATA                                     |
+      | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | None                                        |
+      | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
+      | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
     And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
     # paSendRT REQ
