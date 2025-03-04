@@ -7038,7 +7038,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_40
-    Scenario: NM3 flow KO, FLOW: activate1 -> paGetPayment -> mod3CancelV2 activate2 -> paGetPayment -> spo+ paymentToken_1 -> KO con PPT_PAGAMENTO_DUPLICATO (OLD_NM3-43G)
+    Scenario: NM3 flow KO, FLOW: activate1 -> paGetPayment -> mod3CancelV2 activate2 -> paGetPayment -> spo+ paymentToken_1 -> KO con PPT_PAGAMENTO_DUPLICATO -> spo+ paymentToken_2 -> OK (OLD_NM3-44G)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 1000           | 10.00  |
