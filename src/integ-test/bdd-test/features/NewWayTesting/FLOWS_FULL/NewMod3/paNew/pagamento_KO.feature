@@ -7089,23 +7089,28 @@ Feature: NM3 flows con pagamento fallito
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice_2Response.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                                                                     |
-            | ID                    | NotNone                                                                                                                                   |
-            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode                                                                                                         |
-            | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                                                                       |
-            | STATUS                | PAYING,CANCELLED,PAYING                                                                                                                   |
-            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                   |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                         |
-            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken,$activatePaymentNotice_1Response.paymentToken,$activatePaymentNotice_2Response.paymentToken |
-            | INSERTED_BY           | activatePaymentNotice,mod3CancelV2,activatePaymentNotice                                                                                  |
+            | column                | value                                                                                                                                                                                                                                                                                                                             |
+            | ID                    | NotNone                                                                                                                                                                                                                                                                                                                           |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode                                                                                                                                                                                                                                                                                                 |
+            | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                                                                                                                                                                                                                                                               |
+            | STATUS                | PAYING,CANCELLED,PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED                                                                                                                                                                                                                                                                |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                                                                                                                                                                                                           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                                                                                                                                                                                                                 |
+            | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken,$activatePaymentNotice_1Response.paymentToken,$activatePaymentNotice_2Response.paymentToken,$activatePaymentNotice_2Response.paymentToken,$activatePaymentNotice_2Response.paymentToken,$activatePaymentNotice_2Response.paymentToken,$activatePaymentNotice_2Response.paymentToken |
+            | INSERTED_BY           | activatePaymentNotice,mod3CancelV2,activatePaymentNotice,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paSendRT                                                                                                                                                                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
             | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
-        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And verify 7 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -7117,12 +7122,12 @@ Feature: NM3 flows con pagamento fallito
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                         |
             | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                           |
             | PAYMENT_TOKEN         | $activatePaymentNotice_1Response.paymentToken,$activatePaymentNotice_2Response.paymentToken |
-            | STATUS                | CANCELLED,PAYING                                                                            |
+            | STATUS                | CANCELLED,NOTIFIED                                                                          |
             | INSERTED_TIMESTAMP    | NotNone                                                                                     |
             | UPDATED_TIMESTAMP     | NotNone                                                                                     |
             | FK_POSITION_PAYMENT   | NotNone                                                                                     |
             | INSERTED_BY           | activatePaymentNotice                                                                       |
-            | UPDATED_BY            | mod3CancelV2,activatePaymentNotice                                                          |
+            | UPDATED_BY            | mod3CancelV2,sendPaymentOutcome                                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -7135,19 +7140,19 @@ Feature: NM3 flows con pagamento fallito
             | ORDER BY       | INSERTED_TIMESTAMP ASC              |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                                    |
-            | ID                 | NotNone                                                  |
-            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode                        |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber                      |
-            | STATUS             | PAYING,INSERTED,PAYING                                   |
-            | INSERTED_TIMESTAMP | NotNone                                                  |
-            | INSERTED_BY        | activatePaymentNotice,mod3CancelV2,activatePaymentNotice |
+            | column             | value                                                                                |
+            | ID                 | NotNone                                                                              |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode                                                    |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber                                                  |
+            | STATUS             | PAYING,INSERTED,PAYING,PAID,NOTIFIED                                                 |
+            | INSERTED_TIMESTAMP | NotNone                                                                              |
+            | INSERTED_BY        | activatePaymentNotice,mod3CancelV2,activatePaymentNotice,sendPaymentOutcome,paSendRT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
             | ORDER BY       | INSERTED_TIMESTAMP ASC              |
-        And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And verify 5 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -7158,13 +7163,13 @@ Feature: NM3 flows con pagamento fallito
             | ID                  | NotNone                             |
             | PA_FISCAL_CODE      | $activatePaymentNotice.fiscalCode   |
             | NOTICE_ID           | $activatePaymentNotice.noticeNumber |
-            | STATUS              | PAYING                              |
+            | STATUS              | NOTIFIED                            |
             | INSERTED_TIMESTAMP  | NotNone                             |
             | UPDATED_TIMESTAMP   | NotNone                             |
             | FK_POSITION_SERVICE | NotNone                             |
             | ACTIVATION_PENDING  | N                                   |
             | INSERTED_BY         | activatePaymentNotice               |
-            | UPDATED_BY          | activatePaymentNotice               |
+            | UPDATED_BY          | sendPaymentOutcome                  |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -7271,3 +7276,30 @@ Feature: NM3 flows con pagamento fallito
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
         And from $sendPaymentOutcomeResp.outcome xml check value KO in position 0
+        # sendPaymentOutcome REQ2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
+        And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
+        And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
+        And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNotice_2Response.paymentToken in position 0
+        And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
+        # sendPaymentOutcome RESP2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNotice_2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcome                            |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
+        And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
