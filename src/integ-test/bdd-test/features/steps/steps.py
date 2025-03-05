@@ -6018,6 +6018,47 @@ def step_impl(context, query_name, db_name):
     setattr(context, query_name, rowExpected)
 
 
+@step("retrieve record from {table_name} where columns {columns} on db {db_name} with where datatable {type_table} and save it under the key {key}")
+def step_impl(context, table_name, columns, db_name, type_table, key):
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+        
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        selected_query = utils.generate_select(dict_fields_values)
+
+        selected_query = selected_query.replace("columns", columns).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        # EXECUTE QUERY WITH POLLING SET TO 60 SEC
+        exec_query = utils.query_with_polling(context, conn, adopted_db, selected_query, 1)
+            
+        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
+        # salvo il dato dentro la chiave
+        setattr(context, key, exec_query[0][0])
+        print(f'il valore estratto è --------> {key}: {exec_query[0][0]}')
+
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
+
+
 @step(u"retrieve param {param} at position {position:d} and save it under the key {key} through the query {query_name}")
 def step_impl(context, param, position, key, query_name):
     rowExpected = getattr(context, query_name)
