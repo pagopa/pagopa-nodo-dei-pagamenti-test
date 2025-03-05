@@ -24526,9 +24526,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
 
-    # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_42 @after
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-23)
+    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> nodoInviaRPT-V2 PPT_SEMANTICA -> paRetryAttivaRpt -> nodoInviaRPT-V2 OK (OLD_NM3-11G)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 002#iuv#     | 10.00  | 2000           |
