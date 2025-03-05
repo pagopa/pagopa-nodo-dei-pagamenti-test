@@ -7675,7 +7675,7 @@ Feature: NM3 flows con pagamento fallito
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_42
-    Scenario Outline: NM3 flow KO, FLOW: activate -> paGetPayment  -> spo+ -> Update paymentMethod cash spo and then streetName road -> spo+ con KO with PPT_TOKEN_SCONOSCIUTO (OLD_NM3-53K)
+    Scenario Outline: NM3 flow KO, FLOW: activate -> paGetPayment  -> spo+ -> Update paymentMethod cash spo and then streetName road -> spo+ con KO with PPT_ERRORE_IDEMPOTENZA (OLD_NM3-53K)
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
