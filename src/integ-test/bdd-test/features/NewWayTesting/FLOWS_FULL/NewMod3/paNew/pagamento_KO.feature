@@ -8031,7 +8031,7 @@ Feature: NM3 flows con pagamento fallito
         And from $sendPaymentOutcomeResp.outcome xml check value KO in position 0
         Examples:
             | elem          | value |
-            | paymentMethod | cash  | 
+            | paymentMethod | cash  |
             | streetName    | road  |
 
 
@@ -8367,7 +8367,7 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-@ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_44 @after
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_44 @after
     Scenario: NM3 flow KO, FLOW: useIdempotency set to False -> activate -> paGetPayment  -> spo+ -> spo+ con KO with PPT_ESITO_GIA_ACQUISITO (OLD_NM3-60K)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to false
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
