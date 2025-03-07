@@ -360,7 +360,7 @@ export function transaction_id() {
 }
 
 export function transaction_idKO() {
-  return uuidv4() += "ko";
+  return uuidv4();// += "ko";
 }
 
 export function iubd() {
