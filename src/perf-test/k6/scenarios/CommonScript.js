@@ -1,5 +1,6 @@
 import { jUnit, textSummary } from './CT/test/util/k6summary.js';
 import { randomIntBetween, randomString } from './CT/test/util/k6utils.js';
+import { uuidv4 } from './CT/test/util/uuid4.js';
 
 export function handleSummary(data, path,test) {
   console.debug('Preparing the end-of-test summary...');
@@ -355,10 +356,7 @@ export function genIdempotencyKey(){
 }
 
 export function transaction_id() {
-    let transactionId = ''
-    const chars = '0123456789';
-    for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
-    return transactionId;
+    return uuidv4();
 }
 
 export function transaction_idKO() {
