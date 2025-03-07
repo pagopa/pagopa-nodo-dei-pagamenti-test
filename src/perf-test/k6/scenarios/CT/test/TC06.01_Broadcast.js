@@ -25,13 +25,6 @@ export function genNoticeNumber() {
     return noticeNumber;
 }
 
-export function transaction_id() {
-    let transactionId = ''
-    for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
-    return transactionId;
-}
-
-
 export function genIdempotencyKey() {
     let key1 = '';
     let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
@@ -155,8 +148,8 @@ export function total() {
     let rndAnagPsp = inputDataUtil.getAnagPsp();
     let rndAnagPaNew = inputDataUtil.getAnagPaNewVP2Broadcast();
 
-    let transactionId = transaction_id();
-    let pspTransactionId = transaction_id();
+    let transactionId = common.transaction_id();
+    let pspTransactionId = common.transaction_id();
 	
 	var totalAmount = 0;
     var res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");

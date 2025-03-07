@@ -360,11 +360,7 @@ export function transaction_id() {
 }
 
 export function transaction_idKO() {
-  let transactionId = ''
-  const chars = '0123456789';
-  for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
-  transactionId += "ko";
-  return transactionId;
+  return uuidv4() += "ko";
 }
 
 export function iubd() {
