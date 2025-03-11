@@ -1872,16 +1872,14 @@ def query_with_polling(context, conn, adopted_db, selected_query, size_record_ex
                 print(f"Results found after {sec} seconds!!!")
                 break
             else:
-                print(
-                    f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
         else:
             if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
 
                 print(f"Results found after {sec} seconds!!!")
                 break
             else:
-                print(
-                    f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
 
         sec += 1
         polling_time -= 1
@@ -1891,8 +1889,9 @@ def query_with_polling(context, conn, adopted_db, selected_query, size_record_ex
         time.sleep(1)
 
     if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
-        print("Polling timed out with no results.")
-
+        print("Polling timed out with no results!")
+    elif polling_time == 0 and exec_query is None or (len(exec_query) != size_record_expected):
+        print("Polling timed out with size results different!")
     return exec_query
 
     # METODO PER EFFETTUARE QUERY CON POLLING
@@ -1921,7 +1920,7 @@ def delete_query(context, conn, adopted_db, del_query):
     return exec_query
 
 
-# METODO PER EFFETTUARE QUERY ALLA CAHCE
+# METODO PER EFFETTUARE QUERY ALLA CACHE
 def query_new_record_cache(context, conn, adopted_db, dbRun):
     new_record_cache = False
 

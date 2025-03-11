@@ -3591,7 +3591,7 @@ def step_impl(context, result_query, type_table, db_name, table_name, columns):
         # EXECUTE QUERY WITH POLLING SET TO 60 SEC
         exec_query = utils.query_with_polling(context, conn, adopted_db, selected_query, 1)
             
-        assert exec_query is not None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
+        assert exec_query is not None and len(exec_query) != 0 and len(exec_query) == 1, f"Result query empty or None or size is not 1 for table: {table_name} !"
 
         if exec_query is not None:
             print(f'executed query: {exec_query}')
