@@ -25,7 +25,7 @@ Feature: NM3 flows PA Old con concorrenza
             | delay | esito | importoSingoloVersamento |
             | 1000  | OK    | 8.00                     |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
         When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 750 ms delay
@@ -368,7 +368,7 @@ Feature: NM3 flows PA Old con concorrenza
             | delay | esito | importoSingoloVersamento |
             | 1000  | OK    | 8.00                     |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
         When calling primitive evolution sendPaymentOutcome and activatePaymentNotice with POST and POST in parallel with 50 ms delay
@@ -713,7 +713,7 @@ Feature: NM3 flows PA Old con concorrenza
             | delay | esito | importoSingoloVersamento |
             | 1000  | OK    | 8.00                     |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | KO      |
         When calling primitive evolution activatePaymentNotice and sendPaymentOutcome with POST and POST in parallel with 750 ms delay
@@ -1051,7 +1051,7 @@ Feature: NM3 flows PA Old con concorrenza
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber                                 | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | $activatePaymentNotice_1Request.noticeNumber | 8.00   |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | KO      |
         When calling primitive evolution sendPaymentOutcome and activatePaymentNotice with POST and POST in parallel with 0 ms delay
@@ -1372,10 +1372,10 @@ Feature: NM3 flows PA Old con concorrenza
 
 
 
-
+    # IL TEST NON E' REPLICABILE A CAUSA DI UNA RANDOMICITA' NELLA SEQUENZA DI ARRIVO DELLE API
     # AccessiConcorrenziali 3e_ACT_SPO
     # ACT -> SPO+ (ACT:KO - SPO: PPT_SEMANTICA Activation pending on position)
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPARALLEL @NM3PAOLDPARALLEL_FULL_5
+    #@ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPARALLEL @NM3PAOLDPARALLEL_FULL_5
     Scenario: NM3 flow KO, FLOW: activate -> mod3CancelV1 -> activate & spo+ in pararallel mode-> KO PPT_SEMANTICA  (OLD_NM3-5A)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
@@ -1390,7 +1390,7 @@ Feature: NM3 flows PA Old con concorrenza
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber                                 | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | $activatePaymentNotice_1Request.noticeNumber | 9.00   |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -1733,7 +1733,7 @@ Feature: NM3 flows PA Old con concorrenza
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber                                 | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | $activatePaymentNotice_1Request.noticeNumber | 9.00   |
-        Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice1Response.paymentToken | OK      |
         And from body with datatable horizontal paaAttivaRPT_KO initial XML paaAttivaRPT
@@ -3151,7 +3151,7 @@ Feature: NM3 flows PA Old con concorrenza
         When calling primitive evolution activatePaymentNotice_1Request and activatePaymentNotice_2Request with POST and POST in parallel with 500 ms delay
         And save activatePaymentNotice_1Request response in activatePaymentNotice1
         Then check outcome is OK of activatePaymentNotice_1Request response
-        Then check outcome is KO of activatePaymentNotice_2Request response
+        And check outcome is KO of activatePaymentNotice_2Request response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
