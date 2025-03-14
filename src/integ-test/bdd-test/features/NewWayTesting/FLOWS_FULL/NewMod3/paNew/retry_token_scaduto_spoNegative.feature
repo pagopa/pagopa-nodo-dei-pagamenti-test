@@ -6,10 +6,9 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRYSPONEG @NM3PANEWRETRYSPONEG_FULL_1 @after
+    @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRYSPONEG @NM3PANEWRETRYSPONEG_FULL_1
     Scenario: NM3 flow retry a token scaduto con spo negative, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo- con resp PPT_TOKEN_SCADUTO_KO (NM3-5)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
-        And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+        Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
@@ -47,6 +46,7 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | KO      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
         And check description is paymentToken is expired on outcome KO of sendPaymentOutcome response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
@@ -73,8 +73,8 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
             | column             | value                 |
             | ID                 | NotNone               |
             | DESCRIPTION        | NotNone               |
-            | COMPANY_NAME       | None                  |
-            | OFFICE_NAME        | None                  |
+            | COMPANY_NAME       | company               |
+            | OFFICE_NAME        | office                |
             | DEBTOR_ID          | NotNone               |
             | INSERTED_TIMESTAMP | NotNone               |
             | UPDATED_TIMESTAMP  | NotNone               |
@@ -92,10 +92,10 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
-            | FLAG_FINAL_PAYMENT    | N                             |
+            | FLAG_FINAL_PAYMENT    | Y                             |
             | INSERTED_TIMESTAMP    | NotNone                       |
             | UPDATED_TIMESTAMP     | NotNone                       |
-            | METADATA              | None                          |
+            | METADATA              | NotNone                       |
             | FK_POSITION_SERVICE   | NotNone                       |
             | INSERTED_BY           | activatePaymentNotice         |
             | UPDATED_BY            | activatePaymentNotice         |
@@ -116,12 +116,12 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
             | BROKER_PSP_ID              | #psp#                                       |
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
+            | FEE                        | 2.00                                        |
             | OUTCOME                    | KO                                          |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | NotNone                                     |
+            | PAYER_ID                   | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -235,6 +235,11 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                |
             | ID_SESSIONE | $activatePaymentNoticeResponse.paymentToken |
+        # POSITION_RECEIPT_XML
+        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
