@@ -102,11 +102,11 @@ replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 replace $file ".services.\"secondary-mock-psp\".subscription_key_name"  "Y"
 
 
-# replace $file ".services.\"mock-pm\".url"           "https://test.nexi.ndp.pagopa.it/mock-pm-sit.nexigroup.com/PerfPMMock"
-# replace $file ".services.\"mock-pm\".healthcheck"   "/actuator/health"
-# replace $file ".services.\"mock-pm\".soap_service"  ""
-# replace $file ".services.\"mock-pm\".rest_service"  ""
-# replace $file ".services.\"mock-pm\".subscription_key_name"  "Y"
+replace $file ".services.\"mock-pm\".url"           "https://test.nexi.ndp.pagopa.it/mock-pm-sit.nexigroup.com/PerfPMMock"
+replace $file ".services.\"mock-pm\".healthcheck"   "/actuator/health"
+replace $file ".services.\"mock-pm\".soap_service"  ""
+replace $file ".services.\"mock-pm\".rest_service"  ""
+replace $file ".services.\"mock-pm\".subscription_key_name"  "Y"
 
 
 ######################## PUNTMANETI SERVIZIO APICONFIGCACHE #####################
