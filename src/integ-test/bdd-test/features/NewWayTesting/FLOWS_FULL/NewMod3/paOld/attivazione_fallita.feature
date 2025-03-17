@@ -9,7 +9,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -865,7 +865,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -1514,7 +1514,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -2185,7 +2185,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -2509,7 +2509,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
@@ -3398,7 +3398,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_Timeout initial XML paaAttivaRPT
+        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
             | 10000 |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
