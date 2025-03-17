@@ -6,7 +6,7 @@ Feature: NM3 flows con PA New retry a token scaduto con SPO negative
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NM3PANEW @NM3PANEWRETRYSPONEG @NM3PANEWRETRYSPONEG_FULL_1
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRYSPONEG @NM3PANEWRETRYSPONEG_FULL_1
     Scenario: NM3 flow retry a token scaduto con spo negative, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo- con resp PPT_TOKEN_SCADUTO_KO (NM3-5)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
