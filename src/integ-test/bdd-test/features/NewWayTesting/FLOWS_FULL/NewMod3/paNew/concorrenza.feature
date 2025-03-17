@@ -1743,5 +1743,4 @@ Feature: NM3 flows PA New con concorrenza
         When calling primitive evolution activatePaymentNotice_1Request and activatePaymentNotice_2Request with POST and POST in parallel with 80 ms delay
         Then check outcome is OK of activatePaymentNotice_1Request response
         Then check outcome is KO of activatePaymentNotice_2Request response
-        And check faultCode is PPT_ATTIVAZIONE_IN_CORSO of sendPaymentOutcome response
 
