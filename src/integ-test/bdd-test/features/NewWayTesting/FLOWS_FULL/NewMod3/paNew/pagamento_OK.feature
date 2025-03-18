@@ -4611,7 +4611,7 @@ Feature: NM3 flows PA New con pagamento OK
       | DUE_DATE              | NotNone                       |
       | RETENTION_DATE        | None                          |
       | AMOUNT                | $activatePaymentNotice.amount |
-      | FLAG_FINAL_PAYMENT    | Y                             |
+      | FLAG_FINAL_PAYMENT    | N                             |
       | INSERTED_TIMESTAMP    | NotNone                       |
       | UPDATED_TIMESTAMP     | NotNone                       |
       | METADATA              | NotNone                       |
@@ -57480,14 +57480,14 @@ Feature: NM3 flows PA New con pagamento OK
       | OUTCOME               | OK                                            |
       | PAYMENT_AMOUNT        | $activatePaymentNoticeV2.amount               |
       | DESCRIPTION           | pagamentoTest                                 |
-      | COMPANY_NAME          | company                                       |
+      | COMPANY_NAME          | companyName                                   |
       | OFFICE_NAME           | office                                        |
       | DEBTOR_ID             | NotNone                                       |
-      | PSP_ID                | #psp#                                         |
+      | PSP_ID                | #pspPoste#                                    |
       | PSP_FISCAL_CODE       | NotNone                                       |
       | PSP_VAT_NUMBER        | None                                          |
       | PSP_COMPANY_NAME      | NotNone                                       |
-      | CHANNEL_ID            | #canale_ATTIVATO_PRESSO_PSP#                  |
+      | CHANNEL_ID            | #channelPoste#                                |
       | CHANNEL_DESCRIPTION   | app                                           |
       | PAYER_ID              | NotNone                                       |
       | FEE                   | 2                                             |

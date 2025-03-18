@@ -6060,7 +6060,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoChiediCopiaRTReq
         And from $nodoChiediCopiaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoChiediCopiaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio# in position 0
+        And from $nodoChiediCopiaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $nodoChiediCopiaRTReq.password xml check value #password# in position 0
         And from $nodoChiediCopiaRTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoChiediCopiaRTReq.identificativoUnivocoVersamento xml check value NotNone in position 0
@@ -10583,29 +10583,3 @@ Feature: NM3 flows PA Old con pagamento KO
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                          |
             | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
-
-
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_36
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment PPT_ERRORE_EMESSO_DA_PAA (OLD_NM3-87B)
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable vertical paGetPayment_Errore_emesso_da_pa initial XML paGetPayment
-            | outcome | KO |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
-
-
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_37
-    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment PPT_STAZIONE_INT_PA_TIMEOUT (OLD_NM3-88B)
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable vertical paGetPayment_timeout initial XML paGetPayment
-            | delay | 10000 |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response

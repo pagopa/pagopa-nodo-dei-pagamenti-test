@@ -11017,7 +11017,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTSecReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTSecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTSecReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTSecReq.receipt.companyName xml check value company in position 0
+        And from $paSendRTSecReq.receipt.companyName xml check value companyName in position 0
         ### TRANSFER 1
         And from $paSendRTSecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTSecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 0
@@ -11087,7 +11087,7 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $paSendRTV2SecReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
         And from $paSendRTV2SecReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paSendRTV2SecReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2SecReq.receipt.companyName xml check value company in position 0
+        And from $paSendRTV2SecReq.receipt.companyName xml check value companyName in position 0
         ### TRANSFER 1
         And from $paSendRTV2SecReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paSendRTV2SecReq.receipt.transferList.transfer.transferAmount xml check value 1400 in position 0

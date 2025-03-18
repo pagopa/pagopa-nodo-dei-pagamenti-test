@@ -3010,9 +3010,7 @@ Feature: NM3 flows con pagamento fallito
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey         |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | 60000000001_7381318111 |
+        And random idempotencyKey having $sendPaymentOutcomeV2.idPSP as idPSP in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
@@ -8590,23 +8588,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys      | where_values                          |
             | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
         # IDEMPOTENCY_CACHE sendPaymentOutcome
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                       |
-            | ID                 | NotNone                                     |
-            | PRIMITIVA          | sendPaymentOutcome                          |
-            | PSP_ID             | $activatePaymentNotice.idPSP                |
-            | PA_FISCAL_CODE     | #creditor_institution_code#                 |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
-            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
-            | VALID_TO           | #CURRENTDATE# +2 00:00:00                   |
-            | HASH_REQUEST       | NotNone                                     |
-            | RESPONSE           | NotNone                                     |
-            | INSERTED_TIMESTAMP | NotNone                                     |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                       |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
-            | ORDER BY        | INSERTED_TIMESTAMP,ID ASC          |
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####
@@ -9319,3 +9301,30 @@ Feature: NM3 flows con pagamento fallito
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
+
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_47
+    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment PPT_ERRORE_EMESSO_DA_PAA (OLD_NM3-87B)
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPayment_Errore_emesso_da_pa initial XML paGetPayment
+            | outcome | KO |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_48
+    Scenario: NM3 flow OK, FLOW: activate -> paGetPayment PPT_STAZIONE_INT_PA_TIMEOUT (OLD_NM3-88B)
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPayment_timeout initial XML paGetPayment
+            | delay | 10000 |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
