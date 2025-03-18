@@ -2325,6 +2325,10 @@ Feature: NM3 flows con pagamento fallito
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
+        Given update for table POSITION_STATUS_SNAPSHOT with parameter NOTICE_ID = $activatePaymentNotice.noticeNumber on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | 311011451292109621                  |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
 
