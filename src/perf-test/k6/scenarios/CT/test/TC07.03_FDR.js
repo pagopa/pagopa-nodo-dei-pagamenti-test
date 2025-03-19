@@ -5,7 +5,7 @@ import scenario2 from './TC07.02_richiestaFDR.js';
 
 
 export const options = {
-    summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.99)', 'p(100)', 'count'],
+    summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.5)', 'p(99.9)', 'p(99.99)', 'p(100)', 'count'],
     discardResponseBodies: false,
     thresholds: {
 
