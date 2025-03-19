@@ -125,7 +125,7 @@ export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaym
     closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId, totalAmount),
     {
       headers: getHeaders({ 'Content-Type': 'application/json' }),
-      tags: { closePaymentV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closePaymentV2" }
+      tags: { closePaymentV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closePaymentV2Multi" }
     }
   );
 

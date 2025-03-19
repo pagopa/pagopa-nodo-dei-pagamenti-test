@@ -25,7 +25,7 @@ function getBody(idInt, idStation, idPA, idPSP, idFlusso) {
 
 export function nodoChiediFlussoRendicontazione(baseUrl, idInt, idStation, idPa, idPSP, idFlusso) {
 
-	const pathToCall = getBasePath(baseUrl, "nodoChiediFlussoRendicontazione")
+	const pathToCall = getBasePath(baseUrl, "nodoChiediFlussoRendicontazione")+'?primitiva=nodoChiediFlussoRendicontazione'
 	let body = getBody(idInt, idStation, idPa, idPSP, idFlusso);
 	
 	let res = http.post(pathToCall, body,

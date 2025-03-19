@@ -36,7 +36,7 @@ export function activatePosteReqBody(cfpa, noticeNmbr, idempotencyKey) {
 export function activatePaymentNotice(baseUrl,rndAnagPa,noticeNmbr,idempotencyKey) {
   
  console.debug( activatePosteReqBody(rndAnagPa.CF , noticeNmbr, idempotencyKey));
- let res=http.post(getBasePath(baseUrl, "activatePaymentNotice"),
+ let res=http.post(getBasePath(baseUrl, "activatePaymentNotice")+'?primitiva=activatePaymentNoticePoste',
     activatePosteReqBody(rndAnagPa.CF , noticeNmbr, idempotencyKey),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNotice'}) ,
 	tags: { activatePaymentNotice: 'http_req_duration', activatePaymentNotice_elapsed: 'elapsed' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}

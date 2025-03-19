@@ -44,7 +44,7 @@ export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, 
 
 export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey) {
  
- let res=http.post(getBasePath(baseUrl, "activateIOPayment"),
+ let res=http.post(getBasePath(baseUrl, "activateIOPayment")+'?primitiva=ActivateIOPayment',
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment'}) ,
 	tags: { ActivateIOPayment: 'http_req_duration', ActivateIOPayment_elapsed: 'elapsed' , ALL: 'http_req_duration', primitiva: "activateIOPayment"}

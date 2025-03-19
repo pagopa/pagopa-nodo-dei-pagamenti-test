@@ -78,7 +78,7 @@ export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken,  isMulti
     sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcomeV2' }),
-      tags: { sendPaymentOutcomeV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "sendPaymentOutcomeV2" }
+      tags: { sendPaymentOutcomeV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "sendPaymentOutcomeV2Multi" }
     }
   );
 

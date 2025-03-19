@@ -40,7 +40,7 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
 
  let rptEncoded = rptUtil.getRptEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuv, "PERFORMANCE");
  const res = http.post(
-		 getBasePath(baseUrl, "nodoInviaRPT"),
+		 getBasePath(baseUrl, "nodoInviaRPT")+'?primitiva=RPT_Semplice',
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' }) ,
 	tags: { RPT_Semplice: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRPT"}

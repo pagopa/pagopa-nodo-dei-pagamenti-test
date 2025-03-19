@@ -35,7 +35,7 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 
 export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  
- let res=http.post(getBasePath(baseUrl, "activatePaymentNotice"),
+ let res=http.post(getBasePath(baseUrl, "activatePaymentNotice")+'?primitiva=activatePaymentNoticeIDMP',
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' }) ,
 	tags: { activatePaymentNotice_IDMP: 'http_req_duration' , activatePaymentNotice_elapsed_IDMP: 'elapsed', ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}
