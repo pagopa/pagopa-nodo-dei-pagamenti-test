@@ -2615,8 +2615,7 @@ Feature: NM3 flows con pagamento fallito
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
-
-        And idPSP with 70000000001 in sendPaymentOutcomeV2
+        Given idPSP with 70000000001 in sendPaymentOutcomeV2
         And idBrokerPSP with 70000000001 in sendPaymentOutcomeV2
         And idChannel with 70000000001_01 in sendPaymentOutcomeV2
 

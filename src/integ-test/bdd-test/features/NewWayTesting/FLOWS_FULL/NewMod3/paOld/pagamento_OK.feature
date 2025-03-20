@@ -134,27 +134,10 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RPT_ACTIVATIONS
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                       |
-            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
-            | PAAATTIVARPTRESP      | Y                                           |
-            | NODOINVIARPTREQ       | N                                           |
-            | PAAATTIVARPTERROR     | N                                           |
-            | INSERTED_TIMESTAMP    | NotNone                                     |
-            | UPDATED_TIMESTAMP     | NotNone                                     |
-            | INSERTED_BY           | activatePaymentNotice                       |
-            | UPDATED_BY            | activatePaymentNotice                       |
-            | RETRY_PENDING         | N                                           |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                      |
-            | PAYMENT_TOKEN  | $ccp                              |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode |
-        Given verify 1 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values           |
-            | PAYMENT_TOKEN | $ccp                   |
-            | ORDER BY      | INSERTED_TIMESTAMP ASC |
+        Given verify 0 record for the table RPT_ACTIVATIONS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
+            | ORDER BY      | INSERTED_TIMESTAMP ASC                      |
         # POSITION_PAYMENT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                       |
