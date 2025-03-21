@@ -51,19 +51,19 @@ export default function () {
     const randomNumber = Math.random();
 
 
-    if (randomNumber < 0.05) { //5%
-        group('ScenarioMisto: TC0602_new_old', () => {
-            TC0602_new_old();
+    if (randomNumber < 0.01) { //1%
+        group('ScenarioMisto: TC0604_new_old', () => {
+			TC0604_new_old();
         });
-    } else if (randomNumber < 0.1) { //10 - 5 = 5%
+    } else if (randomNumber < 0.02) { //2 - 1 = 1%
         group('ScenarioMisto: TC0603_new_new', () => {
             TC0603_new_new();
         });
-    } else if (randomNumber < 0.15) { // 15 - 5 - 5 = 5%
-        group('ScenarioMisto: TC0604_new_old', () => {
-            TC0604_new_old();
+    } else if (randomNumber < 0.26) { // 26 - 1 - 1 = 24%
+        group('ScenarioMisto: TC0602_new_old', () => {
+            TC0602_new_old();
         });
-    } else { //85%
+    } else { //74%
         group('ScenarioMisto: TC0601_new_new', () => {
             TC0601_new_new();
         });
