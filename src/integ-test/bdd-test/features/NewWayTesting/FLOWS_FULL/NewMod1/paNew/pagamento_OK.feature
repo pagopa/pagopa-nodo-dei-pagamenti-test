@@ -16977,6 +16977,25 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
             | ORDER BY   | ID ASC                                |
+        # POSITION_RECEIPT_RECIPIENT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                                                                                            |
+            | ID                       | NotNone                                                                                                          |
+            | PA_FISCAL_CODE           | $activatePaymentNoticeV2.fiscalCode                                                                              |
+            | NOTICE_ID                | $activatePaymentNoticeV2.noticeNumber                                                                            |
+            | STATUS                   | NOTIFIED,NOTIFIED,NOTICE_PENDING,NOTIFIED,NOTIFIED,NOTIFIED,NOTIFIED,NOTIFIED                                    |
+            | INSERTED_TIMESTAMP       | NotNone                                                                                                          |
+            | CREDITOR_REFERENCE_ID    | $paGetPaymentV2.creditorReferenceId                                                                              |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken                                                                    |
+            | RECIPIENT_PA_FISCAL_CODE | 90000000001,90000000001,66666666666,90000000002,90000000003,90000000003,88888888888,88888888888                  |
+            | RECIPIENT_STATION_ID     | 90000000001_09,90000000001_08,standin,90000000001_01,90000000003_02,90000000003_01,88888888888_01,88888888888_02 |
+            | INSERTED_BY              | sendPaymentOutcomeV2                                                                                             |
+            | UPDATED_BY               | sendPaymentOutcomeV2                                                                                             |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
