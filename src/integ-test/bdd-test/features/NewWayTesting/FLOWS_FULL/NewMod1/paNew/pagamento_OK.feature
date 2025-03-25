@@ -7815,7 +7815,7 @@ Feature: NMU flows con PA New pagamento OK
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
+        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment?clientId&deviceId
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -7836,7 +7836,7 @@ Feature: NMU flows con PA New pagamento OK
             | timestampOperation1   | 2021-07-09T17:06:03                           |
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -8034,12 +8034,12 @@ Feature: NMU flows con PA New pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                                                                                               |
-            | TRANSACTION_ID | $transaction_id                                                                                                     |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                     |
-            | INSERTED_BY    | closePayment-v2                                                                                                     |
-            | UPDATED_BY     | closePayment-v2                                                                                                     |
+            | column         | value                                                                                                                           |
+            | TRANSACTION_ID | $transaction_id                                                                                                                 |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn,QUERYSTRING |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344,clientId&deviceId               |
+            | INSERTED_BY    | closePayment-v2                                                                                                                 |
+            | UPDATED_BY     | closePayment-v2                                                                                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -8269,15 +8269,26 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
-        And from $sendPaymentResultv2Req.outcome json check value OK in position 0
-        And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
-        And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 10$iuv in position 0
-        And from $sendPaymentResultv2Req.payments.debtor json check value 44444444444 in position 0
-        And from $sendPaymentResultv2Req.payments.description json check value pagamentoTest in position 0
-        And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
-
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultV2Req
+        And from $sendPaymentResultV2Req.outcome json check value OK in position 0
+        And from $sendPaymentResultV2Req.paymentDate json check value NotNone in position 0
+        And from $sendPaymentResultV2Req.payments.companyName json check value company in position 0
+        And from $sendPaymentResultV2Req.payments.creditorReferenceId json check value 10$iuv in position 0
+        And from $sendPaymentResultV2Req.payments.debtor json check value 44444444444 in position 0
+        And from $sendPaymentResultV2Req.payments.description json check value pagamentoTest in position 0
+        And from $sendPaymentResultV2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $sendPaymentResultV2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $sendPaymentResultV2Req.payments.officeName json check value office in position 0
+        # RE INFO
+        And retrieve record from RE where columns INFO on db re with where datatable horizontal and save it under the key info
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentResult-v2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And checking value $info is containing value clientId&deviceId
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_18
