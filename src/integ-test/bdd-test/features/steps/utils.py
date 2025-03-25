@@ -419,6 +419,12 @@ def replace_local_variables_for_query(body, context):
     return body
 
 
+
+def check_exists_tag_in_payload(context, tag, payload):
+    from xml.etree.ElementTree import fromstring
+    root = fromstring(payload)
+    return root.find(".//{}".format(tag)) is None
+
 # position deve essere l'occorrenza (prima seconda terza...) del tag che si vuole controllare
 def replace_local_variables_with_position(body, position, context, type_body):
     list_tag = body.split(".")
@@ -439,12 +445,18 @@ def replace_local_variables_with_position(body, position, context, type_body):
     for field in match:
         saved_elem = getattr(context, field.replace('$', '').split('.')[0])
         value = saved_elem
+        
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[size_list-1]
+            
             if dbRun == "Postgres":
                 if isinstance(saved_elem, str):
                     modify_xmlns = False
                     try:
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem)
+            
+                        if check_tag_exists:
+                            return None
                         document = parseString(saved_elem)
                     except Exception as e:
                         modify_xmlns = True
@@ -454,13 +466,23 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         document = parseString(saved_elem)
                 else:
                     if type_body == 'xml':
+
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem)
+            
+                        if check_tag_exists:
+                            return None
+                        
                         document = parseString(saved_elem.content)
                     elif type_body == 'json':
-                        jsonDict = json.loads(
-                            saved_elem[0][0].tobytes().decode('utf-8'))
+                        jsonDict = json.loads(saved_elem[0][0].tobytes().decode('utf-8'))
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n', '').replace('\t', '')
+
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, payload)
+            
+                        if check_tag_exists:
+                            return None
                         document = parseString(payload)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
@@ -488,8 +510,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         payload = payload.replace('\n', '').replace('\t', '')
                         document = parseString(payload)
             try:
-                value = document.getElementsByTagNameNS(
-                    '*', tag)[int(position)].firstChild.data
+                value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data
             except Exception as e:
                 raise Exception(
                     f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
@@ -1999,3 +2020,5 @@ def replace_placeholders(value):
             return value.replace(match.group(0), new_date_with_time)
     
     return value
+
+

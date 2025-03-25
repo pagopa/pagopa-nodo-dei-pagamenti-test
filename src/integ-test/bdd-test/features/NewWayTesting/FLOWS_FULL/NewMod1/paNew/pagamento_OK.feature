@@ -4200,6 +4200,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
         And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentReq.transferType xml check value NotExists in position 0
         # paGetPayment RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -4695,6 +4696,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $paGetPaymentV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paGetPaymentV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
         And from $paGetPaymentV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentV2Req.transferType xml check value PAGOPA in position 0
         # paGetPaymentV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |

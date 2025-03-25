@@ -4833,6 +4833,9 @@ def step_impl(context, value_obtained_with_path, type_body, value_expected, n):
         elif value_expected == 'NotNone':    
             assert value_obtained_with_path != None, f"For tipo evento: {tipo_evento} assert result query with Not None field: {field_to_check} Failed!"
             print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is NotNone")
+        elif value_expected == 'NotExists':
+            assert value_obtained_with_path is None, f"Tag presente nel {list_tag}"
+            print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} Not Exists")
         else:
             if utils.isFloat(value_expected):
                 assert float(value_obtained_with_path) == float(value_expected), f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {float(value_obtained_with_path)} != value expected: {float(value_expected)}"
