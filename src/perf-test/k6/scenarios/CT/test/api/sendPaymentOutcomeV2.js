@@ -73,12 +73,17 @@ export function sendPaymentOutcomeV2MultiToken(baseUrl, rndAnagPsp, paymentToken
 export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken,  isMulti) {
   //console.debug("VERIFY="+noticeNmbr);
   console.debug(sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken))
+  var primitivaName = "sendPaymentOutcomeV2";
+  if (isMulti){
+	primitivaName+="Multi";
+	}
+  
   const res = http.post(
     getBasePath(baseUrl, "sendPaymentOutcomeV2")+'?primitiva=sendPaymentOutcomeV2',
     sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcomeV2' }),
-      tags: { sendPaymentOutcomeV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "sendPaymentOutcomeV2Multi" }
+      tags: { sendPaymentOutcomeV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: primitivaName }
     }
   );
 

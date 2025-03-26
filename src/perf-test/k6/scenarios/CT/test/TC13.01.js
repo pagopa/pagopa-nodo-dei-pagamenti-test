@@ -15,6 +15,7 @@ import TC0604_new_old from './TC06.04_new_old.js';
 import TC0801 from './TC08.01.js';
 import TC0901 from './TC09.01.js';
 import TC0902 from './TC09.02.js';
+import TC1001 from './TC10.01.js';
 import TC0603_new_new from './TC06.03_new_new.js';
 import TC0602_new_old from './TC06.02_new_old.js';
 import TC1201 from './TC12.01.js';
@@ -118,24 +119,24 @@ export default function () {
 			TC1201();
         });
     } else if (rand < 6.33) { // 1.03%
+        group('ScenarioMisto: TC10.01', () => {
+			TC1001();
+        });
+    } else if (rand < 7.63) { // 1.3%
         group('ScenarioMisto: TC06.01_multi_nav', () => {
 			TC0601_multi_nav();
         });
-    } else if (rand < 7.63) { // 1.30%
+    } else if (rand < 9) { // 1.37%
         group('ScenarioMisto: TC02.03', () => {
 			TC0203();
         });
-    } else if (rand < 9.00) { // 1.37&
+    } else if (rand < 10.37) { // 1.37&
         group('ScenarioMisto: TC02.04', () => {
 			TC0204();
         });
-    } else if (rand < 10.37) { // 1.37%
+    } else if (rand < 18.15) { // 7.78%
         group('ScenarioMisto: TC06.02_new_new', () => {
 			TC0602_new_new();
-        });
-    } else if (rand < 18.15) { // 7.78%
-        group('ScenarioMisto: TC02.03', () => {
-			TC0203();
         });
     } else if (rand < 39.00) { // 20.85%
         group('ScenarioMisto: TC06.01_new_new', () => {
