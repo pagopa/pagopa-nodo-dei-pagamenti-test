@@ -33,7 +33,7 @@ export const options = {
     mixed_scenario: {
       preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
-          timeUnit: '3.5s',
+          timeUnit: '3.2s', //'3.5s'
           maxVUs: 1500,
                 stages: [
             { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
@@ -59,7 +59,8 @@ export const options = {
            ],
            tags: { test_type: 'ALL', scenarioName: 'TC13.01' }
     }
-  }
+  },
+  summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.5)', 'p(99.9)', 'p(99.99)', 'p(100)', 'count']
 };
 
 export default function () {
