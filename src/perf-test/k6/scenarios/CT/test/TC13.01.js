@@ -19,7 +19,6 @@ import TC1001 from './TC10.01.js';
 import TC0603_new_new from './TC06.03_new_new.js';
 import TC0602_new_old from './TC06.02_new_old.js';
 import TC1201 from './TC12.01.js';
-import * as common from '../../CommonScript.js';
 import { SharedArray } from 'k6/data';
 
 export const getScalini = new SharedArray('scalini', function () {
@@ -34,7 +33,7 @@ export const options = {
     mixed_scenario: {
       preAllocatedVUs: 1, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
-          timeUnit: '4s',
+          timeUnit: '3.5s',
           maxVUs: 1500,
                 stages: [
             { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
