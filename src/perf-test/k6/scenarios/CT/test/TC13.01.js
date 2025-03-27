@@ -19,6 +19,7 @@ import TC1001 from './TC10.01.js';
 import TC0603_new_new from './TC06.03_new_new.js';
 import TC0602_new_old from './TC06.02_new_old.js';
 import TC1201 from './TC12.01.js';
+import * as common from '../../CommonScript.js';
 import { SharedArray } from 'k6/data';
 
 export const getScalini = new SharedArray('scalini', function () {
@@ -57,7 +58,7 @@ export const options = {
             { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
             { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
            ],
-           tags: { test_type: 'ALL', scenarioName: 'TC06.05_NMU_misto' }
+           tags: { test_type: 'ALL', scenarioName: 'TC13.01' }
     }
   }
 };
@@ -150,9 +151,3 @@ export default function () {
 
 }
 
-export function handleSummary(data) {
-    console.debug('Preparing the end-of-test summary...');
-
-    return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
-
-}
