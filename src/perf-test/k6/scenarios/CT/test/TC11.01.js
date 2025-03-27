@@ -43,7 +43,8 @@ export const options = {
            ],
            tags: { test_type: 'ALL', scenarioName: 'TC11.01' }
     }
-  }
+  },
+  summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.5)', 'p(99.9)', 'p(99.99)', 'p(100)', 'count']
 };
 
 export default function () {
