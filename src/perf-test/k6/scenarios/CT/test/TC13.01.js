@@ -6,7 +6,7 @@ import TC0306 from './TC03.06.js';
 import TC0601_new_new from './TC06.01_new_new.js';
 import TC0601_new_old from './TC06.01_new_old.js';
 import TC0601_multi_nav from './TC06.01_multi_nav.js';
-import TC0601_broadcast from './TC06.01_broadcast.js';
+import TC0601_broadcast from './TC06.01_Broadcast.js';
 import TC0601_MBD from './TC06.01_MBD.js';
 import TC0602_new_new from './TC06.02_new_new.js';
 import TC0603_new_old from './TC06.03_new_old.js';
