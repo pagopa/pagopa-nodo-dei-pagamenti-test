@@ -81,8 +81,8 @@ export default function () {
         });
     } else if (rand < 0.19) { // 0.16%
         group('ScenarioMisto: TC09.02', () => {
-			//TC0902(); // ddd
-			TC0305();
+			TC0902(); // ddd
+			//TC0305();
         });
     } else if (rand < 0.39) { // 0.2%
         group('ScenarioMisto: TC06.03_new_new', () => {
