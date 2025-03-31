@@ -4670,6 +4670,7 @@ Feature: NM3 flows PA New con pagamento OK
       | TRANSFER_IDENTIFIER      | 1                           |
       | VALID                    | Y                           |
       | FK_POSITION_PAYMENT      | NotNone                     |
+      | COMPANY_NAME_SECONDARY   | companySec                  |
       | INSERTED_TIMESTAMP       | NotNone                     |
       | UPDATED_TIMESTAMP        | NotNone                     |
       | FK_PAYMENT_PLAN          | NotNone                     |
@@ -4788,6 +4789,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value 10 in position 0
     And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 1
+    And from $activatePaymentNoticeResp.transferList.transfer.companyName xml check value NotExists in position 1
     And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     And from $activatePaymentNoticeResp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
     And from $activatePaymentNoticeResp.creditorReferenceId xml check value 10$iuv in position 0
@@ -11439,6 +11441,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
     And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+    And from $activatePaymentNoticeV2Resp.transferList.transfer.companyName xml check value companySec in position 1
     And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value NotNone in position 0
     And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 10$iuv in position 0
     # paGetPaymentV2 REQ

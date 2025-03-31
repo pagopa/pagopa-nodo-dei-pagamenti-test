@@ -4546,6 +4546,7 @@ Feature: NMU flows con PA New pagamento OK
             | TRANSFER_CATEGORY        | NotNone                             |
             | TRANSFER_IDENTIFIER      | 1                                   |
             | VALID                    | Y                                   |
+            | COMPANY_NAME_SECONDARY   | companySec                          |
             | FK_POSITION_PAYMENT      | NotNone                             |
             | INSERTED_TIMESTAMP       | NotNone                             |
             | UPDATED_TIMESTAMP        | NotNone                             |
@@ -4682,8 +4683,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.companyName xml check value companySec in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
-        And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 10$iuv in position 0
+        And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 10$iuv in position 0 
         # paGetPaymentV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
