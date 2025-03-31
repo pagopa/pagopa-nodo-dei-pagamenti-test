@@ -420,12 +420,22 @@ def replace_local_variables_for_query(body, context):
 
 
 
-def check_exists_tag_in_payload(context, tag, payload):
-    from xml.etree.ElementTree import fromstring
+def check_exists_tag_in_payload(context, tag, payload, posizione):
+    from xml.etree.ElementTree import fromstring 
+    
+    try:
+        posizione = int(posizione)
+    except ValueError as e:
+        raise Exception(
+                    f"La posizione non può essere convertitsa in un intero!") from e
+ 
     root = fromstring(payload)
-    return root.find(".//{}".format(tag)) is None
+    elements = root.findall(".//{}".format(tag))
+    
+    return not elements or not (0 <= posizione < len(elements))
 
-# position deve essere l'occorrenza (prima seconda terza...) del tag che si vuole controllare
+
+
 def replace_local_variables_with_position(body, position, context, type_body):
     list_tag = body.split(".")
     size_list = len(list_tag)
@@ -453,7 +463,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                 if isinstance(saved_elem, str):
                     modify_xmlns = False
                     try:
-                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem)
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem, position)
             
                         if check_tag_exists:
                             return None
@@ -467,7 +477,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                 else:
                     if type_body == 'xml':
 
-                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem)
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem, position)
             
                         if check_tag_exists:
                             return None
