@@ -489,7 +489,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n', '').replace('\t', '')
 
-                        check_tag_exists = check_exists_tag_in_payload(context, tag, payload)
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, payload, position)
             
                         if check_tag_exists:
                             return None
