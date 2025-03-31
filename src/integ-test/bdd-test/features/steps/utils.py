@@ -427,7 +427,7 @@ def check_exists_tag_in_payload(context, tag, payload, posizione):
         posizione = int(posizione)
     except ValueError as e:
         raise Exception(
-                    f"La posizione non può essere convertitsa in un intero!") from e
+                    f"La posizione non può essere convertita in un intero!") from e
  
     root = fromstring(payload)
     elements = root.findall(".//{}".format(tag))
