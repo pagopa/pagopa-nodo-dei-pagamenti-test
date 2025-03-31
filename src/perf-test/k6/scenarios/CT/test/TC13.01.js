@@ -81,8 +81,8 @@ export default function () {
         });
     } else if (rand < 0.19) { // 0.16%
         group('ScenarioMisto: TC09.02', () => {
-			//TC0902(); // ddd
-			TC0305();
+			TC0902(); // ddd
+			//TC0305();
         });
     } else if (rand < 0.39) { // 0.2%
         group('ScenarioMisto: TC06.03_new_new', () => {
@@ -106,8 +106,8 @@ export default function () {
         });
     } else if (rand < 2.30) { // 0.75%
         group('ScenarioMisto: TC06.01_broadcast', () => {
-			TC0601_broadcast(); //ddd
-			//TC0305();
+			//TC0601_broadcast(); //ddd
+			TC0305();
         });
     } else if (rand < 3.30) { // 1%
         group('ScenarioMisto: TC03.06', () => {
@@ -127,8 +127,8 @@ export default function () {
         });
     } else if (rand < 7.63) { // 1.3%
         group('ScenarioMisto: TC06.01_multi_nav', () => {
-			TC0601_multi_nav(); //ddd
-			//TC0305();
+			//TC0601_multi_nav(); //ddd
+			TC0305();
         });
     } else if (rand < 9) { // 1.37%
         group('ScenarioMisto: TC02.03', () => {
