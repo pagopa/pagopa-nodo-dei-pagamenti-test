@@ -1157,7 +1157,7 @@ Feature: spostamento traduttore 954
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @prova
+    
     Scenario: Test 2.1 (part 3)
         Given the Test 2.1 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1446,7 +1446,7 @@ Feature: spostamento traduttore 954
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And apply new restore initial configurations
 
-    @test 
+    @test @poppa
     Scenario: Test 3.1 (part 5)
         Given the Test 3.1 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
