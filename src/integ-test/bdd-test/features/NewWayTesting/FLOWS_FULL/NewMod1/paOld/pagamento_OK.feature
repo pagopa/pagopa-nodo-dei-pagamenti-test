@@ -8156,7 +8156,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
   @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_16
-  Scenario: NMU flow OK, FLOW con PA Old e PSP vp2, chiamate parallelo -> spo+ arriva prima della risposta alla notify -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 REQ malformata outcome OO, spoV2+ REQ -> paInviaRT+ (OLD_NMU-210)
+  Scenario: NMU flow OK, FLOW con PA Old e PSP vp2 -> spo+ arriva prima della risposta alla notify -> checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 REQ malformata outcome OO, spoV2+ REQ -> paInviaRT+ (OLD_NMU-210)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 305#iuv#     |
