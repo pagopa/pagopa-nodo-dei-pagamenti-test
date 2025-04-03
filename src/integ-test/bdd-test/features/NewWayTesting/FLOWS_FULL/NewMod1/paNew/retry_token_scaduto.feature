@@ -947,7 +947,27 @@ Feature: NMU flows con PA New retry a token scaduto
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        # IDEMPOTENCY_CACHE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                         |
+            | ID                 | NotNone                                       |
+            | PRIMITIVA          | activatePaymentNoticeV2                       |
+            | PSP_ID             | $activatePaymentNoticeV2.idPSP                |
+            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode           |
+            | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber         |
+            | TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+            | VALID_TO           | NotNone                                       |
+            | HASH_REQUEST       | NotNone                                       |
+            | RESPONSE           | NotNone                                       |
+            | INSERTED_TIMESTAMP | NotNone                                       |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                            |
+            | IDEMPOTENCY_KEY | $activatePaymentNoticeV2.idempotencyKey |
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                            |
+            | IDEMPOTENCY_KEY | $activatePaymentNoticeV2.idempotencyKey |
         When job mod3CancelV2 triggered after 4 seconds
+        And job idempotencyCacheClean triggered after 1 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
@@ -975,6 +995,10 @@ Feature: NMU flows con PA New retry a token scaduto
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
         And wait 1 seconds for expiration
+        # IDEMPOTENCY_CACHE
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                            |
+            | IDEMPOTENCY_KEY | $activatePaymentNoticeV2.idempotencyKey |
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -1414,7 +1438,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | CREDITOR_REFERENCE_ID      | 10$iuv                                        |
             | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
-            | STATION_ID                 | #stazione_versione_primitive_2#                                  |
+            | STATION_ID                 | #stazione_versione_primitive_2#               |
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
@@ -1694,7 +1718,7 @@ Feature: NMU flows con PA New retry a token scaduto
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                            |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -1710,7 +1734,7 @@ Feature: NMU flows con PA New retry a token scaduto
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                            |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
             | SOTTO_TIPO_EVENTO  | RESP                                          |
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
