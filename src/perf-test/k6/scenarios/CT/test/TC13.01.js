@@ -66,7 +66,7 @@ export const options = {
 export default function () {
     // Genera un numero casuale compreso tra 0 e 1
     const rand = Math.random()*100;
-
+    
 	if (rand < 0.01) { //0.01%
         group('ScenarioMisto: TC06.03_new_old', () => {
 			TC0603_new_old();
@@ -93,8 +93,17 @@ export default function () {
 			TC0604_new_new();
         });
     } else if (rand < 0.89) { // 0.3%
+    	const subCase = Math.random()*100;
+    	var dimensioneLista = undefined; //default value
+    	
+    	if(subCase <= 1.15){
+			dimensioneLista = 9999
+		}
+		else {
+			dimensioneLista = 500;
+		}
         group('ScenarioMisto: TC09.01', () => {
-			TC0901();
+			TC0901(dimensioneLista);
         });
     } else if (rand < 1.21) { // 0.32%
         group('ScenarioMisto: TC06.01_MBD', () => {

@@ -121,8 +121,12 @@ export const options = {
 
 };
 
-export function total() {
-
+export function total(dimensioneLista) {
+if (dimensioneLista == undefined)
+{
+	dimensioneLista = 500;
+}
+console.debug(`dimensione lista ${dimensioneLista}`);
   let baseSoapUrl = "";
   let urls = csvBaseUrl;
   for (var key in urls) {
@@ -139,14 +143,14 @@ export function total() {
   iuvArray.push(iuv);
   let res = RPT_Carrello_1(baseSoapUrl, rndAnagPsp, rndAnagPa, iuvArray);
 
-  res = nodoChiediListaPendentiRPT(baseSoapUrl, rndAnagPa);
+  res = nodoChiediListaPendentiRPT(baseSoapUrl, rndAnagPa, dimensioneLista);
 
   res = nodoChiediStatoRPT(baseSoapUrl, rndAnagPa, iuv, "PERFORMANCE");
 
 }
 
-export default function () {
-  total();
+export default function (dimensioneLista) {
+  total(dimensioneLista);
 }
 
 export function handleSummary(data) {
