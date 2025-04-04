@@ -19,7 +19,7 @@ export function nodoChiediListaPendentiRPTReqBody(pa, intpa, stazpa) {
           <identificativoStazioneIntermediarioPA>${stazpa}</identificativoStazioneIntermediarioPA>
           <password>pwdpwdpwd</password>
           <identificativoDominio>${pa}</identificativoDominio>
-          <dimensioneLista>200</dimensioneLista>
+          <dimensioneLista>500</dimensioneLista>
       </ws:nodoChiediListaPendentiRPT>
   </soapenv:Body>
   </soapenv:Envelope>`};
