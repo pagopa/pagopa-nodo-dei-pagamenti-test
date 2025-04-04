@@ -96,7 +96,7 @@ export default function () {
     	const subCase = Math.random()*100;
     	var dimensioneLista = undefined; //default value
     	
-    	if(subCase <= 1.15){
+    	if(subCase <= 0.2){
 			dimensioneLista = 9999
 		}
 		else {
