@@ -6038,12 +6038,9 @@ Feature: NMU flows con pagamento KO
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
         And saving paGetPaymentV2 request in paGetPaymentV2_2Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-
         Given from body with datatable vertical pspNotifyPaymentV2_Timeout_noOptional initial XML pspNotifyPaymentV2
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
-
-
         And from body with datatable vertical closePaymentV2Body_CP_2paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
             | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
@@ -7761,7 +7758,7 @@ Feature: NMU flows con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_17 @after
-    Scenario: NMU flow paNEW VP2 KO, FLOW: con checkPosition con 2 nav, activateV2 token1-> paGetPayment, activateV2 token2 -> pspNotifyPaymentV2 in timeout -> closeV2+ -> mod3CancelV2  (OLD_NM1-47)
+    Scenario: NMU flow paNEW VP2 KO, FLOW: con checkPosition con 2 nav, activateV2-> paGetPayment, activateV2 -> paGetPayment -> pspNotifyPaymentV2 in timeout -> closeV2+ -> mod3CancelV2  (OLD_NM1-47)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 16000
         And waiting after triggered refresh job ALL
         And from body with datatable vertical checkPositionBody_2element initial JSON checkPosition
