@@ -29624,7 +29624,7 @@ Feature: NM3 flows PA New con pagamento OK
       | OBJ_ID     | ('7','15131') |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
-    Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+    And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 50.00  |
     And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
@@ -31460,7 +31460,7 @@ Feature: NM3 flows PA New con pagamento OK
       | OBJ_ID     | ('7','15131') |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
-    Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+    And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 50.00  |
     And from body with datatable vertical paGetPaymentV2_5transferWithMetadata_full initial XML paGetPaymentV2
@@ -33339,7 +33339,7 @@ Feature: NM3 flows PA New con pagamento OK
       | OBJ_ID     | ('7','15131') |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
-    Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+    And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 50.00  |
     And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment
@@ -35175,7 +35175,7 @@ Feature: NM3 flows PA New con pagamento OK
       | OBJ_ID     | ('7','15131') |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
-    Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+    And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 50.00  |
     And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
@@ -40727,7 +40727,7 @@ Feature: NM3 flows PA New con pagamento OK
       | OBJ_ID     | ('7','15131') |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
-    Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+    And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
       | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     | 50.00  |
     And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2
@@ -42579,7 +42579,7 @@ Feature: NM3 flows PA New con pagamento OK
       | OBJ_ID     | ('7','15131') |
     And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And waiting after triggered refresh job ALL
-    Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+    And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
       | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 310#iuv#     | 50.00  |
     And from body with datatable vertical paGetPaymentV2_5transfer_full initial XML paGetPaymentV2

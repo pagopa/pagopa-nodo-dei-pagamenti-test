@@ -11202,6 +11202,7 @@ Feature: NMU flows con PA New pagamento OK
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_21 @after
     Scenario: NMU flow paNEW OK con Multitoken paPrinc=paSec standin no flag_standin_psp no flag_standin_pa flag invioReceiptStandin=true, FLOW: checkPosition con 4 nav, 4x activateV2 -> token1: paGetPayment verso ACA 5 transfer paPrincip = paSecond, token2: paGetPaymentV2 5 transfer paPrincip = paSecond, token3: paGetPayment 5 transfer paPrincip = paSecond, token4: paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotifyV2 con 4 token e senza il flag standin=true, spoV2+ con 4 token ->token1: 2xpaSendRTV2 verso stazione principale standin , 1 paSendRT e 1 paSendRTV2, 5x BIZ+ e SPRv2+ (NMU-35)
         Given update parameter invioReceiptStandin on configuration keys with value true
+        And waiting after triggered refresh job ALL
         And from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
             | fiscalCode2   | #creditor_institution_code# |
@@ -34671,6 +34672,7 @@ Feature: NMU flows con PA New pagamento OK
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_50 @after
     Scenario: NMU flow paNEW OK con Multitoken paPrinc!=paSec standin no flag_standin_psp no flag_standin_pa flag invioReceiptStandin=true, FLOW: checkPosition con 4 nav, 4x activateV2 -> token1: paGetPayment verso ACA 5 transfer paPrincip != paSecond, token2: paGetPaymentV2 5 transfer paPrincip != paSecond, token3: paGetPayment 5 transfer paPrincip != paSecond, token4: paGetPaymentV2 verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotifyV2 con 4 token e senza il flag standin=true, spoV2+ con 4 token ->token1: 2xpaSendRTV2 verso stazione principale standin , 1 paSendRT e 1 paSendRTV2, 5x BIZ+ e SPRv2+ (NMU-36)
         Given update parameter invioReceiptStandin on configuration keys with value true
+        And waiting after triggered refresh job ALL
         And from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
             | fiscalCode2   | #creditor_institution_code# |
