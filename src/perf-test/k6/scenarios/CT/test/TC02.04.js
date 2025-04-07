@@ -121,8 +121,10 @@ export const options = {
 }; 
 
 
-export function total() {
-
+export function total(skipSpo) {
+if(skipSpo == undefined){
+	skipSpo = false;
+}
   let baseUrl = "";
   let urls = csvBaseUrl;
   for (var key in urls){
@@ -145,14 +147,14 @@ export function total() {
   console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
   res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 
-
+if(!skipSpo){
   res = sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken);
-
+}
 }
 
 
-export default function(){
-	total();
+export default function(skipSpo){
+	total(skipSpo);
 }
 
 

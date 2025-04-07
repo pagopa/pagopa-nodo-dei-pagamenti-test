@@ -133,13 +133,15 @@ export const options = {
 }; 
 
 
-export function total() {
+export function total(skipSpo) {
 
   /*console.debug("current stage index="+getCurrentStageIndex());
   console.debug(exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target);
   options.rps = exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target;
   console.debug(options.rps);*/
-
+if(skipSpo == undefined){
+	skipSpo = false;
+}
   let baseUrl = "";
   let urls = csvBaseUrl;
   for (var key in urls){
@@ -163,15 +165,15 @@ export function total() {
  let paymentToken=res.paymentToken;
 
 
-
-  res = sendPaymentOutcome_NN(baseUrl,rndAnagPsp,paymentToken);
-
+ if(!skipSpo){
+  		res = sendPaymentOutcome_NN(baseUrl,rndAnagPsp,paymentToken);
+	}
 
 }
 
 
-export default function(){
-	total();
+export default function(skipSpo){
+	total(skipSpo);
 }
 
 
