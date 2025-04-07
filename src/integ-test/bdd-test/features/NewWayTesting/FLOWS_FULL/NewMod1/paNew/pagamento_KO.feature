@@ -6976,8 +6976,8 @@ Feature: NMU flows con pagamento KO
             | where_keys      | where_values                              |
             | IDEMPOTENCY_KEY | $activatePaymentNoticeV2_2.idempotencyKey |
         Given from body with datatable horizontal pspNotifyPaymentV2_malformata_KO initial XML pspNotifyPaymentV2
-            | outcome  | 
-            | OO       |
+            | outcome |
+            | OO      |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
         And from body with datatable vertical closePaymentV2Body_CP_2paymentTokens initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
@@ -7009,13 +7009,13 @@ Feature: NMU flows con pagamento KO
         # POSITION_PAYMENT_STATUS
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                             |
-            | ID                    | NotNone                                                           |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_1.fiscalCode                             |
-            | CREDITOR_REFERENCE_ID | $paGetPaymentV2_1Request.creditorReferenceId                      |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_1Response.paymentToken                   |
-            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED    |
-            | INSERTED_TIMESTAMP    | NotNone                                                           |
+            | column                | value                                                          |
+            | ID                    | NotNone                                                        |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_1.fiscalCode                          |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2_1Request.creditorReferenceId                   |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_1Response.paymentToken                |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED |
+            | INSERTED_TIMESTAMP    | NotNone                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
@@ -7026,13 +7026,13 @@ Feature: NMU flows con pagamento KO
             | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                             |
-            | ID                    | NotNone                                                           |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_2.fiscalCode                             |
-            | CREDITOR_REFERENCE_ID | $paGetPaymentV2_2Request.creditorReferenceId                      |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_2Response.paymentToken                   |
-            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED    |
-            | INSERTED_TIMESTAMP    | NotNone                                                           |
+            | column                | value                                                          |
+            | ID                    | NotNone                                                        |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_2.fiscalCode                          |
+            | CREDITOR_REFERENCE_ID | $paGetPaymentV2_2Request.creditorReferenceId                   |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_2Response.paymentToken                |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED |
+            | INSERTED_TIMESTAMP    | NotNone                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
