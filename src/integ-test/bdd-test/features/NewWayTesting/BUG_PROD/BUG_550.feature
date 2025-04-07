@@ -5,7 +5,7 @@ Feature: BUG PROD
         Given systems up    
     
     # process tests for generazioneRicevute 1337
-    @ALL @FLOW @FLOW_FULL @BUG @BUG_550 @after
+    @ALL @FLOW @FLOW_FULL @BUG @BUG_550
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp1 spo: verify -> activate -> nodoInviaRPT  mod3CancelV1 -> activate -> nodoInviaRPT -> spo+ (BUG-4)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber |
