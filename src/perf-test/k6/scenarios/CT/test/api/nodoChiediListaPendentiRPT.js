@@ -8,7 +8,7 @@ import { getBasePath, getHeaders } from "../util/base_path_util.js";
 export const activatePaymentNotice_Trend = new Trend('nodoChiediListaPendentiRPT');
 export const All_Trend = new Trend('ALL');
 
-export function nodoChiediListaPendentiRPTReqBody(pa, intpa, stazpa) {
+export function nodoChiediListaPendentiRPTReqBody(pa, intpa, stazpa, dimensioneLista) {
 
   return `
   <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -19,17 +19,17 @@ export function nodoChiediListaPendentiRPTReqBody(pa, intpa, stazpa) {
           <identificativoStazioneIntermediarioPA>${stazpa}</identificativoStazioneIntermediarioPA>
           <password>pwdpwdpwd</password>
           <identificativoDominio>${pa}</identificativoDominio>
-          <dimensioneLista>500</dimensioneLista>
+          <dimensioneLista>${dimensioneLista}</dimensioneLista>
       </ws:nodoChiediListaPendentiRPT>
   </soapenv:Body>
   </soapenv:Envelope>`};
 
 
-export function nodoChiediListaPendentiRPT(baseUrl, rndAnagPa) {
+export function nodoChiediListaPendentiRPT(baseUrl, rndAnagPa, dimensioneLista) {
 
   console.debug(nodoChiediListaPendentiRPTReqBody(rndAnagPa.CF));
   let res = http.post(getBasePath(baseUrl, "nodoChiediListaPendentiRPT")+'?primitiva=nodoChiediListaPendentiRPT',
-    nodoChiediListaPendentiRPTReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA),
+    nodoChiediListaPendentiRPTReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, dimensioneLista),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediListaPendentiRPT' }),
       tags: { nodoChiediListaPendentiRPT: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoChiediListaPendentiRPT" }
