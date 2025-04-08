@@ -9115,7 +9115,7 @@ Feature: NMU flows con pagamento KO
         Given from body with datatable vertical pspNotifyPayment_Timeout_noOptional initial XML pspNotifyPayment
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
+        And from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -9509,7 +9509,7 @@ Feature: NMU flows con pagamento KO
         Given from body with datatable vertical pspNotifyPayment_Timeout_noOptional initial XML pspNotifyPayment
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
+        And from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -9902,7 +9902,7 @@ Feature: NMU flows con pagamento KO
         Given from body with datatable vertical pspNotifyPayment_Timeout_noOptional initial XML pspNotifyPayment
             | delay | 10000 |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
+        And from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
