@@ -10270,7 +10270,7 @@ Feature: NMU flows con pagamento KO
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_22
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_23
     Scenario: NMU flow paNEW KO, FLOW: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> mod3CancelV2 (OLD_NMU-68)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
