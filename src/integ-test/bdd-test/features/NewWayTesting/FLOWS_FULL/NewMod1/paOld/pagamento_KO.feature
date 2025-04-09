@@ -4235,12 +4235,11 @@ Feature: NMU flows PA Old con pagamento KO
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
-        When job mod3CancelV1 triggered after 1 seconds
-        And job paInviaRt triggered after 4 seconds
+        When job mod3CancelV1 triggered after 2 seconds
+        And job paInviaRt triggered after 1 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And verify the HTTP status code of paInviaRt response is 200
-        And wait 3 seconds for expiration
+        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                        |
