@@ -8780,7 +8780,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
   @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_17
-  Scenario: NMU flow OK, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment con Timeout, spo+ -> paInviaRT+, SPRv2+ (OLD_NMU-193)
+  Scenario: NMU flow OK, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment con Timeout, spo+ -> SPRv2+ (OLD_NMU-193)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
@@ -9369,7 +9369,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
   @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_18
-  Scenario: NMU flow OK, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment malformata, spo+ -> paInviaRT+, SPRv2+ (OLD_NMU-194)
+  Scenario: NMU flow OK, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment malformata, spo+ -> SPRv2+ (OLD_NMU-194)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
       | #creditor_institution_code# | 312#iuv#     |
