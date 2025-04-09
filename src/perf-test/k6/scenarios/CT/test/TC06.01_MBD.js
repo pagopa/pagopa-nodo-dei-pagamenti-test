@@ -166,7 +166,7 @@ export function total() {
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
-    sleep(2);
+    sleep(3);
 
     let mbdEncoded = mbdUtil.getMbdEncoded(rndAnagPsp.PSP, iubd);
     res = sendPaymentOutcomeV2MBD(baseSoapUrl, rndAnagPsp, paymentToken, mbdEncoded);
