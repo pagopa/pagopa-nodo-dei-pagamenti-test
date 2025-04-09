@@ -36564,6 +36564,18 @@ Feature: NMU flows con PA New pagamento OK
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
             | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        # PM_METADATA
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column         | value                                                                                                               |
+            | TRANSACTION_ID | $transaction_id                                                                                                     |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                     |
+            | INSERTED_BY    | closePayment-v2                                                                                                     |
+            | UPDATED_BY     | closePayment-v2                                                                                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values    |
+            | TRANSACTION_ID | $transaction_id |
+            | ORDER BY       | ID ASC          |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -36801,7 +36813,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome |
             | OO      |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
-        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
+        And from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
@@ -37019,6 +37031,18 @@ Feature: NMU flows con PA New pagamento OK
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
+        # PM_METADATA
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column         | value                                                                                                               |
+            | TRANSACTION_ID | $transaction_id                                                                                                     |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                     |
+            | INSERTED_BY    | closePayment-v2                                                                                                     |
+            | UPDATED_BY     | closePayment-v2                                                                                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values    |
+            | TRANSACTION_ID | $transaction_id |
+            | ORDER BY       | ID ASC          |
         #RE #####
         # activatePaymentNoticeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
