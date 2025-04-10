@@ -94,10 +94,9 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
 
 
 
-  /*if(outcome=='KO'){
-  console.debug("verifyNN REQuest----------------"+ verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr)); 
-  console.debug("verifyNN RESPONSE----------------"+res.body);
-  }*/
+  if(outcome!=='OK'){
+  console.info(`verifyPaymentNotice_NN KO RES ${JSON.stringify(res)}`);
+  }
     
    check(
     res,
