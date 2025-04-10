@@ -50,7 +50,7 @@
 							<!--1 to 10 repetitions:-->
 							<mapEntry>
 								<key>$key</key>
-								<value>22</value>
+								<value>$value</value>
 							</mapEntry>
 						</metadata>
 					</transfer>
@@ -60,7 +60,7 @@
 					<!--1 to 10 repetitions:-->
 					<mapEntry>
 						<key>$key</key>
-						<value>22</value>
+						<value>$value</value>
 					</mapEntry>
 				</metadata>
 			</data>
