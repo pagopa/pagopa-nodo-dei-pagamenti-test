@@ -36317,7 +36317,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGOK_FULL_52
-    Scenario: NMU flow paNEW OK, FLOW: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> spoV2+ -> OK (OLD_NMU-66)
+    Scenario: NMU flow paNEW OK, FLOW con checkPosition con 1 nav: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> spoV2+ -> OK (OLD_NMU-66)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -36777,7 +36777,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGOK_FULL_53
-    Scenario: NMU flow paNEW OK, FLOW: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> spoV2+ -> OK (OLD_NMU-67)
+    Scenario: NMU flow paNEW OK, FLOW con checkPosition con 1 nav:: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> spoV2+ -> OK (OLD_NMU-67)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
