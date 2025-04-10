@@ -2845,6 +2845,11 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
+    When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcomeV2 response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
+
+
 
   @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_6
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-13)
