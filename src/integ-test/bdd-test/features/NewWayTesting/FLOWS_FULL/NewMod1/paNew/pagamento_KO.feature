@@ -11448,7 +11448,7 @@ Feature: NMU flows con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_26
-    Scenario: NMU flow paNEW VP2 KO, FLOW: con  2x activateV2-> 2x paGetPaymentV2 -> pspNotifyPayment -> closeV2 -> SPOV2- -> KO PPT_SEMANTICA (OLD_NM1-135)
+    Scenario: NMU flow paNEW VP1 KO, FLOW: con  2x activateV2-> 2x paGetPayment -> pspNotifyPaymentV2 -> closeV2 con token activate1 -> spoV2- KO con PPT_TOKEN_SCONOSCIUTO (OLD_NM1-135)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
