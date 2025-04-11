@@ -7999,6 +7999,7 @@ Feature: NMU flows con PA New pagamento OK
             | FK_PAYMENT_PLAN          | NotNone                             |
             | INSERTED_BY              | activatePaymentNoticeV2             |
             | UPDATED_BY               | activatePaymentNoticeV2             |
+            | COMPANY_NAME_SECONDARY   | companySec                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8123,10 +8124,13 @@ Feature: NMU flows con PA New pagamento OK
         And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.companyName xml check value company in position 0
+        And from $activatePaymentNoticeV2Resp.officeName xml check value office in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.companyName xml check value companySec in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
@@ -8162,9 +8166,11 @@ Feature: NMU flows con PA New pagamento OK
         And from $paGetPaymentV2Resp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paGetPaymentV2Resp.data.dueDate xml check value 2021-12-12 in position 0
         And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
+        And from $paGetPaymentV2Resp.data.companyName xml check value company in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentV2Resp.data.transferList.transfer.companyName xml check value companySec in position 1
         And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
@@ -8214,6 +8220,25 @@ Feature: NMU flows con PA New pagamento OK
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2Req
+        And from $pspNotifyPaymentV2Req.idPSP xml check value #psp# in position 0
+        And from $pspNotifyPaymentV2Req.idBrokerPSP xml check value #psp# in position 0
+        And from $pspNotifyPaymentV2Req.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $pspNotifyPaymentV2Req.transactionId xml check value NotNone in position 0
+        And from $pspNotifyPaymentV2Req.totalAmount xml check value 12.00 in position 0
+        And from $pspNotifyPaymentV2Req.fee xml check value 2.00 in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.paymentDescription xml check value pagamentoTest in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.companyName xml check value company in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.officeName xml check value office in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.creditorReferenceId xml check value 10$iuv in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.debtAmount xml check value 10.00 in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.transferList.transfer.transferAmount xml check value 10.00 in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $pspNotifyPaymentV2Req.paymentList.payment.transferList.transfer.companyName xml check value companySec in position 1
+        And from $pspNotifyPaymentV2Req.paymentList.payment.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value tipoVersamento in position 0
         And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value CP in position 0
         And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value outcomePaymentGateway in position 1
