@@ -2221,6 +2221,24 @@ Feature: NMU flows con PA New - activation phase
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
             | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+        # POSITION_PAYMENT_PLAN Metadata 1
+        And execution query to get value result_query on the table POSITION_PAYMENT_PLAN, with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC LIMIT 1        |
+        And through the query result_query retrieve json METADATA at position 0 and save it under the key position_payment_plan_metadata
+        And from $position_payment_plan_metadata.key json check value 1 in position 0
+        And from $position_payment_plan_metadata.value json check value 22 in position 0
+        # POSITION_PAYMENT_PLAN Metadata 2
+        And execution query to get value result_query on the table POSITION_PAYMENT_PLAN, with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP DESC LIMIT 1        |
+        And through the query result_query retrieve json METADATA at position 0 and save it under the key position_payment_plan_metadata
+        And from $position_payment_plan_metadata.key json check value chiave in position 0
+        And from $position_payment_plan_metadata.value json check value valore in position 0
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                           |

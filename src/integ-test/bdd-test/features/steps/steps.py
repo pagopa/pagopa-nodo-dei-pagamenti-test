@@ -3670,6 +3670,7 @@ def step_impl(context, query_name, param, position, row_number, key):
 @step("through the query {query_name} retrieve {type_body} {body} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, type_body, body, position, key):
     try:
+        result_query_clean = None
         dbRun = getattr(context, "dbRun")
         result_query = getattr(context, query_name)
         print(f'{query_name}: {result_query}')
@@ -3681,6 +3682,12 @@ def step_impl(context, query_name, type_body, body, position, key):
             elif dbRun == "Oracle":
                 selected_element = result_query[0][position].read().decode('utf-8')
         elif type_body == 'json':
+            if isinstance(result_query[0][0], str):
+                if result_query[0][0].startswith("[") and result_query[0][0].endswith("]"):
+                    json_clean = result_query[0][0].strip("[]").encode("utf-8")
+                    memory_view_json_clean = memoryview(json_clean)
+                    result_query_clean = [(memory_view_json_clean,)]
+                    result_query = result_query_clean
             selected_element = result_query
 
         print(f'{body}: {selected_element}')
