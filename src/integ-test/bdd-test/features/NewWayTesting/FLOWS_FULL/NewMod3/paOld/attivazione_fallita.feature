@@ -4185,3 +4185,27 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $activatePaymentNoticeResp.fault.id xml check value NodoDeiPagamentiSPC in position 0
         And from $activatePaymentNoticeResp.fault.faultCode xml check value PPT_IBAN_ACCREDITO in position 0
         And from $activatePaymentNoticeResp.fault.faultString xml check value Iban accredito non disponibile in position 0
+
+
+
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_16 @after
+    Scenario: NM3 flow retry a token scaduto, FLOW con PA Old vp1 e PSP POSTE vp1: verificaBollettino POSTE -> paVerify KO PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE (NM3-128)
+        Given update for table STAZIONI with parameter VERSIONE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 1200001      |
+        And waiting after triggered refresh job ALL
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+            | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 347#iuv#     |
+        And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
+            | outcome            | OK                          |
+            | amount             | 50.00                       |
+            | options            | EQ                          |
+            | allCCP             | false                       |
+            | paymentDescription | Pagamento di Test           |
+            | fiscalCodePA       | #creditor_institution_code# |
+            | company            | company                     |
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is KO of verificaBollettino response
+        And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of verificaBollettino response
