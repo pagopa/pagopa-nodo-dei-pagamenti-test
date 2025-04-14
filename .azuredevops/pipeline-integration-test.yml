@@ -179,7 +179,7 @@ stages:
               cd $(Build.SourcesDirectory)/oracle
               sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-              sudo wget http://archive.ubuntu.com/ubuntu/pool/main/liba/libaio/libaio1_0.3.112-9_amd64.deb
+              sudo wget https://archive.ubuntu.com/ubuntu/pool/main/liba/libaio/libaio1t64_0.3.113-6build1.1_amd64.deb
               sudo apt install ./libaio1_0.3.112-9_amd64.deb  
               #sudo apt update
               #sudo apt install libaio1
