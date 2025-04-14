@@ -4189,7 +4189,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_16 @after
-    Scenario: NM3 flow retry a token scaduto, FLOW con PA Old vp1 e PSP POSTE vp1: verificaBollettino POSTE -> paVerify KO PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE (NM3-128)
+    Scenario: NM3 flow retry a token scaduto, FLOW con PA Old vp1 e PSP POSTE vp1: verificaBollettino POSTE -> paVerify KO PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE (NM3-107)
         Given update for table STAZIONI with parameter VERSIONE = '1' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
