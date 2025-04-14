@@ -2488,13 +2488,13 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | INVIATA                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                |
             | ORDER BY           | DATA_ORA_EVENTO ASC                             |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Req
-        And from $paGetPaymentV2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idStation xml check value #id_station# in position 0
-        And from $paGetPaymentV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paGetPaymentV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idStation xml check value #id_station# in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
         # paGetPayment 1 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                    |
@@ -2504,18 +2504,18 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | RICEVUTA                                        |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                |
             | ORDER BY           | DATA_ORA_EVENTO ASC                             |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Resp
-        And from $paGetPaymentV2Resp.outcome xml check value OK in position 0
-        And from $paGetPaymentV2Resp.data.creditorReferenceId xml check value 02$iuv in position 0
-        And from $paGetPaymentV2Resp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paGetPaymentV2Resp.data.dueDate xml check value 2021-12-31 in position 0
-        And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         # paGetPayment 2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                    |
@@ -2525,13 +2525,13 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | INVIATA                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                |
             | ORDER BY           | DATA_ORA_EVENTO ASC                             |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Req
-        And from $paGetPaymentV2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idStation xml check value #id_station# in position 0
-        And from $paGetPaymentV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paGetPaymentV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idStation xml check value #id_station# in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
         # paGetPayment 2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                    |
@@ -2541,18 +2541,18 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | RICEVUTA                                        |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                |
             | ORDER BY           | DATA_ORA_EVENTO ASC                             |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Resp
-        And from $paGetPaymentV2Resp.outcome xml check value OK in position 0
-        And from $paGetPaymentV2Resp.data.creditorReferenceId xml check value 02$iuv in position 0
-        And from $paGetPaymentV2Resp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paGetPaymentV2Resp.data.dueDate xml check value 2021-12-31 in position 0
-        And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
 
 
 
@@ -2901,13 +2901,13 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Req
-        And from $paGetPaymentV2Req.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idStation xml check value #id_station# in position 0
-        And from $paGetPaymentV2Req.qrCode.fiscalCode xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Req.qrCode.noticeNumber xml check value $activatePaymentNotice.noticeNumber in position 0
-        And from $paGetPaymentV2Req.amount xml check value $activatePaymentNotice.amount in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentReq.idStation xml check value #id_station# in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNotice.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNotice.amount in position 0
         # paGetPayment 1 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -2917,18 +2917,18 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Resp
-        And from $paGetPaymentV2Resp.outcome xml check value OK in position 0
-        And from $paGetPaymentV2Resp.data.creditorReferenceId xml check value 02$iuv in position 0
-        And from $paGetPaymentV2Resp.data.paymentAmount xml check value $activatePaymentNotice.amount in position 0
-        And from $paGetPaymentV2Resp.data.dueDate xml check value 2021-12-31 in position 0
-        And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNotice.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         # paGetPayment 2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -2938,13 +2938,13 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Req
-        And from $paGetPaymentV2Req.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Req.idStation xml check value #id_station# in position 0
-        And from $paGetPaymentV2Req.qrCode.fiscalCode xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Req.qrCode.noticeNumber xml check value $activatePaymentNotice.noticeNumber in position 0
-        And from $paGetPaymentV2Req.amount xml check value $activatePaymentNotice.amount in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentReq.idStation xml check value #id_station# in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNotice.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNotice.amount in position 0
         # paGetPayment 2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -2954,15 +2954,15 @@ Feature: NMU flows con PA New - activation phase
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentV2Resp
-        And from $paGetPaymentV2Resp.outcome xml check value OK in position 0
-        And from $paGetPaymentV2Resp.data.creditorReferenceId xml check value 02$iuv in position 0
-        And from $paGetPaymentV2Resp.data.paymentAmount xml check value $activatePaymentNotice.amount in position 0
-        And from $paGetPaymentV2Resp.data.dueDate xml check value 2021-12-31 in position 0
-        And from $paGetPaymentV2Resp.data.description xml check value pagamentoTest in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
-        And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNotice.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
