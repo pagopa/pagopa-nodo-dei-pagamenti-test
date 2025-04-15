@@ -475,7 +475,7 @@ Feature: NMU flows con PA New retry a token scaduto
         And check outcome is OK of checkPosition response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv      | 1000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
@@ -520,13 +520,14 @@ Feature: NMU flows con PA New retry a token scaduto
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        When job mod3CancelV2 triggered after 4 seconds
+        When job mod3CancelV2 triggered after 9 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
