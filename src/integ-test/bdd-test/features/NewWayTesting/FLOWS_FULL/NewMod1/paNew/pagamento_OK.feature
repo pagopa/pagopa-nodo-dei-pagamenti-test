@@ -57,6 +57,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -555,6 +556,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -1037,6 +1039,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -1517,6 +1520,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -2002,6 +2006,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -2494,6 +2499,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -2975,6 +2981,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -3456,6 +3463,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -3943,6 +3951,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -4439,6 +4448,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -4927,6 +4937,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -5412,6 +5423,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -5899,6 +5911,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -6433,6 +6446,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -6916,6 +6930,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -7401,6 +7416,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -7886,6 +7902,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -8496,6 +8513,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
@@ -9646,6 +9664,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
@@ -10730,6 +10749,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
@@ -11422,6 +11442,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
@@ -12482,6 +12503,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -13578,6 +13600,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -14675,6 +14698,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -15772,6 +15796,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -16872,6 +16897,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -18015,6 +18041,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -19112,6 +19139,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -19706,6 +19734,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -20300,6 +20329,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -21037,6 +21067,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -21775,6 +21806,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -22516,6 +22548,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -23603,6 +23636,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -24688,6 +24722,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -25777,6 +25812,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -26868,6 +26904,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -27955,6 +27992,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -29042,6 +29080,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -33739,6 +33778,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
@@ -34312,6 +34352,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                            | password   | paymentToken                                  | outcome |
             | #psp# | #psp#       | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -34918,6 +34959,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_full initial XML sendPaymentOutcomeV2
             | idPSP       | #psp#                                           |
             | idBrokerPSP | #psp#                                           |
@@ -36401,6 +36443,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -37314,6 +37357,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO_TRAVASO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
@@ -37871,6 +37915,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_idempotency_full initial XML sendPaymentOutcomeV2
             | idPSP          | #psp#                                           |
             | idBrokerPSP    | #psp#                                           |
@@ -38957,6 +39002,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | idempotencyKey    |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | #idempotency_key# |
@@ -39453,6 +39499,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | idempotencyKey    |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | #idempotency_key# |
@@ -39952,6 +39999,7 @@ Feature: NMU flows con PA New pagamento OK
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | idempotencyKey    |
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | #idempotency_key# |
