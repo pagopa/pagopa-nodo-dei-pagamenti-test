@@ -13106,6 +13106,36 @@ Feature: NMU flows con pagamento KO
             | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                   |
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
         And from $closePaymentv2Resp.outcome json check value OK in position 0
+        # pspNotifyPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                          |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken') |
+            | TIPO_EVENTO        | pspNotifyPaymentV2                                                                                    |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                   |
+            | ESITO              | INVIATA                                                                                               |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                      |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                   |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2Req
+        And from $pspNotifyPaymentV2Req.paymentList.payment.metadata.mapEntry.key xml check value IBANAPPOGGIO in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.metadata.mapEntry.value xml check value 22 in position 0
+        And from $pspNotifyPaymentV2Req.paymentList.payment.metadata.mapEntry.key xml check value IBANAPPOGGIO in position 1
+        And from $pspNotifyPaymentV2Req.paymentList.payment.metadata.mapEntry.value xml check value 22 in position 1
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value tipoVersamento in position 2
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value CP in position 2
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value outcomePaymentGateway in position 3
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 3
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value timestampOperation in position 4
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 2021-07-09T17:06:03 in position 4
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value totalAmount in position 5
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 12 in position 5
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value paymentGateway in position 6
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 6
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value fee in position 7
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 2 in position 7
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value authorizationCode in position 8
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 123456 in position 8
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value rrn in position 9
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 11223344 in position 9
         # pspNotifyPayment RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                                                                          |
