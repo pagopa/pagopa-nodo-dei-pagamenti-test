@@ -151,11 +151,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -168,11 +168,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -185,11 +185,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -202,11 +202,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -287,11 +287,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -302,11 +302,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -317,11 +317,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -332,11 +332,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -433,7 +433,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -468,7 +468,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -503,7 +503,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -538,7 +538,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -564,7 +564,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                                                                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber','$activatePaymentNoticeV2_3Request.noticeNumber','$activatePaymentNoticeV2_4Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                                                                                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                                                                                                                             |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -798,11 +798,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -815,11 +815,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -832,11 +832,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -849,11 +849,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -934,11 +934,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -949,11 +949,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -964,11 +964,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -979,11 +979,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -1080,7 +1080,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -1115,7 +1115,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -1150,7 +1150,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -1185,7 +1185,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -1211,7 +1211,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                                                                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber','$activatePaymentNoticeV2_3Request.noticeNumber','$activatePaymentNoticeV2_4Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                                                                                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                                                                                                                             |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -1446,11 +1446,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -1463,11 +1463,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -1480,11 +1480,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -1497,11 +1497,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -1582,11 +1582,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -1597,11 +1597,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -1612,11 +1612,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -1627,11 +1627,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -1728,7 +1728,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -1763,7 +1763,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 3
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -1798,7 +1798,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 4
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -1833,7 +1833,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -1859,7 +1859,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                                                                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber','$activatePaymentNoticeV2_3Request.noticeNumber','$activatePaymentNoticeV2_4Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                                                                                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                                                                                                                             |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -2043,11 +2043,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -2075,11 +2075,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                                        |
@@ -2129,7 +2129,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                    |
@@ -2142,7 +2142,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column         | value                                                                                                               |
@@ -2508,11 +2508,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -2525,11 +2525,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -2576,11 +2576,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -2591,11 +2591,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -2662,7 +2662,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -2697,7 +2697,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -2715,7 +2715,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1.noticeNumber','$activatePaymentNoticeV2_2.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                             |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -2847,11 +2847,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                         |
@@ -2922,11 +2922,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                         |
@@ -3113,11 +3113,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -3130,11 +3130,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -3181,11 +3181,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -3196,11 +3196,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -3267,7 +3267,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -3302,7 +3302,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -3320,7 +3320,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                        |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                              |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                           |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -3607,11 +3607,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -3624,11 +3624,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -3675,11 +3675,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -3690,11 +3690,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -3761,7 +3761,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -3796,7 +3796,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -3814,7 +3814,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                        |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                              |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                           |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -4102,11 +4102,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -4119,11 +4119,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -4171,11 +4171,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -4187,11 +4187,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -4258,7 +4258,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -4293,7 +4293,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -4311,7 +4311,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                        |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                              |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                           |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -4524,11 +4524,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -4541,11 +4541,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -4593,11 +4593,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -4609,11 +4609,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -4680,7 +4680,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -4715,7 +4715,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -4733,7 +4733,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                        |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                              |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                           |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -4894,7 +4894,7 @@ Feature: NMU flows con pagamento KO
         And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -4907,11 +4907,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
@@ -4939,7 +4939,7 @@ Feature: NMU flows con pagamento KO
         And verify 0 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -4950,11 +4950,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
@@ -5014,7 +5014,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
@@ -5247,11 +5247,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                          |
@@ -5264,11 +5264,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -5315,11 +5315,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -5330,11 +5330,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -5401,7 +5401,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -5436,7 +5436,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -5454,7 +5454,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1.noticeNumber','$activatePaymentNoticeV2_2.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                             |
         # PM_METADATA
         And verify 10 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -5673,11 +5673,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                |
@@ -5690,11 +5690,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -5741,11 +5741,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -5756,11 +5756,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -5827,7 +5827,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
@@ -5865,7 +5865,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
@@ -6124,11 +6124,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                |
@@ -6141,11 +6141,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ##ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -6193,11 +6193,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -6209,11 +6209,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -6280,7 +6280,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -6315,7 +6315,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -6333,7 +6333,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                        |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                              |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                           |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column         | value                                                                                                                                             |
@@ -6583,11 +6583,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                             |
@@ -6600,11 +6600,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -6651,11 +6651,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -6666,11 +6666,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -6737,7 +6737,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -6772,7 +6772,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -6790,7 +6790,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1.noticeNumber','$activatePaymentNoticeV2_2.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                             |
         # PM_METADATA
         And verify 10 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -7016,11 +7016,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                          |
@@ -7033,11 +7033,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -7084,11 +7084,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -7099,11 +7099,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -7170,7 +7170,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -7205,7 +7205,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -7223,7 +7223,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1.noticeNumber','$activatePaymentNoticeV2_2.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                             |
         # PM_METADATA
         And verify 10 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -7488,7 +7488,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
@@ -7505,7 +7505,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
@@ -7556,11 +7556,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -7571,11 +7571,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -7918,11 +7918,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                          |
@@ -7935,11 +7935,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ##ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -7987,11 +7987,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                        |
@@ -8003,11 +8003,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -8074,7 +8074,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -8109,7 +8109,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                         |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -8127,7 +8127,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                                        |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1Request.noticeNumber','$activatePaymentNoticeV2_2Request.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                              |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                                           |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column         | value                                                                                                                                             |
@@ -8363,11 +8363,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -8380,11 +8380,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -8431,11 +8431,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -8446,11 +8446,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -8517,7 +8517,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -8552,7 +8552,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -8570,7 +8570,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1.noticeNumber','$activatePaymentNoticeV2_2.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                             |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -8793,11 +8793,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -8810,11 +8810,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -8861,11 +8861,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -8876,11 +8876,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -8947,7 +8947,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                     | value                                           |
@@ -8982,7 +8982,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -9000,7 +9000,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                                                          |
             | NOTICE_ID  | ('$activatePaymentNoticeV2_1.noticeNumber','$activatePaymentNoticeV2_2.noticeNumber') |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                                                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                                             |
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
@@ -9183,11 +9183,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -9216,11 +9216,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -9289,7 +9289,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -9577,11 +9577,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -9610,11 +9610,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -9683,7 +9683,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -9970,11 +9970,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -10003,11 +10003,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -10076,7 +10076,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -10367,11 +10367,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -10400,11 +10400,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -10473,7 +10473,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -10765,11 +10765,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -10798,11 +10798,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -10871,7 +10871,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -11160,11 +11160,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -11193,11 +11193,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -11266,7 +11266,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -11589,11 +11589,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -11606,11 +11606,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                           |
@@ -11656,11 +11656,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -11672,11 +11672,11 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 1 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                                 |
@@ -12015,7 +12015,7 @@ Feature: NMU flows con pagamento KO
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                            |
             | IDEMPOTENCY_KEY | $activatePaymentNoticeV2.idempotencyKey |
@@ -12031,7 +12031,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -12055,7 +12055,7 @@ Feature: NMU flows con pagamento KO
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -12070,7 +12070,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -12085,7 +12085,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -12138,7 +12138,7 @@ Feature: NMU flows con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |

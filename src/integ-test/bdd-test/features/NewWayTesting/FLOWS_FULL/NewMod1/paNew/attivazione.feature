@@ -1564,7 +1564,7 @@ Feature: NMU flows con PA New - activation phase
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWATTIVAZIONE_FULL_8
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_8
     Scenario: NMU flow paNEW KO, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment -> OK,  activateV2 with expired token -> paGetPayment -> KO PPT_PAGAMENTO_IN_CORSO  (OLD_NMU-25)
         Given update parameter useIdempotency on configuration keys with value true
         And update parameter default_idempotency_key_validity_minutes on configuration keys with value 10
@@ -1909,7 +1909,7 @@ Feature: NMU flows con PA New - activation phase
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWATTIVAZIONE_FULL_9
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_9
     Scenario: NMU flow paNEW VP2 OK, FLOW: con  activateV2-> paGetPaymentV2 with companyName in transfer (OLD_NM1-52)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -2146,7 +2146,7 @@ Feature: NMU flows con PA New - activation phase
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWATTIVAZIONE_FULL_10
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_10
     Scenario: NMU flow paNEW OK, FLOW: activateV2 -> paGetPayment -> mod3CancelV2-> activateV2 -> paGetPayment with different key and value in transferList  (OLD_NMU-72)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -2561,7 +2561,7 @@ Feature: NMU flows con PA New - activation phase
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWATTIVAZIONE_FULL_11
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_11
     Scenario: NMU flow paNEW OK, FLOW: activate -> paGetPayment -> mod3Cancel-> activate -> paGetPayment with different key and value in transferList  (OLD_NMU-73)
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
