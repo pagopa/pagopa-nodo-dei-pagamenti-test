@@ -224,11 +224,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -722,11 +722,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -1204,11 +1204,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -1684,11 +1684,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -2169,11 +2169,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -2661,11 +2661,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -3142,11 +3142,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -3623,11 +3623,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -4110,11 +4110,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -4607,11 +4607,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -5094,11 +5094,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -5579,11 +5579,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -6066,11 +6066,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -6600,11 +6600,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -7083,11 +7083,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -7568,11 +7568,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -8054,11 +8054,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -9152,11 +9152,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 2
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -9168,11 +9168,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 3
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -9184,11 +9184,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_3.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 4
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -9200,11 +9200,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_4.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 1
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -10302,11 +10302,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 2
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -10318,11 +10318,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 3
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -10334,11 +10334,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_3.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 4
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -10350,11 +10350,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_4.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 1
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -10897,11 +10897,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -12010,11 +12010,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 2
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -12026,11 +12026,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 3
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -12042,11 +12042,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_3.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 4
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -12058,11 +12058,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_4.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 1
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -12649,11 +12649,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -12933,7 +12933,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA_KO                                    |
             | IDENTIFICATIVO_EROGATORE | standin                                       |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -12992,7 +12992,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -13052,7 +13052,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -13064,7 +13064,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -13123,7 +13123,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -13135,7 +13135,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -13195,7 +13195,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -13207,7 +13207,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -13267,7 +13267,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -13279,7 +13279,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -13339,7 +13339,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -13351,7 +13351,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -13411,7 +13411,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -13423,7 +13423,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -13482,7 +13482,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -13745,11 +13745,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -14029,7 +14029,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA_KO                                    |
             | IDENTIFICATIVO_EROGATORE | standin                                       |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -14088,7 +14088,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -14148,7 +14148,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -14160,7 +14160,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -14219,7 +14219,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -14231,7 +14231,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -14291,7 +14291,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -14303,7 +14303,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -14363,7 +14363,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -14375,7 +14375,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -14435,7 +14435,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -14447,7 +14447,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -14507,7 +14507,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -14519,7 +14519,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -14578,7 +14578,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -14842,11 +14842,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -15126,7 +15126,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA_KO                                    |
             | IDENTIFICATIVO_EROGATORE | standin                                       |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -15185,7 +15185,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -15245,7 +15245,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -15257,7 +15257,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -15316,7 +15316,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -15328,7 +15328,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -15388,7 +15388,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -15400,7 +15400,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -15460,7 +15460,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -15472,7 +15472,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -15532,7 +15532,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -15544,7 +15544,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -15604,7 +15604,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -15616,7 +15616,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -15675,7 +15675,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -15939,11 +15939,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -16223,7 +16223,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA_KO                                    |
             | IDENTIFICATIVO_EROGATORE | standin                                       |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -16282,7 +16282,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -16342,7 +16342,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -16354,7 +16354,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -16413,7 +16413,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -16425,7 +16425,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -16485,7 +16485,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -16497,7 +16497,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -16557,7 +16557,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -16569,7 +16569,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -16629,7 +16629,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -16641,7 +16641,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -16701,7 +16701,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -16713,7 +16713,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -16772,7 +16772,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -17039,11 +17039,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -17368,7 +17368,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA_KO                                    |
             | IDENTIFICATIVO_EROGATORE | standin                                       |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -17427,7 +17427,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -17487,7 +17487,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -17499,7 +17499,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -17558,7 +17558,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -17570,7 +17570,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -17630,7 +17630,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -17642,7 +17642,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -17702,7 +17702,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -17714,7 +17714,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -17774,7 +17774,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -17786,7 +17786,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -17846,7 +17846,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -17858,7 +17858,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -17917,7 +17917,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -18182,11 +18182,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -18466,7 +18466,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA_KO                                    |
             | IDENTIFICATIVO_EROGATORE | standin                                       |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -18525,7 +18525,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -18585,7 +18585,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -18597,7 +18597,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -18656,7 +18656,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -18668,7 +18668,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -18728,7 +18728,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -18740,7 +18740,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -18800,7 +18800,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -18812,7 +18812,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -18872,7 +18872,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -18884,7 +18884,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -18944,7 +18944,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -18956,7 +18956,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -19015,7 +19015,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -19279,11 +19279,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -19562,7 +19562,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -19873,11 +19873,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -20156,7 +20156,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -20467,11 +20467,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -20750,7 +20750,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -20809,7 +20809,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -20869,7 +20869,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -20881,7 +20881,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -20940,7 +20940,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -21204,11 +21204,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -21487,7 +21487,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -21546,7 +21546,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -21606,7 +21606,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -21618,7 +21618,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -21677,7 +21677,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -21942,11 +21942,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -22225,7 +22225,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -22284,7 +22284,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -22344,7 +22344,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -22356,7 +22356,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
@@ -22415,7 +22415,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -22683,11 +22683,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -22957,7 +22957,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -23016,7 +23016,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -23076,7 +23076,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -23088,7 +23088,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -23147,7 +23147,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -23159,7 +23159,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -23219,7 +23219,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -23231,7 +23231,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -23291,7 +23291,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -23303,7 +23303,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -23363,7 +23363,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -23375,7 +23375,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -23435,7 +23435,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -23447,7 +23447,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -23506,7 +23506,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -23770,11 +23770,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -24040,7 +24040,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -24099,7 +24099,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -24159,7 +24159,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -24171,7 +24171,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -24230,7 +24230,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -24242,7 +24242,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -24302,7 +24302,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -24314,7 +24314,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -24374,7 +24374,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -24386,7 +24386,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -24446,7 +24446,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -24458,7 +24458,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -24518,7 +24518,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -24530,7 +24530,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -24589,7 +24589,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -24855,11 +24855,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -25129,7 +25129,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -25188,7 +25188,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -25248,7 +25248,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -25260,7 +25260,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -25319,7 +25319,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -25331,7 +25331,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -25391,7 +25391,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -25403,7 +25403,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -25463,7 +25463,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -25475,7 +25475,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -25535,7 +25535,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -25547,7 +25547,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -25607,7 +25607,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -25619,7 +25619,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -25678,7 +25678,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -25944,11 +25944,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -26218,7 +26218,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -26277,7 +26277,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -26337,7 +26337,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -26349,7 +26349,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -26408,7 +26408,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -26420,7 +26420,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -26480,7 +26480,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -26492,7 +26492,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -26552,7 +26552,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -26564,7 +26564,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -26624,7 +26624,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -26636,7 +26636,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -26696,7 +26696,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -26708,7 +26708,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -26767,7 +26767,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -27035,11 +27035,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -27305,7 +27305,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -27364,7 +27364,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -27424,7 +27424,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -27436,7 +27436,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -27495,7 +27495,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -27507,7 +27507,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -27567,7 +27567,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -27579,7 +27579,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -27639,7 +27639,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -27651,7 +27651,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -27711,7 +27711,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -27723,7 +27723,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -27783,7 +27783,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -27795,7 +27795,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -27854,7 +27854,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -28122,11 +28122,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -28396,7 +28396,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -28455,7 +28455,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
         And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -28515,7 +28515,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
         And from $paSendRT_1Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 2
@@ -28527,7 +28527,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
         And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
         And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
@@ -28586,7 +28586,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
         And from $paSendRT_2Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 3
@@ -28598,7 +28598,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
         And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
@@ -28658,7 +28658,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
         And from $paSendRT_3Resp.outcome xml check value OK in position 0
         # paSendRT REQ NO standin 4
@@ -28670,7 +28670,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
         And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
         And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
@@ -28730,7 +28730,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
         And from $paSendRT_4Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 1
@@ -28742,7 +28742,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
         And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
         And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
@@ -28802,7 +28802,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
         And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 2
@@ -28814,7 +28814,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
         And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
         And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
@@ -28874,7 +28874,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
         And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ NO standin 3
@@ -28886,7 +28886,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | INVIATA                                       |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
         And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
         And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
@@ -28945,7 +28945,7 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO                    | RICEVUTA                                      |
             | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
-            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY                 | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
         And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
@@ -29209,11 +29209,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -29492,7 +29492,7 @@ Feature: NMU flows con PA New pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA_KO                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | ORDER BY           | INSERTED_TIMESTAMP,ID ASC                     |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -29788,11 +29788,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -30300,11 +30300,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -30813,11 +30813,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -31325,11 +31325,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -31837,11 +31837,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -32349,11 +32349,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -32861,11 +32861,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -33374,11 +33374,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -33906,11 +33906,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value   |
@@ -34479,11 +34479,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -35506,11 +35506,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 2
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -35522,11 +35522,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 3
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -35538,11 +35538,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_3.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 4
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -35554,11 +35554,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_4.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 1
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -35909,7 +35909,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGOK_FULL_51
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_51
     Scenario: NMU flow paNEW KO, FLOW: 2x activateV2 -> 2x paGetPaymentV2 -> pspNotifyPaymentV2 timeout -> closeV2+ con 2 token -> spoV2+ (OLD-NMU-45)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -36238,13 +36238,13 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_NOTE               | responseFull                                                                                    |
             | FLAG_STANDIN               | N                                                                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values           |
-            | TRANSACTION_ID | $transaction_id        |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC |
+            | where_keys     | where_values              |
+            | TRANSACTION_ID | $transaction_id           |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC |
         And verify 2 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values           |
-            | TRANSACTION_ID | $transaction_id        |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC |
+            | where_keys     | where_values              |
+            | TRANSACTION_ID | $transaction_id           |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -36343,7 +36343,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGOK_FULL_52
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_52
     Scenario: NMU flow paNEW OK, FLOW con checkPosition con 1 nav: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> spoV2+ -> OK (OLD_NMU-66)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -36442,11 +36442,11 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -36475,11 +36475,11 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -36548,7 +36548,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -36803,7 +36803,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGOK_FULL_53
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_53
     Scenario: NMU flow paNEW OK, FLOW con checkPosition con 1 nav:: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> spoV2+ -> OK (OLD_NMU-67)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -36903,11 +36903,11 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -36936,11 +36936,11 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value                               |
@@ -37009,7 +37009,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
@@ -37481,11 +37481,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -38528,11 +38528,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 2
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -38544,11 +38544,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 3
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -38560,11 +38560,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_3.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 4
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -38576,11 +38576,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_4.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # ACTIVATE 1
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -39126,11 +39126,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -39626,11 +39626,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -40123,11 +40123,11 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value    |
@@ -40478,7 +40478,7 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                            |
             | IDEMPOTENCY_KEY | $activatePaymentNoticeV2.idempotencyKey |
@@ -40494,7 +40494,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -40518,7 +40518,7 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -40533,7 +40533,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -40548,7 +40548,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -40601,7 +40601,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                   |
