@@ -3,9 +3,61 @@ Feature: Stand in with psp POSTE 1568
     Background:
         Given systems up
 
-    @standin
+
+    Scenario: Execute verificaBollettino request
+        Given update through the query param_update_in of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 2, with where condition OBJ_ID and where value ('15131') under macro update_query on db nodo_cfg
+        And update through the query param_update_in of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1, with where condition OBJ_ID and where value ('1200001') under macro update_query on db nodo_cfg
+        And update through the query param_update_in of the table STAZIONI the parameter FLAG_STANDIN with Y, with where condition OBJ_ID and where value ('16631') under macro update_query on db nodo_cfg
+        And update through the query param_update_in of the table CANALI_NODO the parameter FLAG_STANDIN with Y, with where condition OBJ_ID and where value ('14748') under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value true
+        And refresh job ALL triggered after 10 seconds
+        And initial XML verificaBollettino
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:verificaBollettinoReq>
+            <idPSP>#pspPoste#</idPSP>
+            <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+            <idChannel>#channelPoste#</idChannel>
+            <password>pwdpwdpwd</password>
+            <ccPost>#ccPoste#</ccPost>
+            <noticeNumber>347#iuv#</noticeNumber>
+            </nod:verificaBollettinoReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paVerifyPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <dueDate>2021-07-31</dueDate>
+            <detailDescription>pagamentoTest</detailDescription>
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>Pagamento di Test</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paVerifyPaymentNoticeRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+        When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
+        Then check outcome is OK of verificaBollettino response
+
     Scenario: activatePaymentNotice request
-        Given initial XML activatePaymentNotice
+        Given the Execute verificaBollettino request scenario executed successfully
+        And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -19,7 +71,7 @@ Feature: Stand in with psp POSTE 1568
             <idempotencyKey>#idempotency_key_POSTE#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>347#iuv#</noticeNumber>
+            <noticeNumber>347$iuv</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -98,5 +150,107 @@ Feature: Stand in with psp POSTE 1568
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
+        Then check outcome is OK of activatePaymentNotice response
+
+
+    @standin @after
+    # Define primitive sendPaymentOutcome
+    Scenario: Define sendPaymentOutcome
+        Given the activatePaymentNotice request scenario executed successfully
+        And initial XML sendPaymentOutcome
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeReq>
+            <idPSP>#pspPoste#</idPSP>
+            <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+            <idChannel>#channelPoste#</idChannel>
+            <password>pwdpwdpwd</password>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@provatest.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        And wait 2 seconds for expiration
+
+        And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
+        
+        And execution query position_status_n to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        
+        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
+        
+        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        
+        And execution query position_transfer to get value on the table POSITION_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
+        
+        And execution query position_status_n to get value on the table POSITION_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        
+        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        
+        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+    
+        # DB Checks for POSITION_PAYMENT
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        
+        # DB Checks for POSITION_RECEIPT
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
+        
+        # DB Checks for POSITION_RECEIPT_XML
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
+        
+        # DB Checks for POSITION_RECEIPT_RECIPIENT
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+        
+        # RE
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod3
+        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
+        And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
+        And check value $paSendRT.standIn is equal to value true
+        And check value $paSendRT.idStation is equal to value standin
+        And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
