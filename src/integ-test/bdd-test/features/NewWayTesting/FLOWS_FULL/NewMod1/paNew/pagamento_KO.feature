@@ -1948,7 +1948,7 @@ Feature: NMU flows con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_4
-    Scenario: NMU flow paNEW KO, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> spoV2+ riceve resp OK, activateV2 -> KO PAGAMENTO_DUPLICATO  (OLD_NM1-2)
+    Scenario: NMU flow paNEW KO, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> spoV2+ riceve resp OK, activateV2 -> KO PAGAMENTO_DUPLICATO  (OLD_NMU-2)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |

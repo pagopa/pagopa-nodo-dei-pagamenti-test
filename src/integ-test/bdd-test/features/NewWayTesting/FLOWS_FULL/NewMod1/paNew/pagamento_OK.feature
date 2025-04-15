@@ -36072,7 +36072,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
@@ -36089,7 +36089,7 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
@@ -36140,11 +36140,11 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_1.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         ###ACTIVATE 2
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                                 |
@@ -36155,11 +36155,11 @@ Feature: NMU flows con PA New pagamento OK
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                            |
             | NOTICE_ID  | $activatePaymentNoticeV2_2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC               |
         # POSITION_STATUS_SNAPSHOT
         ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -36238,11 +36238,13 @@ Feature: NMU flows con PA New pagamento OK
             | PAYMENT_NOTE               | responseFull                                                                                    |
             | FLAG_STANDIN               | N                                                                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values    |
-            | TRANSACTION_ID | $transaction_id |
+            | where_keys     | where_values           |
+            | TRANSACTION_ID | $transaction_id        |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC |
         And verify 2 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values    |
-            | TRANSACTION_ID | $transaction_id |
+            | where_keys     | where_values           |
+            | TRANSACTION_ID | $transaction_id        |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC |
         # PM_SESSION_DATA
         #ACTIVATE 1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
@@ -39146,10 +39148,10 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
             | ORDER BY   | ID ASC                                |
-        # IDEMPOTENCY_CACHE    
+        # IDEMPOTENCY_CACHE
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                          |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey  |
+            | where_keys      | where_values                         |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -39646,10 +39648,10 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
             | ORDER BY   | ID ASC                                |
-        # IDEMPOTENCY_CACHE    
+        # IDEMPOTENCY_CACHE
         And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                          |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey  |
+            | where_keys      | where_values                         |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -40143,10 +40145,10 @@ Feature: NMU flows con PA New pagamento OK
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
             | ORDER BY   | ID ASC                                |
-        # IDEMPOTENCY_CACHE    
+        # IDEMPOTENCY_CACHE
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                          |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey  |
+            | where_keys      | where_values                         |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -40398,8 +40400,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-        @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_59
-        Scenario: NMU flow paNEW OK, FLOW con checkPosition con 1 nav: activateV2 -> paGetPayment -> closeV2 -> SPOV2+ -> OK  (OLD_NMU-138)
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_59
+    Scenario: NMU flow paNEW OK, FLOW con checkPosition con 1 nav: activateV2 -> paGetPayment -> closeV2 -> SPOV2+ -> OK  (OLD_NMU-138)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
