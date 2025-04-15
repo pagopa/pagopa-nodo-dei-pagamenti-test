@@ -173,8 +173,8 @@ stages:
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo wget https://archive.ubuntu.com/ubuntu/pool/main/liba/libaio/libaio1t64_0.3.113-6build1.1_amd64.deb
               sudo apt install ./libaio1t64_0.3.113-6build1.1_amd64.deb
-              sudo apt update
-              sudo apt install libaio1
+              #sudo apt update
+              #sudo apt install libaio1
 
             displayName: "Install Oracle Instant Client"
 
