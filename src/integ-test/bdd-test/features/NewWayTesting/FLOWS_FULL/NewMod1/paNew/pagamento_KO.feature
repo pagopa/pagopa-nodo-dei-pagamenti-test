@@ -14147,7 +14147,7 @@ Feature: NMU flows con pagamento KO
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_31
-    Scenario: NM3 flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> closeV2+ -> upd POSITION_STATUS_SNAPSHOT NOTICE_ID rand NOTIFIED -> spoV2+ -> KO con PPT_PAGAMENTO_SCONOSCIUTO (OLD_NM3-144)
+    Scenario: NMU flow KO, FLOW: verify -> paVerify activate -> paGetPayment -> closeV2+ -> upd POSITION_STATUS_SNAPSHOT NOTICE_ID rand NOTIFIED -> spoV2+ -> KO con PPT_PAGAMENTO_SCONOSCIUTO (OLD_NM3-144)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302#iuv#     |
