@@ -5566,7 +5566,9 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.description json check value pagamento multibeneficiario in position 0
     And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
-
+    
+    When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcomeV2 response
 
 
 
