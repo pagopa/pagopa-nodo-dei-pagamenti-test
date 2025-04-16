@@ -5071,12 +5071,31 @@ Feature: NMU flows PA Old con pagamento OK
     Then verify the HTTP status code of v2/closepayment response is 200
     And check outcome is OK of v2/closepayment response
     And wait 1 seconds for expiration
-    Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-      | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
-      | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+    Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
+      | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | idempotencyKey    |
+      | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | #idempotency_key# |
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
     And wait 1 seconds for expiration
+    # IDEMPOTENCY_CACHE
+    And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+      | column             | value                                         |
+      | ID                 | NotNone                                       |
+      | PRIMITIVA          | sendPaymentOutcomeV2                          |
+      | PSP_ID             | #psp#                                         |
+      | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode           |
+      | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber         |
+      | TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+      | VALID_TO           | NotNone                                       |
+      | HASH_REQUEST       | NotNone                                       |
+      | RESPONSE           | NotNone                                       |
+      | INSERTED_TIMESTAMP | NotNone                                       |
+    And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+      | where_keys      | where_values                         |
+      | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+      | where_keys      | where_values                         |
+      | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
     # RPT
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column           | value                                        |
@@ -5549,7 +5568,7 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-  
+
 
 
 
