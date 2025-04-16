@@ -430,7 +430,7 @@ Feature: NMU flows con PA Old sessione scaduta
         And check outcome is OK of checkPosition response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 312$iuv      | 2000           | 10.00  |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 312$iuv      | 1000           | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -486,7 +486,7 @@ Feature: NMU flows con PA Old sessione scaduta
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 12 seconds for expiration
+        And wait 10 seconds for expiration
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
@@ -955,7 +955,7 @@ Feature: NMU flows con PA Old sessione scaduta
             | outcome |
             | OO      |
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
-        Given from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
+        And from body with datatable vertical closePaymentV2Body_CP initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
