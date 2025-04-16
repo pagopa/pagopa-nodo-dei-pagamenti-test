@@ -621,7 +621,7 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_2
+  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_2 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-9)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
@@ -1157,7 +1157,7 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_3
+  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_3 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso PPAL, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con paypalPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-10)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
@@ -1690,7 +1690,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_4
+  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_4 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso BPAY, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-11)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
@@ -2852,7 +2852,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_6
+  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_6 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-13)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
@@ -3388,7 +3388,7 @@ Feature: NMU flows PA Old con pagamento OK
     And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
 
 
-  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_7
+  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_7 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso PPAL, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-14)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
@@ -3919,7 +3919,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_8
+  @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_FULL_8 @after
   Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso BPAY, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-15)
     Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
       | fiscalCode                  | noticeNumber |
