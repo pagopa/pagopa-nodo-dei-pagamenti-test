@@ -13304,7 +13304,7 @@ Feature: NMU flows con pagamento KO
 
 
    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_29
-    Scenario: NMU flow paNEW KO, FLOW con checkPosition con 1 nav: activateV2 -> paGetPayment -> closeV2 ->SPOV2- -> KO PPT_ESITO_GIA_ACQUISITO (OLD_NMU-141)
+    Scenario: NMU flow paNEW KO, FLOW con checkPosition con 1 nav: activateV2 -> paGetPayment -> closeV2 ->SPOV2- -> KO PPT_SEMANTICA (OLD_NMU-141)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
