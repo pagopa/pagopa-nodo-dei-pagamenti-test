@@ -2018,6 +2018,7 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And saving sendPaymentOutcomeV2 request in sendPaymentOutcomeV2_2
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
+        And check description contains Esito concorde of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
