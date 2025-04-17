@@ -1636,6 +1636,35 @@ Feature: NMU flows PA Old con pagamento KO
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                               |
+            | ID                  | NotNone                             |
+            | ID_SESSIONE         | NotNone                             |
+            | IDENT_DOMINIO       | $activatePaymentNoticeV2.fiscalCode |
+            | IUV                 | 05$iuv                              |
+            | COD_ESITO           | 1                                   |
+            | ESITO               | NON_ESEGUITO                        |
+            | DATA_RICEVUTA       | NotNone                             |
+            | DATA_RICHIESTA      | NotNone                             |
+            | ID_RICEVUTA         | NotNone                             |
+            | ID_RICHIESTA        | NotNone                             |
+            | SOMMA_VERSAMENTI    | 0                                   |
+            | INSERTED_TIMESTAMP  | NotNone                             |
+            | UPDATED_TIMESTAMP   | NotNone                             |
+            | CANALE              | $nodoInviaRPT.identificativoCanale  |
+            | NOTIFICA_PROCESSATA | N                                   |
+            | GENERATA_DA         | PM                                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                  |
+            | IUV           | 05$iuv                                        |
+            | IDENT_DOMINIO | $activatePaymentNoticeV2.fiscalCode           |
+            | CCP           | $activatePaymentNoticeV2Response.paymentToken |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                  |
+            | IUV           | 05$iuv                                        |
+            | IDENT_DOMINIO | $activatePaymentNoticeV2.fiscalCode           |
+            | CCP           | $activatePaymentNoticeV2Response.paymentToken |
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
