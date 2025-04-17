@@ -1955,7 +1955,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_5
-    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-12)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ -> spoV2+ KO PPT_ESITO_GIA_ACQUISITO (NMU-12)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -2007,11 +2007,17 @@ Feature: NMU flows con PA New pagamento OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 1 seconds for expiration
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome | idempotencyKey    |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | #idempotency_key# |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And saving sendPaymentOutcomeV2 request in sendPaymentOutcomeV2_1
+        Given random idempotencyKey having $sendPaymentOutcomeV2.idPSP as idPSP in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And saving sendPaymentOutcomeV2 request in sendPaymentOutcomeV2_2
+        And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -2363,7 +2369,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
         And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
         # sendPaymentOutcomeV2 REQ
-        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
             | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
@@ -2371,15 +2377,8 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
-        And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
-        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
         # sendPaymentOutcomeV2 RESP
-        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
             | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
@@ -2387,8 +2386,6 @@ Feature: NMU flows con PA New pagamento OK
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
-        And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
         # paSendRT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -37166,13 +37163,13 @@ Feature: NMU flows con PA New pagamento OK
         And from $paGetPaymentV2Resp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         # closePayment-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | closePayment-v2                               |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | closePayment-v2                             |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | RICEVUTA                                    |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
         And from $closePaymentv2Req.fee json check value 2.0 in position 0
         And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
@@ -37191,13 +37188,13 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | closePayment-v2                               |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | closePayment-v2                             |
+            | SOTTO_TIPO_EVENTO  | RESP                                        |
+            | ESITO              | INVIATA                                     |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
         And from $closePaymentv2Resp.outcome json check value OK in position 0
         # sendPaymentOutcome REQ
@@ -37309,7 +37306,7 @@ Feature: NMU flows con PA New pagamento OK
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
             | idBrokerPSP           | #id_broker_psp#                               |
-            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#                 |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | paymentMethod         | CP                                            |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -37330,7 +37327,7 @@ Feature: NMU flows con PA New pagamento OK
         And check outcome is OK of v2/closepayment response
         And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | idempotencyKey    |
+            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome | idempotencyKey    |
             | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | #idempotency_key# |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -37403,7 +37400,7 @@ Feature: NMU flows con PA New pagamento OK
             | STATION_VERSION            | 2                                             |
             | PSP_ID                     | #psp#                                         |
             | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#                 |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.00                                          |
             | OUTCOME                    | OK                                            |
@@ -37452,14 +37449,14 @@ Feature: NMU flows con PA New pagamento OK
             | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                                                                              |
-            | ID                    | NotNone                                                                                                                                            |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                                                                                |
-            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                                                                              |
-            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED                                                   |
-            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                            |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                                  |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                                                                      |
+            | column                | value                                                                                                                                            |
+            | ID                    | NotNone                                                                                                                                          |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                                                                              |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                                                                            |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED                                                 |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                          |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                                |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                                                                    |
             | INSERTED_BY           | activatePaymentNoticeV2,closePayment-v2,closePayment-v2,pspNotifyPayment,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paSendRT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -37660,7 +37657,7 @@ Feature: NMU flows con PA New pagamento OK
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | pspNotifyPayment                           |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
@@ -37686,7 +37683,7 @@ Feature: NMU flows con PA New pagamento OK
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | pspNotifyPayment                            |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
             | SOTTO_TIPO_EVENTO  | RESP                                          |
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
