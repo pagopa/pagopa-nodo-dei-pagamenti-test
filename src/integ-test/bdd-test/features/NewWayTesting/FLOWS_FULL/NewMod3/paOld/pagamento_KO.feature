@@ -6039,16 +6039,15 @@ Feature: NM3 flows PA Old con pagamento KO
             | ESITO                     | INVIATA             |
             | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
-        And from $nodoInviaRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
-        And from $nodoInviaRPTResp.esito.redirect xml check value 0 in position 0
-        And from $nodoInviaRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_RICEVUTA_NODO in position 1
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_ACCETTATA_NODO in position 2
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_PARCHEGGIATA_NODO_MOD3 in position 3
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RT_GENERATA_NODO in position 4
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RT_INVIATA_PA in position 5
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RT_ACCETTATA_PA in position 6
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoChiediStatoRPTResp
+        And from $nodoChiediStatoRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
+        And from $nodoChiediStatoRPTResp.esito.redirect xml check value 0 in position 0
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_RICEVUTA_NODO in position 1
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_ACCETTATA_NODO in position 2
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_PARCHEGGIATA_NODO_MOD3 in position 3
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_GENERATA_NODO in position 4
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_INVIATA_PA in position 5
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_ACCETTATA_PA in position 6
         # nodoChiediCopiaRT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys                | where_values        |
@@ -6499,16 +6498,15 @@ Feature: NM3 flows PA Old con pagamento KO
             | ESITO                     | INVIATA             |
             | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
-        And from $nodoInviaRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
-        And from $nodoInviaRPTResp.esito.redirect xml check value 0 in position 0
-        And from $nodoInviaRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_RICEVUTA_NODO in position 1
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_ACCETTATA_NODO in position 2
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_PARCHEGGIATA_NODO_MOD3 in position 3
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RT_GENERATA_NODO in position 4
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RT_INVIATA_PA in position 5
-        And from $nodoInviaRPTResp.esito.elementoStoricoRPT.stato xml check value RT_ACCETTATA_PA in position 6
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoChiediStatoRPTResp
+        And from $nodoChiediStatoRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
+        And from $nodoChiediStatoRPTResp.esito.redirect xml check value 0 in position 0
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_RICEVUTA_NODO in position 1
+        And from $nodoInvinodoChiediStatoRPTRespaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_ACCETTATA_NODO in position 2
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_PARCHEGGIATA_NODO_MOD3 in position 3
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_GENERATA_NODO in position 4
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_INVIATA_PA in position 5
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_ACCETTATA_PA in position 6
         # nodoChiediCopiaRT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys                | where_values        |
