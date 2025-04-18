@@ -6502,7 +6502,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And from $nodoChiediStatoRPTResp.esito.stato xml check value RT_ACCETTATA_PA in position 0
         And from $nodoChiediStatoRPTResp.esito.redirect xml check value 0 in position 0
         And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_RICEVUTA_NODO in position 1
-        And from $nodoInvinodoChiediStatoRPTRespaRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_ACCETTATA_NODO in position 2
+        And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_ACCETTATA_NODO in position 2
         And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RPT_PARCHEGGIATA_NODO_MOD3 in position 3
         And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_GENERATA_NODO in position 4
         And from $nodoChiediStatoRPTResp.esito.elementoStoricoRPT.stato xml check value RT_INVIATA_PA in position 5
