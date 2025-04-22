@@ -12319,6 +12319,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                                         |
