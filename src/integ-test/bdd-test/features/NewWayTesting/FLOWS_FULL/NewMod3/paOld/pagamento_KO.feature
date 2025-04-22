@@ -4096,9 +4096,9 @@ Feature: NM3 flows PA Old con pagamento KO
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
         Given update for table POSITION_STATUS_SNAPSHOT with parameter NOTICE_ID = $activatePaymentNotice.noticeNumber on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | 311011451292109621                  |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | where_keys     | where_values                      |
+            | NOTICE_ID      | 311011451292109621                |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode |
 
 
 
@@ -6114,7 +6114,7 @@ Feature: NM3 flows PA Old con pagamento KO
     Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: verify -> paaVerificaRPT -> activate con KO response -> paaAttivaRPT irraggiungibile -> nodoInviaRPT -> paaInviaRT+ (subito, senza job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT (OLD_NM3-13H)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     |
         And from body with datatable vertical paaVerificaRPT_noOptional initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
@@ -6125,7 +6125,7 @@ Feature: NM3 flows PA Old con pagamento KO
         Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_irrag initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -6137,18 +6137,18 @@ Feature: NM3 flows PA Old con pagamento KO
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
-            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#   |
+            | identificativoStazioneRichiedente | #id_station_old#                |
             | dataOraMessaggioRichiesta         | #timedate#                      |
             | dataEsecuzionePagamento           | #date#                          |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount   |
-            | identificativoUnivocoVersamento   | 05$iuv                          |
+            | identificativoUnivocoVersamento   | 12$iuv                          |
             | codiceContestoPagamento           | $paymentToken                   |
             | importoSingoloVersamento          | $activatePaymentNotice.amount   |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 05$iuv                          |
+            | identificativoUnivocoVersamento       | 12$iuv                          |
             | codiceContestoPagamento               | $paymentToken                   |
             | password                              | #password#                      |
             | identificativoPSP                     | #pspFittizio#                   |
@@ -6157,12 +6157,14 @@ Feature: NM3 flows PA Old con pagamento KO
             | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        When job paInviaRt triggered after 5 seconds
+        Then verify the HTTP status code of paInviaRt response is 200
         Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
-            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#   |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | password                              | #password#                      |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 05$iuv                          |
+            | identificativoUnivocoVersamento       | 12$iuv                          |
             | codiceContestoPagamento               | $paymentToken                   |
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_PARCHEGGIATA_NODO_MOD3 of nodoChiediStatoRPT response
@@ -6174,7 +6176,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | password                              | #password#                      |
             | identificativoDominio                 | #creditor_institution_code_old# |
-            | identificativoUnivocoVersamento       | 05$iuv                          |
+            | identificativoUnivocoVersamento       | 12$iuv                          |
             | codiceContestoPagamento               | $paymentToken                   |
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
@@ -6184,7 +6186,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                         |
             | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 05$iuv                        |
+            | CREDITOR_REFERENCE_ID | 12$iuv                        |
             | PSP_ID                | #psp#                         |
             | PAYMENT_TOKEN         | $paymentToken                 |
             | TOKEN_VALID_FROM      | None                          |
@@ -6219,7 +6221,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                         |
             | ID                    | NotNone                       |
-            | CREDITOR_REFERENCE_ID | 05$iuv                        |
+            | CREDITOR_REFERENCE_ID | 12$iuv                        |
             | DUE_DATE              | NotNone                       |
             | RETENTION_DATE        | None                          |
             | AMOUNT                | $activatePaymentNotice.amount |
@@ -6238,7 +6240,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                   | value                             |
             | ID                       | NotNone                           |
-            | CREDITOR_REFERENCE_ID    | 05$iuv                            |
+            | CREDITOR_REFERENCE_ID    | 12$iuv                            |
             | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode |
             | IBAN                     | IT96R0123454321000000012345       |
             | AMOUNT                   | $activatePaymentNotice.amount     |
@@ -6266,10 +6268,10 @@ Feature: NM3 flows PA Old con pagamento KO
             | column                     | value                             |
             | ID                         | NotNone                           |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode |
-            | CREDITOR_REFERENCE_ID      | 05$iuv                            |
+            | CREDITOR_REFERENCE_ID      | 12$iuv                            |
             | PAYMENT_TOKEN              | $paymentToken                     |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode |
-            | STATION_ID                 | #id_station_old_invio_rt_ist#     |
+            | STATION_ID                 | #id_station_old#                  |
             | STATION_VERSION            | 1                                 |
             | PSP_ID                     | NotNone                           |
             | BROKER_PSP_ID              | NotNone                           |
@@ -6318,7 +6320,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber |
             | STATUS                | PAYING_RPT,CANCELLED                |
             | INSERTED_TIMESTAMP    | NotNone                             |
-            | CREDITOR_REFERENCE_ID | 05$iuv                              |
+            | CREDITOR_REFERENCE_ID | 12$iuv                              |
             | PAYMENT_TOKEN         | $paymentToken                       |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -6336,7 +6338,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | ID                    | NotNone                             |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode   |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber |
-            | CREDITOR_REFERENCE_ID | 05$iuv                              |
+            | CREDITOR_REFERENCE_ID | 12$iuv                              |
             | PAYMENT_TOKEN         | $paymentToken                       |
             | STATUS                | CANCELLED                           |
             | INSERTED_TIMESTAMP    | NotNone                             |
@@ -6358,38 +6360,38 @@ Feature: NM3 flows PA Old con pagamento KO
             | ID_SESSIONE           | NotNone                                                                                                        |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
-            | IUV                   | 05$iuv                                                                                                         |
+            | IUV                   | 12$iuv                                                                                                         |
             | CCP                   | $paymentToken                                                                                                  |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
-            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                    |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paInviaRt,paaInviaRT                                       |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | 05$iuv                    |
+            | IUV        | 12$iuv                    |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 05$iuv       |
+            | IUV        | 12$iuv       |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                             |
             | ID_SESSIONE        | NotNone                           |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode |
-            | IUV                | 05$iuv                            |
+            | IUV                | 12$iuv                            |
             | CCP                | $paymentToken                     |
             | STATO              | RT_ACCETTATA_PA                   |
             | INSERTED_BY        | nodoInviaRPT                      |
-            | UPDATED_BY         | paaInviaRT                        |
+            | UPDATED_BY         | paInviaRt                         |
             | INSERTED_TIMESTAMP | NotNone                           |
             | UPDATED_TIMESTAMP  | NotNone                           |
             | PUSH               | None                              |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 05$iuv       |
+            | IUV        | 12$iuv       |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | 05$iuv       |
+            | IUV        | 12$iuv       |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -6434,8 +6436,8 @@ Feature: NM3 flows PA Old con pagamento KO
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -6453,7 +6455,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value NotNone in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
@@ -6484,7 +6486,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoChiediStatoRPTReq
         And from $nodoChiediStatoRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoChiediStatoRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
+        And from $nodoChiediStatoRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
         And from $nodoChiediStatoRPTReq.password xml check value #password# in position 0
         And from $nodoChiediStatoRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoChiediStatoRPTReq.identificativoUnivocoVersamento xml check value NotNone in position 0
@@ -6536,29 +6538,29 @@ Feature: NM3 flows PA Old con pagamento KO
         And from $nodoChiediCopiaRTResp.rt xml check value NotNone in position 0
         # paaInviaRT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values        |
-            | PAYMENT_TOKEN      | $paymentToken       |
-            | TIPO_EVENTO        | paaInviaRT          |
-            | SOTTO_TIPO_EVENTO  | REQ                 |
-            | ESITO              | INVIATA             |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)    |
-            | ORDER BY           | DATA_ORA_EVENTO ASC |
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $paymentToken       |
+            | TIPO_EVENTO               | paaInviaRT          |
+            | SOTTO_TIPO_EVENTO         | REQ                 |
+            | ESITO                     | INVIATA             |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
         And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaInviaRTReq.codiceContestoPagamento xml check value $paymentToken in position 0
         And from $paaInviaRTReq.rt xml check value NotNone in position 0
         # paaInviaRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values        |
-            | PAYMENT_TOKEN      | $paymentToken       |
-            | TIPO_EVENTO        | paaInviaRT          |
-            | SOTTO_TIPO_EVENTO  | RESP                |
-            | ESITO              | RICEVUTA            |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)    |
-            | ORDER BY           | DATA_ORA_EVENTO ASC |
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $paymentToken       |
+            | TIPO_EVENTO               | paaInviaRT          |
+            | SOTTO_TIPO_EVENTO         | RESP                |
+            | ESITO                     | RICEVUTA            |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
         And from $paaInviaRTResp.esito xml check value OK in position 0
 

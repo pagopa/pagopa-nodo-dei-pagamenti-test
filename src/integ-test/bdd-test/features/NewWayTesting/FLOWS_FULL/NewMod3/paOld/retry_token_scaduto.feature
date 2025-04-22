@@ -17505,7 +17505,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_31 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-69)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
