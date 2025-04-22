@@ -21511,10 +21511,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_37 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-24)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -21523,18 +21524,18 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Then check outcome is OK of activatePaymentNotice response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#             |
-            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#               |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
             | dataOraMessaggioRichiesta         | #timedate#                                  |
             | dataEsecuzionePagamento           | #date#                                      |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
-            | identificativoUnivocoVersamento   | 05$iuv                                      |
+            | identificativoUnivocoVersamento   | 12$iuv                                      |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#               |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
             | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 05$iuv                                      |
+            | identificativoUnivocoVersamento       | 12$iuv                                      |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
             | password                              | #password#                                  |
             | identificativoPSP                     | #pspFittizio#                               |
@@ -21557,18 +21558,18 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#                |
-            | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#                  |
+            | identificativoStazioneRichiedente | #id_station_old#                               |
             | dataOraMessaggioRichiesta         | #timedate#                                     |
             | dataEsecuzionePagamento           | #date#                                         |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount                  |
-            | identificativoUnivocoVersamento   | 05$iuv                                         |
+            | identificativoUnivocoVersamento   | 12$iuv                                         |
             | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken-v2 |
             | importoSingoloVersamento          | $activatePaymentNotice.amount                  |
         And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                                |
-            | identificativoStazioneIntermediarioPA | #id_station_old_invio_rt_ist#                  |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                               |
             | identificativoDominio                 | #creditor_institution_code_old#                |
-            | identificativoUnivocoVersamento       | 05$iuv                                         |
+            | identificativoUnivocoVersamento       | 12$iuv                                         |
             | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken-v2 |
             | password                              | #password#                                     |
             | identificativoPSP                     | #pspFittizio#                                  |
@@ -21587,7 +21588,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                          |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode              |
-            | CREDITOR_REFERENCE_ID | 05$iuv                                         |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken-v2 |
             | PAAATTIVARPTRESP      | N                                              |
             | NODOINVIARPTREQ       | N                                              |
@@ -21610,10 +21611,10 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | column                     | value                                          |
             | ID                         | NotNone                                        |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode              |
-            | CREDITOR_REFERENCE_ID      | 05$iuv                                         |
+            | CREDITOR_REFERENCE_ID      | 12$iuv                                         |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken-v2 |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode              |
-            | STATION_ID                 | #id_station_old_invio_rt_ist#                  |
+            | STATION_ID                 | #id_station_old#                               |
             | STATION_VERSION            | 1                                              |
             | PSP_ID                     | #psp#                                          |
             | BROKER_PSP_ID              | #id_broker_psp#                                |
@@ -21659,10 +21660,10 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | column                     | value                                       |
             | ID                         | NotNone                                     |
             | PA_FISCAL_CODE             | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | 05$iuv                                      |
+            | CREDITOR_REFERENCE_ID      | 12$iuv                                      |
             | PAYMENT_TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | BROKER_PA_ID               | $activatePaymentNotice.fiscalCode           |
-            | STATION_ID                 | #id_station_old_invio_rt_ist#               |
+            | STATION_ID                 | #id_station_old#                            |
             | STATION_VERSION            | 1                                           |
             | PSP_ID                     | #psp#                                       |
             | BROKER_PSP_ID              | #id_broker_psp#                             |
@@ -21712,7 +21713,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber             |
             | STATUS                | PAYING,PAYING_RPT,CANCELLED                     |
             | INSERTED_TIMESTAMP    | NotNone                                         |
-            | CREDITOR_REFERENCE_ID | 05$iuv                                          |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                          |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken     |
             | INSERTED_BY           | activatePaymentNotice,nodoInviaRPT,mod3CancelV1 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -21733,7 +21734,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber            |
             | STATUS                | PAID_NORPT                                     |
             | INSERTED_TIMESTAMP    | NotNone                                        |
-            | CREDITOR_REFERENCE_ID | 05$iuv                                         |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken-v2 |
             | INSERTED_BY           | sendPaymentOutcome                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
@@ -21753,7 +21754,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | 05$iuv                                      |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
             | STATUS                | CANCELLED                                   |
             | INSERTED_TIMESTAMP    | NotNone                                     |
@@ -21772,7 +21773,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ID                    | NotNone                                        |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode              |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber            |
-            | CREDITOR_REFERENCE_ID | 05$iuv                                         |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                         |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken-v2 |
             | STATUS                | PAID_NORPT                                     |
             | INSERTED_TIMESTAMP    | NotNone                                        |
@@ -21797,19 +21798,19 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ID_SESSIONE           | NotNone                                                                                                        |
             | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
-            | IUV                   | 05$iuv                                                                                                         |
+            | IUV                   | 12$iuv                                                                                                         |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                    |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,mod3CancelV1,mod3CancelV1,paaInviaRT                                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
-            | IUV        | 05$iuv                                      |
+            | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                   |
         And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
-            | IUV        | 05$iuv                                      |
+            | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                   |
         # STATI_RPT -v2
@@ -21819,19 +21820,19 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ID_SESSIONE           | NotNone                                        |
             | ID_SESSIONE_ORIGINALE | NotNone                                        |
             | ID_DOMINIO            | $activatePaymentNotice.fiscalCode              |
-            | IUV                   | 05$iuv                                         |
+            | IUV                   | 12$iuv                                         |
             | CCP                   | $activatePaymentNoticeResponse.paymentToken-v2 |
             | STATO                 | RPT_RICEVUTA_NODO,RPT_RIFIUTATA_NODO           |
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT                      |
             | INSERTED_TIMESTAMP    | NotNone                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
-            | IUV        | 05$iuv                                         |
+            | IUV        | 12$iuv                                         |
             | CCP        | $activatePaymentNoticeResponse.paymentToken-v2 |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         And verify 2 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
-            | IUV        | 05$iuv                                         |
+            | IUV        | 12$iuv                                         |
             | CCP        | $activatePaymentNoticeResponse.paymentToken-v2 |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                      |
         # STATI_RPT_SNAPSHOT
@@ -21839,7 +21840,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | column             | value                                       |
             | ID_SESSIONE        | NotNone                                     |
             | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
-            | IUV                | 05$iuv                                      |
+            | IUV                | 12$iuv                                      |
             | CCP                | $activatePaymentNoticeResponse.paymentToken |
             | STATO              | RT_ACCETTATA_PA                             |
             | INSERTED_BY        | nodoInviaRPT                                |
@@ -21849,16 +21850,16 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PUSH               | None                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
-            | IUV        | 05$iuv                                      |
+            | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                |
-            | IUV        | 05$iuv                                      |
+            | IUV        | 12$iuv                                      |
             | CCP        | $activatePaymentNoticeResponse.paymentToken |
         # STATI_RPT_SNAPSHOT -v2
         And verify 0 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
-            | IUV        | 05$iuv                                         |
+            | IUV        | 12$iuv                                         |
             | CCP        | $activatePaymentNoticeResponse.paymentToken-v2 |
         # RETRY_PA_ATTIVA_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -21866,13 +21867,13 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode              |
             | TOKEN              | $activatePaymentNoticeResponse.paymentToken-v2 |
             | RETRY              | 0                                              |
-            | IUV                | 05$iuv                                         |
+            | IUV                | 12$iuv                                         |
             | READY              | N                                              |
             | INSERTED_TIMESTAMP | NotNone                                        |
             | UPDATED_TIMESTAMP  | NotNone                                        |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RETRY_PA_ATTIVA_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                      |
-            | IUV            | 05$iuv                            |
+            | IUV            | 12$iuv                            |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode |
             | ORDER BY       | INSERTED_TIMESTAMP,ID ASC         |
         # TOKEN_UTILITY
@@ -21896,14 +21897,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | column                      | value                                       |
             | ID_SESSIONE                 | NotNone                                     |
             | IDENT_DOMINIO               | $activatePaymentNotice.fiscalCode           |
-            | IUV                         | 05$iuv                                      |
+            | IUV                         | 12$iuv                                      |
             | CCP                         | $activatePaymentNoticeResponse.paymentToken |
             | BIC_ADDEBITO                | NotNone                                     |
             | DATA_MSG_RICH               | NotNone                                     |
             | FLAG_CANC                   | N                                           |
             | IBAN_ADDEBITO               | NotNone                                     |
             | ID_MSG_RICH                 | NotNone                                     |
-            | STAZ_INTERMEDIARIOPA        | #id_station_old_invio_rt_ist#               |
+            | STAZ_INTERMEDIARIOPA        | #id_station_old#                            |
             | INTERMEDIARIOPA             | #id_broker_old#                             |
             | CANALE                      | #canaleFittizio#                            |
             | PSP                         | #pspFittizio#                               |
@@ -21922,17 +21923,17 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | FLAG_IO                     | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
-            | IUV           | 05$iuv                                      |
+            | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
         And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
-            | IUV           | 05$iuv                                      |
+            | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
         And verify 0 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                   |
-            | IUV           | 05$iuv                                         |
+            | IUV           | 12$iuv                                         |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode              |
             | CCP           | $activatePaymentNoticeResponse.paymentToken-v2 |
         # RT
@@ -21940,7 +21941,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | column              | value                                       |
             | ID_SESSIONE         | NotNone                                     |
             | IDENT_DOMINIO       | $activatePaymentNotice.fiscalCode           |
-            | IUV                 | 05$iuv                                      |
+            | IUV                 | 12$iuv                                      |
             | CCP                 | $activatePaymentNoticeResponse.paymentToken |
             | COD_ESITO           | 1                                           |
             | ESITO               | NON_ESEGUITO                                |
@@ -21956,17 +21957,17 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | GENERATA_DA         | NMP                                         |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
-            | IUV           | 05$iuv                                      |
+            | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
         And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                |
-            | IUV           | 05$iuv                                      |
+            | IUV           | 12$iuv                                      |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
         And verify 0 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                   |
-            | IUV           | 05$iuv                                         |
+            | IUV           | 12$iuv                                         |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode              |
             | CCP           | $activatePaymentNoticeResponse.paymentToken-v2 |
         # RE #####
@@ -22005,7 +22006,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And from $activatePaymentNoticeResp.transferList.transfer.transferAmount xml check value $activatePaymentNotice.amount in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeResp.transferList.transfer.IBAN xml check value NotNone in position 0
-        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 05$iuv in position 0
+        And from $activatePaymentNoticeResp.creditorReferenceId xml check value 12$iuv in position 0
         # paaAttivaRPT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -22018,8 +22019,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaAttivaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value $activatePaymentNotice.amount in position 0
@@ -22077,8 +22078,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $nodoInviaRPTReq.password xml check value #password# in position 0
         And from $nodoInviaRPTReq.identificativoPSP xml check value #pspFittizio# in position 0
@@ -22109,8 +22110,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
         And from $paaInviaRTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaInviaRTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaInviaRTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $paaInviaRTReq.rt xml check value NotNone in position 0
         # paaInviaRT RESP
@@ -22136,8 +22137,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaAttivaRPTReq
         And from $paaAttivaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paaAttivaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $paaAttivaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $paaAttivaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $paaAttivaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken-v2 in position 0
         And from $paaAttivaRPTReq.datiPagamentoPSP.importoSingoloVersamento xml check value 10.00 in position 0
         # paaAttivaRPT RESP con -v2
@@ -22161,8 +22162,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTReq
         And from $nodoInviaRPTReq.identificativoIntermediarioPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $nodoInviaRPTReq.identificativoDominio xml check value $activatePaymentNotice.fiscalCode in position 0
-        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old_invio_rt_ist# in position 0
-        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 05$iuv in position 0
+        And from $nodoInviaRPTReq.identificativoStazioneIntermediarioPA xml check value #id_station_old# in position 0
+        And from $nodoInviaRPTReq.identificativoUnivocoVersamento xml check value 12$iuv in position 0
         And from $nodoInviaRPTReq.codiceContestoPagamento xml check value $activatePaymentNoticeResponse.paymentToken-v2 in position 0
         And from $nodoInviaRPTReq.rpt xml check value NotNone in position 0
         # nodoInviaRPT RESP con -v2
