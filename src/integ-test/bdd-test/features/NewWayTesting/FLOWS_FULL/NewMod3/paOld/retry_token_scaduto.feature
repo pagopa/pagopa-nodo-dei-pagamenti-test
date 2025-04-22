@@ -17508,9 +17508,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
+        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  | 1000           |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -25196,7 +25196,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | rpt                                   | $rptAttachment                              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        When job mod3CancelV1 triggered after 1 seconds
+        When job mod3CancelV1 triggered after 2 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         Given from body with datatable horizontal paaInviaRT_KO initial XML paaInviaRT
             | faultCode        | faultString                | id     | description | esito |
