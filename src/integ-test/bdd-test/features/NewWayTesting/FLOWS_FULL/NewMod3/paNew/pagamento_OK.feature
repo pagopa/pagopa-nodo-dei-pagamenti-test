@@ -64605,7 +64605,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-      | ORDER BY       | ID,INSERTED_TIMESTAMP ASC             |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     # POSITION_SERVICE
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column             | value                               |
@@ -64717,7 +64717,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-      | ORDER BY       | ID,INSERTED_TIMESTAMP ASC             |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     # POSITION_TRANSFER
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column                   | value                                 |
@@ -64747,7 +64747,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-      | ORDER BY       | ID,INSERTED_TIMESTAMP ASC             |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
     # POSITION_PAYMENT_STATUS
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column                | value                                                                                                                                           |
@@ -65017,7 +65017,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | ID,INSERTED_TIMESTAMP ASC           |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     # POSITION_SERVICE
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column             | value                             |
@@ -65129,7 +65129,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | ID,INSERTED_TIMESTAMP ASC           |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     # POSITION_TRANSFER
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column                   | value                               |
@@ -65159,7 +65159,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | ID,INSERTED_TIMESTAMP ASC           |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     # POSITION_PAYMENT_STATUS
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
       | column                | value                                                                                                                                     |

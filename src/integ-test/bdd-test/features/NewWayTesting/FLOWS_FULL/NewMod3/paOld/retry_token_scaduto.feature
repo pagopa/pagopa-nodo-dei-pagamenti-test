@@ -17015,7 +17015,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
-        And wait 5 seconds for expiration
+        And wait 7 seconds for expiration
         When job paRetryAttivaRpt triggered after 5 seconds
         Then verify the HTTP status code of paRetryAttivaRpt response is 200
         And wait 1 seconds for expiration
@@ -18639,6 +18639,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+        And wait 1 seconds for expiration
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#                |
             | identificativoStazioneRichiedente | #id_station_old#                               |
