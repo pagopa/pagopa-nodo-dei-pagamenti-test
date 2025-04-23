@@ -19369,6 +19369,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+        And wait 1 seconds for expiration
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#                  |
             | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#                    |
