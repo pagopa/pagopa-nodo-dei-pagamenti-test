@@ -25207,7 +25207,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        When job paInviaRt triggered after 1 seconds
+        When job paInviaRt triggered after 2 seconds
         Then verify the HTTP status code of paInviaRt response is 200
         And wait 2 seconds for expiration
         # STATI_RPT_SNAPSHOT
