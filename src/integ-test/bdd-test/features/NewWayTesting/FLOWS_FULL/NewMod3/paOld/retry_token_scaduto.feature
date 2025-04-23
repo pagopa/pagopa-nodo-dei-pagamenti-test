@@ -454,6 +454,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+        And wait 1 seconds for expiration
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#                |
             | identificativoStazioneRichiedente | #id_station_old_invio_rt_ist#                  |
@@ -25164,9 +25165,10 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_43
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_43 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- KO RT_RIFIUTATA_PA -> spo+ con resp PPT_TOKEN_SCADUTO (OLD_NM3-49G)
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 002#iuv#     | 10.00  | 1000           |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
