@@ -202,7 +202,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -1473,7 +1473,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -3367,7 +3367,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    
+
 
 
 
@@ -3474,7 +3474,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -3713,7 +3713,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -3963,7 +3963,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4293,7 +4293,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -4645,7 +4645,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4973,7 +4973,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -5325,7 +5325,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -5659,7 +5659,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -6009,7 +6009,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -6409,7 +6409,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -6814,7 +6814,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -7210,7 +7210,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -7592,7 +7592,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -8001,7 +8001,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9472,7 +9472,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -9679,7 +9679,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -10959,7 +10959,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -11432,7 +11432,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -11874,7 +11874,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                                                                                                                                                                            |
@@ -11890,7 +11890,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -12802,7 +12802,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -13204,7 +13204,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -14748,7 +14748,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -15392,7 +15392,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -15803,7 +15803,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -16144,7 +16144,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -16493,7 +16493,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -16847,7 +16847,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |

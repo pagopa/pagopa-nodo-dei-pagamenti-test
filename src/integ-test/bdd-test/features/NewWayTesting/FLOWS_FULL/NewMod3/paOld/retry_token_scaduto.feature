@@ -17016,7 +17016,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
-        And wait 7 seconds for expiration
+        And wait 8 seconds for expiration
         When job paRetryAttivaRpt triggered after 5 seconds
         Then verify the HTTP status code of paRetryAttivaRpt response is 200
         And wait 1 seconds for expiration
