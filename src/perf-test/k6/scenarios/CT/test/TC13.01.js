@@ -29,6 +29,7 @@ export const getScalini = new SharedArray('scalini', function () {
 });
 
 export const options = {
+  noConnectionReuse: true,
   scenarios: {
     mixed_scenario: {
       preAllocatedVUs: 1, // how large the initial pool of VUs would be
