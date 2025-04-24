@@ -7656,8 +7656,9 @@ Feature: NMU flows con pagamento KO
             | PAYMENT_NOTE               | responseFull                                                                                    |
             | FLAG_STANDIN               | N                                                                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values    |
-            | TRANSACTION_ID | $transaction_id |
+            | where_keys     | where_values              |
+            | TRANSACTION_ID | $transaction_id           |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC |
         And verify 2 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -13303,7 +13304,7 @@ Feature: NMU flows con pagamento KO
 
 
 
-   @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_29
+    @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_29
     Scenario: NMU flow paNEW KO, FLOW con checkPosition con 1 nav: activateV2 -> paGetPayment -> closeV2 ->SPOV2- -> KO PPT_SEMANTICA (OLD_NMU-141)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -13389,13 +13390,13 @@ Feature: NMU flows con pagamento KO
             | IDEMPOTENCY_KEY | $activatePaymentNoticeV2.idempotencyKey |
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                            |
-            | ID                    | NotNone                                                                                          |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                              |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                    |
+            | column                | value                                                 |
+            | ID                    | NotNone                                               |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                   |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                     |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken         |
             | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED |
-            | INSERTED_TIMESTAMP    | NotNone                                                                                          |
+            | INSERTED_TIMESTAMP    | NotNone                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -13431,7 +13432,7 @@ Feature: NMU flows con pagamento KO
             | FK_POSITION_PAYMENT   | NotNone                                       |
             | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
-            | STATUS                | PAYMENT_ACCEPTED                                      |
+            | STATUS                | PAYMENT_ACCEPTED                              |
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
@@ -13443,12 +13444,12 @@ Feature: NMU flows con pagamento KO
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                                 |
-            | ID                 | NotNone                                               |
-            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode                   |
-            | STATUS             | PAYING                                 |
-            | INSERTED_BY        | activatePaymentNoticeV2 |
-            | INSERTED_TIMESTAMP | NotNone                                               |
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
+            | STATUS             | PAYING                              |
+            | INSERTED_BY        | activatePaymentNoticeV2             |
+            | INSERTED_TIMESTAMP | NotNone                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
@@ -13461,7 +13462,7 @@ Feature: NMU flows con pagamento KO
             | column              | value                               |
             | ID                  | NotNone                             |
             | PA_FISCAL_CODE      | $activatePaymentNoticeV2.fiscalCode |
-            | STATUS              | PAYING                            |
+            | STATUS              | PAYING                              |
             | FK_POSITION_SERVICE | NotNone                             |
             | INSERTED_TIMESTAMP  | NotNone                             |
             | UPDATED_TIMESTAMP   | NotNone                             |
@@ -13486,9 +13487,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | 2.0                                           |
-            | OUTCOME                    | None                                            |
+            | OUTCOME                    | None                                          |
             | INSERTED_BY                | activatePaymentNoticeV2                       |
-            | UPDATED_BY                 | closePayment-v2                          |
+            | UPDATED_BY                 | closePayment-v2                               |
             | FK_PAYMENT_PLAN            | NotNone                                       |
             | RPT_ID                     | None                                          |
             | PAYMENT_TYPE               | MOD3                                          |
@@ -13702,7 +13703,7 @@ Feature: NMU flows con pagamento KO
             | SOTTO_TIPO_EVENTO  | REQ                                           |
             | ESITO              | RICEVUTA                                      |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
@@ -13718,7 +13719,7 @@ Feature: NMU flows con pagamento KO
             | SOTTO_TIPO_EVENTO  | RESP                                          |
             | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
         And from $sendPaymentOutcomeV2Resp.outcome xml check value KO in position 0
 
