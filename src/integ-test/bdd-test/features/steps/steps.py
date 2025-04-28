@@ -3690,6 +3690,8 @@ def step_impl(context, query_name, type_body, body, position, key):
                     result_query = result_query_clean
             selected_element = result_query
 
+        if 'aim:' in selected_element:
+            selected_element = selected_element.replace("aim:", "")
         print(f'{body}: {selected_element}')
         setattr(context, key, selected_element)
         
