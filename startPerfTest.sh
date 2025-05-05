@@ -15,7 +15,7 @@ executeScript()
 	test_step=$3
 	
 	#envTest="pagoPA_PERF_apim"
-	envTest="pagoPA_PERF_apim_pg"
+	envTest="pagoPA_PERF_apim"
 	
 	echo -----------------------------------------
 	echo *** Main K6 Perf Test Script ***
