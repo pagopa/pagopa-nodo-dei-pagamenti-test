@@ -29,7 +29,7 @@ export function nodoChiediCopiaRTReqBody(pa, intpa, stazpa, iuv, ccp) {
 export function nodoChiediCopiaRT(baseUrl, rndAnagPa, iuv, ccp) {
 
   console.debug(nodoChiediCopiaRTReqBody(rndAnagPa.CF, iuv, ccp));
-  let res = http.post(getBasePath(baseUrl, "nodoChiediCopiaRT")/*+'?primitiva=nodoChiediCopiaRT'*/),
+  let res = http.post(getBasePath(baseUrl, "nodoChiediCopiaRT")/*+'?primitiva=nodoChiediCopiaRT')*/,
     nodoChiediCopiaRTReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, ccp),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediCopiaRT' }),
