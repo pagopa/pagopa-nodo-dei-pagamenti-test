@@ -32,7 +32,7 @@ export const options = {
   noConnectionReuse: true,
   scenarios: {
     mixed_scenario: {
-      preAllocatedVUs: 1000, // how large the initial pool of VUs would be
+      preAllocatedVUs: 1500, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
           timeUnit: '3.2s', //'3.5s'
           //maxVUs: 2500,
