@@ -35,7 +35,7 @@ export const options = {
       preAllocatedVUs: 1000, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
           timeUnit: '3.2s', //'3.5s'
-          maxVUs: 2500,
+          //maxVUs: 2500,
                 stages: [
             { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
             { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
