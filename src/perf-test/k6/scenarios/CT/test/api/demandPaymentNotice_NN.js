@@ -36,7 +36,7 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
  }catch(error){}
  
  const res = http.post(
-    getBasePath(baseUrl, "demandPaymentNotice")+'?primitiva=demandPaymentNotice',
+    getBasePath(baseUrl, "demandPaymentNotice")/*+'?primitiva=demandPaymentNotice'*/,
     demandReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, idServizio),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'demandPaymentNotice' }) ,
 	tags: { demandPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration', primitiva: "demandPaymentNotice"}

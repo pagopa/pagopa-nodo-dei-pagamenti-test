@@ -28,7 +28,7 @@ export function nodoChiediCatalogoServiziV2ReqBody(psp, pspint, chpsp) {
 export function nodoChiediCatalogoServiziV2(baseUrl, rndAnagPsp) {
 
   console.debug(nodoChiediCatalogoServiziV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP));
-  let res = http.post(getBasePath(baseUrl, "nodoChiediCatalogoServiziV2")+'?primitiva=nodoChiediCatalogoServizi',
+  let res = http.post(getBasePath(baseUrl, "nodoChiediCatalogoServiziV2")/*+'?primitiva=nodoChiediCatalogoServizi'*/,
     nodoChiediCatalogoServiziV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediCatalogoServiziV2' }),

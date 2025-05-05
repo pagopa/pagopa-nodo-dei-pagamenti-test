@@ -29,7 +29,7 @@ export function nodoChiediStatoRPTReqBody(pa, intpa, stazpa, iuv, ccp) {
 export function nodoChiediStatoRPT(baseUrl, rndAnagPa, iuv, ccp) {
 
   console.debug(nodoChiediStatoRPTReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, ccp));
-  let res = http.post(getBasePath(baseUrl, "nodoChiediStatoRPT")+'?primitiva=nodoChiediStatoRPT',
+  let res = http.post(getBasePath(baseUrl, "nodoChiediStatoRPT")/*+'?primitiva=nodoChiediStatoRPT'*/,
     nodoChiediStatoRPTReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, ccp),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediStatoRPT' }),

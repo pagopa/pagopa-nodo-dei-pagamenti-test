@@ -28,7 +28,7 @@ export function nodoChiediListaPendentiRPTReqBody(pa, intpa, stazpa, dimensioneL
 export function nodoChiediListaPendentiRPT(baseUrl, rndAnagPa, dimensioneLista) {
 
   console.debug(nodoChiediListaPendentiRPTReqBody(rndAnagPa.CF));
-  let res = http.post(getBasePath(baseUrl, "nodoChiediListaPendentiRPT")+'?primitiva=nodoChiediListaPendentiRPT',
+  let res = http.post(getBasePath(baseUrl, "nodoChiediListaPendentiRPT")/*+'?primitiva=nodoChiediListaPendentiRPT'*/,
     nodoChiediListaPendentiRPTReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, dimensioneLista),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediListaPendentiRPT' }),

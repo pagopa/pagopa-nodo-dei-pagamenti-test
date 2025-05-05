@@ -39,7 +39,7 @@ export function activateV2EcommReqBody(cfpa, noticeNmbr, idempotencyKey, payment
 export function activatePaymentNoticeV2Ecomm(baseUrl, rndAnagPa, noticeNmbr, idempotencyKey, paymentNote) {
 
   console.debug(activateV2EcommReqBody(rndAnagPa.CF, noticeNmbr, idempotencyKey, paymentNote));
-  let res = http.post(getBasePath(baseUrl, "activatePaymentNoticeV2")+'?primitiva=activatePaymentNoticeV2_ecommerce',
+  let res = http.post(getBasePath(baseUrl, "activatePaymentNoticeV2")/*+'?primitiva=activatePaymentNoticeV2_ecommerce'*/,
     activateV2EcommReqBody(rndAnagPa.CF, noticeNmbr, idempotencyKey, paymentNote),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNoticeV2' }),

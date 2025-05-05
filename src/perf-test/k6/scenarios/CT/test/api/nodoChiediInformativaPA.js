@@ -27,7 +27,7 @@ export function nodoChiediInformativaPAReqBody(psp, pspint, chpsp) {
 export function nodoChiediInformativaPA(baseUrl, rndAnagPsp) {
 
   console.debug(nodoChiediInformativaPAReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP));
-  let res = http.post(getBasePath(baseUrl, "nodoChiediInformativaPA")+'?primitiva=nodoChiediInformativaPA',
+  let res = http.post(getBasePath(baseUrl, "nodoChiediInformativaPA")/*+'?primitiva=nodoChiediInformativaPA'*/,
     nodoChiediInformativaPAReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediInformativaPA' }),

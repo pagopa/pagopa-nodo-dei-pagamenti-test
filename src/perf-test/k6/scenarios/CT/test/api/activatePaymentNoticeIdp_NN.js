@@ -43,7 +43,7 @@ today = yyyy + '-' + mm + '-' + dd;
 
 export function activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey, paymentNote) {
  
- let res=http.post(getBasePath(baseUrl, "activatePaymentNotice")+'?primitiva=activatePaymentNoticeIDP_NN',
+ let res=http.post(getBasePath(baseUrl, "activatePaymentNotice")/*+'?primitiva=activatePaymentNoticeIDP_NN'/*,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' }) ,
 	tags: { activatePaymentNoticeIdp_NN: 'http_req_duration' , activatePaymentNoticeIdp_elapsed_NN: 'elapsed' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}

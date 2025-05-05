@@ -27,7 +27,7 @@ export function nodoPAChiediInformativaPAReqBody(pa, intpa, stazpa) {
 export function nodoPAChiediInformativaPA(baseUrl, rndAnagPa) {
 
   console.debug(nodoPAChiediInformativaPAReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA));
-  let res = http.post(getBasePath(baseUrl, "nodoPAChiediInformativaPA")+'?primitiva=nodoPAChiediInformativaPA',
+  let res = http.post(getBasePath(baseUrl, "nodoPAChiediInformativaPA")/*+'?primitiva=nodoPAChiediInformativaPA'*/,
     nodoPAChiediInformativaPAReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoPAChiediInformativaPA' }),

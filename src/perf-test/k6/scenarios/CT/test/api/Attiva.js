@@ -75,7 +75,7 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
  
 console.debug(AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp));
  const res = http.post(
-	 getBasePath(baseUrl, "nodoAttivaRPT")+'?primitiva=nodoAttivaRPT',
+	 getBasePath(baseUrl, "nodoAttivaRPT")/*+'?primitiva=nodoAttivaRPT'*/,
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoAttivaRPT', 'x-forwarded-for':'10.6.189.192' }) ,
 	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoAttivaRPT"}

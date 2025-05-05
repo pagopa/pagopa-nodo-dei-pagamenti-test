@@ -40,7 +40,7 @@ export function activateV2ReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempote
 export function activatePaymentNoticeV2(baseUrl, rndAnagPsp, rndAnagPa, noticeNmbr, idempotencyKey, paymentNote) {
 
   console.debug(activateV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF, noticeNmbr, idempotencyKey, paymentNote));
-  let res = http.post(getBasePath(baseUrl, "activatePaymentNoticeV2")+'?primitiva=activatePaymentNoticeV2',
+  let res = http.post(getBasePath(baseUrl, "activatePaymentNoticeV2")/*+'?primitiva=activatePaymentNoticeV2'*/,
     activateV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF, noticeNmbr, idempotencyKey, paymentNote),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNoticeV2' }),

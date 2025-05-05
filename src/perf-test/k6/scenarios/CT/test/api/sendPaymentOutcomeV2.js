@@ -79,7 +79,7 @@ export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken,  isMulti
 	}
   
   const res = http.post(
-    getBasePath(baseUrl, "sendPaymentOutcomeV2")+'?primitiva=sendPaymentOutcomeV2',
+    getBasePath(baseUrl, "sendPaymentOutcomeV2")/*+'?primitiva=sendPaymentOutcomeV2'*/,
     sendPaymentOutcomeV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcomeV2' }),

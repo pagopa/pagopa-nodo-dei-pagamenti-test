@@ -32,7 +32,7 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
  
   console.debug(numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA))
  const res = http.post(
-		 getBasePath(baseUrl, "nodoChiediNumeroAvviso")+'?primitiva=chiediNumeroAvviso',
+		 getBasePath(baseUrl, "nodoChiediNumeroAvviso")/*+'?primitiva=chiediNumeroAvviso'*/,
     numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediNumeroAvviso' }) ,
 	tags: { ChiediNumeroAvviso: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoChiediNumeroAvviso"}
