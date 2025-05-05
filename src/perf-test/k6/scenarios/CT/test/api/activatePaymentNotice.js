@@ -36,7 +36,7 @@ export function activateReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempotenc
 export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
   
  console.debug( activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey));
- let res=http.post(getBasePath(baseUrl, "activatePaymentNotice")/*+'?primitiva=activatePaymentNotice'/*,
+ let res=http.post(getBasePath(baseUrl, "activatePaymentNotice")/*+'?primitiva=activatePaymentNotice'*/,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNotice'}) ,
 	tags: { activatePaymentNotice: 'http_req_duration', activatePaymentNotice: 'elapsed' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}
