@@ -44,7 +44,9 @@ export function getBasePath(baseUrl, primitive) {
 			"verificaBollettino": "/node-for-psp/v1",
 			"verifyPaymentNotice": "/node-for-psp/v1",
 			"activatePaymentNotice": "/node-for-psp/v1",
+			"activatePaymentNoticeV2": "/node-for-psp/v1",
 			"sendPaymentOutcome": "/node-for-psp/v1",
+			"sendPaymentOutcomeV2": "/node-for-psp/v1",
 			"activateIOPayment": "/node-for-io/v1",
 			"nodoVerificaRPT": "/nodo-per-psp/v1",
 			"nodoAttivaRPT": "/nodo-per-psp/v1",
@@ -64,8 +66,8 @@ export function getBasePath(baseUrl, primitive) {
 			"nodoInviaRPT": "/nodo-per-pa/v1",
 			"nodoInviaRT": "/nodo-per-psp/v1",
 			"nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
-			"checkPosition": "/checkPosition",
-			"closePaymentV2": "/v2/closepayment",
+			"checkPosition": "/nodo-per-pm/v1/checkPosition",
+			"closePaymentV2": "/nodo-per-pm/v2/closepayment",
 
 			"nodoPerPMv1": "/nodo-per-pm/v1",
 			"nodoPerPMv2": "/nodo-per-pm/v2"
