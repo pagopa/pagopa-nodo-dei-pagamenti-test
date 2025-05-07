@@ -1,43 +1,41 @@
 Feature: RT_PUSH
 
     Background:
-        Given systems up    
-    
-    @ALL @FLOW @FLOW_FULL @RT_PUSH @RT_PUSH_1 
+        Given systems up
+
+    @ALL @FLOW @FLOW_FULL @RT_PUSH @RT_PUSH_1
     Scenario: nodoInviaCarrelloRPT - PAG-2346 rt push 1 iban 1479 (old_rtpush_1)
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-        And RPT generation RPT_generation_tipoVersamento with datatable vertical
+        Given RPT generation RPT_generation_tipoVersamento with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
             | dataOraMessaggioRichiesta         | #timedate#                  |
             | dataEsecuzionePagamento           | #date#                      |
             | importoTotaleDaVersare            | 5.00                        |
             | tipoVersamento                    | BBT                         |
-            | identificativoUnivocoVersamento   | $1iuv                       |
-            | codiceContestoPagamento           | $1carrello                  |
+            | identificativoUnivocoVersamento   | #iuv#                       |
+            | codiceContestoPagamento           | #ccp#                       |
             | importoSingoloVersamento          | 5.00                        |
-        Given RT generation RT_generation with datatable vertical
+        And RT generation RT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
             | dataOraMessaggioRicevuta          | #timedate#                  |
             | importoTotalePagato               | 5.00                        |
-            | identificativoUnivocoVersamento   | $1iuv                       |
-            | identificativoUnivocoRiscossione  | $1iuv                       |
-            | CodiceContestoPagamento           | $1carrello                  |
+            | identificativoUnivocoVersamento   | $iuv                        |
+            | identificativoUnivocoRiscossione  | $iuv                        |
+            | CodiceContestoPagamento           | $ccp                        |
             | codiceEsitoPagamento              | 0                           |
             | singoloImportoPagato              | 5.00                        |
         And from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #intermediarioPA#                    |
             | identificativoStazioneIntermediarioPA | #id_station#                         |
-            | identificativoCarrello                | $1carrello                           |
+            | identificativoCarrello                | $ccp                                 |
             | password                              | #password#                           |
             | identificativoPSP                     | #psp#                                |
             | identificativoIntermediarioPSP        | #psp#                                |
             | identificativoCanale                  | #canale_IMMEDIATO_MULTIBENEFICIARIO# |
             | identificativoDominio                 | #creditor_institution_code#          |
-            | identificativoUnivocoVersamento       | $1iuv                                |
-            | codiceContestoPagamento               | $1carrello                           |
+            | identificativoUnivocoVersamento       | $iuv                                 |
+            | codiceContestoPagamento               | $ccp                                 |
             | rpt                                   | $rptAttachment                       |
         And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
             | esitoComplessivoOperazione  | OK                                                        |
@@ -53,13 +51,13 @@ Feature: RT_PUSH
             | password                        | #password#                           |
             | identificativoPSP               | #psp#                                |
             | identificativoDominio           | #creditor_institution_code#          |
-            | identificativoUnivocoVersamento | $1iuv                                |
-            | codiceContestoPagamento         | $1carrello                           |
+            | identificativoUnivocoVersamento | $iuv                                 |
+            | codiceContestoPagamento         | $ccp                                 |
             | forzaControlloSegno             | 1                                    |
             | rt                              | $rtAttachment                        |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        # STATI_RPT 
+        # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                                                                                     |
             | ID          | NotNone                                                                                                                                   |
@@ -68,18 +66,18 @@ Feature: RT_PUSH
             | INSERTED_BY | nodoInviaCarrelloRPT,nodoInviaCarrelloRPT,pspInviaCarrelloRPT,pspInviaCarrelloRPT,nodoInviaRT,nodoInviaRT,nodoInviaRT,nodoInviaRT         |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | $1iuv                     |
+            | IUV        | $iuv                      |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | $1iuv        |
+            | IUV        | $iuv         |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                       |
-            | ID_SESSIONE | $sessionToken                               |
-            | STATO       | RT_ACCETTATA_PA |
-            | INSERTED_BY | nodoInviaCarrelloRPT   |
+            | column      | value                |
+            | ID_SESSIONE | $sessionToken        |
+            | STATO       | RT_ACCETTATA_PA      |
+            | INSERTED_BY | nodoInviaCarrelloRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
@@ -88,10 +86,95 @@ Feature: RT_PUSH
             | ID_SESSIONE | $sessionToken |
         # STATI_CARRELLO_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                  |
-            | ID_SESSIONE | $sessionToken          |
-            | STATO       | CART_ACCETTATO_PSP |
-            | INSERTED_BY | nodoInviaCarrelloRPT   |
+            | column      | value                |
+            | ID_SESSIONE | $sessionToken        |
+            | STATO       | CART_ACCETTATO_PSP   |
+            | INSERTED_BY | nodoInviaCarrelloRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_CARRELLO_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                                |
+            | ID                  | NotNone                              |
+            | ID_SESSIONE         | NotNone                              |
+            | CCP                 | $ccp                                 |
+            | COD_ESITO           | 0                                    |
+            | ESITO               | ESEGUITO                             |
+            | DATA_RICEVUTA       | NotNone                              |
+            | DATA_RICHIESTA      | NotNone                              |
+            | ID_RICEVUTA         | NotNone                              |
+            | ID_RICHIESTA        | NotNone                              |
+            | SOMMA_VERSAMENTI    | NotNone                              |
+            | INSERTED_TIMESTAMP  | NotNone                              |
+            | UPDATED_TIMESTAMP   | NotNone                              |
+            | ID_RICEVUTA         | NotNone                              |
+            | ID_RICHIESTA        | NotNone                              |
+            | CANALE              | #canale_IMMEDIATO_MULTIBENEFICIARIO# |
+            | NOTIFICA_PROCESSATA | N                                    |
+            | GENERATA_DA         | PSP                                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                          |
+            | IUV        | $nodoInviaCarrelloRPT.identificativoUnivocoVersamento |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                                |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                          |
+            | IUV        | $nodoInviaCarrelloRPT.identificativoUnivocoVersamento |
+        # RE #####
+        # nodoInviaRT REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $ccp                |
+            | TIPO_EVENTO               | nodoInviaRT         |
+            | SOTTO_TIPO_EVENTO         | REQ                 |
+            | ESITO                     | RICEVUTA            |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRTReq
+        And from $nodoInviaRTReq.identificativoIntermediarioPSP xml check value #psp# in position 0
+        And from $nodoInviaRTReq.identificativoCanale xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $nodoInviaRTReq.password xml check value #password# in position 0
+        And from $nodoInviaRTReq.identificativoPSP xml check value #id_broker_psp# in position 0
+        And from $nodoInviaRTReq.identificativoDominio xml check value #intermediarioPA# in position 0
+        And from $nodoInviaRTReq.identificativoUnivocoVersamento xml check value $iuv in position 0
+        And from $nodoInviaRTReq.codiceContestoPagamento xml check value $ccp in position 0
+        And from $nodoInviaRTReq.forzaControlloSegno xml check value 1 in position 0
+        And from $nodoInviaRTReq.rt xml check value NotNone in position 0
+        # nodoInviaRT RES
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $ccp                |
+            | TIPO_EVENTO               | nodoInviaRT         |
+            | SOTTO_TIPO_EVENTO         | RESP                |
+            | ESITO                     | INVIATA             |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRTResp
+        And from $nodoInviaRTResp.esito xml check value OK in position 0
+        # paaInviaRT REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $ccp                |
+            | TIPO_EVENTO               | paaInviaRT          |
+            | SOTTO_TIPO_EVENTO         | REQ                 |
+            | ESITO                     | INVIATA             |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
+        And from $paaInviaRTReq.identificativoIntermediarioPA xml check value #intermediarioPA# in position 0
+        And from $paaInviaRTReq.identificativoDominio xml check value #intermediarioPA# in position 0
+        And from $paaInviaRTReq.identificativoStazioneIntermediarioPA xml check value #id_station# in position 0
+        And from $paaInviaRTReq.identificativoUnivocoVersamento xml check value $iuv in position 0
+        And from $paaInviaRTReq.codiceContestoPagamento xml check value $ccp in position 0
+        And from $paaInviaRTReq.rt xml check value NotNone in position 0
+        # paaInviaRT RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys                | where_values        |
+            | CODICE_CONTESTO_PAGAMENTO | $ccp                |
+            | TIPO_EVENTO               | paaInviaRT          |
+            | SOTTO_TIPO_EVENTO         | RESP                |
+            | ESITO                     | RICEVUTA            |
+            | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
+            | ORDER BY                  | DATA_ORA_EVENTO ASC |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
+        And from $paaInviaRTResp.esito xml check value OK in position 0
