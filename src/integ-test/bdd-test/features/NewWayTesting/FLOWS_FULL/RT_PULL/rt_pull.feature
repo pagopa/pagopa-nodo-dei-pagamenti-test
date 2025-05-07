@@ -4,7 +4,6 @@ Feature: RT PULL flow
         Given systems up
 
 
-
     @ALL @FLOW @FLOW_FULL @RTPULL @RTPULL_1
     Scenario: RT pull, FLOW con PA Old e PSP Old, PSP che utilizza le primitive Mod4 a vecchio e RT Pull: nodoChiediCatalogoServizi, nodoChiedinumeroAvviso -> paaChiediNumeroAvviso, nodoAttivaRPT -> paaAttivaRPT, nodoInviaCarrelloRPT, job rt-pull -> pspChiediListaRT, pspChiediRT, pspInviaAckRT, paaInviaRT+, BIZ+ (OLD_RTPull-4A)
         Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
