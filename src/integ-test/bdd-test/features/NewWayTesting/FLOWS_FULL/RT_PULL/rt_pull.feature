@@ -367,7 +367,7 @@ Feature: RT PULL flow
 
 
     @ALL @FLOW @FLOW_FULL @RTPULL @RTPULL_2
-    Scenario: RT pull, FLOW con PA Old e PSP Old, PSP che utilizza flag 'RT Push' e 'Recovery' disabilitati e identificativoIntermediarioPA e identificativoStazioneIntermediarioPA irraggiungibili: nodoInviaRPT, job rt-pull -> pspChiediListaRT, pspChiediRT, pspInviaAckRT, paaInviaRT+, BIZ+ (OLD_RTPull-29A)
+    Scenario: RT pull, FLOW con PA Old e PSP Old, PSP che utilizza flag 'RT Push' e 'Recovery' disabilitati e identificativoIntermediarioPA e identificativoStazioneIntermediarioPA irraggiungibili: nodoInviaRPT, job rt-pull -> pspChiediListaRT, pspChiediRT, paaInviaRT+, BIZ+ (OLD_RTPull-29A)
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | irraggiungibile                 |
