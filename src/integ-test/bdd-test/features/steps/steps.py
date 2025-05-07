@@ -610,7 +610,7 @@ def step_impl(context, primitive, type_table, filebody):
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e} for primitive {primitive}")
         # Interrompiamo il test
         raise e
 
