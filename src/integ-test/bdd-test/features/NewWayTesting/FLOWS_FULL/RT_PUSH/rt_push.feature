@@ -1,11 +1,11 @@
 Feature: RT PUSH flow
 
     Background:
-        Given systems up    
-    
+        Given systems up
+
 
     @ALL @FLOW @FLOW_FULL @RT_PUSH @RT_PUSH_1
-    Scenario: RT push, FLOW con PA New e PSP che utilizza: RPT e RT con MND -> nodoInviaCarrelloRPT -> pspInviaCarrelloRPT, nodoInviaRT  BIZ+ (OLD_RTPush-1B)
+    Scenario: RT push, FLOW con PA New e PSP che utilizza: RPT e RT con MBD -> nodoInviaCarrelloRPT -> pspInviaCarrelloRPT, nodoInviaRT  BIZ+ (OLD_RTPush-1B)
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
@@ -13,30 +13,30 @@ Feature: RT PUSH flow
             | dataEsecuzionePagamento           | #date#                      |
             | importoTotaleDaVersare            | 5.00                        |
             | tipoVersamento                    | BBT                         |
-            | identificativoUnivocoVersamento   | $1iuv                       |
-            | codiceContestoPagamento           | $1carrello                  |
+            | identificativoUnivocoVersamento   | #iuv#                       |
+            | codiceContestoPagamento           | #ccp#                       |
             | importoSingoloVersamento          | 5.00                        |
-        Given RT generation RT_generation with datatable vertical
+        And RT generation RT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
             | dataOraMessaggioRicevuta          | #timedate#                  |
             | importoTotalePagato               | 5.00                        |
-            | identificativoUnivocoVersamento   | $1iuv                       |
-            | identificativoUnivocoRiscossione  | $1iuv                       |
-            | CodiceContestoPagamento           | $1carrello                  |
+            | identificativoUnivocoVersamento   | $iuv                        |
+            | identificativoUnivocoRiscossione  | $iuv                        |
+            | CodiceContestoPagamento           | $ccp                        |
             | codiceEsitoPagamento              | 0                           |
             | singoloImportoPagato              | 5.00                        |
         And from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #intermediarioPA#                    |
             | identificativoStazioneIntermediarioPA | #id_station#                         |
-            | identificativoCarrello                | $1carrello                           |
+            | identificativoCarrello                | $ccp                                 |
             | password                              | #password#                           |
             | identificativoPSP                     | #psp#                                |
             | identificativoIntermediarioPSP        | #psp#                                |
             | identificativoCanale                  | #canale_IMMEDIATO_MULTIBENEFICIARIO# |
             | identificativoDominio                 | #creditor_institution_code#          |
-            | identificativoUnivocoVersamento       | $1iuv                                |
-            | codiceContestoPagamento               | $1carrello                           |
+            | identificativoUnivocoVersamento       | $iuv                                 |
+            | codiceContestoPagamento               | $ccp                                 |
             | rpt                                   | $rptAttachment                       |
         And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
             | esitoComplessivoOperazione  | OK                                                        |
@@ -52,13 +52,13 @@ Feature: RT PUSH flow
             | password                        | #password#                           |
             | identificativoPSP               | #psp#                                |
             | identificativoDominio           | #creditor_institution_code#          |
-            | identificativoUnivocoVersamento | $1iuv                                |
-            | codiceContestoPagamento         | $1carrello                           |
+            | identificativoUnivocoVersamento | $iuv                                 |
+            | codiceContestoPagamento         | $ccp                                 |
             | forzaControlloSegno             | 1                                    |
             | rt                              | $rtAttachment                        |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        # STATI_RPT 
+        # STATI_RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column      | value                                                                                                                                     |
             | ID          | NotNone                                                                                                                                   |
@@ -67,18 +67,18 @@ Feature: RT PUSH flow
             | INSERTED_BY | nodoInviaCarrelloRPT,nodoInviaCarrelloRPT,pspInviaCarrelloRPT,pspInviaCarrelloRPT,nodoInviaRT,nodoInviaRT,nodoInviaRT,nodoInviaRT         |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values              |
-            | IUV        | $1iuv                     |
+            | IUV        | $iuv                      |
             | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
-            | IUV        | $1iuv        |
+            | IUV        | $iuv         |
             | ORDER BY   | ID ASC       |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                                       |
-            | ID_SESSIONE | $sessionToken                               |
-            | STATO       | RT_ACCETTATA_PA |
-            | INSERTED_BY | nodoInviaCarrelloRPT   |
+            | column      | value                |
+            | ID_SESSIONE | $sessionToken        |
+            | STATO       | RT_ACCETTATA_PA      |
+            | INSERTED_BY | nodoInviaCarrelloRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
@@ -87,10 +87,10 @@ Feature: RT PUSH flow
             | ID_SESSIONE | $sessionToken |
         # STATI_CARRELLO_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column      | value                  |
-            | ID_SESSIONE | $sessionToken          |
-            | STATO       | CART_ACCETTATO_PSP |
-            | INSERTED_BY | nodoInviaCarrelloRPT   |
+            | column      | value                |
+            | ID_SESSIONE | $sessionToken        |
+            | STATO       | CART_ACCETTATO_PSP   |
+            | INSERTED_BY | nodoInviaCarrelloRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_CARRELLO_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values  |
             | ID_SESSIONE | $sessionToken |
