@@ -17274,8 +17274,8 @@ Feature: NM3 flows PA Old con pagamento OK
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                           |
             | IDEMPOTENCY_KEY | $activatePaymentNotice2.idempotencyKey |
-        Given nodo-dei-pagamenti has config parameter useIdempotency set to false
-        When  waiting after triggered refresh job ALL
+        Given update parameter useIdempotency on configuration keys with value false
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNotice2Response.paymentToken | OK      |

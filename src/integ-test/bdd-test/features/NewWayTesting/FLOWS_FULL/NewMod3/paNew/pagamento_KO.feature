@@ -2875,9 +2875,10 @@ Feature: NM3 flows con pagamento fallito
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_23
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_23 @after
     Scenario: NM3 flow KO, FLOW: upd scheduler.jobName_idempotencyCacheClean.enabled set to false -> verify -> paVerify activate -> paGetPayment -> spoV2+ -> upd VALID_TO 1 min later -> spoV2+ -> KO con PPT_ESITO_GIA_ACQUISITO (OLD_NM3-121)
-        Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+        Given update parameter scheduler.jobName_idempotencyCacheClean.enabled on configuration keys with value false
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -2962,8 +2963,6 @@ Feature: NM3 flows con pagamento fallito
         And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
-
 
 
 
@@ -8763,7 +8762,8 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_44 @after
     Scenario: NM3 flow KO, FLOW: useIdempotency set to False -> activate -> paGetPayment  -> spo+ -> spo+ con KO with PPT_ESITO_GIA_ACQUISITO (OLD_NM3-60K)
-        Given nodo-dei-pagamenti has config parameter useIdempotency set to false
+        Given update parameter useIdempotency on configuration keys with value false
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |

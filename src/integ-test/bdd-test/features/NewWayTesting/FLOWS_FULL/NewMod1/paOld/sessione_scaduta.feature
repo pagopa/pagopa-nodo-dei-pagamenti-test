@@ -417,7 +417,7 @@ Feature: NMU flows con PA Old sessione scaduta
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDSESSCAD @NMUPAOLDSESSCAD_FULL_2 @after
     Scenario: NMU flow sessione scaduta, FLOW con PA Old e PSP vp1, Caso di pagamento semplice per scadenza sessione dopo timeout a notify e prima di spo: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations in timeout (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ- e SPRv2- spo+ con resp KO (NMU-7)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |

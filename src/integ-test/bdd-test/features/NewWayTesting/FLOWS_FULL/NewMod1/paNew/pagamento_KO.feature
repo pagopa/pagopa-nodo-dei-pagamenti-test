@@ -6879,7 +6879,8 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_15 @after
     Scenario: NMU flow paNEW KO, FLOW: 2x activateV2 -> 2x paGetPaymentV2, closeV2+ con 2 token e pspNotifyPaymentV2 malformata -> mod3CancelV2 (OLD-NMU-204)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
@@ -7762,7 +7763,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_17 @after
     Scenario: NMU flow paNEW VP2 KO, FLOW: con checkPosition con 2 nav, activateV2-> paGetPayment, activateV2 -> paGetPayment -> pspNotifyPaymentV2 in timeout -> closeV2+ -> mod3CancelV2  (OLD_NM1-47)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 16000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 16000
         And waiting after triggered refresh job ALL
         And from body with datatable vertical checkPositionBody_2element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
@@ -9092,7 +9093,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_20 @after
     Scenario: NMU flow paNEW VP2 KO, FLOW: con activateV2-> paGetPaymentV2 -> pspNotifyPayment Timeout -> closeV2, mod3CancelV2 -> SPOV2- ->KO PPT_SEMANTICA (OLD_NM1-61)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -9486,7 +9487,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_21 @after
     Scenario: NMU flow paNEW VP2 KO, FLOW: con  activateV2-> paGetPaymentV2 -> pspNotifyPayment Timeout -> closeV2, mod3CancelV2 -> SPO+ ->KO PPT_SEMANTICA (OLD_NM1-62)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -9879,7 +9880,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_22 @after
     Scenario: NMU flow paNEW VP2 KO, FLOW: con activateV2-> paGetPaymentV2 -> pspNotifyPayment Timeout -> closeV2, mod3CancelV2 -> SPO- ->KO PPT_SEMANTICA (OLD_NM1-63)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -10275,7 +10276,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_23 @after
     Scenario: NMU flow paNEW KO, FLOW: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> mod3CancelV2 (OLD_NMU-68)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -10673,7 +10674,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_24 @after
     Scenario: NMU flow paNEW KO, FLOW: activateV2 -> paGetPaymentV2 -> pspNotifyPayment malformed -> closeV2+ -> mod3CancelV2 (OLD_NMU-69)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -11071,7 +11072,7 @@ Feature: NMU flows con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGKO @NMUPANEWPAGKO_FULL_25 @after
     Scenario: NMU flow paNEW KO, FLOW con checkPosition con 1 nav: activateV2 -> paGetPaymentV2 -> pspNotifyPayment KO -> closeV2+ -> mod3CancelV2 (OLD_NMU-70)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |

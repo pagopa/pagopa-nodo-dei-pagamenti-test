@@ -37275,7 +37275,8 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_61 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2: checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotify, spoV2+ con idempotency -> spoV2+ con idempotency and resp KO con PPT_ESITO_GIA_ACQUISITO -> paSendRT+, e SPRv2+ (OLD_NMU-182)
-        Given nodo-dei-pagamenti has config parameter useIdempotency set to false
+        Given update parameter useIdempotency on configuration keys with value false
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |

@@ -10506,9 +10506,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_21 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-25)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -10555,7 +10555,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -11239,7 +11239,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_22 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-51)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -11288,7 +11288,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -11975,7 +11975,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_23 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-68)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -12024,7 +12024,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -12708,7 +12708,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_24 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-85)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -12757,7 +12757,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -13445,7 +13445,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_25 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paaVerificaRPT, activate Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-101)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -13505,7 +13505,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -14188,7 +14188,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_26 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT, activateV2 Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-102)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -14248,7 +14248,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -14933,7 +14933,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_27 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate e PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT, activateV2 Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-103)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -14993,7 +14993,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -15677,9 +15677,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_28 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT, activate Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-104)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 305#iuv#     |
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
@@ -15737,7 +15737,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -16421,9 +16421,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_29 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-26)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -16470,7 +16470,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -16963,9 +16963,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_30 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT (NM3-52)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -17012,7 +17012,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -17507,9 +17507,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_31 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-69)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  | 1000           |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -17556,7 +17556,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -18052,9 +18052,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_32 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT (NM3-86)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -18101,7 +18101,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
+        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200

@@ -8,7 +8,7 @@ Feature: NMU flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWRETRY @NMUPANEWRETRY_FULL_1 @after
     Scenario: NMU flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations in timeout (scadenza sessione), mod3cancelV2 , BIZ- e SPRv2-, spo+ con resp KO (NMU-5)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -465,7 +465,7 @@ Feature: NMU flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWRETRY @NMUPANEWRETRY_FULL_2 @after
     Scenario: NMU flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2: checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotifyV2 in timeout (scadenza sessione), mod3cancelV2, BIZ- e SPRv2-, spoV2+ con resp KO (NMU-7)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -920,7 +920,7 @@ Feature: NMU flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWRETRY @NMUPANEWRETRY_FULL_3 @after
     Scenario: NMU flow sessione scaduta, FLOW con PA New vp1 e PSP na: checkPosition con 1 nav activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-4)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1311,7 +1311,7 @@ Feature: NMU flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWRETRY @NMUPANEWRETRY_FULL_4 @after
     Scenario: NMU flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con additionalPaymentInformations in timeout (scadenza sessione), mod3cancelV2 , BIZ- e SPRv2-, spoV2+ con resp KO (NMU-57)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |

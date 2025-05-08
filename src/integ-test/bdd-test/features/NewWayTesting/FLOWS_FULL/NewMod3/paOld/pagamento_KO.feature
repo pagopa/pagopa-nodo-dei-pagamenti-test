@@ -3277,7 +3277,8 @@ Feature: NM3 flows PA Old con pagamento KO
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
-        And nodo-dei-pagamenti has config parameter useIdempotency set to true
+        Given update parameter useIdempotency on configuration keys with value true
+        And waiting after triggered refresh job ALL
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
@@ -3611,7 +3612,8 @@ Feature: NM3 flows PA Old con pagamento KO
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
-        And nodo-dei-pagamenti has config parameter useIdempotency set to true
+        Given update parameter useIdempotency on configuration keys with value true
+        And waiting after triggered refresh job ALL
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
@@ -4292,7 +4294,8 @@ Feature: NM3 flows PA Old con pagamento KO
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
-        And nodo-dei-pagamenti has config parameter useIdempotency set to false
+        Given update parameter useIdempotency on configuration keys with value false
+        And waiting after triggered refresh job ALL
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 1.00                        |
@@ -4321,7 +4324,8 @@ Feature: NM3 flows PA Old con pagamento KO
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
-        And nodo-dei-pagamenti has config parameter useIdempotency set to true
+        Given update parameter useIdempotency on configuration keys with value true
+        And waiting after triggered refresh job ALL
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |

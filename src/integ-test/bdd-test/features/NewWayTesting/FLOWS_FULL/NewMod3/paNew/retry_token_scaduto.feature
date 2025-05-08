@@ -7,7 +7,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_1 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ PPT_TOKEN_SCADUTO -> paSendRT, BIZ+ -> activate PPT_PAGAMENTO_DUPLICATO (NM3-4)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -425,7 +426,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_2 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRT, BIZ+ (NM3-12)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -833,7 +835,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_3 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2, BIZ+ (NM3-33)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
@@ -1242,7 +1245,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_4 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRTV2, BIZ+ (NM3-40)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
@@ -1653,7 +1657,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_5 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2- con resp PPT_TOKEN_SCADUTO_KO (NM3-41)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
@@ -2027,7 +2032,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_6 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1 activate e PSP vp2 spo : activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRT, BIZ+ (NM3-65)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -2437,7 +2443,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_7 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 activate e PSP vp1 spo: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRT, BIZ+ (NM3-69)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -2847,7 +2854,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_8 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 activate e PSP vp2 spo: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRTV2, BIZ+ (NM3-87)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
@@ -3257,7 +3265,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_9 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 activate e PSP vp1 spo: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2, BIZ+ (NM3-91)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     |
@@ -4924,7 +4933,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_12 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-146)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -5334,7 +5344,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_13 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-147)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
@@ -5716,7 +5727,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_14 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-148)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
@@ -6098,7 +6110,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_15 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-149)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
@@ -6479,7 +6492,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_16 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-150)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -6880,7 +6894,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_17 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-151)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -7266,7 +7281,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_18 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-152)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -7664,7 +7680,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_19 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-153)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
@@ -16793,7 +16810,8 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_32 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2-, BIZ+ (OLD_NM3-16)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |

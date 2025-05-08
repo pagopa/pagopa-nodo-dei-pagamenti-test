@@ -1436,7 +1436,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_15 @after
     Scenario: NM3 flow KO, FLOW con PA Old e PSP POSTE vp1: UPDATE verificabollettino.validity.minutes to 1 min -> verificaBollettino -> paVerificaRPT -> activate Poste -> override paaAttivaRPT -> activatePaymentNotice KO con PPT_IBAN_ACCREDITO -> nodoInviaRPT KO con PPT_SEMANTICA (OLD_NM3-15M)
-        Given nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
+        Given update parameter verificabollettino.validity.minutes on configuration keys with value 1
         And update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
