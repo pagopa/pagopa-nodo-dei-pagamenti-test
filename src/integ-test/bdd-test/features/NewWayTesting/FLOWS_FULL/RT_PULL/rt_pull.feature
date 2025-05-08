@@ -90,14 +90,13 @@ Feature: RT PULL flow
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        And wait 5 seconds for expiration
+        And wait 1 seconds for expiration
         When EC sends soap nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And job pspChiediListaAndChiediRt triggered after 2 seconds
+        And job paInviaRt triggered after 2 seconds
+        And wait 1 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                                |
@@ -410,11 +409,11 @@ Feature: RT PULL flow
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        And wait 5 seconds for expiration
+        And wait 1 seconds for expiration
         When EC sends soap nodoInviaRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And job pspChiediListaAndChiediRt triggered after 2 seconds
+        And job paInviaRt triggered after 2 seconds
+        And wait 1 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -704,14 +703,13 @@ Feature: RT PULL flow
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        And wait 5 seconds for expiration
+        And wait 1 seconds for expiration
         When EC sends soap nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And job pspChiediListaAndChiediRt triggered after 2 seconds
+        And job paInviaRt triggered after 2 seconds
+        And wait 1 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                                |
@@ -1079,14 +1077,13 @@ Feature: RT PULL flow
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        And wait 5 seconds for expiration
+        And wait 1 seconds for expiration
         When EC sends soap nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 5 seconds for expiration
+        And job pspChiediListaAndChiediRt triggered after 2 seconds
+        And job paInviaRt triggered after 2 seconds
+        And wait 1 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        And wait 1 seconds for expiration
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column           | value                                                |
@@ -1405,10 +1402,11 @@ Feature: RT PULL flow
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 1 seconds for expiration
         When EC sends soap nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 2 seconds
         And job paInviaRt triggered after 2 seconds
-        And wait 2 seconds for expiration
+        And wait 1 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         # RPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
