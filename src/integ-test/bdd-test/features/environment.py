@@ -93,87 +93,87 @@ def before_all(context):
         
     setattr(context, 'SUBKEY', SUBKEY)
 
-    # apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
-    # db.set_address(apicfg_testing_support_service)
+    apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
+    db.set_address(apicfg_testing_support_service)
         
-    # try:
-    #     db_config = context.config.userdata.get("db_configuration")
-    #     db_name = "nodo_cfg"
-    #     db_selected = db_config.get(db_name)
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "nodo_cfg"
+        db_selected = db_config.get(db_name)
 
-    #     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    #     # Call the procedure to reset test data for CONFIGURATION_KEYS table
-    #     print(f"----> SET CONFIGURATION_KEYS...")
-    #     reset_test_data_query = "select resettestdata();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
+        # Call the procedure to reset test data for CONFIGURATION_KEYS table
+        print(f"----> SET CONFIGURATION_KEYS...")
+        reset_test_data_query = "select resettestdata();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
         
-    #     # Call the procedure to reset test data for CANALI table
-    #     print(f"----> SET CANALI...")
-    #     reset_test_data_canali = "select resettestcanali();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
+        # Call the procedure to reset test data for CANALI table
+        print(f"----> SET CANALI...")
+        reset_test_data_canali = "select resettestcanali();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
         
-    #     # Call the procedure to reset test data for STAZIONI table
-    #     print(f"----> SET STAZIONI...")
-    #     reset_test_data_stazioni = "select resetteststazioni();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
+        # Call the procedure to reset test data for STAZIONI table
+        print(f"----> SET STAZIONI...")
+        reset_test_data_stazioni = "select resetteststazioni();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
         
-    #     # Call the procedure to reset test data for PA_STAZIONE_PA table
-    #     print(f"----> SET PA_STAZIONE_PA...")
-    #     reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
+        # Call the procedure to reset test data for PA_STAZIONE_PA table
+        print(f"----> SET PA_STAZIONE_PA...")
+        reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
         
-    #     # Call the procedure to reset test data for CANALI_NODO table
-    #     print(f"----> SET CANALI_NODO...")
-    #     reset_test_data_canali_nodo = "select resettestcanalinodo();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)             
+        # Call the procedure to reset test data for CANALI_NODO table
+        print(f"----> SET CANALI_NODO...")
+        reset_test_data_canali_nodo = "select resettestcanalinodo();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)             
 
-    #     adopted_db.closeConnection(conn)
+        adopted_db.closeConnection(conn)
     
-    #     selected_query = utils.query_json(context, 'select_config', 'configurations')
-    #     adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
-    #     exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
+        selected_query = utils.query_json(context, 'select_config', 'configurations')
+        adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
+        exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
 
-    #     adopted_db.closeConnection(conn)
+        adopted_db.closeConnection(conn)
 
-    #     config_dict = {}
-    #     for row in exec_query:
-    #         config_key, config_value = row
-    #         config_dict[row[config_key]] = row[config_value]
+        config_dict = {}
+        for row in exec_query:
+            config_key, config_value = row
+            config_dict[row[config_key]] = row[config_value]
         
-    #     setattr(context, 'configurations', config_dict)
+        setattr(context, 'configurations', config_dict)
         
-    #     flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
-    #     headers = ''
-    #     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+        headers = ''
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
 
-    #     if flag_subscription == 'Y':
-    #         headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
-    #     else:
-    #         headers = {'Host': header_host}
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Host': header_host}
 
-    #     print(f"----> REFRESH...")
+        print(f"----> REFRESH...")
     
-    #     print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
 
-    #     refresh_response = None
+        refresh_response = None
 
-    #     if dbRun == 'Postgres':
-    #         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    #     elif dbRun == 'Oracle':
-    #         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+        if dbRun == 'Postgres':
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == 'Oracle':
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
         
-    #     #CHECK NEW RECORD CACHE AFTER REFRESH
-    #     new_record_cache = utils.query_new_record_cache(context, conn, adopted_db, dbRun)
-    #     adopted_db.closeConnection(conn)
-    #     assert new_record_cache == True, f"New record cache not found!"
+        #CHECK NEW RECORD CACHE AFTER REFRESH
+        new_record_cache = utils.query_new_record_cache(context, conn, adopted_db, dbRun)
+        adopted_db.closeConnection(conn)
+        assert new_record_cache == True, f"New record cache not found!"
         
-    #     assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
+        assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
-    # except Exception as e:
-    #     # Gestione di tutte le altre eccezioni
-    #     print("----->>>> Exception:", e)
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
 
 
 def before_feature(context, feature):
@@ -201,9 +201,9 @@ def before_scenario(context, scenario):
     if "after" in scenario.effective_tags:
         execute_after_scenario = True
 
-    # context.stdout_capture = StringIO()
-    # context.original_stdout = sys.stdout
-    # sys.stdout = context.stdout_capture
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
     
 
 
@@ -292,31 +292,31 @@ def after_scenario(context, scenario):
         # Gestione di tutte le altre eccezioni
         print("----->>>> Exception:", e)
     
-    # if dbRun == "Postgres":
-    #     sys.stdout = context.original_stdout
-    #     context.stdout_capture.seek(0)
-    #     captured_stdout = context.stdout_capture.read()
+    if dbRun == "Postgres":
+        sys.stdout = context.original_stdout
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
 
-    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    #     context.stdout_capture.close()
+        context.stdout_capture.close()
 
-    #     # Stampa l'output nel terminale
-    #     print(f"\nCaptured stdout:\n{captured_stdout}")
+        # Stampa l'output nel terminale
+        print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    # elif dbRun == "Oracle":
-    #     ####RUN DA LOCALE
-    #     if user_profile != None:
-    #         sys.stdout = context.original_stdout
-    #         context.stdout_capture.seek(0)
-    #         captured_stdout = context.stdout_capture.read()
+    elif dbRun == "Oracle":
+        ####RUN DA LOCALE
+        if user_profile != None:
+            sys.stdout = context.original_stdout
+            context.stdout_capture.seek(0)
+            captured_stdout = context.stdout_capture.read()
 
-    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    #         context.stdout_capture.close()
+            context.stdout_capture.close()
 
-    #         # Stampa l'output nel terminale
-    #         print(f"\nCaptured stdout:\n{captured_stdout}")
+            # Stampa l'output nel terminale
+            print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
@@ -351,70 +351,70 @@ def after_all(context):
             proxies = None
     
         setattr(context, 'proxies', proxies)
-    # try:
-    #     db_config = context.config.userdata.get("db_configuration")
-    #     db_name = "nodo_cfg"
-    #     db_selected = db_config.get(db_name)
-    #     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "nodo_cfg"
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    #     # Call the procedure to reset test data for CONFIGURATION_KEYS table
-    #     print(f"----> RESTORE CONFIGURATION_KEYS...")
-    #     reset_test_data_query = "select resettestdata();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
+        # Call the procedure to reset test data for CONFIGURATION_KEYS table
+        print(f"----> RESTORE CONFIGURATION_KEYS...")
+        reset_test_data_query = "select resettestdata();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
         
-    #     # Call the procedure to reset test data for CANALI table
-    #     print(f"----> RESTORE CANALI...")
-    #     reset_test_data_canali = "select resettestcanali();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
+        # Call the procedure to reset test data for CANALI table
+        print(f"----> RESTORE CANALI...")
+        reset_test_data_canali = "select resettestcanali();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
         
-    #     # Call the procedure to reset test data for STAZIONI table
-    #     print(f"----> RESTORE STAZIONI...")
-    #     reset_test_data_stazioni = "select resetteststazioni();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
+        # Call the procedure to reset test data for STAZIONI table
+        print(f"----> RESTORE STAZIONI...")
+        reset_test_data_stazioni = "select resetteststazioni();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
         
-    #     # Call the procedure to reset test data for PA_STAZIONE_PA table
-    #     print(f"----> RESTORE PA_STAZIONE_PA...")
-    #     reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
+        # Call the procedure to reset test data for PA_STAZIONE_PA table
+        print(f"----> RESTORE PA_STAZIONE_PA...")
+        reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
         
-    #     # Call the procedure to reset test data for CANALI_NODO table
-    #     print(f"----> RESTORE CANALI_NODO...")
-    #     reset_test_data_canali_nodo = "select resettestcanalinodo();"
-    #     exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
+        # Call the procedure to reset test data for CANALI_NODO table
+        print(f"----> RESTORE CANALI_NODO...")
+        reset_test_data_canali_nodo = "select resettestcanalinodo();"
+        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
 
-    #     adopted_db.closeConnection(conn)
+        adopted_db.closeConnection(conn)
         
-    #     flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
-    #     headers = ''
-    #     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+        headers = ''
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
 
-    #     if flag_subscription == 'Y':
-    #         headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
-    #     else:
-    #         headers = {'Host': header_host}
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Host': header_host}
 
-    #     refresh_response = None
+        refresh_response = None
         
-    #     print(f"----> REFRESH...")
+        print(f"----> REFRESH...")
     
-    #     if dbRun == "Postgres":
-    #         print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-    #         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     
-    #     elif dbRun == "Oracle":
-    #         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+        elif dbRun == "Oracle":
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    #     #CHECK NEW RECORD CACHE AFTER REFRESH
-    #     new_record_cache = utils.query_new_record_cache(context, conn, adopted_db, dbRun)
-    #     adopted_db.closeConnection(conn)
-    #     assert new_record_cache == True, f"New record cache not found!"
+        #CHECK NEW RECORD CACHE AFTER REFRESH
+        new_record_cache = utils.query_new_record_cache(context, conn, adopted_db, dbRun)
+        adopted_db.closeConnection(conn)
+        assert new_record_cache == True, f"New record cache not found!"
 
-    #     assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
+        assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
         
-    # except AssertionError as e:
-    #     # Stampiamo il messaggio di errore dell'assert
-    #     print("----->>>> Assertion Error: ", e)
-    # except Exception as e:
-    #     # Gestione di tutte le altre eccezioni
-    #     print("----->>>> Exception:", e)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
