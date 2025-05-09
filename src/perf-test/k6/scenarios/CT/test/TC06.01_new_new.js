@@ -164,7 +164,7 @@ export function total() {
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
-    sleep(3);
+    sleep(5);3);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }

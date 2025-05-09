@@ -175,7 +175,7 @@ export function total() {
     let outcome = 'OK';
     res = closePaymentV2_5Token(baseRestUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, pspTransactionId, totalAmount);
 	
-    sleep(3);
+    sleep(5);3);
 
     res = sendPaymentOutcomeV2MultiToken(baseSoapUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken);
 }
