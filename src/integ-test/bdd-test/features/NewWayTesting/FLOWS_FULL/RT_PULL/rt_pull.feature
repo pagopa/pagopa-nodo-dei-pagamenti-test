@@ -3723,7 +3723,7 @@ Feature: RT PULL flow
 
 
     @ALL @FLOW @FLOW_FULL @RTPULL @RTPULL_13 @after
-    Scenario: RT pull, FLOW con PA Old e PSP Old: nodoChiediCatalogoServizi, nodoChiedinumeroAvviso -> paaChiediNumeroAvviso, nodoAttivaRPT -> paaAttivaRPT, RPT con MBD, nodoInviaRPT, job rt-pull ->  pspChiediListaRT, pspChiediRT, pspInviaAckRT Timeout -> job pspRetryAckNegative -> paaInviaRT+ (OLD_RTPull-13A)
+    Scenario: RT pull, FLOW con PA Old e PSP Old: nodoChiediCatalogoServizi, nodoChiedinumeroAvviso -> paaChiediNumeroAvviso, nodoAttivaRPT -> paaAttivaRPT, RPT con MBD, nodoInviaRPT, job rt-pull ->  pspChiediListaRT, pspChiediRT, pspInviaAckRT error faultCode CANALE_SYSTEM_ERROR -> job pspRetryAckNegative -> paaInviaRT+ (OLD_RTPull-13A)
         Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | identificativoDominio       |
             | #psp#             | #id_broker_psp#                | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# |
