@@ -817,7 +817,7 @@ Feature: RT PUSH flow
 
 
     @ALL @FLOW @FLOW_FULL @RT_PUSH @RT_PUSH_5
-    Scenario: RT push, FLOW con PA New e PSP che utilizza: RPT e RT -> nodoInviaCarrelloRPT -> pspInviaCarrelloRPT, nodoInviaRT  BIZ+ (OLD_RTPush-6B)
+    Scenario: RT push, FLOW con PA New e PSP che utilizza: RPT e RT con codiceEsitoPagamento 1 NON PAGATO -> nodoInviaCarrelloRPT -> pspInviaCarrelloRPT, nodoInviaRT  BIZ+ (OLD_RTPush-6B)
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | #id_station_old#                |
@@ -828,16 +828,16 @@ Feature: RT PUSH flow
             | identificativoUnivocoVersamento   | #iuv#                           |
             | codiceContestoPagamento           | #ccp#                           |
             | importoSingoloVersamento          | 10.00                           |
-        And RT generation RT_generation with datatable vertical
+        And RT generation RT_generation_KO with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | #id_station_old#                |
             | dataOraMessaggioRicevuta          | #timedate#                      |
-            | importoTotalePagato               | 10.00                           |
+            | importoTotalePagato               | 0.00                            |
             | identificativoUnivocoVersamento   | $iuv                            |
             | identificativoUnivocoRiscossione  | $iuv                            |
             | CodiceContestoPagamento           | $ccp                            |
-            | codiceEsitoPagamento              | 0                               |
-            | singoloImportoPagato              | 10.00                           |
+            | codiceEsitoPagamento              | 1                               |
+            | singoloImportoPagato              | 0.00                            |
         And from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #creditor_institution_code_old# |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
