@@ -2,6 +2,7 @@
 debugEnabled=$1
 rampingSel=$2
 blacklistCT=$3
+apimEnabled=$4
 echo "params: ${debugEnabled} ${rampingSel} ${blacklistCT}"
 
 export https_proxy=http://10.79.20.33:81
@@ -14,8 +15,13 @@ executeScript()
 	active_test=$2
 	test_step=$3
 	
-	envTest="pagoPA_PERF_apim"
-	#envTest="pagoPA_PERF_apim_pg"
+	if echo "${apimEnabled}" | grep -q "true"; then
+		envTest="pagoPA_PERF_apim"
+		echo "apim enabled"
+	else
+		envTest="pagoPA_PERF_apim_pg"
+		echo "apim disabled"
+	fi
 	
 	echo -----------------------------------------
 	echo *** Main K6 Perf Test Script ***

@@ -21,13 +21,13 @@ def start_test():
     #read body
     data = request.get_json()
 
-    if 'debugEnabled' in data and 'rampa' in data and 'blacklist' in data:
+    if 'debugEnabled' in data and 'rampa' in data and 'blacklist' in data and 'apimEnabled' in data:
         debugEnabled = data['debugEnabled']
         rampa = data['rampa']
         blacklist = data['blacklist']
-
+		apimEnabled = data['apimEnabled']
         # execute tests
-        script_thread = threading.Thread(target=run_script, args=(debugEnabled, rampa, blacklist))
+        script_thread = threading.Thread(target=run_script, args=(debugEnabled, rampa, blacklist, apimEnabled))
         script_thread.start()
         print('start test END')
         return jsonify({"message": "test started"})
