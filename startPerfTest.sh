@@ -16,10 +16,10 @@ executeScript()
 	test_step=$3
 	
 	if echo "${apimEnabled}" | grep -q "true"; then
-		envTest="pagoPA_PERF_apim"
+		envTest="pagoPA_PERF_apim_pg"
 		echo "apim enabled"
 	else
-		envTest="pagoPA_PERF_apim_pg"
+		envTest="pagoPA_PERF_apim"
 		echo "apim disabled"
 	fi
 	
