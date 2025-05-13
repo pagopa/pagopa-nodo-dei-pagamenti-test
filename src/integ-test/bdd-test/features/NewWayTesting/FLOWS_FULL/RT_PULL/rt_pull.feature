@@ -5117,3 +5117,447 @@ Feature: RT PULL flow
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
         And from $paaInviaRTResp.esito xml check value OK in position 0
+
+
+
+    @ALL @FLOW @FLOW_FULL @RTPULL @RTPULL_17
+    Scenario: RT pull, FLOW con PA Old e PSP Old, nodoInviaCarrelloRPT con in request un carrello contenente 5 RPT: nodoInviaCarrelloRPT, job rt-pull -> pspChiediListaRT, pspChiediRT, pspInviaAckRT, paaInviaRT+, BIZ+ (OLD_RTPull-20A)
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 3 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 5 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And RPT1 generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station_old#            |
+            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10         |
+            | dataEsecuzionePagamento           | 2016-09-16                  |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | #ccp1#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RPT2 generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station_old#            |
+            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10         |
+            | dataEsecuzionePagamento           | 2016-09-16                  |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | $2iuv                       |
+            | codiceContestoPagamento           | #ccp2#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RPT3 generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station_old#            |
+            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10         |
+            | dataEsecuzionePagamento           | 2016-09-16                  |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | $3iuv                       |
+            | codiceContestoPagamento           | #ccp3#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RPT4 generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station_old#            |
+            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10         |
+            | dataEsecuzionePagamento           | 2016-09-16                  |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | $4iuv                       |
+            | codiceContestoPagamento           | #ccp4#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RPT5 generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station_old#            |
+            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10         |
+            | dataEsecuzionePagamento           | 2016-09-16                  |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | $5iuv                       |
+            | codiceContestoPagamento           | #ccp5#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RT1 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station#                    |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | identificativoUnivocoRiscossione  | $1iuv                           |
+            | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
+            | singoloImportoPagato              | 10.00                           |
+        And RT2 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station#                    |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $2iuv                           |
+            | identificativoUnivocoRiscossione  | $2iuv                           |
+            | CodiceContestoPagamento           | $2ccp                           |
+            | codiceEsitoPagamento              | 0                               |
+            | singoloImportoPagato              | 10.00                           |
+        And RT3 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station#                    |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $3iuv                           |
+            | identificativoUnivocoRiscossione  | $3iuv                           |
+            | CodiceContestoPagamento           | $3ccp                           |
+            | codiceEsitoPagamento              | 0                               |
+            | singoloImportoPagato              | 10.00                           |
+        And RT4 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station#                    |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $4iuv                           |
+            | identificativoUnivocoRiscossione  | $4iuv                           |
+            | CodiceContestoPagamento           | $4ccp                           |
+            | codiceEsitoPagamento              | 0                               |
+            | singoloImportoPagato              | 10.00                           |
+        And RT5 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station#                    |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $5iuv                           |
+            | identificativoUnivocoRiscossione  | $5iuv                           |
+            | CodiceContestoPagamento           | $5ccp                           |
+            | codiceEsitoPagamento              | 0                               |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaCarrelloRPT_5elemLista initial XML nodoInviaCarrelloRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code#     |
+            | identificativoStazioneIntermediarioPA | #id_station#                    |
+            | identificativoCarrello                | $1carrello                      |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                 |
+            | identificativoCanale                  | #canaleRtPull_sec#              |
+            | identificativoDominio1                | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento1      | $1iuv                           |
+            | codiceContestoPagamento1              | $1ccp                           |
+            | rpt1                                  | $rpt1Attachment                 |
+            | identificativoDominio2                | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento2      | $2iuv                           |
+            | codiceContestoPagamento2              | $2ccp                           |
+            | rpt2                                  | $rpt2Attachment                 |
+            | identificativoDominio3                | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento3      | $3iuv                           |
+            | codiceContestoPagamento3              | $3ccp                           |
+            | rpt3                                  | $rpt3Attachment                 |
+            | identificativoDominio4                | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento4      | $4iuv                           |
+            | codiceContestoPagamento4              | $4ccp                           |
+            | rpt4                                  | $rpt4Attachment                 |
+            | identificativoDominio5                | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento5      | $5iuv                           |
+            | codiceContestoPagamento5              | $5ccp                           |
+            | rpt5                                  | $rpt5Attachment                 |
+        And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
+            | esitoComplessivoOperazione  | OK                                                        |
+            | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello |
+        And from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $1iuv                           | $1ccp                   |
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
+            | rt             |
+            | $rt1Attachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        And job pspChiediListaAndChiediRt triggered after 2 seconds
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+
+        # second pspChiediListaAndChiediRt trigger
+        Given from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $2iuv                           | $2ccp                   |
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
+            | rt             |
+            | $rt2Attachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 3 seconds
+
+        # third pspChiediListaAndChiediRt trigger
+        Given from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $3iuv                           | $3ccp                   |
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
+            | rt             |
+            | $rt3Attachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 3 seconds
+
+        # fourth pspChiediListaAndChiediRt trigger
+        Given from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $4iuv                           | $4ccp                   |
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
+            | rt             |
+            | $rt4Attachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 3 seconds
+
+        # fifth pspChiediListaAndChiediRt trigger
+        Given from body with datatable horizontal pspChiediListaRT initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $5iuv                           | $5ccp                   |
+        And from body with datatable horizontal pspChiediRT initial XML pspChiediRT
+            | rt             |
+            | $rt5Attachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        When job pspChiediListaAndChiediRt triggered after 3 seconds
+
+        And job paInviaRt triggered after 3 seconds
+        And wait 3 seconds for expiration
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value                                                                                                                                     |
+            | STATO  | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | $1iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value           |
+            | STATO  | RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        # STATI_RPT second iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value                                                                                                                                     |
+            | STATO  | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | $2iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $2iuv        |
+        # STATI_RPT_SNAPSHOT second iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value           |
+            | STATO  | RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $2iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $2iuv        |
+        # STATI_RPT third iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value                                                                                                                                     |
+            | STATO  | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | $3iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $3iuv        |
+        # STATI_RPT_SNAPSHOT third iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value           |
+            | STATO  | RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $3iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $3iuv        |
+        # STATI_RPT fourth iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value                                                                                                                                     |
+            | STATO  | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | $4iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $4iuv        |
+        # STATI_RPT_SNAPSHOT fourth iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value           |
+            | STATO  | RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $4iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $4iuv        |
+        # STATI_RPT fifth iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value                                                                                                                                     |
+            | STATO  | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | $5iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $5iuv        |
+        # STATI_RPT_SNAPSHOT fifth iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value           |
+            | STATO  | RT_ACCETTATA_PA |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $5iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $5iuv        |
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value              |
+            | ID                  | NotNone            |
+            | ID_SESSIONE         | NotNone            |
+            | CCP                 | $1ccp              |
+            | COD_ESITO           | 0                  |
+            | ESITO               | ESEGUITO           |
+            | DATA_RICEVUTA       | NotNone            |
+            | DATA_RICHIESTA      | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | SOMMA_VERSAMENTI    | 10.00              |
+            | INSERTED_TIMESTAMP  | NotNone            |
+            | UPDATED_TIMESTAMP   | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | CANALE              | #canaleRtPull_sec# |
+            | NOTIFICA_PROCESSATA | N                  |
+            | GENERATA_DA         | PSP                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        # RT second iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value              |
+            | ID                  | NotNone            |
+            | ID_SESSIONE         | NotNone            |
+            | CCP                 | $2ccp              |
+            | COD_ESITO           | 0                  |
+            | ESITO               | ESEGUITO           |
+            | DATA_RICEVUTA       | NotNone            |
+            | DATA_RICHIESTA      | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | SOMMA_VERSAMENTI    | 10.00              |
+            | INSERTED_TIMESTAMP  | NotNone            |
+            | UPDATED_TIMESTAMP   | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | CANALE              | #canaleRtPull_sec# |
+            | NOTIFICA_PROCESSATA | N                  |
+            | GENERATA_DA         | PSP                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $2iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $2iuv        |
+        # RT third iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value              |
+            | ID                  | NotNone            |
+            | ID_SESSIONE         | NotNone            |
+            | CCP                 | $3ccp              |
+            | COD_ESITO           | 0                  |
+            | ESITO               | ESEGUITO           |
+            | DATA_RICEVUTA       | NotNone            |
+            | DATA_RICHIESTA      | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | SOMMA_VERSAMENTI    | 10.00              |
+            | INSERTED_TIMESTAMP  | NotNone            |
+            | UPDATED_TIMESTAMP   | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | CANALE              | #canaleRtPull_sec# |
+            | NOTIFICA_PROCESSATA | N                  |
+            | GENERATA_DA         | PSP                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $3iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $3iuv        |
+        # RT fourth iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value              |
+            | ID                  | NotNone            |
+            | ID_SESSIONE         | NotNone            |
+            | CCP                 | $4ccp              |
+            | COD_ESITO           | 0                  |
+            | ESITO               | ESEGUITO           |
+            | DATA_RICEVUTA       | NotNone            |
+            | DATA_RICHIESTA      | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | SOMMA_VERSAMENTI    | 10.00              |
+            | INSERTED_TIMESTAMP  | NotNone            |
+            | UPDATED_TIMESTAMP   | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | CANALE              | #canaleRtPull_sec# |
+            | NOTIFICA_PROCESSATA | N                  |
+            | GENERATA_DA         | PSP                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $4iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $4iuv        |
+        # RT fifth iuv
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value              |
+            | ID                  | NotNone            |
+            | ID_SESSIONE         | NotNone            |
+            | CCP                 | $5ccp              |
+            | COD_ESITO           | 0                  |
+            | ESITO               | ESEGUITO           |
+            | DATA_RICEVUTA       | NotNone            |
+            | DATA_RICHIESTA      | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | SOMMA_VERSAMENTI    | 10.00              |
+            | INSERTED_TIMESTAMP  | NotNone            |
+            | UPDATED_TIMESTAMP   | NotNone            |
+            | ID_RICEVUTA         | NotNone            |
+            | ID_RICHIESTA        | NotNone            |
+            | CANALE              | #canaleRtPull_sec# |
+            | NOTIFICA_PROCESSATA | N                  |
+            | GENERATA_DA         | PSP                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $5iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $5iuv        |
