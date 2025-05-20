@@ -10694,7 +10694,7 @@ Feature: NMU flows con PA New pagamento OK
             | Importo       | 5.00                                         |
             | TipoBollo     | 01                                           |
             | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
-        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+        And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
