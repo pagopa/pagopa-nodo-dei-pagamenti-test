@@ -10439,8 +10439,8 @@ Feature: NM3 flows PA Old con pagamento KO
             | ORDER BY           | DATA_ORA_EVENTO ASC LIMIT 1                 |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
-        And from $activatePaymentNoticeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $activatePaymentNoticeReq.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
+        And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeReq.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
         And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
         And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNoticeResponse.paymentToken in position 0
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
@@ -10464,13 +10464,13 @@ Feature: NM3 flows PA Old con pagamento KO
             | ESITO              | RICEVUTA                                    |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO DESC LIMIT 1                |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
-        And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
-        And from $activatePaymentNoticeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
-        And from $activatePaymentNoticeReq.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
-        And from $sendPaymentOutcomeReq.password xml check value #password# in position 0
-        And from $sendPaymentOutcomeReq.paymentToken xml check value $activatePaymentNoticeResponse.paymentToken in position 0
-        And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq2
+        And from $sendPaymentOutcomeReq2.idPSP xml check value #psp# in position 0
+        And from $sendPaymentOutcomeReq2.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeReq2.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
+        And from $sendPaymentOutcomeReq2.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeReq2.paymentToken xml check value $activatePaymentNoticeResponse.paymentToken in position 0
+        And from $sendPaymentOutcomeReq2.outcome xml check value OK in position 0
         # sendPaymentOutcom 2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
@@ -10480,8 +10480,8 @@ Feature: NM3 flows PA Old con pagamento KO
             | ESITO              | INVIATA                                     |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO DESC LIMIT 1                |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
-        And from $sendPaymentOutcomeResp.outcome xml check value KO in position 0
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp2
+        And from $sendPaymentOutcomeResp2.outcome xml check value KO in position 0
 
 
 

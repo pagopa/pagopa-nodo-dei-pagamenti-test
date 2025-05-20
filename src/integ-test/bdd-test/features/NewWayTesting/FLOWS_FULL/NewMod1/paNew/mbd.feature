@@ -6,7 +6,7 @@ Feature: NMU flows con PA New e MBD
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWMBD @NMUPANEWMBD_FULL_1
-    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 con MBD: upd MARCA_BOLLO_DIGITALE = 0 on PSP table, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 (OLD_NMU-1A)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 con MBD, PSP MBD 0 e CANALI NODO MBD Y: upd MARCA_BOLLO_DIGITALE = 0 on PSP table, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 (OLD_NMU-1A)
         Given update for table PSP with parameter MARCA_BOLLO_DIGITALE = 0 on db nodo_cfg with where datatable horizontal
             | where_keys | where_values   |
             | ID_PSP     | #pspEcommerce# |
