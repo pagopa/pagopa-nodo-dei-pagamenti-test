@@ -2174,6 +2174,13 @@ Feature: NMU flows con PA New e MBD
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
             | ORDER BY   | ID ASC                                |
         # POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value |
+            | RETRY  | 0     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
         And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
