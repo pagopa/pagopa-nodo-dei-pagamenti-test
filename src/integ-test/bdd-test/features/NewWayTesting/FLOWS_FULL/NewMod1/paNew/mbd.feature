@@ -3748,7 +3748,7 @@ Feature: NMU flows con PA New e MBD
 
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWMBD @NMUPANEWMBD_FULL_11
-    Scenario: NMU flow RETRY, FLOW con PA New vp2 e PSP vp2 con MBD e IBAN: activateV2 -> paGetPaymentV2 sia con MBD che IBAN, closepaymentV2 -> override paSendRTV2 timeout -> spoV2 -> paSendRTV2 (OLD_NMU-7A)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 con MBD e IBAN: activateV2 -> paGetPaymentV2 sia con MBD che IBAN, closepaymentV2 -> override paSendRTV2 timeout -> spoV2 -> paSendRTV2 (OLD_NMU-7A)
         Given MB generation MBD_generation with datatable vertical
             | CodiceFiscale | #creditor_institution_code#                  |
             | Denominazione | #psp#                                        |
