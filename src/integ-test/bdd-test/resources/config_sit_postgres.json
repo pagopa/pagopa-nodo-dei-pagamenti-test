@@ -42,7 +42,7 @@
          "subscription_key_name": "Y"
       },
       "apicfg-testing-support": {
-         "url": "https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1",
+         "url": "https://api.dev.platform.pagopa.it/apiconfig/testing-support/p/v1",
          "healthcheck": "/info",
          "soap_service": " ",
          "rest_service": " ",

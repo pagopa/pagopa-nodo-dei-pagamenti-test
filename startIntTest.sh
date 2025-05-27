@@ -111,7 +111,7 @@ replace $file ".services.\"mock-pm\".subscription_key_name"  "Y"
 
 ######################## PUNTMANETI SERVIZIO APICONFIGCACHE #####################
 
-replace $file ".services.\"apicfg-testing-support\".url"           "https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1"
+replace $file ".services.\"apicfg-testing-support\".url"           "https://api.dev.platform.pagopa.it/apiconfig/testing-support/p/v1"
 replace $file ".services.\"apicfg-testing-support\".healthcheck"   "/info"
 replace $file ".services.\"apicfg-testing-support\".soap_service"  ""
 replace $file ".services.\"apicfg-testing-support\".rest_service"  ""
