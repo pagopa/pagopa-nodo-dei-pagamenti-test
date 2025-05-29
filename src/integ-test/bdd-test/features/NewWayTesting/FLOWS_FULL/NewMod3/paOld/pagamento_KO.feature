@@ -10428,6 +10428,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And from $activatePaymentNoticeReq.qrCode.fiscalCode xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $activatePaymentNoticeReq.qrCode.noticeNumber xml check value $activatePaymentNotice.noticeNumber in position 0
         And from $activatePaymentNoticeReq.amount xml check value $activatePaymentNotice.amount in position 0
+        And wait 1 seconds for expiration
         # sendPaymentOutcome 1 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                |
