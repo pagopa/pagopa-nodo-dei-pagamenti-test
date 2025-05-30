@@ -97,11 +97,43 @@ def before_all(context):
     db.set_address(apicfg_testing_support_service)
         
     try:
+        # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM NODO_ONLINE > 7gg
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "nodo_online"
+        db_selected = db_config.get(db_name)
+        print(f"db_online: {db_online}")
+
+        adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        print(f"----> DELETE NODO_ONLINE OLD PARTITIONS > 7GG ...")
+        delete_old_partitions_query = "SELECT delete_old_partitions();"
+        exec_query = adopted_db.executeQuery(context, nodo_online_conn, delete_old_partitions_query)
+
+        adopted_db.closeConnection(nodo_online_conn)
+        
+        
+        
+        # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM RE > 7gg
+        db_config = context.config.userdata.get("db_configuration")
+        db_name = "re"
+        db_selected = db_config.get(db_name)
+
+        adopted_db, re_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        print(f"----> DELETE RE OLD PARTITIONS > 7GG ...")
+        delete_old_partitions_query = "SELECT delete_old_partitions();"
+        exec_query = adopted_db.executeQuery(context, re_conn, delete_old_partitions_query)
+
+        adopted_db.closeConnection(re_conn)
+              
+        
+        # CALL THE FUNCTION TO RESET DATA FOR CONFIGURATION_KEYS
         db_config = context.config.userdata.get("db_configuration")
         db_name = "nodo_cfg"
         db_selected = db_config.get(db_name)
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        
 
         # Call the procedure to reset test data for CONFIGURATION_KEYS table
         print(f"----> SET CONFIGURATION_KEYS...")
@@ -201,9 +233,9 @@ def before_scenario(context, scenario):
     if "after" in scenario.effective_tags:
         execute_after_scenario = True
 
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    # context.stdout_capture = StringIO()
+    # context.original_stdout = sys.stdout
+    # sys.stdout = context.stdout_capture
     
 
 
@@ -292,31 +324,31 @@ def after_scenario(context, scenario):
         # Gestione di tutte le altre eccezioni
         print("----->>>> Exception:", e)
     
-    if dbRun == "Postgres":
-        sys.stdout = context.original_stdout
-        context.stdout_capture.seek(0)
-        captured_stdout = context.stdout_capture.read()
+    # if dbRun == "Postgres":
+    #     sys.stdout = context.original_stdout
+    #     context.stdout_capture.seek(0)
+    #     captured_stdout = context.stdout_capture.read()
 
-        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-        context.stdout_capture.close()
+    #     context.stdout_capture.close()
 
-        # Stampa l'output nel terminale
-        print(f"\nCaptured stdout:\n{captured_stdout}")
+    #     # Stampa l'output nel terminale
+    #     print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    elif dbRun == "Oracle":
-        ####RUN DA LOCALE
-        if user_profile != None:
-            sys.stdout = context.original_stdout
-            context.stdout_capture.seek(0)
-            captured_stdout = context.stdout_capture.read()
+    # elif dbRun == "Oracle":
+    #     ####RUN DA LOCALE
+    #     if user_profile != None:
+    #         sys.stdout = context.original_stdout
+    #         context.stdout_capture.seek(0)
+    #         captured_stdout = context.stdout_capture.read()
 
-            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-            context.stdout_capture.close()
+    #         context.stdout_capture.close()
 
-            # Stampa l'output nel terminale
-            print(f"\nCaptured stdout:\n{captured_stdout}")
+    #         # Stampa l'output nel terminale
+    #         print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
