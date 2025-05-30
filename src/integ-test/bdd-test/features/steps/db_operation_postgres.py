@@ -60,9 +60,13 @@ def execute_read_query(context, connection, query, as_dict:bool = False):
     try:
         cursor.execute(query)
         
-        if query.startswith('SELECT'):  
+        if query.startswith('SELECT'): 
             result = cursor.fetchall()
-            print(f' Query executed successfully - [{len(result)}] row/s found')            
+            if 'FROM' not in query:
+                connection.commit()
+                print(f' Function executed successfully')
+            else:
+                print(f' Query executed successfully - [{len(result)}] row/s found')            
             return result
         
         elif query.startswith('UPDATE'): 

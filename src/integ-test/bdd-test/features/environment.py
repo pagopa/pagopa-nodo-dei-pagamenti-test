@@ -4,6 +4,7 @@ import os
 import requests
 import steps.utils as utils
 import time
+import steps.db_operation_postgres as db_operation_postgres
 
 import steps.db_operation_apicfg_testing_support as db
 
@@ -25,6 +26,8 @@ db_online = None
 db_offline = None
 db_re = None
 db_wfesp = None
+
+
 
 user_profile = os.environ.get("USERPROFILE")
 
@@ -52,6 +55,11 @@ def before_all(context):
         setattr(context, 'user_profile', user_profile)
 
     if dbRun == "Postgres":
+        
+        db_online = db_operation_postgres
+        db_offline = db_operation_postgres
+        db_re = db_operation_postgres
+        db_wfesp = db_operation_postgres
         print(f"Proxy enabled: {proxyEnabled}")
         if proxyEnabled == 'True':
             ####RUN DA LOCALE
@@ -101,7 +109,6 @@ def before_all(context):
         db_config = context.config.userdata.get("db_configuration")
         db_name = "nodo_online"
         db_selected = db_config.get(db_name)
-        print(f"db_online: {db_online}")
 
         adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
@@ -121,7 +128,7 @@ def before_all(context):
         adopted_db, re_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
         print(f"----> DELETE RE OLD PARTITIONS > 7GG ...")
-        delete_old_partitions_query = "SELECT delete_old_partitions();"
+        delete_old_partitions_query = "SELECT delete_old_re_partitions();"
         exec_query = adopted_db.executeQuery(context, re_conn, delete_old_partitions_query)
 
         adopted_db.closeConnection(re_conn)
@@ -233,9 +240,9 @@ def before_scenario(context, scenario):
     if "after" in scenario.effective_tags:
         execute_after_scenario = True
 
-    # context.stdout_capture = StringIO()
-    # context.original_stdout = sys.stdout
-    # sys.stdout = context.stdout_capture
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
     
 
 
@@ -324,31 +331,31 @@ def after_scenario(context, scenario):
         # Gestione di tutte le altre eccezioni
         print("----->>>> Exception:", e)
     
-    # if dbRun == "Postgres":
-    #     sys.stdout = context.original_stdout
-    #     context.stdout_capture.seek(0)
-    #     captured_stdout = context.stdout_capture.read()
+    if dbRun == "Postgres":
+        sys.stdout = context.original_stdout
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
 
-    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    #     context.stdout_capture.close()
+        context.stdout_capture.close()
 
-    #     # Stampa l'output nel terminale
-    #     print(f"\nCaptured stdout:\n{captured_stdout}")
+        # Stampa l'output nel terminale
+        print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    # elif dbRun == "Oracle":
-    #     ####RUN DA LOCALE
-    #     if user_profile != None:
-    #         sys.stdout = context.original_stdout
-    #         context.stdout_capture.seek(0)
-    #         captured_stdout = context.stdout_capture.read()
+    elif dbRun == "Oracle":
+        ####RUN DA LOCALE
+        if user_profile != None:
+            sys.stdout = context.original_stdout
+            context.stdout_capture.seek(0)
+            captured_stdout = context.stdout_capture.read()
 
-    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    #         context.stdout_capture.close()
+            context.stdout_capture.close()
 
-    #         # Stampa l'output nel terminale
-    #         print(f"\nCaptured stdout:\n{captured_stdout}")
+            # Stampa l'output nel terminale
+            print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
