@@ -5574,7 +5574,7 @@ Feature: RT PULL flow
         And MB1 generation MBD_generation with datatable vertical
             | CodiceFiscale | 12345678901                                  |
             | Denominazione | #psp#                                        |
-            | IUBD          | #iubd#                                       |
+            | IUBD          | #iubd1#                                      |
             | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
             | Importo       | 10.00                                        |
             | TipoBollo     | 01                                           |
