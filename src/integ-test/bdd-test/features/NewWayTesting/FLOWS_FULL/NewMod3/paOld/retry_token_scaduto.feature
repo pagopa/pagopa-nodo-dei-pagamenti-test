@@ -25163,6 +25163,8 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | IUV           | $iuv                                        |
             | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
             | CCP           | $activatePaymentNoticeResponse.paymentToken |
+        When job paInviaRt triggered after 0 seconds
+        Then verify the HTTP status code of paInviaRt response is 200
 
 
 
