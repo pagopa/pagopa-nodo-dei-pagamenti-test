@@ -67795,6 +67795,7 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_120 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1, FLOW : verify -> activate -> paGetPayment con 1 transfer, spo+ -> Override paSendRT with delay 10000 -> retry paSendRT with same delay, BIZ+ (OLD_NM3-17F)
+    When job paSendRt triggered after 3 seconds
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
@@ -68856,6 +68857,7 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_122 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1, FLOW : verify -> activate -> paGetPayment with 1 transfer, spo+ -> Override paSendRT with empty body, retry paSendRT -> BIZ+ (OLD_NM3-25F)
+    When job paSendRt triggered after 3 seconds
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
     And refresh job ALL triggered after 10 seconds
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
