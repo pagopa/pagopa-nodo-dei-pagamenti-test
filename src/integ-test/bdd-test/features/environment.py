@@ -106,32 +106,32 @@ def before_all(context):
         
     try:
         # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM NODO_ONLINE > 7gg
-        db_config = context.config.userdata.get("db_configuration")
-        db_name = "nodo_online"
-        db_selected = db_config.get(db_name)
+        # db_config = context.config.userdata.get("db_configuration")
+        # db_name = "nodo_online"
+        # db_selected = db_config.get(db_name)
 
-        adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        # adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        print(f"----> DELETE NODO_ONLINE OLD PARTITIONS > 7GG ...")
-        delete_old_partitions_query = "SELECT delete_old_partitions();"
-        exec_query = adopted_db.executeQuery(context, nodo_online_conn, delete_old_partitions_query)
+        # print(f"----> DELETE NODO_ONLINE OLD PARTITIONS > 7GG ...")
+        # delete_old_partitions_query = "SELECT delete_old_partitions();"
+        # exec_query = adopted_db.executeQuery(context, nodo_online_conn, delete_old_partitions_query)
 
-        adopted_db.closeConnection(nodo_online_conn)
+        # adopted_db.closeConnection(nodo_online_conn)
         
         
         
-        # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM RE > 7gg
-        db_config = context.config.userdata.get("db_configuration")
-        db_name = "re"
-        db_selected = db_config.get(db_name)
+        # # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM RE > 7gg
+        # db_config = context.config.userdata.get("db_configuration")
+        # db_name = "re"
+        # db_selected = db_config.get(db_name)
 
-        adopted_db, re_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        # adopted_db, re_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        print(f"----> DELETE RE OLD PARTITIONS > 7GG ...")
-        delete_old_partitions_query = "SELECT delete_old_re_partitions();"
-        exec_query = adopted_db.executeQuery(context, re_conn, delete_old_partitions_query)
+        # print(f"----> DELETE RE OLD PARTITIONS > 7GG ...")
+        # delete_old_partitions_query = "SELECT delete_old_re_partitions();"
+        # exec_query = adopted_db.executeQuery(context, re_conn, delete_old_partitions_query)
 
-        adopted_db.closeConnection(re_conn)
+        # adopted_db.closeConnection(re_conn)
               
         
         # CALL THE FUNCTION TO RESET DATA FOR CONFIGURATION_KEYS
@@ -292,7 +292,7 @@ def after_scenario(context, scenario):
 
             print("----> AFTER SCENARIO RESTORE COMPLETED")
 
-            #adopted_db.closeConnection(conn)
+            adopted_db.closeConnection(conn)
 
             ##REFRESH
             flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
