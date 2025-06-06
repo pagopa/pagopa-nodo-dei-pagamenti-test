@@ -68332,9 +68332,6 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-
-
-
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_121 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp1, FLOW : verify -> activate -> paGetPayment with 3 transfer 2 secondary broadcast, spo+ -> Override paSendRT with delay 10000 , BIZ+ (OLD_NM3-19F)
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
@@ -68348,33 +68345,33 @@ Feature: NM3 flows PA New con pagamento OK
     Then check outcome is OK of verifyPaymentNotice response
     Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber                      | amount | expirationTime |
-      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $verifyPaymentNotice.noticeNumber | 30.00  | 6000           |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | $verifyPaymentNotice.noticeNumber | 30.00  | 60000          |
     And from body with datatable vertical paGetPayment_3transfer_full initial XML paGetPayment
-      | outcome                     | OK                          |
-      | creditorReferenceId         | 02$iuv                      |
-      | paymentAmount               | 30.00                       |
-      | dueDate                     | 2021-12-31                  |
-      | description                 | pagamentoTest               |
-      | entityUniqueIdentifierType  | G                           |
-      | entityUniqueIdentifierValue | 77777777777                 |
-      | fullName                    | Massimo Benvegnù            |
-      | transferAmount              | 10.00                       |
-      | IBAN                        | IT45R0760103200000000001016 |
-      | fiscalCodePA1               | 90000000001                 |
-      | fiscalCodePA2               | 90000000002                 |
-      | fiscalCodePA3               | 88888888888                 |
-      | remittanceInformation       | testPaGetPayment            |
-      | transferCategory            | paGetPaymentTest            |
+      | outcome                     | OK                                |
+      | creditorReferenceId         | 02$iuv                            |
+      | paymentAmount               | 30.00                             |
+      | dueDate                     | 2021-12-31                        |
+      | description                 | pagamentoTest                     |
+      | entityUniqueIdentifierType  | G                                 |
+      | entityUniqueIdentifierValue | 77777777777                       |
+      | fullName                    | Massimo Benvegnù                  |
+      | transferAmount              | 10.00                             |
+      | IBAN                        | IT45R0760103200000000001016       |
+      | fiscalCodePA1               | $activatePaymentNotice.fiscalCode |
+      | fiscalCodePA2               | 90000000001                       |
+      | fiscalCodePA3               | 90000000002                       |
+      | remittanceInformation       | testPaGetPayment                  |
+      | transferCategory            | paGetPaymentTest                  |
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     Given from body with datatable vertical paSendRT_delay initial XML paSendRT
       | outcome | OK    |
       | delay   | 10000 |
+    And EC replies to nodo-dei-pagamenti with the paSendRT
     And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
       | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
-    And EC replies to nodo-dei-pagamenti with the paSendRT
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     And wait 10 seconds for expiration
     Then check outcome is OK of sendPaymentOutcome response
@@ -68492,7 +68489,7 @@ Feature: NM3 flows PA New con pagamento OK
       | NOTICE_ID                | $activatePaymentNotice.noticeNumber |
       | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId   |
       | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode   |
-      | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,88888888888 |
+      | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode,90000000001,90000000002 |
       | IBAN                     | IT45R0760103200000000001016         |
       | AMOUNT                   | 10.00                               |
       | REMITTANCE_INFORMATION   | testPaGetPayment                    |
@@ -68557,14 +68554,14 @@ Feature: NM3 flows PA New con pagamento OK
       | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                                                                                          |
       | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                            |
       | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken                                                                                                  |
-      | STATUS                | NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTIFIED                      |
+      | STATUS                | NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED                      |
       | INSERTED_TIMESTAMP    | NotNone                                                                                                                                      |
       | INSERTED_BY           | sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paSendRT,sendPaymentOutcome,paSendRT,sendPaymentOutcome,paSendRT |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -68578,7 +68575,7 @@ Feature: NM3 flows PA New con pagamento OK
       | NOTICE_ID             | $activatePaymentNotice.noticeNumber                      |
       | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                        |
       | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken              |
-      | STATUS                | NOTIFIED,NOTICE_PENDING,NOTIFIED                         |
+      | STATUS                | NOTICE_PENDING,NOTIFIED,NOTIFIED                         |
       | INSERTED_TIMESTAMP    | NotNone                                                  |
       | INSERTED_BY           | sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
@@ -68756,7 +68753,7 @@ Feature: NM3 flows PA New con pagamento OK
     And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
     And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNotice.amount in position 0
     And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 0
-    And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+    And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
     And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     # sendPaymentOutcome REQ
     And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -68809,21 +68806,21 @@ Feature: NM3 flows PA New con pagamento OK
     ### TRANSFER 1
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-    And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+    And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNotice.fiscalCode in position 0
     And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
     And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
     And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
     ### TRANSFER 2
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-    And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+    And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 1
     And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
     And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
     And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
     ### TRANSFER 3
     And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
     And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-    And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 2
+    And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 2
     And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
     And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
     And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
