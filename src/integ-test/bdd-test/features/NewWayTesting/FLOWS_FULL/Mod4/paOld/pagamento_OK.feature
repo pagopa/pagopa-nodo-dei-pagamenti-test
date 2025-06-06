@@ -285,6 +285,36 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
+        # POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        # POSITION_RECEIPT_XML
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                       |
+            | ID                       | NotNone                                     |
+            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID                | $activatePaymentNotice.noticeNumber         |
+            | CREDITOR_REFERENCE_ID    | 12$iuv                                      |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeResponse.paymentToken |
+            | XML                      | NotNone                                     |
+            | INSERTED_TIMESTAMP       | NotNone                                     |
+            | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode           |
+            | RECIPIENT_BROKER_PA_ID   | $activatePaymentNotice.fiscalCode           |
+            | RECIPIENT_STATION_ID     | #id_station_old#                            |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | ID ASC                              |
         # RE #####
         # activatePaymentNotice REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
