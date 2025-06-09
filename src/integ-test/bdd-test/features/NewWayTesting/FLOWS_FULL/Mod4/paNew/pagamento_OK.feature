@@ -99,9 +99,9 @@ Feature: NM4 e MOD4 flows con PA New pagamento OK
             | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId           |
             | PAYMENT_TOKEN            | $activatePaymentNoticeResponse.paymentToken |
             | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode           |
-            | RECIPIENT_STATION_ID     | #id_station#             |
-            | INSERTED_BY              | sendPaymentOutcome                        |
-            | UPDATED_BY               | sendPaymentOutcome                        |
+            | RECIPIENT_STATION_ID     | #id_station#                                |
+            | INSERTED_BY              | sendPaymentOutcome                          |
+            | UPDATED_BY               | sendPaymentOutcome                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -128,17 +128,17 @@ Feature: NM4 e MOD4 flows con PA New pagamento OK
             | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         # POSITION_RECEIPT_XML
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                                         |
-            | ID                       | NotNone                                       |
-            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode             |
-            | NOTICE_ID                | $activatePaymentNotice.noticeNumber           |
-            | CREDITOR_REFERENCE_ID    | 02$iuv                                        |
+            | column                   | value                                       |
+            | ID                       | NotNone                                     |
+            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID                | $activatePaymentNotice.noticeNumber         |
+            | CREDITOR_REFERENCE_ID    | 02$iuv                                      |
             | PAYMENT_TOKEN            | $activatePaymentNoticeResponse.paymentToken |
-            | XML                      | NotNone                                       |
-            | INSERTED_TIMESTAMP       | NotNone                                       |
-            | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode             |
-            | RECIPIENT_BROKER_PA_ID   | $activatePaymentNotice.fiscalCode             |
-            | RECIPIENT_STATION_ID     | #id_station#                 |
+            | XML                      | NotNone                                     |
+            | INSERTED_TIMESTAMP       | NotNone                                     |
+            | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode           |
+            | RECIPIENT_BROKER_PA_ID   | $activatePaymentNotice.fiscalCode           |
+            | RECIPIENT_STATION_ID     | #id_station#                                |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -305,7 +305,7 @@ Feature: NM4 e MOD4 flows con PA New pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
