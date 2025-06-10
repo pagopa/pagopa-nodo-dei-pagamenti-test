@@ -104,71 +104,53 @@ def before_all(context):
     apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
     db.set_address(apicfg_testing_support_service)
         
-    try:
-        # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM NODO_ONLINE > 7gg
-        # db_config = context.config.userdata.get("db_configuration")
-        # db_name = "nodo_online"
-        # db_selected = db_config.get(db_name)
-
-        # adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-
-        # print(f"----> DELETE NODO_ONLINE OLD PARTITIONS > 7GG ...")
-        # delete_old_partitions_query = "SELECT delete_old_partitions();"
-        # exec_query = adopted_db.executeQuery(context, nodo_online_conn, delete_old_partitions_query)
-
-        # adopted_db.closeConnection(nodo_online_conn)
+    try:              
         
-        
-        
-        # # CALL THE FUNCTION TO DELETE OLD PARTITIONS FROM RE > 7gg
-        # db_config = context.config.userdata.get("db_configuration")
-        # db_name = "re"
-        # db_selected = db_config.get(db_name)
+        # Esegui update massivo tramite endpoint usando i file SQL
+        sql_files = [
+            "dataConfigKey.sql",
+            "dataCanali.sql",
+            "dataPaStazionePa.sql",
+            "dataStazioni.sql",
+            "dataCanaliNodo.sql"
+        ]
+        apicfg_url = "https://api.dev.platform.pagopa.it/apiconfig/testing-support/p/v1/massive"
+        headers = {
+            "Ocp-Apim-Subscription-Key": getattr(context, "SUBKEY"),
+        }
 
-        # adopted_db, re_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        # Percorso assoluto alla cartella 'sql' nella struttura del progetto
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "sql"))
+        for sql_filename in sql_files:
+            sql_file_path = os.path.join(base_dir, sql_filename)
+            print(f"----> UPDATE via API using {sql_file_path}...")
 
-        # print(f"----> DELETE RE OLD PARTITIONS > 7GG ...")
-        # delete_old_partitions_query = "SELECT delete_old_re_partitions();"
-        # exec_query = adopted_db.executeQuery(context, re_conn, delete_old_partitions_query)
+            if not os.path.isfile(sql_file_path):
+                raise FileNotFoundError(f"SQL file not found: {sql_file_path}")
 
-        # adopted_db.closeConnection(re_conn)
-              
-        
-        # CALL THE FUNCTION TO RESET DATA FOR CONFIGURATION_KEYS
+            with open(sql_file_path, "r", encoding="utf-8") as sql_file:
+                sql_content = sql_file.read()
+
+            try:
+                files = {
+                    'file': (sql_filename, sql_content, 'application/sql')
+                }
+                response = requests.post(
+                    apicfg_url,
+                    files=files,
+                    headers=headers,
+                    verify=False,
+                    proxies=None
+                )
+                assert response.status_code == 200, f"Update failed for {sql_filename}! Status code: {response.status_code}, Response: {response.text}"
+                print(f"----> UPDATE COMPLETED for {sql_filename}")
+            except Exception as req_exc:
+                print(f"Exception during UPDATE for {sql_filename}: {req_exc}")
+                raise
+            
         db_config = context.config.userdata.get("db_configuration")
         db_name = "nodo_cfg"
         db_selected = db_config.get(db_name)
-
-        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-        
-
-        # Call the procedure to reset test data for CONFIGURATION_KEYS table
-        print(f"----> SET CONFIGURATION_KEYS...")
-        reset_test_data_query = "select resettestdata();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
-        
-        # Call the procedure to reset test data for CANALI table
-        print(f"----> SET CANALI...")
-        reset_test_data_canali = "select resettestcanali();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
-        
-        # Call the procedure to reset test data for STAZIONI table
-        print(f"----> SET STAZIONI...")
-        reset_test_data_stazioni = "select resetteststazioni();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
-        
-        # Call the procedure to reset test data for PA_STAZIONE_PA table
-        print(f"----> SET PA_STAZIONE_PA...")
-        reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
-        
-        # Call the procedure to reset test data for CANALI_NODO table
-        print(f"----> SET CANALI_NODO...")
-        reset_test_data_canali_nodo = "select resettestcanalinodo();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)             
-
-        adopted_db.closeConnection(conn)
-    
         selected_query = utils.query_json(context, 'select_config', 'configurations')
         adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
         exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
@@ -240,9 +222,9 @@ def before_scenario(context, scenario):
     if "after" in scenario.effective_tags:
         execute_after_scenario = True
 
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    # context.stdout_capture = StringIO()
+    # context.original_stdout = sys.stdout
+    # sys.stdout = context.stdout_capture
     
 
 
@@ -258,41 +240,54 @@ def after_scenario(context, scenario):
             # # Resetta la variabile "after"
             execute_after_scenario = False  
 
-            ####Invece dell'after per ogni scenario che lo richiede, per postgres, chiamo direttamente le stored procedure eliminando gli skipped dovuti agli after
+            # Esegui update massivo tramite endpoint usando i file SQL
+            sql_files = [
+                "dataConfigKey.sql",
+                "dataCanali.sql",
+                "dataPaStazionePa.sql",
+                "dataStazioni.sql",
+                "dataCanaliNodo.sql"
+            ]
+            apicfg_url = "https://api.dev.platform.pagopa.it/apiconfig/testing-support/p/v1/massive"
+            headers = {
+                "Ocp-Apim-Subscription-Key": getattr(context, "SUBKEY"),
+            }
 
+            # Percorso assoluto alla cartella 'sql' nella struttura del progetto
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "sql"))
+            for sql_filename in sql_files:
+                sql_file_path = os.path.join(base_dir, sql_filename)
+                print(f"----> UPDATE via API using {sql_file_path}...")
+
+                if not os.path.isfile(sql_file_path):
+                    raise FileNotFoundError(f"SQL file not found: {sql_file_path}")
+
+                with open(sql_file_path, "r", encoding="utf-8") as sql_file:
+                    sql_content = sql_file.read()
+
+                try:
+                    files = {
+                        'file': (sql_filename, sql_content, 'application/sql')
+                    }
+                    response = requests.post(
+                        apicfg_url,
+                        files=files,
+                        headers=headers,
+                        verify=False,
+                        proxies=None
+                    )
+                    assert response.status_code == 200, f"Update failed for {sql_filename}! Status code: {response.status_code}, Response: {response.text}"
+                    print(f"----> UPDATE COMPLETED for {sql_filename}")
+                except Exception as req_exc:
+                    print(f"Exception during UPDATE for {sql_filename}: {req_exc}")
+                    raise
+
+                print("----> AFTER SCENARIO RESTORE COMPLETED")
+            
             db_config = context.config.userdata.get("db_configuration")
             db_name = "nodo_cfg"
             db_selected = db_config.get(db_name)
             adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-
-            # Call the procedure to reset test data for CONFIGURATION_KEYS table
-            print(f"----> RESTORE CONFIGURATION_KEYS...")
-            reset_test_data_query = "select resettestdata();"
-            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
-            
-            # Call the procedure to reset test data for CANALI table
-            print(f"----> RESTORE CANALI...")
-            reset_test_data_canali = "select resettestcanali();"
-            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
-            
-            # Call the procedure to reset test data for STAZIONI table
-            print(f"----> RESTORE STAZIONI...")
-            reset_test_data_stazioni = "select resetteststazioni();"
-            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
-            
-            # Call the procedure to reset test data for PA_STAZIONE_PA table
-            print(f"----> RESTORE PA_STAZIONE_PA...")
-            reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
-            
-            # Call the procedure to reset test data for CANALI_NODO table
-            print(f"----> RESTORE CANALI_NODO...")
-            reset_test_data_canali_nodo = "select resettestcanalinodo();"
-            exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
-
-            print("----> AFTER SCENARIO RESTORE COMPLETED")
-
-            adopted_db.closeConnection(conn)
 
             ##REFRESH
             flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
@@ -331,31 +326,31 @@ def after_scenario(context, scenario):
         # Gestione di tutte le altre eccezioni
         print("----->>>> Exception:", e)
     
-    if dbRun == "Postgres":
-        sys.stdout = context.original_stdout
-        context.stdout_capture.seek(0)
-        captured_stdout = context.stdout_capture.read()
+    # if dbRun == "Postgres":
+    #     sys.stdout = context.original_stdout
+    #     context.stdout_capture.seek(0)
+    #     captured_stdout = context.stdout_capture.read()
 
-        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-        context.stdout_capture.close()
+    #     context.stdout_capture.close()
 
-        # Stampa l'output nel terminale
-        print(f"\nCaptured stdout:\n{captured_stdout}")
+    #     # Stampa l'output nel terminale
+    #     print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    elif dbRun == "Oracle":
-        ####RUN DA LOCALE
-        if user_profile != None:
-            sys.stdout = context.original_stdout
-            context.stdout_capture.seek(0)
-            captured_stdout = context.stdout_capture.read()
+    # elif dbRun == "Oracle":
+    #     ####RUN DA LOCALE
+    #     if user_profile != None:
+    #         sys.stdout = context.original_stdout
+    #         context.stdout_capture.seek(0)
+    #         captured_stdout = context.stdout_capture.read()
 
-            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-            context.stdout_capture.close()
+    #         context.stdout_capture.close()
 
-            # Stampa l'output nel terminale
-            print(f"\nCaptured stdout:\n{captured_stdout}")
+    #         # Stampa l'output nel terminale
+    #         print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
@@ -396,32 +391,47 @@ def after_all(context):
         db_selected = db_config.get(db_name)
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        # Call the procedure to reset test data for CONFIGURATION_KEYS table
-        print(f"----> RESTORE CONFIGURATION_KEYS...")
-        reset_test_data_query = "select resettestdata();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_query)
-        
-        # Call the procedure to reset test data for CANALI table
-        print(f"----> RESTORE CANALI...")
-        reset_test_data_canali = "select resettestcanali();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali)
-        
-        # Call the procedure to reset test data for STAZIONI table
-        print(f"----> RESTORE STAZIONI...")
-        reset_test_data_stazioni = "select resetteststazioni();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_stazioni)
-        
-        # Call the procedure to reset test data for PA_STAZIONE_PA table
-        print(f"----> RESTORE PA_STAZIONE_PA...")
-        reset_test_data_pa_stazione_pa = "select resettestpastazionepa();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_pa_stazione_pa)
-        
-        # Call the procedure to reset test data for CANALI_NODO table
-        print(f"----> RESTORE CANALI_NODO...")
-        reset_test_data_canali_nodo = "select resettestcanalinodo();"
-        exec_query = adopted_db.executeQuery(context, conn, reset_test_data_canali_nodo)
+        # Esegui update massivo tramite endpoint usando i file SQL
+        sql_files = [
+            "dataConfigKey.sql",
+            "dataCanali.sql",
+            "dataPaStazionePa.sql",
+            "dataStazioni.sql",
+            "dataCanaliNodo.sql"
+        ]
+        apicfg_url = "https://api.dev.platform.pagopa.it/apiconfig/testing-support/p/v1/massive"
+        headers = {
+            "Ocp-Apim-Subscription-Key": getattr(context, "SUBKEY"),
+        }
 
-        adopted_db.closeConnection(conn)
+        # Percorso assoluto alla cartella 'sql' nella struttura del progetto
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "sql"))
+        for sql_filename in sql_files:
+            sql_file_path = os.path.join(base_dir, sql_filename)
+            print(f"----> UPDATE via API using {sql_file_path}...")
+
+            if not os.path.isfile(sql_file_path):
+                raise FileNotFoundError(f"SQL file not found: {sql_file_path}")
+
+            with open(sql_file_path, "r", encoding="utf-8") as sql_file:
+                sql_content = sql_file.read()
+
+            try:
+                files = {
+                    'file': (sql_filename, sql_content, 'application/sql')
+                }
+                response = requests.post(
+                    apicfg_url,
+                    files=files,
+                    headers=headers,
+                    verify=False,
+                    proxies=None
+                )
+                assert response.status_code == 200, f"Update failed for {sql_filename}! Status code: {response.status_code}, Response: {response.text}"
+                print(f"----> UPDATE COMPLETED for {sql_filename}")
+            except Exception as req_exc:
+                print(f"Exception during UPDATE for {sql_filename}: {req_exc}")
+                raise
         
         flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
 
