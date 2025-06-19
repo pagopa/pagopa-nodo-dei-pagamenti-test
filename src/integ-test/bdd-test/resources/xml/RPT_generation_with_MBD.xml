@@ -60,7 +60,7 @@
 		<pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
 		<pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
 		<pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>$importoSingoloVersamento</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
