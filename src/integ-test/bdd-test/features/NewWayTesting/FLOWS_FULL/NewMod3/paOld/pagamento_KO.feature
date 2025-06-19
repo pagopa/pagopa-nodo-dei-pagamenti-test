@@ -10087,6 +10087,15 @@ Feature: NM3 flows PA Old con pagamento KO
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And execution query to get value result_query on the table RE, with the columns ID_SESSIONE with db name re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcome                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | RICEVUTA                                    |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And through the query result_query retrieve param paymentToken at position 0 and save it under the key sessione_spo
         # IDEMPOTENCY_CACHE activatePaymentNotice
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                          |
@@ -10436,8 +10445,9 @@ Feature: NM3 flows PA Old con pagamento KO
             | TIPO_EVENTO        | sendPaymentOutcome                          |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | ESITO              | RICEVUTA                                    |
+            | ID_SESSIONE        | $sessione_spo                               |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC LIMIT 1                 |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
@@ -10452,8 +10462,9 @@ Feature: NM3 flows PA Old con pagamento KO
             | TIPO_EVENTO        | sendPaymentOutcome                          |
             | SOTTO_TIPO_EVENTO  | RESP                                        |
             | ESITO              | INVIATA                                     |
+            | ID_SESSIONE        | $sessione_spo                               |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC LIMIT 1                 |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
         # sendPaymentOutcome 2 REQ
@@ -10463,8 +10474,9 @@ Feature: NM3 flows PA Old con pagamento KO
             | TIPO_EVENTO        | sendPaymentOutcome                          |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | ESITO              | RICEVUTA                                    |
+            | ID_SESSIONE        | !=$sessione_spo                             |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO DESC LIMIT 1                |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key 2sendPaymentOutcomeReq
         And from $2sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $2sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
@@ -10479,8 +10491,9 @@ Feature: NM3 flows PA Old con pagamento KO
             | TIPO_EVENTO        | sendPaymentOutcome                          |
             | SOTTO_TIPO_EVENTO  | RESP                                        |
             | ESITO              | INVIATA                                     |
+            | ID_SESSIONE        | !=$sessione_spo                             |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO DESC LIMIT 1                |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key 2sendPaymentOutcomeResp
         And from $2sendPaymentOutcomeResp.outcome xml check value KO in position 0
 

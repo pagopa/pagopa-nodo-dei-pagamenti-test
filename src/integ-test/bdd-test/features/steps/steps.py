@@ -3769,7 +3769,6 @@ def step_impl(context, result_query, type_table, db_name, table_name, columns):
             print(f'executed query: {exec_query}')
             
         setattr(context, result_query, exec_query)
-        
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
