@@ -4664,7 +4664,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4855,8 +4855,8 @@ Feature: NM3 flows con pagamento fallito
             | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         And EC replies to nodo-dei-pagamenti with the paSendRT
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        And wait 10 seconds for expiration
+        And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        When wait 10 seconds for expiration
         Then check outcome is KO of sendPaymentOutcome response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
@@ -5042,7 +5042,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -5083,7 +5083,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
@@ -5123,7 +5123,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
