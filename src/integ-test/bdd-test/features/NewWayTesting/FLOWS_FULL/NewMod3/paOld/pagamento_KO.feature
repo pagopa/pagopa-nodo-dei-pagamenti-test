@@ -8069,8 +8069,8 @@ Feature: NM3 flows PA Old con pagamento KO
         Then check esito is OK of nodoInviaRPT response
         And saving nodoInviaRPT request in nodoInviaRPT1
         When job mod3CancelV1 triggered after 10 seconds
-        Then wait 5 seconds for expiration
-        And verify the HTTP status code of mod3CancelV1 response is 200
+        And wait 5 seconds for expiration
+        Then verify the HTTP status code of mod3CancelV1 response is 200
         When job paInviaRt triggered after 15 seconds
         And wait 5 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
@@ -8229,7 +8229,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                       |
@@ -8249,7 +8249,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         # POSITION_PAYMENT_PLAN
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                 |
