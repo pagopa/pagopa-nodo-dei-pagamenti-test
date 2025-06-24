@@ -11797,7 +11797,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
