@@ -827,11 +827,9 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             print(f"primitive: {primitive} ---> body: {body}")
 
             if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
-                response = requests.post(
-                    url_nodo, body, headers=headers, verify=False)
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
             else:
-                response = requests.post(
-                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
         else:
             if '<' in body:
                 body = xmltodict.parse(body)

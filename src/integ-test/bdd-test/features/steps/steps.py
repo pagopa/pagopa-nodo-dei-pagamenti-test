@@ -2734,6 +2734,7 @@ def step_impl(context, tag, value, primitive):
         else:
             node_response = getattr(context, primitive + RESPONSE)
             status_code = node_response.status_code
+            print(f'status code obtained: {status_code}')
             json_response = node_response.json()
             founded_value = jo.get_value_from_key(json_response, tag)
 

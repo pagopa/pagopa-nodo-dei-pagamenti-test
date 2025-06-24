@@ -56,9 +56,9 @@ Feature: TEST INSERT
             | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO     |
             | INSERTED_BY | nodoInviaCarrelloRPT,nodoInviaCarrelloRPT,nodoInviaCarrelloRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | $1iuv        |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | $1iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 3 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | $1iuv        |
@@ -71,9 +71,9 @@ Feature: TEST INSERT
             | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO     |
             | INSERTED_BY | nodoInviaCarrelloRPT,nodoInviaCarrelloRPT,nodoInviaCarrelloRPT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | $2iuv        |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | $2iuv                     |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 3 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | $2iuv        |
@@ -2257,13 +2257,13 @@ Feature: TEST INSERT
             | ID_DOMINIO | #creditor_institution_code_old#       |
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         And verify 3 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | ID_DOMINIO | #creditor_institution_code_old#       |
             | IUV        | $1iuv                                 |
             | CCP        | $nodoInviaRPT.codiceContestoPagamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                                |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC             |
         # STATI_RPT_SNAPSHOT_GI
         And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
@@ -2415,7 +2415,7 @@ Feature: TEST INSERT
 
 
 
-    
+
 
 
 
@@ -2856,3 +2856,24 @@ Feature: TEST INSERT
             | ID_DOMINIO | #creditor_institution_code# |
             | IUV        | $1iuv                       |
             | CCP        | $2ccp                       |
+
+
+
+
+
+
+
+
+
+
+    @ALL @FLOW  @INSERT @INSERT_26
+    Scenario: 2 actvateV2 in parallel with 2 different idempotencykey
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2_1
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2_2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
+        When calling primitive evolution activatePaymentNoticeV2_1 and activatePaymentNoticeV2_2 with POST and POST in parallel with 10 ms delay
+        Then check outcome is OK of activatePaymentNoticeV2_1 response
+        And check outcome is OK of activatePaymentNoticeV2_2 response
