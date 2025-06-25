@@ -51,6 +51,7 @@
       }
    },
    "global_configuration": {
+      "sql_file": "sql/apim",
    	"proxyEnabled": "True",
       "dbRun": "Postgres",
       "creditor_institution_code": "66666666666",

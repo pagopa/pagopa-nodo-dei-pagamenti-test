@@ -120,7 +120,9 @@ def before_all(context):
         }
 
         # Percorso assoluto alla cartella 'sql' nella struttura del progetto
-        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "sql"))
+        sql_config = context.config.userdata.get("global_configuration").get("sql_file")
+        print(f"SQL CONFIG SELECTED: {sql_config}")
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), sql_config))
         for sql_filename in sql_files:
             sql_file_path = os.path.join(base_dir, sql_filename)
             print(f"----> UPDATE via API using {sql_file_path}...")
@@ -254,7 +256,9 @@ def after_scenario(context, scenario):
             }
 
             # Percorso assoluto alla cartella 'sql' nella struttura del progetto
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "sql"))
+            sql_config = context.config.userdata.get("global_configuration").get("sql_file")
+            print(f"SQL CONFIG SELECTED: {sql_config}")
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), sql_config))
             for sql_filename in sql_files:
                 sql_file_path = os.path.join(base_dir, sql_filename)
                 print(f"----> UPDATE via API using {sql_file_path}...")
@@ -405,7 +409,9 @@ def after_all(context):
         }
 
         # Percorso assoluto alla cartella 'sql' nella struttura del progetto
-        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "sql"))
+        sql_config = context.config.userdata.get("global_configuration").get("sql_file")
+        print(f"SQL CONFIG SELECTED: {sql_config}")
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), sql_config))
         for sql_filename in sql_files:
             sql_file_path = os.path.join(base_dir, sql_filename)
             print(f"----> UPDATE via API using {sql_file_path}...")
