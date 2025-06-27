@@ -148,8 +148,5 @@
          "password": "wF35P",
          "port": "5444"
       }
-   },
-   "env": {
-      "SUBKEY": "PIPPO"
    }
 }
