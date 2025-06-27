@@ -3817,24 +3817,36 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name
 @step("through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, param, position, key):
-    result_query = getattr(context, query_name)
-    print(f'{query_name}: {result_query}')
+    try:
+        result_query = getattr(context, query_name)
+        print(f'{query_name}: {result_query}')
 
-    if position == -1:  # il -1 recupera tutti i record
-        selected_element = [t[0] for t in result_query]
-    else:
-        selected_element = result_query[0][position]
-    print(f'{param}: {selected_element}')
-    setattr(context, key, selected_element)
+        if position == -1:  # il -1 recupera tutti i record
+            selected_element = [t[0] for t in result_query]
+        else:
+            selected_element = result_query[0][position]
+        print(f'{param}: {selected_element}')
+        setattr(context, key, selected_element)
+            
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
-@step("through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
-def step_impl(context, query_name, param, position, row_number, key):
-    result_query = getattr(context, query_name)
-    print(f'{query_name}: {result_query}')
-    selected_element = result_query[row_number][position]
-    print(f'{param}: {selected_element}')
-    setattr(context, key, selected_element)
+# @step("through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
+# def step_impl(context, query_name, param, position, row_number, key):
+#     result_query = getattr(context, query_name)
+#     print(f'{query_name}: {result_query}')
+#     selected_element = result_query[row_number][position]
+#     print(f'{param}: {selected_element}')
+#     setattr(context, key, selected_element)
     
 
 
@@ -3900,14 +3912,14 @@ def step_impl(context, query_name, xml, position, key):
         raise e
 
 
-@step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
-def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
-    result_query1 = getattr(context, query_name1)
-    result_query2 = getattr(context, query_name2)
-    print("elem1: ", result_query1[0][position1])
-    print("elem2: ", result_query2[0][position2])
+# @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
+# def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
+#     result_query1 = getattr(context, query_name1)
+#     result_query2 = getattr(context, query_name2)
+#     print("elem1: ", result_query1[0][position1])
+#     print("elem2: ", result_query2[0][position2])
 
-    assert result_query1[0][position1] == result_query2[0][position2]
+#     assert result_query1[0][position1] == result_query2[0][position2]
 
 
 @Step("call the {elem} of {primitive} response as {name}")
@@ -3978,17 +3990,6 @@ def step_impl(context, elem, primitive, name):
         # Interrompiamo il test
         raise e
 
-@given("PSP waits {elem} of {primitive} expires")
-def step_impl(context, elem, primitive):
-    payload = getattr(context, primitive)
-    my_document = parseString(payload)
-    if len(my_document.getElementsByTagName(elem)) > 0:
-        elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        wait_time = (int(elem_value) + 200) / 1000
-        print(f"wait for: {wait_time} seconds")
-        time.sleep(wait_time)
-    else:
-        assert False
 
 
 @step("{mock} waits {number} minutes for expiration")
