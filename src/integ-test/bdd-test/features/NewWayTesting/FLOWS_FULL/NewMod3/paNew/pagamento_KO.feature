@@ -2877,7 +2877,9 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_23 @after
     Scenario: NM3 flow KO, FLOW: upd scheduler.jobName_idempotencyCacheClean.enabled set to false -> verify -> paVerify activate -> paGetPayment -> spoV2+ -> upd VALID_TO 1 min later -> spoV2+ -> KO con PPT_ESITO_GIA_ACQUISITO (OLD_NM3-121)
-        Given update parameter scheduler.jobName_idempotencyCacheClean.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                    |
+            | CONFIG_KEY | scheduler.jobName_idempotencyCacheClean.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -2938,7 +2940,10 @@ Feature: NM3 flows con pagamento fallito
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
         And current date plus 1 minutes generation
-        And updates through the query update_validto of the table IDEMPOTENCY_CACHE the parameter VALID_TO with $date_plus_minutes under macro NewMod1 on db nodo_online
+        And update for table IDEMPOTENCY_CACHE with parameter VALID_TO = '$date_plus_minutes' on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                         |
+            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
+            | PSP_ID          | $sendPaymentOutcomeV2.idPSP          |
         And wait 65 seconds for expiration
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -3454,12 +3459,16 @@ Feature: NM3 flows con pagamento fallito
         Then check outcome is OK of activatePaymentNotice response
         And saving activatePaymentNotice request in activatePaymentNoticeRequest2
         And save activatePaymentNotice response in activatePaymentNotice_2
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
+        And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                  | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNotice_1Response.paymentToken | OK      |
-        And updates through the query update_noticeid_activate2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest1.noticeNumber under macro NewMod1 on db nodo_online
+        And update for table POSITION_PAYMENT_STATUS_SNAPSHOT with parameter NOTICE_ID = $activatePaymentNoticeRequest1.noticeNumber on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | NOTICE_ID  | $activatePaymentNoticeRequest2.noticeNumber |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        And updates through the query update_noticeid_activate1 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter NOTICE_ID with $activatePaymentNoticeRequest2.noticeNumber under macro NewMod1 on db nodo_online
+        And update for table POSITION_PAYMENT_STATUS_SNAPSHOT with parameter NOTICE_ID = $activatePaymentNoticeRequest2.noticeNumber on db nodo_online with where datatable horizontal
+            | where_keys | where_values                                |
+            | NOTICE_ID  | $activatePaymentNoticeRequest1.noticeNumber |
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
         # POSITION_PAYMENT_STATUS activate1
@@ -3950,8 +3959,14 @@ Feature: NM3 flows con pagamento fallito
         Then check outcome is OK of activatePaymentNotice response
         And saving activatePaymentNotice request in activatePaymentNoticeRequest1
         And save activatePaymentNotice response in activatePaymentNotice1
-        And updates through the query update_activate of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
-        And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
+        And update for table POSITION_PAYMENT_STATUS_SNAPSHOT with parameter STATUS = 'CANCELLED' on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+        And update for table POSITION_STATUS_SNAPSHOT with parameter STATUS = 'INSERTED' on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And wait 3 seconds for expiration
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -4286,17 +4301,17 @@ Feature: NM3 flows con pagamento fallito
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                                          |
-            | ID                       | NotNone                                        |
-            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode              |
-            | NOTICE_ID                | $activatePaymentNotice.noticeNumber            |
-            | STATUS                   | NOTICE_GENERATED,NOTICE_SENT,NOTIFIED          |
-            | INSERTED_TIMESTAMP       | NotNone                                        |
-            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId              |
-            | PAYMENT_TOKEN            | $activatePaymentNoticeResponse.paymentToken    |
-            | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode              |
-            | RECIPIENT_BROKER_PA_ID   | $activatePaymentNotice.fiscalCode              |
-            | RECIPIENT_STATION_ID     | #id_station#                                   |
+            | column                   | value                                              |
+            | ID                       | NotNone                                            |
+            | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode                  |
+            | NOTICE_ID                | $activatePaymentNotice.noticeNumber                |
+            | STATUS                   | NOTICE_GENERATED,NOTICE_SENT,NOTIFIED              |
+            | INSERTED_TIMESTAMP       | NotNone                                            |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeResponse.paymentToken        |
+            | RECIPIENT_PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode                  |
+            | RECIPIENT_BROKER_PA_ID   | $activatePaymentNotice.fiscalCode                  |
+            | RECIPIENT_STATION_ID     | #id_station#                                       |
             | INSERTED_BY              | sendPaymentOutcomeV2,sendPaymentOutcomeV2,paSendRT |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
@@ -4306,14 +4321,14 @@ Feature: NM3 flows con pagamento fallito
         # RE #####
         # activatePaymentNotice #1 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                               | where_values                                |
+            | where_keys                               | where_values                                 |
             | PAYMENT_TOKEN                            | $activatePaymentNotice1Response.paymentToken |
-            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station#                                |
-            | TIPO_EVENTO                              | activatePaymentNotice                       |
-            | SOTTO_TIPO_EVENTO                        | REQ                                         |
-            | ESITO                                    | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
+            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station#                                 |
+            | TIPO_EVENTO                              | activatePaymentNotice                        |
+            | SOTTO_TIPO_EVENTO                        | REQ                                          |
+            | ESITO                                    | RICEVUTA                                     |
+            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                             |
+            | ORDER BY                                 | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeReq
         And from $activatePaymentNoticeReq.idPSP xml check value #psp# in position 0
         And from $activatePaymentNoticeReq.idBrokerPSP xml check value #psp# in position 0
@@ -4324,14 +4339,14 @@ Feature: NM3 flows con pagamento fallito
         And from $activatePaymentNoticeReq.amount xml check value $activatePaymentNotice.amount in position 0
         # activatePaymentNotice #1 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                               | where_values                                |
+            | where_keys                               | where_values                                 |
             | PAYMENT_TOKEN                            | $activatePaymentNotice1Response.paymentToken |
-            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station#                                |
-            | TIPO_EVENTO                              | activatePaymentNotice                       |
-            | SOTTO_TIPO_EVENTO                        | RESP                                        |
-            | ESITO                                    | INVIATA                                     |
-            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
+            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station#                                 |
+            | TIPO_EVENTO                              | activatePaymentNotice                        |
+            | SOTTO_TIPO_EVENTO                        | RESP                                         |
+            | ESITO                                    | INVIATA                                      |
+            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                             |
+            | ORDER BY                                 | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeResp
         And from $activatePaymentNoticeResp.outcome xml check value OK in position 0
         And from $activatePaymentNoticeResp.totalAmount xml check value $activatePaymentNotice.amount in position 0
@@ -4344,13 +4359,13 @@ Feature: NM3 flows con pagamento fallito
         And from $activatePaymentNoticeResp.creditorReferenceId xml check value 02$iuv in position 0
         # paGetPayment #1 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | paGetPayment                                 |
+            | SOTTO_TIPO_EVENTO  | REQ                                          |
+            | ESITO              | INVIATA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
         And from $paGetPaymentReq.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -4360,13 +4375,13 @@ Feature: NM3 flows con pagamento fallito
         And from $paGetPaymentReq.amount xml check value $activatePaymentNotice.amount in position 0
         # paGetPayment #1 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | paGetPayment                                 |
+            | SOTTO_TIPO_EVENTO  | RESP                                         |
+            | ESITO              | RICEVUTA                                     |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
         And from $paGetPaymentResp.outcome xml check value OK in position 0
         And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
@@ -4376,13 +4391,13 @@ Feature: NM3 flows con pagamento fallito
         And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         # activatePaymentNotice #2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                                                 | where_values                                |
-            | PAYMENT_TOKEN                                              | $activatePaymentNotice2Response.paymentToken |
-            | TIPO_EVENTO                                                | activatePaymentNotice                       |
-            | SOTTO_TIPO_EVENTO                                          | REQ                                         |
-            | ESITO                                                      | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP                                         | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                                   | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                 |
+            | PAYMENT_TOKEN      | $activatePaymentNotice2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNotice                        |
+            | SOTTO_TIPO_EVENTO  | REQ                                          |
+            | ESITO              | RICEVUTA                                     |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeReq2
         And from $activatePaymentNoticeReq2.idPSP xml check value #psp# in position 0
         And from $activatePaymentNoticeReq2.idBrokerPSP xml check value #psp# in position 0
@@ -4393,13 +4408,13 @@ Feature: NM3 flows con pagamento fallito
         And from $activatePaymentNoticeReq2.amount xml check value $activatePaymentNotice.amount in position 0
         # activatePaymentNotice #2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                                                 | where_values                                |
-            | PAYMENT_TOKEN                                              | $activatePaymentNotice2Response.paymentToken |
-            | TIPO_EVENTO                                                | activatePaymentNotice                       |
-            | SOTTO_TIPO_EVENTO                                          | RESP                                        |
-            | ESITO                                                      | INVIATA                                     |
-            | INSERTED_TIMESTAMP                                         | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                                   | DATA_ORA_EVENTO ASC                         |
+            | where_keys         | where_values                                 |
+            | PAYMENT_TOKEN      | $activatePaymentNotice2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNotice                        |
+            | SOTTO_TIPO_EVENTO  | RESP                                         |
+            | ESITO              | INVIATA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeResp2
         And from $activatePaymentNoticeResp2.outcome xml check value OK in position 0
         And from $activatePaymentNoticeResp2.totalAmount xml check value $activatePaymentNotice.amount in position 0
@@ -4412,13 +4427,13 @@ Feature: NM3 flows con pagamento fallito
         And from $activatePaymentNoticeResp2.creditorReferenceId xml check value 02$iuv in position 0
         # paGetPayment #2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice2Response.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | paGetPayment                                 |
+            | SOTTO_TIPO_EVENTO  | REQ                                          |
+            | ESITO              | INVIATA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq2
         And from $paGetPaymentReq2.idPA xml check value $activatePaymentNotice.fiscalCode in position 0
         And from $paGetPaymentReq2.idBrokerPA xml check value $activatePaymentNotice.fiscalCode in position 0
@@ -4428,13 +4443,13 @@ Feature: NM3 flows con pagamento fallito
         And from $paGetPaymentReq2.amount xml check value $activatePaymentNotice.amount in position 0
         # paGetPayment #2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice2Response.paymentToken |
-            | TIPO_EVENTO        | paGetPayment                                |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | paGetPayment                                 |
+            | SOTTO_TIPO_EVENTO  | RESP                                         |
+            | ESITO              | RICEVUTA                                     |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp2
         And from $paGetPaymentResp2.outcome xml check value OK in position 0
         And from $paGetPaymentResp2.data.creditorReferenceId xml check value 02$iuv in position 0
@@ -4444,13 +4459,13 @@ Feature: NM3 flows con pagamento fallito
         And from $paGetPaymentResp2.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         # sendPaymentOutcomeV2 #1 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                         |
+            | SOTTO_TIPO_EVENTO  | REQ                                          |
+            | ESITO              | RICEVUTA                                     |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
         And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #psp# in position 0
@@ -4460,25 +4475,25 @@ Feature: NM3 flows con pagamento fallito
         And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
         # sendPaymentOutcomeV2 #1 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice1Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                         |
+            | SOTTO_TIPO_EVENTO  | RESP                                         |
+            | ESITO              | INVIATA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
         And from $sendPaymentOutcomeV2Resp.outcome xml check value KO in position 0
         And from $sendPaymentOutcomeV2Resp.faultCode xml check value PPT_PAGAMENTO_DUPLICATO in position 0
         # sendPaymentOutcomeV2 #2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
-            | SOTTO_TIPO_EVENTO  | REQ                                         |
-            | ESITO              | RICEVUTA                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                         |
+            | SOTTO_TIPO_EVENTO  | REQ                                          |
+            | ESITO              | RICEVUTA                                     |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req2
         And from $sendPaymentOutcomeV2Req2.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeV2Req2.idBrokerPSP xml check value #psp# in position 0
@@ -4488,16 +4503,16 @@ Feature: NM3 flows con pagamento fallito
         And from $sendPaymentOutcomeV2Req2.outcome xml check value OK in position 0
         # sendPaymentOutcomeV2 #2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                |
+            | where_keys         | where_values                                 |
             | PAYMENT_TOKEN      | $activatePaymentNotice2Response.paymentToken |
-            | TIPO_EVENTO        | sendPaymentOutcomeV2                        |
-            | SOTTO_TIPO_EVENTO  | RESP                                        |
-            | ESITO              | INVIATA                                     |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                         |
+            | SOTTO_TIPO_EVENTO  | RESP                                         |
+            | ESITO              | INVIATA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                             |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp2
         And from $sendPaymentOutcomeV2Resp2.outcome xml check value OK in position 0
-        
+
 
 
 
@@ -4722,7 +4737,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -4875,7 +4890,9 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_30 @after
     Scenario: NM3 flow KO con PA New vp1 e PSP vp1, FLOW : verify -> activate -> paGetPayment with 3 transfer, mod3CancelV2, spo+ -> Override paSendRT with delay 10000 , BIZ- (OLD_NM3-23F)
-        Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
+        Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'N' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | FK_PA      | ('6','8')    |
         And refresh job ALL triggered after 10 seconds
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -5100,7 +5117,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -5141,7 +5158,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
@@ -5181,7 +5198,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
@@ -9713,7 +9730,9 @@ Feature: NM3 flows con pagamento fallito
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGKO @NM3PANEWPAGKO_FULL_44 @after
     Scenario: NM3 flow KO, FLOW: useIdempotency set to False -> activate -> paGetPayment  -> spo+ -> spo+ con KO with PPT_ESITO_GIA_ACQUISITO (OLD_NM3-60K)
-        Given update parameter useIdempotency on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
