@@ -18122,7 +18122,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | where_keys | where_values   |
             | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+        And from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                 | outcome |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #idempotency_key# | $activatePaymentNotice2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
