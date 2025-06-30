@@ -1665,7 +1665,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_5 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK, spoV2+ -> paSendRT BIZ+ (NM3-16)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -2099,7 +2101,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_6 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2, FLOW con GEC KO: activateV2 -> paGetPayment --> getFees KO spoV2+ -> paSendRT BIZ+ (NM3-17)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -2516,8 +2520,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -3022,9 +3030,15 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 16647        |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -3533,9 +3547,15 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 16647        |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -68015,7 +68035,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -68056,7 +68076,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                        |
       | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
@@ -68485,24 +68505,24 @@ Feature: NM3 flows PA New con pagamento OK
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
     # POSITION_TRANSFER
     And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-      | column                   | value                               |
-      | ID                       | NotNone                             |
-      | NOTICE_ID                | $activatePaymentNotice.noticeNumber |
-      | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId   |
-      | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode   |
+      | column                   | value                                                     |
+      | ID                       | NotNone                                                   |
+      | NOTICE_ID                | $activatePaymentNotice.noticeNumber                       |
+      | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId                         |
+      | PA_FISCAL_CODE           | $activatePaymentNotice.fiscalCode                         |
       | PA_FISCAL_CODE_SECONDARY | $activatePaymentNotice.fiscalCode,90000000001,90000000002 |
-      | IBAN                     | IT45R0760103200000000001016         |
-      | AMOUNT                   | 10.00                               |
-      | REMITTANCE_INFORMATION   | testPaGetPayment                    |
-      | TRANSFER_CATEGORY        | NotNone                             |
-      | TRANSFER_IDENTIFIER      | 1,2,3                               |
-      | VALID                    | Y                                   |
-      | FK_POSITION_PAYMENT      | NotNone                             |
-      | INSERTED_TIMESTAMP       | NotNone                             |
-      | UPDATED_TIMESTAMP        | NotNone                             |
-      | FK_PAYMENT_PLAN          | NotNone                             |
-      | INSERTED_BY              | activatePaymentNotice               |
-      | UPDATED_BY               | activatePaymentNotice               |
+      | IBAN                     | IT45R0760103200000000001016                               |
+      | AMOUNT                   | 10.00                                                     |
+      | REMITTANCE_INFORMATION   | testPaGetPayment                                          |
+      | TRANSFER_CATEGORY        | NotNone                                                   |
+      | TRANSFER_IDENTIFIER      | 1,2,3                                                     |
+      | VALID                    | Y                                                         |
+      | FK_POSITION_PAYMENT      | NotNone                                                   |
+      | INSERTED_TIMESTAMP       | NotNone                                                   |
+      | UPDATED_TIMESTAMP        | NotNone                                                   |
+      | FK_PAYMENT_PLAN          | NotNone                                                   |
+      | INSERTED_BY              | activatePaymentNotice                                     |
+      | UPDATED_BY               | activatePaymentNotice                                     |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -68603,7 +68623,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                        |
       | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
@@ -68947,7 +68967,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -68988,7 +69008,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                        |
       | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
@@ -69028,7 +69048,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys     | where_values                        |
       | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
       | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+      | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
     And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                        |
       | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
