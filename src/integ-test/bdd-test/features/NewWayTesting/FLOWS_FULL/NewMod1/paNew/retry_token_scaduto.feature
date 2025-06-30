@@ -1317,7 +1317,7 @@ Feature: NMU flows con PA New retry a token scaduto
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWRETRY @NMUPANEWRETRY_FULL_4 @after
     Scenario: NMU flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con additionalPaymentInformations in timeout (scadenza sessione), mod3cancelV2 , BIZ- e SPRv2-, spoV2+ con resp KO (NMU-57)
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
-            | where_keys | where_values   |
+            | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition

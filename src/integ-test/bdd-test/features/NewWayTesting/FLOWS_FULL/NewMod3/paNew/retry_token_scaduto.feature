@@ -7,7 +7,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_1 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ PPT_TOKEN_SCADUTO -> paSendRT, BIZ+ -> activate PPT_PAGAMENTO_DUPLICATO (NM3-4)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -20,7 +22,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 1000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -426,7 +428,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_2 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRT, BIZ+ (NM3-12)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -439,7 +443,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -835,7 +839,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_3 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2, BIZ+ (NM3-33)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -848,7 +854,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -1245,7 +1251,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_4 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRTV2, BIZ+ (NM3-40)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -1258,7 +1266,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -1657,7 +1665,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_5 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2- con resp PPT_TOKEN_SCADUTO_KO (NM3-41)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -1670,7 +1680,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -2032,7 +2042,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_6 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1 activate e PSP vp2 spo : activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRT, BIZ+ (NM3-65)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -2045,7 +2057,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -2443,7 +2455,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_7 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp2 activate e PSP vp1 spo: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRT, BIZ+ (NM3-69)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -2456,7 +2470,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -2854,7 +2868,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_8 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp1 activate e PSP vp2 spo: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ -> paSendRTV2, BIZ+ (NM3-87)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -2867,7 +2883,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -3265,7 +3281,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_9 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP vp2 activate e PSP vp1 spo: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ -> paSendRTV2, BIZ+ (NM3-91)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -3278,7 +3296,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -3688,10 +3706,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('16647')    |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
@@ -4317,10 +4343,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('16647')    |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
@@ -4933,9 +4967,11 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_12 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-146)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
@@ -5344,7 +5380,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_13 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-147)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -5727,7 +5765,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_14 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRT, BIZ+ (NM3-148)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6110,7 +6150,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_15 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRT, BIZ+ (NM3-149)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6492,9 +6534,11 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_16 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-150)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
@@ -6894,9 +6938,11 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_17 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-151)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
@@ -7281,9 +7327,11 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_18 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo: activate Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spoV2+ Poste -> paSendRTV2, BIZ+ (NM3-152)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
         And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
@@ -7680,7 +7728,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_19 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo: activateV2 Poste -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ-, spo+ Poste -> paSendRTV2, BIZ+ (NM3-153)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -8084,10 +8134,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('1200001')  |
-        And update parameter gec.enabled on configuration keys with value true
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -8759,10 +8817,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('100')      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And update parameter gec.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -9475,10 +9541,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('1200001')  |
-        And update parameter gec.enabled on configuration keys with value true
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -9960,10 +10034,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('100')      |
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And update parameter gec.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -10450,10 +10532,18 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | ('100')      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And update parameter gec.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -11172,11 +11262,21 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter gec.enabled on configuration keys with value true
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -12147,11 +12247,21 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter gec.enabled on configuration keys with value true
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -13125,11 +13235,21 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter gec.enabled on configuration keys with value true
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -13608,11 +13728,21 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter gec.enabled on configuration keys with value true
-        And update parameter invioReceiptStandin on configuration keys with value false
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_GEC_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint | expirationTime |
@@ -14091,9 +14221,15 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter gec.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -15086,9 +15222,15 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter gec.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -16078,8 +16220,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                                         |
             | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-        And update parameter default_durata_estensione_token_IO on configuration keys with value 1000
-        And update parameter gec.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | CONFIG_KEY | gec.enabled  |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -16810,7 +16956,9 @@ Feature: NM3 flows con PA New retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_32 @after
     Scenario: NM3 flow retry a token scaduto, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ-, spoV2-, BIZ+ (OLD_NM3-16)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -17522,7 +17670,7 @@ Feature: NM3 flows con PA New retry a token scaduto
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 5 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |

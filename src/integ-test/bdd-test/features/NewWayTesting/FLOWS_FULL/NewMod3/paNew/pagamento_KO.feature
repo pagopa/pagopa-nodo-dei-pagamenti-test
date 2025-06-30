@@ -5936,7 +5936,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
         And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
-            | where_keys | where_values   |
+            | where_keys | where_values                       |
             | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
