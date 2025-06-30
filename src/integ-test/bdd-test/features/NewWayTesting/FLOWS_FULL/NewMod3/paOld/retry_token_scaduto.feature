@@ -7,9 +7,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_1 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spo+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-17)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -413,9 +415,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_2 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-19)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -1051,9 +1055,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_3 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo- con resp PPT_TOKEN_SCADUTO_KO (NM3-20)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -1470,9 +1476,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_4 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-23)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -2018,9 +2026,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_5 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activateV2 -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ- spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-45)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -2655,9 +2665,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_6 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-43)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -3061,9 +3073,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_7 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-62)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -3468,9 +3482,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_8 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2+ con resp PPT_TOKEN_SCADUTO nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-79)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -3875,9 +3891,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_9 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spo- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-18)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -4294,9 +4312,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_10 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-44)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -4716,9 +4736,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_11 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-21)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -5260,9 +5282,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_12 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-47)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -5806,9 +5830,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_13 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-64)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -6353,9 +6379,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO, la SPO arriva quando al RPT è in stato RT_RIFIUTATA_PA
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_14 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- resp KO BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> Nodo crea payment-v2 in stato PAID (NM3-81)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -6896,9 +6924,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_15 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO (NM3-46)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -7317,9 +7347,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_16 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-49)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -7897,9 +7929,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_17 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-63)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -8621,9 +8655,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_18 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-66)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -9202,9 +9238,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in OK
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_19 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp OK nodoInviaRPT con ccp-v2 -> paaInviaRT+ BIZ+ token-v2 (NM3-80)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -9925,9 +9963,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in KO
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_20 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 e resp KO BIZ attivazione fallita (NM3-83)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -10505,8 +10545,12 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_21 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-25)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -10555,7 +10599,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -11238,10 +11284,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_22 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-51)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -11288,7 +11338,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -11974,10 +12026,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_23 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-68)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -12024,7 +12080,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -12707,10 +12765,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_24 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-85)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -12757,7 +12819,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -13444,10 +13508,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_25 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paaVerificaRPT, activate Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-101)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 305#iuv#     |
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
@@ -13505,7 +13573,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -14187,10 +14257,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_26 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paaVerificaRPT, activateV2 Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-102)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 305#iuv#     |
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
@@ -14248,7 +14322,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -14932,10 +15008,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_27 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2 activate e PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT, activateV2 Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-103)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+        And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 305#iuv#     |
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
@@ -14993,7 +15073,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -15676,8 +15758,12 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene accettata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_28 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT, activate Poste -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ Poste con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA accetta RT job retryAttiva, Nodo fa la paaAttivaRPT con token-v2, nodoInviaRPT con ccp-v2 -> paaInviaRT+ con ccp-v2 BIZ+ (NM3-104)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -15737,7 +15823,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | esito |
             | OK    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -16420,8 +16508,12 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_29 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-26)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -16470,7 +16562,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -16962,8 +17056,12 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_30 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT (NM3-52)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -17012,7 +17110,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -17506,8 +17606,12 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_31 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT,PAID (NM3-69)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
@@ -17556,7 +17660,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -18051,8 +18157,12 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (stato RPT diverso da RT_ACCETTATA_PA e da RT_RIFIUTATA_PA), poi la RT viene rifiutata e si fa retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_32 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> RT non ancora accettata/rifiutata dalla PA BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> inserimento in coda RETRY_PA_ATTIVA_RPT, PA rifiuta RT job retryAttiva, Nodo crea payment-v2 in stato PAID_NORPT (NM3-86)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -18101,7 +18211,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | faultCode        | faultString                | id     | description | esito |
             | PAA_SINTASSI_XSD | RT non valida rispetto XSD | mockPa | test        | KO    |
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        And update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -18595,9 +18707,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_33 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-22)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -19324,9 +19438,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_34 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-48)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -20053,9 +20169,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_35 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-65)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -20783,9 +20901,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), RPT2 arriva prima di OK a retry attiva
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_36 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2  REQ, nodoInviaRPT con ccp-v2 -> aspetta lock, paaAttivaRPT con token-v2 RESP OK, nodoInviaRPT con ccp-v2 viene processata e genera paaInviaRT+ BIZ+ (NM3-82)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -21513,7 +21633,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_37 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-24)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
@@ -22194,9 +22316,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_38 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-50)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -22845,9 +22969,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_39 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- BIZ-, spoV2+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-67)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -23496,9 +23622,11 @@ Feature: NM3 flows PA Old con retry a token scaduto
     # sessione scade dopo RPT ma prima di SPO (RPT in stato RT_ACCETTATA_PA), retry attiva in timeout e ricezione RPT2
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_40 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT, nodoInviaRPT (scadenza sessione) mod3cancelV1 -> paaInviaRT- BIZ-, spo+ con resp PPT_TOKEN_SCADUTO -> paaAttivaRPT con token-v2 in timeout BIZ attivazione fallita? --> probabilmente non c'è nodoInviaRPT con ccp-v2 rifiutata --> non toglie della coda dei retry della attiva e non fa paaInviaRT BIZ+ --> lo fa? (NM3-84)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -25170,7 +25298,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_FULL_43 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 ->  paaInviaRT- KO RT_RIFIUTATA_PA -> spo+ con resp PPT_TOKEN_SCADUTO (OLD_NM3-49G)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 002#iuv#     | 10.00  | 1000           |
