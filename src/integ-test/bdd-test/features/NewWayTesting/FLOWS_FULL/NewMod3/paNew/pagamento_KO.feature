@@ -5935,9 +5935,11 @@ Feature: NM3 flows con pagamento fallito
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 50.00  |
         And from body with datatable vertical paGetPayment_5transfer_full initial XML paGetPayment

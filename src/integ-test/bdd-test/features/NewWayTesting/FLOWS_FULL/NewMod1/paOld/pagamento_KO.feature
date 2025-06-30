@@ -4252,7 +4252,9 @@ Feature: NMU flows PA Old con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPAOLD @NMUPAOLDPAGKO @NMUPAOLDPAGKO_FULL_10 @after
     Scenario: NMU flow KO, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 with expiration -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment malformata, mod3Cancel -> SPRv2+ (OLD_NMU-197)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
