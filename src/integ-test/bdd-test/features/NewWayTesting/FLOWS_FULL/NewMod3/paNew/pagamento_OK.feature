@@ -15138,8 +15138,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 16647        |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -15647,8 +15651,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 16647        |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+	  And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -16157,8 +16165,14 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 100          |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    #And update parameter invioReceiptStandin on configuration keys with value true
+	  And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+    #And update parameter station.stand-in on configuration keys with value 66666666666_01
+	  And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber |
@@ -16664,8 +16678,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y',VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 100          |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+	  And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+	  And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber |
@@ -17174,8 +17192,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+	  And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+	  And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber |
@@ -17685,8 +17707,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y',VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
+	  And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+		And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -18196,8 +18222,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
+	  And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+		And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber |
@@ -18707,8 +18737,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y',VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
+	  And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+		  | where_keys      | where_values        |
+		  | CONFIG_KEY      | invioReceiptStandin |
+		And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+		  | where_keys     | where_values      |
+		  | CONFIG_KEY     | station.stand-in  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber |
