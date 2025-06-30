@@ -153,7 +153,7 @@ def before_all(context):
         db_config = context.config.userdata.get("db_configuration")
         db_name = "nodo_cfg"
         db_selected = db_config.get(db_name)
-        selected_query = utils.query_json(context, 'select_config', 'configurations')
+        selected_query = "SELECT ck.CONFIG_KEY, ck.CONFIG_VALUE from CONFIGURATION_KEYS ck"
         adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
         exec_query = adopted_db.executeQuery(context, conn, selected_query, as_dict=True)
 
