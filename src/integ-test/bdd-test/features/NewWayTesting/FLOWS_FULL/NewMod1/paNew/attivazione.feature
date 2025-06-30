@@ -1367,10 +1367,10 @@ Feature: NMU flows con PA New - activation phase
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_7 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2: activateV2 -> paGetPayment -> activateV2 PPT_PAGAMENTO_IN_CORSO (OLD-NMU-24)
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1' on db nodo_cfg with where datatable horizontal
-            | where_keys | where_values   |
+            | where_keys | where_values                             |
             | CONFIG_KEY | default_idempotency_key_validity_minutes |
         And update for table CONFIGURATION_KEYS with parameter config_value = '1800000' on db nodo_cfg with where datatable horizontal
-            | where_keys | where_values   |
+            | where_keys | where_values                           |
             | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
@@ -1580,10 +1580,10 @@ Feature: NMU flows con PA New - activation phase
             | where_keys | where_values   |
             | CONFIG_KEY | useIdempotency |
         And update for table CONFIGURATION_KEYS with parameter config_value = '10' on db nodo_cfg with where datatable horizontal
-            | where_keys | where_values   |
+            | where_keys | where_values                             |
             | CONFIG_KEY | default_idempotency_key_validity_minutes |
         And update for table CONFIGURATION_KEYS with parameter config_value = '1800000' on db nodo_cfg with where datatable horizontal
-            | where_keys | where_values   |
+            | where_keys | where_values                           |
             | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
