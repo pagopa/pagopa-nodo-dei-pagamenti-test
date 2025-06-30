@@ -9073,9 +9073,11 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_35 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT nodoInviaRPT (scadenza sessione) mod3cancelV1 -> activate -> upd RPT fields -> nodoInviaRPT (OLD_NM3-19)
-        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 305#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_full initial XML paaAttivaRPT
@@ -12761,7 +12763,9 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_44 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> activate -> sendPaymentOutcome+ -> paaInviaRT in timeout OK  BIZ+ (OLD_NM3-23H)
-        Given update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber |
@@ -13780,7 +13784,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
-        Given update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value true
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         When job paRetryPaInviaRtNegative triggered after 0 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
@@ -17265,7 +17271,9 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_55 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT,  activate -> spo+ without idempotency key in request-> OK check idempotency cache for first and second activate (OLD_NM3-18K)
-        Given update parameter scheduler.jobName_idempotencyCacheClean.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                    |
+            | CONFIG_KEY | scheduler.jobName_idempotencyCacheClean.enabled |
         When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
@@ -17627,7 +17635,9 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_56 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT -> spo+ -> OK, activate with same idempotency key and differnet noticeNumber-> OK check idempotency cache for first and second activate (OLD_NM3-19K)
-        Given update parameter scheduler.jobName_idempotencyCacheClean.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                    |
+            | CONFIG_KEY | scheduler.jobName_idempotencyCacheClean.enabled |
         When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
@@ -17950,14 +17960,14 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value NotNone in position 0
         # sendPaymentOutcome REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                               | where_values                                |
+            | where_keys                               | where_values                                 |
             | PAYMENT_TOKEN                            | $activatePaymentNotice1Response.paymentToken |
-            | TIPO_EVENTO                              | sendPaymentOutcome                          |
-            | SOTTO_TIPO_EVENTO                        | REQ                                         |
-            | ESITO                                    | RICEVUTA                                    |
-            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station_old#                            |
-            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO                              | sendPaymentOutcome                           |
+            | SOTTO_TIPO_EVENTO                        | REQ                                          |
+            | ESITO                                    | RICEVUTA                                     |
+            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station_old#                             |
+            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                             |
+            | ORDER BY                                 | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeReq
         And from $sendPaymentOutcomeReq.idPSP xml check value #psp# in position 0
         And from $sendPaymentOutcomeReq.idBrokerPSP xml check value #id_broker_psp# in position 0
@@ -17967,14 +17977,14 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $sendPaymentOutcomeReq.outcome xml check value OK in position 0
         # sendPaymentOutcom RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys                               | where_values                                |
+            | where_keys                               | where_values                                 |
             | PAYMENT_TOKEN                            | $activatePaymentNotice1Response.paymentToken |
-            | TIPO_EVENTO                              | sendPaymentOutcome                          |
-            | SOTTO_TIPO_EVENTO                        | RESP                                        |
-            | ESITO                                    | INVIATA                                     |
-            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station_old#                            |
-            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                            |
-            | ORDER BY                                 | DATA_ORA_EVENTO ASC                         |
+            | TIPO_EVENTO                              | sendPaymentOutcome                           |
+            | SOTTO_TIPO_EVENTO                        | RESP                                         |
+            | ESITO                                    | INVIATA                                      |
+            | IDENTIFICATIVO_STAZIONE_INTERMEDIARIO_PA | #id_station_old#                             |
+            | INSERTED_TIMESTAMP                       | TRUNC(SYSDATE-1)                             |
+            | ORDER BY                                 | DATA_ORA_EVENTO ASC                          |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
 
@@ -17986,7 +17996,9 @@ Feature: NM3 flows PA Old con pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_57 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, activate -> spo+ with idempotency key-> OK check idempotency cache for first and second activate (OLD_NM3-20K)
-        Given update parameter scheduler.jobName_idempotencyCacheClean.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                    |
+            | CONFIG_KEY | scheduler.jobName_idempotencyCacheClean.enabled |
         When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
@@ -18106,7 +18118,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                           |
             | IDEMPOTENCY_KEY | $activatePaymentNotice2.idempotencyKey |
-        Given update parameter useIdempotency on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
             | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey    | paymentToken                                 | outcome |
