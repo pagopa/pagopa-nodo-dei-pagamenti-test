@@ -1354,7 +1354,9 @@ Feature: RT PULL flow
 
     @ALL @FLOW @FLOW_FULL @RTPULL @RTPULL_5
     Scenario: RT pull, FLOW con PA Old e PSP Old, PSP che utilizza flag 'RT Push' e 'Recovery' disabilitati e che l'RT vada in esito sconosciuto PA.: nodoInviaRPT, job rt-pull -> pspChiediListaRT, pspChiediRT, pspInviaAckRT, paaInviaRT+, BIZ+ (OLD_RTPull-25A)
-        Given update parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                       |
+            | CONFIG_KEY | scheduler.jobName_paRetryPaInviaRtNegative.enabled |
         And waiting after triggered refresh job ALL
         And RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -3429,8 +3431,13 @@ Feature: RT PULL flow
         And from body with datatable horizontal pspInviaAckRT initial XML pspInviaAckRT
             | esito   |
             | timeout |
-        And update parameter scheduler.pspRetryAckNegativePollerMaxRetry on configuration keys with value 1
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value false
+        And update for table CONFIGURATION_KEYS with parameter config_value = 1 on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                |
+            | CONFIG_KEY | scheduler.pspRetryAckNegativePollerMaxRetry |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
@@ -3441,7 +3448,10 @@ Feature: RT PULL flow
         And wait 1 seconds for expiration
         And retrieve session token from $nodoInviaRPTResponse.url
         Given PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         When job pspRetryAckNegative triggered after 2 seconds
         And job paInviaRt triggered after 2 seconds
         Then wait 2 seconds for expiration
@@ -3815,8 +3825,13 @@ Feature: RT PULL flow
         And from body with datatable horizontal pspInviaAckRT_error initial XML pspInviaAckRT
             | esito | faultCode           | faultString  |
             | KO    | CANALE_SYSTEM_ERROR | system error |
-        And update parameter scheduler.pspRetryAckNegativePollerMaxRetry on configuration keys with value 1
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value false
+        And update for table CONFIGURATION_KEYS with parameter config_value = 1 on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.pspRetryAckNegativePollerMaxRetry   |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
@@ -3827,7 +3842,10 @@ Feature: RT PULL flow
         And wait 1 seconds for expiration
         And retrieve session token from $nodoInviaRPTResponse.url
         Given PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         When job pspRetryAckNegative triggered after 2 seconds
         And job paInviaRt triggered after 2 seconds
         Then wait 2 seconds for expiration
@@ -4439,8 +4457,13 @@ Feature: RT PULL flow
         And from body with datatable horizontal pspInviaAckRT_malformed initial XML pspInviaAckRT
             | body_ack  |
             | malformed |
-        And update parameter scheduler.pspRetryAckNegativePollerMaxRetry on configuration keys with value 1
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value false
+        And update for table CONFIGURATION_KEYS with parameter config_value = 1 on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.pspRetryAckNegativePollerMaxRetry   |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
@@ -4451,7 +4474,10 @@ Feature: RT PULL flow
         And wait 1 seconds for expiration
         And retrieve session token from $nodoInviaRPTResponse.url
         Given PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         When job pspRetryAckNegative triggered after 2 seconds
         And job paInviaRt triggered after 2 seconds
         Then wait 2 seconds for expiration
@@ -4829,8 +4855,13 @@ Feature: RT PULL flow
         And from body with datatable horizontal pspInviaAckRT_syntax_ko initial XML pspInviaAckRT
             | esito | faultCode           | faultString        |
             | KO    | CANALE_SINTASSI_XSD | Errore di sintassi |
-        And update parameter scheduler.pspRetryAckNegativePollerMaxRetry on configuration keys with value 1
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value false
+        And update for table CONFIGURATION_KEYS with parameter config_value = 1 on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.pspRetryAckNegativePollerMaxRetry   |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
@@ -4841,7 +4872,10 @@ Feature: RT PULL flow
         And wait 1 seconds for expiration
         And retrieve session token from $nodoInviaRPTResponse.url
         Given PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
-        And update parameter scheduler.jobName_pspRetryAckNegative.enabled on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                  |
+            | CONFIG_KEY | scheduler.jobName_pspRetryAckNegative.enabled |
+        And waiting after triggered refresh job ALL
         When job pspRetryAckNegative triggered after 2 seconds
         And job paInviaRt triggered after 2 seconds
         Then wait 2 seconds for expiration
