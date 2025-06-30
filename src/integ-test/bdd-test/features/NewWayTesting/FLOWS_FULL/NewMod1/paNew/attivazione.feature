@@ -6,11 +6,17 @@ Feature: NMU flows con PA New - activation phase
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_1 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2: checkPosition con 1 nav, activateV2 -> paGetPayment  (OLD-NMU-8)
-        Given update parameter useIdempotency on configuration keys with value true
-        And update parameter default_idempotency_key_validity_minutes on configuration keys with value 40
-        And update parameter default_token_duration_validity_millis on configuration keys with value 1800000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '4' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                             |
+            | CONFIG_KEY | default_idempotency_key_validity_minutes |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1800000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                           |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+        And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
@@ -1360,8 +1366,12 @@ Feature: NMU flows con PA New - activation phase
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_7 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2: activateV2 -> paGetPayment -> activateV2 PPT_PAGAMENTO_IN_CORSO (OLD-NMU-24)
-        Given update parameter default_idempotency_key_validity_minutes on configuration keys with value 1
-        And update parameter default_token_duration_validity_millis on configuration keys with value 1800000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | default_idempotency_key_validity_minutes |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1800000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -1566,11 +1576,17 @@ Feature: NMU flows con PA New - activation phase
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWATTIVAZIONE @NMUPANEWATTIVAZIONE_FULL_8
     Scenario: NMU flow paNEW KO, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment -> OK,  activateV2 with expired token -> paGetPayment -> KO PPT_PAGAMENTO_IN_CORSO  (OLD_NMU-25)
-        Given update parameter useIdempotency on configuration keys with value true
-        And update parameter default_idempotency_key_validity_minutes on configuration keys with value 10
-        And update parameter default_token_duration_validity_millis on configuration keys with value 1800000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '10' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | default_idempotency_key_validity_minutes |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '1800000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | default_token_duration_validity_millis |
         And waiting after triggered refresh job ALL
-        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+        And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
@@ -2235,7 +2251,7 @@ Feature: NMU flows con PA New - activation phase
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP DESC LIMIT 1        |
+            | ORDER BY       | INSERTED_TIMESTAMP DESC LIMIT 1       |
         And through the query result_query retrieve json METADATA at position 0 and save it under the key position_payment_plan_metadata
         And from $position_payment_plan_metadata.key json check value chiave in position 0
         And from $position_payment_plan_metadata.value json check value valore in position 0
