@@ -11283,7 +11283,9 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_21 @after
     Scenario: NMU flow paNEW OK con Multitoken paPrinc=paSec standin no flag_standin_psp no flag_standin_pa flag invioReceiptStandin=true, FLOW: checkPosition con 4 nav, 4x activateV2 -> token1: paGetPayment verso ACA 5 transfer paPrincip = paSecond, token2: paGetPaymentV2 5 transfer paPrincip = paSecond, token3: paGetPayment 5 transfer paPrincip = paSecond, token4: paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotifyV2 con 4 token e senza il flag standin=true, spoV2+ con 4 token ->token1: 2xpaSendRTV2 verso stazione principale standin , 1 paSendRT e 1 paSendRTV2, 5x BIZ+ e SPRv2+ (NMU-35)
-        Given update parameter invioReceiptStandin on configuration keys with value true
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
         And waiting after triggered refresh job ALL
         And from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
@@ -11350,7 +11352,9 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-        Given update parameter station.stand-in on configuration keys with value 66666666666_01
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
@@ -11381,7 +11385,9 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
-        Given update parameter station.stand-in on configuration keys with value 66666666666_08
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
@@ -12443,9 +12449,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 2000041      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -13540,9 +13552,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -14638,9 +14656,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -15735,9 +15759,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values            |
             | OBJ_ID     | ('7','15131','1200001') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -16836,9 +16866,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values            |
             | OBJ_ID     | ('7','15131','1200001') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -17980,9 +18016,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values            |
             | OBJ_ID     | ('7','15131','1200001') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -19079,9 +19121,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -19674,9 +19722,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -20268,9 +20322,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -21006,9 +21066,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -21745,9 +21811,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -22488,9 +22560,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -23578,9 +23656,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -24662,9 +24746,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -25752,9 +25842,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -26846,9 +26942,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -27932,9 +28034,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values  |
             | OBJ_ID     | ('7','15131') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -29020,9 +29128,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -29625,9 +29739,15 @@ Feature: NMU flows con PA New pagamento OK
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values     |
             | OBJ_ID     | ('14','1200001') |
-        And update parameter invioReceiptStandin on configuration keys with value true
-        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And waiting after triggered refresh job ALL
         And MB generation MBD_generation with datatable vertical
             | CodiceFiscale | #creditor_institution_code#                  |
@@ -30714,7 +30834,9 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_50 @after
     Scenario: NMU flow paNEW OK con Multitoken paPrinc!=paSec standin no flag_standin_psp no flag_standin_pa flag invioReceiptStandin=true, FLOW: checkPosition con 4 nav, 4x activateV2 -> token1: paGetPayment verso ACA 5 transfer paPrincip != paSecond, token2: paGetPaymentV2 5 transfer paPrincip != paSecond, token3: paGetPayment 5 transfer paPrincip != paSecond, token4: paGetPaymentV2 verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotifyV2 con 4 token e senza il flag standin=true, spoV2+ con 4 token ->token1: 2xpaSendRTV2 verso stazione principale standin , 1 paSendRT e 1 paSendRTV2, 5x BIZ+ e SPRv2+ (NMU-36)
-        Given update parameter invioReceiptStandin on configuration keys with value true
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values        |
+            | CONFIG_KEY | invioReceiptStandin |
         And waiting after triggered refresh job ALL
         And from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
@@ -30781,7 +30903,9 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-        Given update parameter station.stand-in on configuration keys with value 66666666666_01
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
@@ -30812,7 +30936,9 @@ Feature: NMU flows con PA New pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
-        Given update parameter station.stand-in on configuration keys with value 66666666666_08
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values     |
+            | CONFIG_KEY | station.stand-in |
         And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 1200001      |
@@ -37275,7 +37401,9 @@ Feature: NMU flows con PA New pagamento OK
 
     @ALL @FLOW @FLOW_FULL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_FULL_61 @after
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2: checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotify, spoV2+ con idempotency -> spoV2+ con idempotency and resp KO con PPT_ESITO_GIA_ACQUISITO -> paSendRT+, e SPRv2+ (OLD_NMU-182)
-        Given update parameter useIdempotency on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
