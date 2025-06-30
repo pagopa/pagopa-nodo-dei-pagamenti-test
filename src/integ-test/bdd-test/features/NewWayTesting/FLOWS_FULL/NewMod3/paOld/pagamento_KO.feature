@@ -3277,7 +3277,9 @@ Feature: NM3 flows PA Old con pagamento KO
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
-        Given update parameter useIdempotency on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -3612,7 +3614,9 @@ Feature: NM3 flows PA Old con pagamento KO
         Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 15000          |
-        Given update parameter useIdempotency on configuration keys with value true
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -4813,7 +4817,9 @@ Feature: NM3 flows PA Old con pagamento KO
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 002#iuv#     |
-        Given update parameter useIdempotency on configuration keys with value false
+        And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
@@ -4852,7 +4858,9 @@ Feature: NM3 flows PA Old con pagamento KO
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
-        Given update parameter useIdempotency on configuration keys with value true
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values   |
+            | CONFIG_KEY | useIdempotency |
         And waiting after triggered refresh job ALL
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
@@ -11577,7 +11585,9 @@ Feature: NM3 flows PA Old con pagamento KO
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGKO @NM3PAOLDPAGKO_FULL_33 @after
     Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT, spo+ -> OK, spo+ with expired idempotency key -> KO with PPT_ERRORE_IDEMPOTENZA (NM3-17K)
-        Given update parameter scheduler.jobName_idempotencyCacheClean.enabled on configuration keys with value false
+        Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                                    |
+            | CONFIG_KEY | scheduler.jobName_idempotencyCacheClean.enabled |
         When  waiting after triggered refresh job ALL
         Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
@@ -11797,7 +11807,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC              |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
         And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |

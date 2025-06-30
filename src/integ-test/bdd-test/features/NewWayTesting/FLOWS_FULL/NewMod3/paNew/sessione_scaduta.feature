@@ -8,7 +8,9 @@ Feature: NM3 flows con sessione scaduta
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_FULL_1 @after
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp1 e PSP vp1: activate -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ- (NM3-6)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -21,7 +23,7 @@ Feature: NM3 flows con sessione scaduta
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -365,7 +367,9 @@ Feature: NM3 flows con sessione scaduta
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_FULL_2 @after
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp1 e PSP vp2: activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2 BIZ- (NM3-13)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -378,7 +382,7 @@ Feature: NM3 flows con sessione scaduta
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
@@ -769,7 +773,9 @@ Feature: NM3 flows con sessione scaduta
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_FULL_3 @after
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp2 e PSP vp1: activate -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ- (NM3-34)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -782,7 +788,7 @@ Feature: NM3 flows con sessione scaduta
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+        And from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
@@ -1074,7 +1080,9 @@ Feature: NM3 flows con sessione scaduta
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWSESSCAD @NM3PANEWSESSCAD_FULL_4 @after
     Scenario: NM3 flow sessione scaduta, FLOW con PA New vp2 e PSP vp2: activateV2 -> paGetPaymentV2 (scadenza sessione), mod3cancelV2 BIZ- (NM3-42)
-        Given update parameter default_durata_estensione_token_IO on configuration keys with value 1000
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                       |
+            | CONFIG_KEY | default_durata_estensione_token_IO |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
@@ -1087,7 +1095,7 @@ Feature: NM3 flows con sessione scaduta
             | paymentDescription | Pagamento di Test           |
             | fiscalCodePA       | #creditor_institution_code# |
             | companyName        | companyName                 |
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+        And from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310$iuv      | 2000           | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2

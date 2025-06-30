@@ -535,7 +535,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.esito xml check value KO in position 0
 
 
-    
+
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_9
@@ -1074,7 +1074,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.esito xml check value KO in position 0
 
 
-    
+
 
 
 
@@ -1220,7 +1220,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
 
-     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_14
+    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_14
     Scenario: NM3 flow KO, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT -> KO PPT_ERRORE_EMESSO_DA_PAA, nodoInviaRPT -> paaInviaRT ->  nodoChiediStatoRPT -> RESP KO RPT_RIFIUTATA_NODO (OLD_NM3-15H)
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber |
@@ -1436,7 +1436,9 @@ Feature: NM3 flows PA Old con attivazione fallita
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_15 @after
     Scenario: NM3 flow KO, FLOW con PA Old e PSP POSTE vp1: UPDATE verificabollettino.validity.minutes to 1 min -> verificaBollettino -> paVerificaRPT -> activate Poste -> override paaAttivaRPT -> activatePaymentNotice KO con PPT_IBAN_ACCREDITO -> nodoInviaRPT KO con PPT_SEMANTICA (OLD_NM3-15M)
-        Given update parameter verificabollettino.validity.minutes on configuration keys with value 1
+        Given update for table CONFIGURATION_KEYS with parameter config_value = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values                        |
+            | CONFIG_KEY | verificabollettino.validity.minutes |
         And update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
