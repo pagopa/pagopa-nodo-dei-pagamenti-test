@@ -16165,11 +16165,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 100          |
-    #And update parameter invioReceiptStandin on configuration keys with value true
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values        |
       | CONFIG_KEY | invioReceiptStandin |
-    #And update parameter station.stand-in on configuration keys with value 66666666666_01
     And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values     |
       | CONFIG_KEY | station.stand-in |
@@ -29728,7 +29726,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -30646,7 +30646,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -31564,7 +31566,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
@@ -32524,7 +32528,6 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    #And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                       |
       | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
@@ -34366,7 +34369,6 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    #And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                       |
       | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
@@ -37129,7 +37131,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -38061,7 +38065,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -38993,7 +38999,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -39925,7 +39933,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -40843,7 +40853,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -41762,7 +41774,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -42695,7 +42709,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -43614,7 +43630,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -44541,7 +44559,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_79 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK, spo+ -> paSendRT BIZ+ (NM3-70)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -44975,7 +44995,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_80 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con GEC: activateV2 -> paGetPaymentV2 --> getFees OK, spoV2+ -> paSendRTV2 BIZ+ (NM3-45)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -45410,7 +45432,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_81 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC: activateV2 -> paGetPaymentV2 --> getFees OK, spo+ -> paSendRTV2 BIZ+ (NM3-92)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -45848,7 +45872,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -46490,7 +46516,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -47201,7 +47229,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -47843,7 +47873,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -48554,7 +48586,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -49207,7 +49241,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_87 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2, FLOW con GEC KO: activateV2 -> paGetPaymentV2 --> getFees KO spoV2+ -> paSendRTV2 BIZ+ (NM3-46)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -49622,7 +49658,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_88 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO: activateV2 -> paGetPayment --> getFees KO spo+ -> paSendRT BIZ+ (NM3-71)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -50036,7 +50074,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_89 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO: activateV2 -> paGetPaymentV2 --> getFees KO spo+ -> paSendRTV2 BIZ+ (NM3-93)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -50457,8 +50497,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -51428,8 +51472,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -52400,8 +52448,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -53371,8 +53423,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -54342,7 +54398,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -55000,7 +55058,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -55727,7 +55787,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -56458,8 +56520,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -57445,8 +57511,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -58477,8 +58547,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -59466,9 +59540,15 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -60107,9 +60187,15 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 100          |
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -60814,9 +60900,15 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter invioReceiptStandin on configuration keys with value false
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -61292,9 +61384,15 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 100          |
-    And update parameter invioReceiptStandin on configuration keys with value false
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
-    And update parameter gec.enabled on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -61771,10 +61869,18 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -62739,10 +62845,18 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter invioReceiptStandin on configuration keys with value true
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -63708,10 +63822,18 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter invioReceiptStandin on configuration keys with value false
-    And update parameter station.stand-in on configuration keys with value 66666666666_01
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -64183,10 +64305,18 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 1200001      |
-    And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
-    And update parameter gec.enabled on configuration keys with value true
-    And update parameter invioReceiptStandin on configuration keys with value false
-    And update parameter station.stand-in on configuration keys with value 66666666666_08
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values                       |
+      | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
+    And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_08' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values     |
+      | CONFIG_KEY | station.stand-in |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount  | paymentMethod | touchPoint |
@@ -66068,7 +66198,9 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal sendPaymentOutcomeV2Body_idempotency_full initial XML sendPaymentOutcomeV2
       | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey    |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
-    And update parameter useIdempotency on configuration keys with value false
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values   |
+      | CONFIG_KEY | useIdempotency |
     And waiting after triggered refresh job ALL
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
@@ -66077,7 +66209,9 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys      | where_values                          |
       | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
       | PRIMITIVA       | activatePaymentNotice                 |
-    And update parameter useIdempotency on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values   |
+      | CONFIG_KEY | useIdempotency |
     And waiting after triggered refresh job ALL
 
 
@@ -66142,7 +66276,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_116 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO 401: activateV2 -> paGetPaymentV2 --> getFees KO spo+ -> paSendRTV2 BIZ+ (OLD_NM3-10E)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -66561,7 +66697,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_117 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO 429: activateV2 -> paGetPaymentV2 --> getFees KO spo+ -> paSendRTV2 BIZ+ (OLD_NM3-11E)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -66978,7 +67116,9 @@ Feature: NM3 flows PA New con pagamento OK
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_118 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC KO 500: activateV2 -> paGetPaymentV2 --> getFees KO spo+ -> paSendRTV2 BIZ+ (OLD_NM3-12E)
-    Given update parameter gec.enabled on configuration keys with value true
+    Given update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values |
+      | CONFIG_KEY | gec.enabled  |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_full initial XML activatePaymentNoticeV2
       | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
@@ -73351,7 +73491,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table STAZIONI with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 16631        |
-    And update parameter invioReceiptStandin on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -74308,7 +74450,9 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CANALI_NODO with parameter FLAG_STANDIN = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 14748        |
-    And update parameter invioReceiptStandin on configuration keys with value true
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values        |
+      | CONFIG_KEY | invioReceiptStandin |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
