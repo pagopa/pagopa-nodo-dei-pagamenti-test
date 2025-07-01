@@ -66154,7 +66154,7 @@ Feature: NM3 flows PA New con pagamento OK
 
 
 
-  @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_114
+  @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_114 @after
   Scenario: NM3 flow OK, FLOW: verify -> paVerify activate -> paGetPayment -> 1 record IDEMPOTENCY_CACHE activate -> update useIdempotency to false -> spoV2+ -> OK con 0 record IDEMPOTENCY_CACHE activate (OLD_NM3-123)
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
