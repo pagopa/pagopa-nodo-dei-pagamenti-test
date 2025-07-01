@@ -63828,7 +63828,7 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
-    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values        |
       | CONFIG_KEY | invioReceiptStandin |
     And update for table CONFIGURATION_KEYS with parameter config_value = '66666666666_01' on db nodo_cfg with where datatable horizontal
@@ -66209,7 +66209,7 @@ Feature: NM3 flows PA New con pagamento OK
       | where_keys      | where_values                          |
       | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
       | PRIMITIVA       | activatePaymentNotice                 |
-    And update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
+    And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values   |
       | CONFIG_KEY | useIdempotency |
     And waiting after triggered refresh job ALL
