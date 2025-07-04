@@ -2578,7 +2578,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | rpt                                   | $rptAttachment                                |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                  | outcome |
@@ -4803,7 +4805,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO  with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
@@ -7034,7 +7038,9 @@ Feature: NM3 flows PA Old con pagamento OK
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
+        Given update for table CANALI_NODO  with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 14748        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal sendPaymentOutcomeV2Body_full initial XML sendPaymentOutcomeV2
             | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
@@ -14769,10 +14775,30 @@ Feature: NM3 flows PA Old con pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
-        #POSITION_SUBJECT
-        And execution query payment_status to get value on the table POSITION_SERVICE, with the columns DEBTOR_ID under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param DEBTOR_ID at position 0 and save it under the key DEBTOR_ID
-        And checks the value DEBTOR of the record at column SUBJECT_TYPE of the table POSITION_SUBJECT retrived by the query position_subject_2 on db nodo_online under macro NewMod3
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                            | value                        |
+            | su.ID                             | NotNone                      |
+            | su.SUBJECT_TYPE                   | DEBTOR                       |
+            | su.ENTITY_UNIQUE_IDENTIFIER_TYPE  | F                            |
+            | su.ENTITY_UNIQUE_IDENTIFIER_VALUE | RCCGLD09P09H501E             |
+            | su.FULL_NAME                      | nome                         |
+            | su.STREET_NAME                    | strada                       |
+            | su.CIVIC_NUMBER                   | civico                       |
+            | su.POSTAL_CODE                    | 00186                        |
+            | su.CITY                           | Roma                         |
+            | su.STATE_PROVINCE_REGION          | RM                           |
+            | su.COUNTRY                        | IT                           |
+            | su.EMAIL                          | gesualdo.riccitelli@poste.it |
+            | su.INSERTED_TIMESTAMP             | NotNone                      |
+            | su.UPDATED_TIMESTAMP              | NotNone                      |
+            | su.INSERTED_BY                    | nodoInviaRPT                 |
+            | su.UPDATED_BY                     | nodoInviaRPT                 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SUBJECT su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys            | where_values                        |
+            | se.NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | se.PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | su.SUBJECT_TYPE       | DEBTOR                              |
+            | su.INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
 
 
 
@@ -14798,7 +14824,11 @@ Feature: NM3 flows PA Old con pagamento OK
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
-        And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And execution query to get value result_query on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN with db name nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+        And through the query result_query retrieve param paymentToken at position 0 and save it under the key paymentToken
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
         # IDEMPOTENCY_CACHE
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal

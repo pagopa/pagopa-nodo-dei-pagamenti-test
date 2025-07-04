@@ -21636,7 +21636,9 @@ Feature: NM3 flows PA Old con retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '2000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                           |
             | CONFIG_KEY | default_token_duration_validity_millis |
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
+        And update for table STAZIONI  with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values |
+            | OBJ_ID     | 16635        |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |

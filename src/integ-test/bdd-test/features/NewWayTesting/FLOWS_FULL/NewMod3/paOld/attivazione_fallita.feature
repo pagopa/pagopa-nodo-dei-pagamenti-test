@@ -1109,8 +1109,11 @@ Feature: NM3 flows PA Old con attivazione fallita
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
-        And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And execution query to get value result_query on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN with db name nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+        And through the query result_query retrieve param paymentToken at position 0 and save it under the key paymentToken
         And wait 1 seconds for expiration
         # POSITION_TRANSFER
         And verify 0 record for the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
@@ -1237,8 +1240,11 @@ Feature: NM3 flows PA Old con attivazione fallita
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
-        And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And execution query to get value result_query on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN with db name nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+        And through the query result_query retrieve param paymentToken at position 0 and save it under the key paymentToken
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | #id_station_old#                |

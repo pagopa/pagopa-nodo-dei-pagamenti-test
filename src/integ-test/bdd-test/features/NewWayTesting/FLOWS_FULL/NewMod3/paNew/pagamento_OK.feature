@@ -68634,7 +68634,9 @@ Feature: NM3 flows PA New con pagamento OK
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     And wait 10 seconds for expiration
     Then check outcome is OK of sendPaymentOutcome response
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
+    And update for table PA_STAZIONE_PA  with parameter BROADCAST = 'N' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values  |
+      | OBJ_ID     | ('1201','13') |
     And refresh job ALL triggered after 10 seconds
     And wait 1 seconds for expiration
     # POSITION_ACTIVATE

@@ -3597,28 +3597,53 @@ def stemp_impl(context, date, add_remove, minutes):
     setattr(context, 'date', date.strftime("%Y-%m-%d %H:%M:%S"))
 
 
-@step("update through the query {query_name} with date {date} under macro {macro} on db {db_name}")
-def step_impl(context, query_name, date, macro, db_name):
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+@step(u"update with date {date} for column {column_name} in table {table_name} on db {db_name} with where datatable {type_table}")
+def step_impl(context, date, column_name, table_name, db_name, type_table): 
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
 
-    date = utils.replace_context_variables(date, context)
+        assert context.table is not None, "Datatable non inserita!!!"
 
-    if date == 'Today':
-        # date = str(datetime.datetime.today())
-        date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')).strftime("%Y-%m-%d %H:%M:%S")
+        # 1. Gestione tipi di date
+        if date == 'Today':
+            date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')).strftime("%Y-%m-%d %H:%M:%S")
+        elif date == 'Yesterday':
+            date = (datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")
+        elif date == '1minuteLater':
+            date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
 
-    if date == 'Yesterday':
-        date = str(datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1))
+        # 2. Datatable → dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
 
-    if date == '1minuteLater':
-        date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(
-            minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
+        # 3. Costruzione WHERE
+        where_conditions = " AND ".join([f"{field} = '{value[0]}'" for field, value in dict_fields_values.items()])
+        upd_query = f"UPDATE table_name SET param WHERE {where_conditions}"
 
-    selected_query = utils.query_json(context, query_name, macro).replace('date', date)
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        # 4. Sostituzioni
+        upd_query = upd_query.replace("table_name", table_name)
+        upd_query = upd_query.replace("param", f"{column_name} = '{date}'")
+        upd_query = utils.replace_global_variables(upd_query, context)
+        upd_query = utils.replace_local_variables(upd_query, context)
+        upd_query = utils.replace_context_variables(upd_query, context)
 
-    exec_query = adopted_db.executeQuery(context, conn, selected_query)
-    adopted_db.closeConnection(conn)
+        print(f"UPDATE QUERY: {upd_query}")
+
+        # 5. Esegui update
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        exec_query = utils.update_query(context, conn, adopted_db, upd_query)
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        print(f"----->>>> Assertion Error: {e}")
+        raise AssertionError(str(e))
+    except Exception as e:
+        print(f"----->>>> Exception: {e}")
+        raise e
+
+
+
+
     
     
 @then("apply new restore initial configurations")
