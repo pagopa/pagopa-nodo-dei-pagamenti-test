@@ -14829,7 +14829,6 @@ Feature: NM3 flows PA Old con pagamento OK
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And through the query result_query retrieve param paymentToken at position 0 and save it under the key paymentToken
-        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
         # IDEMPOTENCY_CACHE
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                          |
