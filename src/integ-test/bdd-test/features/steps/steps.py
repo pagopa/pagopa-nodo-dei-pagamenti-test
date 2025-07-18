@@ -2419,6 +2419,113 @@ def step_impl(context):
 
     print("RT generato: ", payload)
     setattr(context, 'erAttachment', payload)
+    
+    
+@step('REND generation {filebody} with datatable {type_table}')
+def step_impl(context, filebody, type_table):
+    try:
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                current_directory = os.getcwd()
+                
+                substring_current_directory = ""
+                
+                substring_current_directory = current_directory[:-2]
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+
+        if '#date#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            payload = payload.replace('#date#', date)
+            setattr(context, 'date', date)
+
+        if '#timedate+1#' in payload:
+            date = datetime.date.today() + datetime.timedelta(hours=1)
+            date = date.strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#timedate+1#', timedate)
+            setattr(context, 'futureTimedate', timedate)
+
+        if "#timedate#" in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
+        if '#identificativoFlusso#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            identificativoFlusso = date + context.config.userdata.get(
+                "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+            payload = payload.replace(
+                '#identificativoFlusso#', identificativoFlusso)
+            setattr(context, 'identificativoFlusso', identificativoFlusso)
+
+        if '#iuv#' in payload:
+            iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
+                datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, 'iuv', iuv)
+
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+        print(payload)
+
+        print("REND generata: ", payload)
+        setattr(context, 'rendAttachment', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('REND generation')
