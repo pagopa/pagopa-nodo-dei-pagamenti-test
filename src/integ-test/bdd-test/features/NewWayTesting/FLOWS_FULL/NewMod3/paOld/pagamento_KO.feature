@@ -8132,7 +8132,7 @@ Feature: NM3 flows PA Old con pagamento KO
         And check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
         When job paInviaRt triggered after 10 seconds
-        And waiting 1 seconds for thread
+        And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                                                       |
