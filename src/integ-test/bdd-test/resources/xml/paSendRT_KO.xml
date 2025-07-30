@@ -1,0 +1,14 @@
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+        <paf:paSendRTRes>
+        <outcome>$outcome</outcome>
+        <!--Optional:-->
+            <fault>
+                <faultCode>$faultCode</faultCode>
+                <faultString>$faultString</faultString>
+                <id>$id</id>
+            </fault>
+        </paf:paSendRTRes>
+      </soapenv:Body>
+    </soapenv:Envelope>

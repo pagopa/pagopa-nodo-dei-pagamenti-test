@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+    <soapenv:Header />
+    <soapenv:Body>
+        <paf:paGetPaymentRes>
+            <delay>$delay</delay>
+        </paf:paGetPaymentRes>
+    </soapenv:Body>
+</soapenv:Envelope>

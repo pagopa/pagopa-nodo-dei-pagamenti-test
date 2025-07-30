@@ -1,0 +1,9 @@
+to install influxDB+grafana:
+https://medium.com/@knoldus/k6-results-with-influxdb-and-grafana-93b4dc381f6c:
+install influxdb vers 1.8: wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip -UseBasicParsing -OutFile influxdb-1.8.10_windows_amd64.zip
+Expand-Archive .\influxdb-1.8.10_windows_amd64.zip -DestinationPath 'C:\Program Files\InfluxData\influxdb\'
+launch ./influxd from dir of influxd.exe
+to install grafana=https://grafana.com/grafana/download?platform=windows
+in grafana create datasource setting url of influxdb (the name of database is the same that compare in k6 script)
+install k6 extension for InfluxDB v2(https://github.com/grafana/xk6-output-influxdb (devono essere installati go (con settaggio variabili d'ambiente) e xk6)): in k6 directory (the dir where main.sh is) launch this command: xk6 build --with github.com/grafana/xk6-output-influxdb
+for default grafana metrics for k6 --> on grafana GUI --> dashboard --> import --> insert in "import via garfana.com": https://grafana.com/grafana/dashboards/2587
