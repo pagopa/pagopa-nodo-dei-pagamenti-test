@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployments.integration_test.name }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    timestamp: "{{ date "20060102150405" .Release.Time }}"
+spec:
+  replicas: {{ .Values.deployments.integration_test.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployments.integration_test.name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployments.integration_test.name }}
+      annotations:
+        timestamp: "{{ date "20060102150405" .Release.Time }}"
+    spec:
+      containers:
+      - name: {{ .Values.deployments.integration_test.name }}
+        image: {{ .Values.deployments.integration_test.registry_url }}/{{ .Values.deployments.integration_test.image_name }}:{{ .Values.deployments.integration_test.image_version }}
+        imagePullPolicy: {{ .Values.deployments.integration_test.imagePullPolicy }}
+        env:
+            {{- tpl (.Values.deployments.integration_test.environment | toYaml) . | nindent 10 }}
+        ports:
+            {{- toYaml .Values.deployments.integration_test.ports | nindent 10 }} 
+        resources:
+            {{- toYaml .Values.deployments.integration_test.resources | nindent 12 }}
+          {{- if .Values.deployments.integration_test.volume_mount }}
+        volumeMounts:
+            {{- tpl (.Values.deployments.integration_test.volume_mount | toYaml) . | nindent 10 }}
+          {{- end }}
+      {{- if .Values.deployments.integration_test.image_pull_secret }}
+      imagePullSecrets: 
+      {{- toYaml  .Values.deployments.integration_test.image_pull_secret | nindent 6 }}
+      {{- end }}
+      {{- if .Values.deployments.integration_test.hostAliases }}
+      hostAliases:
+      {{- toYaml .Values.deployments.integration_test.hostAliases | nindent 6 }}
+      {{- end }}
+      {{- if .Values.deployments.integration_test.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.deployments.integration_test.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.deployments.integration_test.tolerations }}
+      tolerations:
+        {{- toYaml .Values.deployments.integration_test.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if .Values.deployments.integration_test.volumes }}
+      volumes:
+        {{- tpl (.Values.deployments.integration_test.volumes | toYaml) . | nindent 8 }}
+      {{- end }}
