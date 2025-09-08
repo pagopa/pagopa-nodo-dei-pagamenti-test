@@ -1765,14 +1765,64 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    @ALL @PRIMITIVE @NMU @company
-    Scenario: semantic check 27 (part 2)
-        Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFINNULL) scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+
+
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_28
+    Scenario: semantic check 27.A
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  | 120000         |
+        And from body with datatable vertical paGetPaymentV2_complete_metadataTransferList initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | companySec                  | companySecondary                    |
+            | transferAmount              | 10.00                               |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+            | key                         | CHIAVEOKFINNULL                            |
+            | value                       | 22                                  |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check key is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
-        And checks the value CHIAVEOKFINNULL is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-        And checks the value CHIAVEOKFINNULL is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
+        # POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                            | value                     |
+            | su.ID                             | NotNone                   |
+            | su.SUBJECT_TYPE                   | DEBTOR                    |
+            | su.ENTITY_UNIQUE_IDENTIFIER_TYPE  | G                         |
+            | su.ENTITY_UNIQUE_IDENTIFIER_VALUE | 44444444444               |
+            | su.FULL_NAME                      | NotNone                   |
+            | su.STREET_NAME                    | paGetPaymentStreet        |
+            | su.CIVIC_NUMBER                   | paGetPayment99            |
+            | su.POSTAL_CODE                    | 20155                     |
+            | su.CITY                           | paGetPaymentCity          |
+            | su.STATE_PROVINCE_REGION          | paGetPaymentState         |
+            | su.COUNTRY                        | IT                        |
+            | su.EMAIL                          | paGetPayment@test.it      |
+            | su.INSERTED_TIMESTAMP             | NotNone                   |
+            | su.UPDATED_TIMESTAMP              | NotNone                   |
+            | su.INSERTED_BY                    | activatePaymentNoticeV2   |
+            | su.UPDATED_BY                     | activatePaymentNoticeV2   |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys            | where_values                          |
+            | se.NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
+            | se.PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode   |
+            | su.SUBJECT_TYPE       | DEBTOR                                |
+            | su.INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
+        # And checks the value CHIAVEOKFINNULL is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
+        # And checks the value CHIAVEOKFINNULL is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
+    
+    
     @ALL @PRIMITIVE @NMU @company
     Scenario: semantic check 27 (part 3)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFININF) scenario executed successfully
@@ -1781,6 +1831,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
         And check metadata field not exists in activatePaymentNoticeV2 response
         And checks the value CHIAVEOKFININF is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKFININF is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
+    
+    
     @ALL @PRIMITIVE @NMU @company
     Scenario: semantic check 27 (part 4)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKINIZSUP) scenario executed successfully
@@ -1789,6 +1841,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
         And check metadata field not exists in activatePaymentNoticeV2 response
         And checks the value CHIAVEOKINIZSUP is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKINIZSUP is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
+    
+    
     @ALL @PRIMITIVE @NMU @company
     Scenario: semantic check 27 (part 5)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveminuscola) scenario executed successfully
@@ -1798,6 +1852,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
         And check metadata field not exists in activatePaymentNoticeV2 response
         And checks the value chiaveminuscola is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value chiaveminuscola is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
+   
+   
     @ALL @PRIMITIVE @NMU @company
     Scenario: semantic check 27 (part 6)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOK) scenario executed successfully
