@@ -4,801 +4,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
         Given systems up
 
 
-    Scenario: activatePaymentNoticeV2 + paGetPayment
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-            <paf:paGetPaymentRes>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>02$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-31</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-31T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>description</description>
-            <!--Optional:-->
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveok)
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>chiaveok</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>chiaveok</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFINNULL)
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOKFINNULL</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOKFINNULL</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFININF)
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOKFININF</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOKFININF</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKINIZSUP)
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOKINIZSUP</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOKINIZSUP</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveminuscola)
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>chiaveminuscola</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>chiaveminuscola</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
-    Scenario: activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOK)
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-12</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@provatest.it</e-mail>
-            </debtor>
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOK</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>CHIAVEOK</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-
     # SEM_APNV2_19
-    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_1 @company
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_1
     Scenario: semantic check 19
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -823,7 +30,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
 
 
     # SEM_APNV2_19.1
-    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_2 @company
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_2
     Scenario: semantic check 19.1
         Given update for table CONFIGURATION_KEYS with parameter config_value = 'false' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values   |
@@ -863,7 +70,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
 
 
     # SEM_APNV2_20
-    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_3 @company
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_3
     Scenario: semantic check 20
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -892,7 +99,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
 
-    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_4 @company
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_4
     Scenario: semantic check 20.A
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -921,7 +128,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
 
 
 
-    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_5 @company
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_5
     Scenario: semantic check 20.B
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
@@ -1707,23 +914,23 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_SUBJECT JOIN POSITION_SERVICE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                            | value                     |
-            | su.ID                             | NotNone                   |
-            | su.SUBJECT_TYPE                   | DEBTOR                    |
-            | su.ENTITY_UNIQUE_IDENTIFIER_TYPE  | G                         |
-            | su.ENTITY_UNIQUE_IDENTIFIER_VALUE | 44444444444               |
-            | su.FULL_NAME                      | NotNone                   |
-            | su.STREET_NAME                    | paGetPaymentStreet        |
-            | su.CIVIC_NUMBER                   | paGetPayment99            |
-            | su.POSTAL_CODE                    | 20155                     |
-            | su.CITY                           | paGetPaymentCity          |
-            | su.STATE_PROVINCE_REGION          | paGetPaymentState         |
-            | su.COUNTRY                        | IT                        |
-            | su.EMAIL                          | paGetPayment@test.it      |
-            | su.INSERTED_TIMESTAMP             | NotNone                   |
-            | su.UPDATED_TIMESTAMP              | NotNone                   |
-            | su.INSERTED_BY                    | activatePaymentNoticeV2   |
-            | su.UPDATED_BY                     | activatePaymentNoticeV2   |
+            | column                            | value                   |
+            | su.ID                             | NotNone                 |
+            | su.SUBJECT_TYPE                   | DEBTOR                  |
+            | su.ENTITY_UNIQUE_IDENTIFIER_TYPE  | G                       |
+            | su.ENTITY_UNIQUE_IDENTIFIER_VALUE | 44444444444             |
+            | su.FULL_NAME                      | NotNone                 |
+            | su.STREET_NAME                    | paGetPaymentStreet      |
+            | su.CIVIC_NUMBER                   | paGetPayment99          |
+            | su.POSTAL_CODE                    | 20155                   |
+            | su.CITY                           | paGetPaymentCity        |
+            | su.STATE_PROVINCE_REGION          | paGetPaymentState       |
+            | su.COUNTRY                        | IT                      |
+            | su.EMAIL                          | paGetPayment@test.it    |
+            | su.INSERTED_TIMESTAMP             | NotNone                 |
+            | su.UPDATED_TIMESTAMP              | NotNone                 |
+            | su.INSERTED_BY                    | activatePaymentNoticeV2 |
+            | su.UPDATED_BY                     | activatePaymentNoticeV2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SUBJECT su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID retrived by the query on db nodo_online with where datatable horizontal
             | where_keys            | where_values                          |
             | se.NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
@@ -1788,90 +995,166 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 956
             | IBAN                        | IT45R0760103200000000001016         |
             | remittanceInformation       | testPaGetPayment                    |
             | transferCategory            | paGetPaymentTest                    |
-            | key                         | CHIAVEOKFINNULL                            |
+            | key                         | CHIAVEOKFINNULL                     |
             | value                       | 22                                  |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check key is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
         # POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                            | value                     |
-            | su.ID                             | NotNone                   |
-            | su.SUBJECT_TYPE                   | DEBTOR                    |
-            | su.ENTITY_UNIQUE_IDENTIFIER_TYPE  | G                         |
-            | su.ENTITY_UNIQUE_IDENTIFIER_VALUE | 44444444444               |
-            | su.FULL_NAME                      | NotNone                   |
-            | su.STREET_NAME                    | paGetPaymentStreet        |
-            | su.CIVIC_NUMBER                   | paGetPayment99            |
-            | su.POSTAL_CODE                    | 20155                     |
-            | su.CITY                           | paGetPaymentCity          |
-            | su.STATE_PROVINCE_REGION          | paGetPaymentState         |
-            | su.COUNTRY                        | IT                        |
-            | su.EMAIL                          | paGetPayment@test.it      |
-            | su.INSERTED_TIMESTAMP             | NotNone                   |
-            | su.UPDATED_TIMESTAMP              | NotNone                   |
-            | su.INSERTED_BY                    | activatePaymentNoticeV2   |
-            | su.UPDATED_BY                     | activatePaymentNoticeV2   |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys            | where_values                          |
-            | se.NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
-            | se.PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode   |
-            | su.SUBJECT_TYPE       | DEBTOR                                |
-            | su.INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
-        # And checks the value CHIAVEOKFINNULL is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-        # And checks the value CHIAVEOKFINNULL is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    
-    
-    @ALL @PRIMITIVE @NMU @company
-    Scenario: semantic check 27 (part 3)
-        Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFININF) scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        And execution query to get value result_query on the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (pp.FK_POSITION_SERVICE=se.ID), with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys        | where_values                          |
+            | se.NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | se.PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key metadata_query
+        And from $metadata_query.key json check value CHIAVEOKFINNULL in position 0
+        And from $metadata_query.value json check value 22 in position 0
+
+
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_29
+    Scenario: semantic check 27.B
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  | 120000         |
+        And from body with datatable vertical paGetPaymentV2_complete_metadataTransferList initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | companySec                  | companySecondary                    |
+            | transferAmount              | 10.00                               |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+            | key                         | CHIAVEOKFININF                      |
+            | value                       | 22                                  |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check metadata field not exists in activatePaymentNoticeV2 response
-        And checks the value CHIAVEOKFININF is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-        And checks the value CHIAVEOKFININF is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    
-    
-    @ALL @PRIMITIVE @NMU @company
-    Scenario: semantic check 27 (part 4)
-        Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKINIZSUP) scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        # POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN
+        And execution query to get value result_query on the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (pp.FK_POSITION_SERVICE=se.ID), with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys        | where_values                          |
+            | se.NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | se.PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key metadata_query
+        And from $metadata_query.key json check value CHIAVEOKFININF in position 0
+        And from $metadata_query.value json check value 22 in position 0
+
+
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_30
+    Scenario: semantic check 27.C
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  | 120000         |
+        And from body with datatable vertical paGetPaymentV2_complete_metadataTransferList initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | companySec                  | companySecondary                    |
+            | transferAmount              | 10.00                               |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+            | key                         | CHIAVEOKINIZSUP                     |
+            | value                       | 22                                  |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check metadata field not exists in activatePaymentNoticeV2 response
-        And checks the value CHIAVEOKINIZSUP is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-        And checks the value CHIAVEOKINIZSUP is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    
-    
-    @ALL @PRIMITIVE @NMU @company
-    Scenario: semantic check 27 (part 5)
-        Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveminuscola) scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        # POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN
+        And execution query to get value result_query on the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (pp.FK_POSITION_SERVICE=se.ID), with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys        | where_values                          |
+            | se.NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | se.PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key metadata_query
+        And from $metadata_query.key json check value CHIAVEOKINIZSUP in position 0
+        And from $metadata_query.value json check value 22 in position 0
+
+
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_31
+    Scenario: semantic check 27.D
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  | 120000         |
+        And from body with datatable vertical paGetPaymentV2_complete_metadataTransferList initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | companySec                  | companySecondary                    |
+            | transferAmount              | 10.00                               |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+            | key                         | chiaveminuscola                     |
+            | value                       | 22                                  |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 5 seconds for expiration
         And check metadata field not exists in activatePaymentNoticeV2 response
-        And checks the value chiaveminuscola is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-        And checks the value chiaveminuscola is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-   
-   
-    @ALL @PRIMITIVE @NMU @company
-    Scenario: semantic check 27 (part 6)
-        Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOK) scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        # POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN
+        And execution query to get value result_query on the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (pp.FK_POSITION_SERVICE=se.ID), with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys        | where_values                          |
+            | se.NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | se.PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key metadata_query
+        And from $metadata_query.key json check value chiaveminuscola in position 0
+        And from $metadata_query.value json check value 22 in position 0
+
+
+
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SEM_NEW @NMU_ACTV2_SEM_NEW_32
+    Scenario: semantic check 27.E
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  | 120000         |
+        And from body with datatable vertical paGetPaymentV2_complete_metadataTransferList initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | companySec                  | companySecondary                    |
+            | transferAmount              | 10.00                               |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+            | key                         | CHIAVEOK                            |
+            | value                       | 22                                  |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check key is CHIAVEOK of activatePaymentNoticeV2 response
-        And checks the value CHIAVEOK is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-        And checks the value CHIAVEOK is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-
-    # SEM_APNV2_28
-    @ALL @PRIMITIVE @NMU @company
-    Scenario: semantic check 28
-        Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 5 seconds for expiration
-        And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB_1
-        And execution query select_activatev2 to get value on the table IDEMPOTENCY_CACHE, with the columns RESPONSE under macro NewMod1 with db name nodo_online
-        And by the query select_activatev2 retrieve xml_no_decode RESPONSE at position 0 and save it under the key XML_DB_2
-        And check value $XML_DB_1 is equal to value $XML_DB_2
+        # POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN
+        And execution query to get value result_query on the table POSITION_SERVICE se JOIN POSITION_PAYMENT_PLAN pp ON (pp.FK_POSITION_SERVICE=se.ID), with the columns METADATA with db name nodo_online with where datatable horizontal
+            | where_keys        | where_values                          |
+            | se.NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | se.PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key metadata_query
+        And from $metadata_query.key json check value CHIAVEOK in position 0
+        And from $metadata_query.value json check value 22 in position 0
