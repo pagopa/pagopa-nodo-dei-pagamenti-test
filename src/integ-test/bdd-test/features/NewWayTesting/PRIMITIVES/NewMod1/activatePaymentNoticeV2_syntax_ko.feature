@@ -34,7 +34,7 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request 958
 
 
 
-    @ALL @PRIMITIVE @NMU 
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SYN_KO @NMU_ACTV2_SYN_KO_2 
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
