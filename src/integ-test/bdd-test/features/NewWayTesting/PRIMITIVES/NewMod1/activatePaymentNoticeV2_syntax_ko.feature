@@ -4,37 +4,7 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request 958
         Given systems up
 
 
-    @newfix
-    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
-            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
-            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 6000           |
-        And from body with datatable vertical paGetPayment_full initial XML paGetPayment
-            | outcome                     | OK                                  |
-            | creditorReferenceId         | 02$iuv                              |
-            | paymentAmount               | 10.00                               |
-            | dueDate                     | 2021-12-31                          |
-            | description                 | pagamentoTest                       |
-            | entityUniqueIdentifierType  | G                                   |
-            | entityUniqueIdentifierValue | 77777777777                         |
-            | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 10.00                               |
-            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
-            | IBAN                        | IT45R0760103200000000001016         |
-            | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory            | paGetPaymentTest                    |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        And <attribute> set <value> for <elem> in activatePaymentNoticeV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNoticeV2 response
-        Examples:
-            | elem             | attribute     | value                                     | soapUI test  |
-            | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNV2_01 |
-
-
-
-    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SYN_KO @NMU_ACTV2_SYN_KO_2 
+    @ALL @PRIMITIVE @NMU @NMU_ACTV2_SYN_KO @NMU_ACTV2_SYN_KO_1
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
