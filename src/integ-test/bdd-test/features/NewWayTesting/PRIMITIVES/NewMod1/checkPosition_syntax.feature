@@ -2,21 +2,14 @@ Feature: syntax checks for checkPosition 961
 
     Background:
         Given systems up
-        And initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "302#iuv#"
-                    }
-                ]
-            }
-            """
-    @ALL @PRIMITIVE @NMU
+
+    @ALL @PRIMITIVE @NMU @NMU_CHECK_POS_SYN @NMU_CHECK_POS_SYN_1
     # KO tests
     Scenario Outline: KO tests
-        Given <elem> with <value> in checkPosition
+        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode                  | noticeNumber |
+            | #creditor_institution_code# | 302#iuv#     |
+        And <elem> with <value> in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
