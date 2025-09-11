@@ -150,93 +150,48 @@ Feature: semantic checks for checkPosition outcome OK 960
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    @ALL @PRIMITIVE @NMU
+    @ALL @PRIMITIVE @NMU @NMU_CHECK_POS_SEM @NMU_CHECK_POS_SEM_1
     # SEM_CPO_01
     Scenario: Code 200 OK 1
-        Given the checkPosition scenario executed successfully
+        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode                  | noticeNumber |
+            | #creditor_institution_code# | 302#iuv#     |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
 
-    # SEM_CPO_02
-    Scenario: Code 200 OK 2 (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-        And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
-    @ALL @PRIMITIVE @NMU
-    Scenario: Code 200 OK 2 (part 2)
-        Given the Code 200 OK 2 (part 1) scenario executed successfully
-        And the checkPosition scenario executed successfully
-        And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in checkPosition
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is OK of checkPosition response
 
-    # SEM_CPO_03
-    Scenario: Code 200 KO (part 1)
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-
-    Scenario: Code 200 KO (part 2)
-        Given the Code 200 KO (part 1) scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 302$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 02$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request1
-        And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
-
-    Scenario: Code 200 KO (part 3)
-        Given the Code 200 KO (part 2) scenario executed successfully
-        And random iuv in context
-        And noticeNumber with 302$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 02$iuv in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request2
-        And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
-    @ALL @PRIMITIVE @NMU
-    Scenario: Code 200 KO (part 4)
-        Given the Code 200 KO (part 3) scenario executed successfully
-        And the checkPosition with 3 activated notice numbers scenario executed successfully
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is KO of checkPosition response
-        And wait 15 seconds for expiration
-        And execution query checkposition_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query checkposition_resp convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE is containing value <description>PAYING</description>
-        And checking value $XML_RE is containing value <description>PAID</description>
-        And checking value $XML_RE is containing value <description>NOTIFIED</description>
-
-    @ALL @PRIMITIVE @NMU 
+    @ALL @PRIMITIVE @NMU @NMU_CHECK_POS_SEM @NMU_CHECK_POS_SEM_2
     Scenario: checkPosition with station version 1 [PG-37]
-        Given the checkPosition scenario executed successfully
-        And noticeNumber with 002$iuv in checkPosition
+        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode                  | noticeNumber |
+            | #creditor_institution_code# | 002#iuv#     |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
 
-    @ALL @PRIMITIVE @NMU
+
+    @ALL @PRIMITIVE @NMU @NMU_CHECK_POS_SEM @NMU_CHECK_POS_SEM_3
     Scenario: Wrong configuration 1
-        Given the checkPosition scenario executed successfully
-        And fiscalCode with 12345678902 in checkPosition
+        Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode  | noticeNumber |
+            | 12345678902 | 302#iuv#     |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Wrong configuration of checkPosition response
 
-    @ALL @PRIMITIVE @NMU
+
+    @ALL @PRIMITIVE @NMU @NMU_CHECK_POS_SEM @NMU_CHECK_POS_SEM_4
     # SEM_CPO_06
     Scenario: Wrong configuration 2
-        Given the checkPosition with 3 notice numbers scenario executed successfully
+        Given from body with datatable vertical checkPositionBody_3element initial JSON checkPosition
+            | fiscalCode1   | #creditor_institution_code# |
+            | fiscalCode2   | #creditor_institution_code# |
+            | fiscalCode3   | #creditor_institution_code# |
+            | noticeNumber1 | 311123456789012345          |
+            | noticeNumber2 | 002123456789012345          |
+            | noticeNumber3 | 310123456789012345          |
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
