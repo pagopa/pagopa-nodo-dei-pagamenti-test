@@ -3,27 +3,7 @@ Feature: semantic checks for closePaymentV2 962
     Background:
         Given systems up
 
-    Scenario: closePaymentV2
-        Given initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_versione_primitive_2#",
-                "paymentMethod": "TPAY",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "key": "#psp_transaction_id#"
-                }
-            }
-            """
+
     @ALL @PRIMITIVE @NMU @NMU_CLOSE_SEM @NMU_CLOSE_SEM_1
     # paymentToken unknown [SEM_CP_01]
     Scenario: Check unknown paymentToken
