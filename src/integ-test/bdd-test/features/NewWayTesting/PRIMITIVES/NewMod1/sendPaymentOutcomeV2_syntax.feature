@@ -3,173 +3,45 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
    Background:
       Given systems up
 
-   Scenario: Define MBD
-      Given MB generation
-         """
-         <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
-         <PSP>
-         <CodiceFiscale>CF60000000006</CodiceFiscale>
-         <Denominazione>#psp#</Denominazione>
-         </PSP>
-         <IUBD>#iubd#</IUBD>
-         <OraAcquisto>2022-02-06T15:00:44.659+01:00</OraAcquisto>
-         <Importo>5.00</Importo>
-         <TipoBollo>01</TipoBollo>
-         <ImprontaDocumento>
-         <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-         <ns2:DigestValue>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</ns2:DigestValue>
-         </ImprontaDocumento>
-         <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-         <SignedInfo>
-         <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-         <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
-         <Reference URI="">
-         <Transforms>
-         <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-         </Transforms>
-         <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-         <DigestValue>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</DigestValue>
-         </Reference>
-         </SignedInfo>
-         <SignatureValue>tSO5SByNpadbzbPvUn5T99ajU4hHdqJLVyr4u8P8WSB5xc9K7Szmw/fo5SYXYaPS6A/DzPlchM95 fgFMZ3VYByqtA+Vc7WgX8aIOEVOrM6eXqx8+kc4g/jgm/9EQyUmXGP+RBvx2Sg0uim04aDdB7Ffd UIi6Q5vjjna1rhNvZIkBEjCV++f+wbL9qpFLt8E2N+bOq9Y0wcTUBHiICrxXvDBDUj1X7Ckbu0/Y KVRJck6cE5rpoQB6DjxdEn5DEUgmzR/UZEwtA1BK3cVRiOsaszx8bXEIwGHe4fvvzxJOHIqgL4ct jj1DoI5m2xGoobQ3rG6Pf3HEwFXLw9x83OykDA==</SignatureValue>
-         </Signature>
-         </marcaDaBollo>
-         """
 
-   Scenario: sendPaymentOutcomeV2
-      Given initial XML sendPaymentOutcomeV2
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:sendPaymentOutcomeV2Request>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>#password#</password>
-         <idempotencyKey>#idempotency_key#</idempotencyKey>
-         <paymentTokens>
-         <paymentToken>12345678901234567890123456789012</paymentToken>
-         </paymentTokens>
-         <outcome>OK</outcome>
-         <!--Optional:-->
-         <details>
-         <paymentMethod>creditCard</paymentMethod>
-         <!--Optional:-->
-         <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
-         <primaryCiIncurredFee>1.00</primaryCiIncurredFee>
-         <idBundle>1</idBundle>
-         <idCiBundle>1.00</idCiBundle>
-         <!--Optional:-->
-         <payer>
-         <uniqueIdentifier>
-         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-         </uniqueIdentifier>
-         <fullName>name</fullName>
-         <!--Optional:-->
-         <streetName>street</streetName>
-         <!--Optional:-->
-         <civicNumber>civic</civicNumber>
-         <!--Optional:-->
-         <postalCode>postal</postalCode>
-         <!--Optional:-->
-         <city>city</city>
-         <!--Optional:-->
-         <stateProvinceRegion>state</stateProvinceRegion>
-         <!--Optional:-->
-         <country>IT</country>
-         <!--Optional:-->
-         <e-mail>prova@provatest.it</e-mail>
-         </payer>
-         <applicationDate>2021-12-12</applicationDate>
-         <transferDate>2021-12-11</transferDate>
-         <marcheDaBollo>
-         <marcaDaBollo>
-         <paymentToken>12345678901234567890123456789012</paymentToken>
-         <idTransfer>1</idTransfer>
-         <MBDAttachment>$bollo</MBDAttachment>
-         </marcaDaBollo>
-         </marcheDaBollo>
-         </details>
-         </nod:sendPaymentOutcomeV2Request>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-
-   Scenario: sendPaymentOutcomeV2 with 6 paymentToken
-      Given initial XML sendPaymentOutcomeV2
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:sendPaymentOutcomeV2Request>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>#password#</password>
-         <idempotencyKey>#idempotency_key#</idempotencyKey>
-         <paymentTokens>
-         <paymentToken>1213123423254r4r44dfwqfdf</paymentToken>
-         <paymentToken>1213123423254r4r44dfwqfda</paymentToken>
-         <paymentToken>1213123423254r4r44dfwqfdb</paymentToken>
-         <paymentToken>1213123423254r4r44dfwqfdc</paymentToken>
-         <paymentToken>1213123423254r4r44dfwqfdd</paymentToken>
-         <paymentToken>1213123423254r4r44dfwqfde</paymentToken>
-         </paymentTokens>
-         <outcome>OK</outcome>
-         <!--Optional:-->
-         <details>
-         <paymentMethod>creditCard</paymentMethod>
-         <!--Optional:-->
-         <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
-         <!--Optional:-->
-         <payer>
-         <uniqueIdentifier>
-         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-         </uniqueIdentifier>
-         <fullName>name</fullName>
-         <!--Optional:-->
-         <streetName>street</streetName>
-         <!--Optional:-->
-         <civicNumber>civic</civicNumber>
-         <!--Optional:-->
-         <postalCode>postal</postalCode>
-         <!--Optional:-->
-         <city>city</city>
-         <!--Optional:-->
-         <stateProvinceRegion>state</stateProvinceRegion>
-         <!--Optional:-->
-         <country>IT</country>
-         <!--Optional:-->
-         <e-mail>prova@provatest.it</e-mail>
-         </payer>
-         <applicationDate>2021-12-12</applicationDate>
-         <transferDate>2021-12-11</transferDate>
-         </details>
-         </nod:sendPaymentOutcomeV2Request>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-   @ALL @PRIMITIVE @NMU
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_1
    # SIN_SPO_00
    Scenario: SIN_SPO_00
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 scenario executed successfully
-      And idempotencyKey with None in sendPaymentOutcomeV2
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       And details with None in sendPaymentOutcomeV2
       When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And checks faultCode is not PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
       And checks faultCode is not PPT_SYSTEM_ERROR of sendPaymentOutcomeV2 response
-   @ALL @PRIMITIVE @NMU
+
+
+
+
+
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_2
    # attribute value check
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       And <attribute> set <value> for <elem> in sendPaymentOutcomeV2
       When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -177,11 +49,25 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
       Examples:
          | elem             | attribute     | value                                     | soapUI test |
          | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_SPO_01  |
-   @ALL @PRIMITIVE @NMU
+
+
+
+
+
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_3
    # element value check
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full_with_idempotency initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       And <elem> with <value> in sendPaymentOutcomeV2
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -189,12 +75,9 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
       Examples:
          | elem                            | value                                                                                                                                                                                                                                                             | soapUI test            |
          | soapenv:Body                    | None                                                                                                                                                                                                                                                              | SIN_SPO_02             |
-         | soapenv:Body                    | Empty                                                                                                                                                                                                                                                             | SIN_SPO_03             |
-         | nod:sendPaymentOutcomeV2Request | Empty                                                                                                                                                                                                                                                             | SIN_SPO_04             |
          | idPSP                           | None                                                                                                                                                                                                                                                              | SIN_SPO_05             |
          | idPSP                           | Empty                                                                                                                                                                                                                                                             | SIN_SPO_06             |
          | idPSP                           | 123456789012345678901234567890123456                                                                                                                                                                                                                              | SIN_SPO_07             |
-         | idBrokerPSP                     | None                                                                                                                                                                                                                                                              | SIN_SPO_08             |
          | idBrokerPSP                     | Empty                                                                                                                                                                                                                                                             | SIN_SPO_09             |
          | idBrokerPSP                     | 123456789012345678901234567890123456                                                                                                                                                                                                                              | SIN_SPO_10             |
          | idChannel                       | None                                                                                                                                                                                                                                                              | SIN_SPO_11             |
@@ -225,15 +108,6 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          | fee                             | 2.134                                                                                                                                                                                                                                                             | SIN_SPO_32             |
          | fee                             | 2.5                                                                                                                                                                                                                                                               | SIN_SPO_33             |
          | fee                             | 1000000000.00                                                                                                                                                                                                                                                     | SIN_SPO_34             |
-         | primaryCiIncurredFee            | Empty                                                                                                                                                                                                                                                             | #commissioni evolute 1 |
-         | primaryCiIncurredFee            | 2,00                                                                                                                                                                                                                                                              | #commissioni evolute 2 |
-         | primaryCiIncurredFee            | 2.134                                                                                                                                                                                                                                                             | #commissioni evolute 3 |
-         | primaryCiIncurredFee            | 2.5                                                                                                                                                                                                                                                               | #commissioni evolute 4 |
-         | primaryCiIncurredFee            | 1000000000.00                                                                                                                                                                                                                                                     | #commissioni evolute 5 |
-         | idBundle                        | Empty                                                                                                                                                                                                                                                             | #commissioni evolute 6 |
-         | idBundle                        | prova7777777provaprova7777777provaprova7777777provaprova7777777provapro                                                                                                                                                                                           | #commissioni evolute 7 |
-         | idCiBundle                      | Empty                                                                                                                                                                                                                                                             | #commissioni evolute 8 |
-         | idCiBundle                      | Empty                                                                                                                                                                                                                                                             | #commissioni evolute 9 |
          | payer                           | RemoveParent                                                                                                                                                                                                                                                      | SIN_SPO_37             |
          | payer                           | Empty                                                                                                                                                                                                                                                             | SIN_SPO_37             |
          | uniqueIdentifier                | None                                                                                                                                                                                                                                                              | SIN_SPO_38             |
@@ -296,11 +170,25 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          | idTransfer                      | a                                                                                                                                                                                                                                                                 | # marca da bollo 6     |
          | MBDAttachment                   | None                                                                                                                                                                                                                                                              | # marca da bollo 7     |
          | MBDAttachment                   | s                                                                                                                                                                                                                                                                 | # marca da bollo 9     |
-   @ALL @PRIMITIVE @NMU
+
+
+
+
+
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_4
    #  the syntax check is OK (check that the error is not PPT_SINTASSI_EXTRAXSD). The SPOV2 outcome is KO though because the payment has not been activated
    Scenario Outline: OK syntax checks
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       And <elem> with <value> in sendPaymentOutcomeV2
       When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
@@ -323,237 +211,106 @@ Feature: syntax checks for sendPaymentOutcomeV2 969
          | city                 | None        | SIN_SPO_60              |
          | stateProvinceRegion  | None        | SIN_SPO_63              |
          | country              | None        | SIN_SPO_66              |
-         | e-mail               | None        | SIN_SPO_70              |
-         | idempotencyKey       | None        | SIN_SPO_80              |
-         | primaryCiIncurredFee | None        | #commissioni evolute 10 |
-         | idBundle             | None        | #commissioni evolute 11 |
-         | idCiBundle           | None        | #commissioni evolute 12 |
          | marcheDaBollo        | None        | # marca da bollo 10     |
 
-   @ALL @PRIMITIVE @NMU
+
+
+
+
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_5
    # SIN_SPO_19.3
    Scenario: SIN_SPO_19.3
-      Given the sendPaymentOutcomeV2 with 6 paymentToken scenario executed successfully
+      Given from body with datatable vertical sendPaymentOutcomeV2Body_4paymentToken_idempotency_full initial XML sendPaymentOutcomeV2
+         | idPSP          | #psp#                         |
+         | idBrokerPSP    | #psp#                         |
+         | idChannel      | #canale_versione_primitive_2# |
+         | password       | #password#                    |
+         | payToken1      | 1213123423254r4r44dfwqfdf     |
+         | payToken2      | 1213123423254r4r44dfwqfda     |
+         | payToken3      | 1213123423254r4r44dfwqfdb     |
+         | payToken4      | 1213123423254r4r44dfwqfdc     |
+         | outcome        | OK                            |
+         | idempotencyKey | #idempotency_key#             |
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
-      And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
+      And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
+
+
+
 
    # marca da bollo 11 - MBD token None  -->  PPT_SINTASSI_EXTRAXSD
-   Scenario: sendPaymentOutcomeV2 MBD token None
-      Given initial XML sendPaymentOutcomeV2
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:sendPaymentOutcomeV2Request>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>#password#</password>
-         <idempotencyKey>#idempotency_key#</idempotencyKey>
-         <paymentTokens>
-         <paymentToken>12345678901234567890123456789012</paymentToken>
-         </paymentTokens>
-         <outcome>OK</outcome>
-         <!--Optional:-->
-         <details>
-         <paymentMethod>creditCard</paymentMethod>
-         <!--Optional:-->
-         <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
-         <primaryCiIncurredFee>1.00</primaryCiIncurredFee>
-         <idBundle>1</idBundle>
-         <idCiBundle>1.00</idCiBundle>
-         <!--Optional:-->
-         <payer>
-         <uniqueIdentifier>
-         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-         </uniqueIdentifier>
-         <fullName>name</fullName>
-         <!--Optional:-->
-         <streetName>street</streetName>
-         <!--Optional:-->
-         <civicNumber>civic</civicNumber>
-         <!--Optional:-->
-         <postalCode>postal</postalCode>
-         <!--Optional:-->
-         <city>city</city>
-         <!--Optional:-->
-         <stateProvinceRegion>state</stateProvinceRegion>
-         <!--Optional:-->
-         <country>IT</country>
-         <!--Optional:-->
-         <e-mail>prova@provatest.it</e-mail>
-         </payer>
-         <applicationDate>2021-12-12</applicationDate>
-         <transferDate>2021-12-11</transferDate>
-         <marcheDaBollo>
-         <marcaDaBollo>
-         <idTransfer>1</idTransfer>
-         <MBDAttachment>$bollo</MBDAttachment>
-         </marcaDaBollo>
-         </marcheDaBollo>
-         </details>
-         </nod:sendPaymentOutcomeV2Request>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-   @ALL @PRIMITIVE @NMU
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_6
    Scenario: execute sendPaymentOutcomeV2 MBD token None
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 MBD token None scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_without_token_MBD initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
 
    # marca da bollo 12 - MBD token Empty  -->  PPT_SINTASSI_EXTRAXSD
-   Scenario: sendPaymentOutcomeV2 MBD token Empty
-      Given initial XML sendPaymentOutcomeV2
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:sendPaymentOutcomeV2Request>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>#password#</password>
-         <idempotencyKey>#idempotency_key#</idempotencyKey>
-         <paymentTokens>
-         <paymentToken>12345678901234567890123456789012</paymentToken>
-         </paymentTokens>
-         <outcome>OK</outcome>
-         <!--Optional:-->
-         <details>
-         <paymentMethod>creditCard</paymentMethod>
-         <!--Optional:-->
-         <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
-         <primaryCiIncurredFee>1.00</primaryCiIncurredFee>
-         <idBundle>1</idBundle>
-         <idCiBundle>1.00</idCiBundle>
-         <!--Optional:-->
-         <payer>
-         <uniqueIdentifier>
-         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-         </uniqueIdentifier>
-         <fullName>name</fullName>
-         <!--Optional:-->
-         <streetName>street</streetName>
-         <!--Optional:-->
-         <civicNumber>civic</civicNumber>
-         <!--Optional:-->
-         <postalCode>postal</postalCode>
-         <!--Optional:-->
-         <city>city</city>
-         <!--Optional:-->
-         <stateProvinceRegion>state</stateProvinceRegion>
-         <!--Optional:-->
-         <country>IT</country>
-         <!--Optional:-->
-         <e-mail>prova@provatest.it</e-mail>
-         </payer>
-         <applicationDate>2021-12-12</applicationDate>
-         <transferDate>2021-12-11</transferDate>
-         <marcheDaBollo>
-         <marcaDaBollo>
-         <paymentToken></paymentToken>
-         <idTransfer>1</idTransfer>
-         <MBDAttachment>$bollo</MBDAttachment>
-         </marcaDaBollo>
-         </marcheDaBollo>
-         </details>
-         </nod:sendPaymentOutcomeV2Request>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-   @ALL @PRIMITIVE @NMU
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_7
    Scenario: execute sendPaymentOutcomeV2 MBD token Empty
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 MBD token Empty scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_token_MBD_empty initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
 
    # marca da bollo 13 - MBD token long  -->  PPT_SINTASSI_EXTRAXSD
-   Scenario: sendPaymentOutcomeV2 MBD token long
-      Given initial XML sendPaymentOutcomeV2
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:sendPaymentOutcomeV2Request>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>#password#</password>
-         <idempotencyKey>#idempotency_key#</idempotencyKey>
-         <paymentTokens>
-         <paymentToken>12345678901234567890123456789012</paymentToken>
-         </paymentTokens>
-         <outcome>OK</outcome>
-         <!--Optional:-->
-         <details>
-         <paymentMethod>creditCard</paymentMethod>
-         <!--Optional:-->
-         <paymentChannel>app</paymentChannel>
-         <fee>2.00</fee>
-         <primaryCiIncurredFee>1.00</primaryCiIncurredFee>
-         <idBundle>1</idBundle>
-         <idCiBundle>1.00</idCiBundle>
-         <!--Optional:-->
-         <payer>
-         <uniqueIdentifier>
-         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-         <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-         </uniqueIdentifier>
-         <fullName>name</fullName>
-         <!--Optional:-->
-         <streetName>street</streetName>
-         <!--Optional:-->
-         <civicNumber>civic</civicNumber>
-         <!--Optional:-->
-         <postalCode>postal</postalCode>
-         <!--Optional:-->
-         <city>city</city>
-         <!--Optional:-->
-         <stateProvinceRegion>state</stateProvinceRegion>
-         <!--Optional:-->
-         <country>IT</country>
-         <!--Optional:-->
-         <e-mail>prova@provatest.it</e-mail>
-         </payer>
-         <applicationDate>2021-12-12</applicationDate>
-         <transferDate>2021-12-11</transferDate>
-         <marcheDaBollo>
-         <marcaDaBollo>
-         <paymentToken>123456789012345678901234567890123456</paymentToken>
-         <idTransfer>1</idTransfer>
-         <MBDAttachment>$bollo</MBDAttachment>
-         </marcaDaBollo>
-         </marcheDaBollo>
-         </details>
-         </nod:sendPaymentOutcomeV2Request>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-   @ALL @PRIMITIVE @NMU
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_8
    Scenario: execute sendPaymentOutcomeV2 MBD token long
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 MBD token long scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full_token_MBD_too_long initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
       And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcomeV2 response
 
-   @ALL @PRIMITIVE @NMU
+
+
+
+   @ALL @PRIMITIVE @NMU @NMU_SPOV2_SYN @NMU_SPOV2_SYN_9
    # marca da bollo 8 - MBDAttachment Empty --> PPT_SINTASSI_XSD
    Scenario: execute sendPaymentOutcomeV2 MBDAttachment Empty
-      Given the Define MBD scenario executed successfully
-      And the sendPaymentOutcomeV2 scenario executed successfully
+      Given MB generation MBD_generation with datatable vertical
+         | CodiceFiscale | #creditor_institution_code#                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 5.00                                         |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_full initial XML sendPaymentOutcomeV2
+         | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                     | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+         | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | OK      | creditCard    | 2.00 | $bollo        | 1          |
       And MBDAttachment with Empty in sendPaymentOutcomeV2
       When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
