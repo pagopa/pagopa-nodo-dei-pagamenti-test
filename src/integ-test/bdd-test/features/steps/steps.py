@@ -865,9 +865,14 @@ def step_impl(context, number, pa, notice_number):
 @given('MB generation {filebody} with datatable {type_table}')
 def step_impl(context, filebody, type_table):
     try:
+        to_change = False
+
         assert context.table is not None, f"Datatable non inserita!!!"
         # Legge la datatable per le where conditions e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
+        
+        if "to_change" in dict_fields_values:
+            to_change = True
 
         file_path = ''
         user_profile = None
@@ -921,11 +926,17 @@ def step_impl(context, filebody, type_table):
             setattr(context, 'iubd', iubd)
         print(">>>>>>>>>>>>", payload)
 
-        payload_b = bytes(payload, 'UTF-8')
-        payload_uni = b64.b64encode(payload_b)
-        payload = f"{payload_uni}".split("'")[1]
+        if to_change:
+            print("payload change after")
+            setattr(context, 'bollo', payload)
+        else:
+            print("payload change now")
 
-        setattr(context, 'bollo', payload)
+            payload_b = bytes(payload, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            setattr(context, 'bollo', payload)
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
@@ -1336,15 +1347,30 @@ def step_impl(context, type, tag, value, primitive):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
-    
-    # use - to skip
-    if elem != "-":
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_context_variables(value, context)
-        value = utils.replace_global_variables(value, context)
-        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-        setattr(context, action, xml)
+    try:
+        # use - to skip
+        if elem != "-":
+            value = utils.replace_local_variables(value, context)
+            value = utils.replace_context_variables(value, context)
+            value = utils.replace_global_variables(value, context)
+            xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
 
+            if action == "bollo":
+                xml_b = bytes(xml, 'UTF-8')
+                xml_uni = b64.b64encode(xml_b)
+                xml = f"{xml_uni}".split("'")[1]
+
+            setattr(context, action, xml)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 @given('replace {old_tag} tag in {action} with {new_tag}')
 def step_impl(context, old_tag, new_tag, action):
