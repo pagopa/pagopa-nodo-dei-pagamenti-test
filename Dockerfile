@@ -40,7 +40,7 @@ ARG ARG_TAGS
 ARG ARG_FOLDER
 ENV tags=$ARG_TAGS
 ENV folder=$ARG_FOLDER
-ENV file_config=src/integ-test/bdd-test/resources/config_sit.json
+ENV file_config=src/integ-test/bdd-test/resources/config_sit_postgres.json
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 

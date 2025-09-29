@@ -112,7 +112,7 @@ deployments:
         
         environment:
           - name: file_config
-            value: src/integ-test/bdd-test/resources/config_sit.json
+            value: src/integ-test/bdd-test/resources/config_sit_postgres.json
           - name: NODO_URL
             value: https://api.dev.platform.pagopa.it/nodo
           - name: db_cfg_host_sit
