@@ -581,6 +581,10 @@ def step_impl(context, number, filebody, type_table):
             payload = payload.replace(f'#ccp{number}#', ccp)
             setattr(context, f"{number}ccp", ccp)
 
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
 
         payload = utils.replace_global_variables(payload, context)
 
