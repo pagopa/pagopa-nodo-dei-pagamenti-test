@@ -585,6 +585,9 @@ def step_impl(context, number, filebody, type_table):
             payload = payload.replace('#timedate#', timedate)
             setattr(context, 'timedate', timedate)
 
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
 
         payload = utils.replace_global_variables(payload, context)
 
