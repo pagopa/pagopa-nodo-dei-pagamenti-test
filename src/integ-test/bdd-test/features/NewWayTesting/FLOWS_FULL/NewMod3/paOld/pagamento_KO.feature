@@ -10429,8 +10429,8 @@ Feature: NM3 flows PA Old con pagamento KO
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
         Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                    | password   | idempotencyKey                     | paymentToken                                | outcome |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $sendPaymentOutcome.idempotencyKey | $activatePaymentNoticeResponse.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                     | paymentToken                                | outcome |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $sendPaymentOutcome.idempotencyKey | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response

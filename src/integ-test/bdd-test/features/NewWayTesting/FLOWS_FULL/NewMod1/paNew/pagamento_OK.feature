@@ -18061,7 +18061,7 @@ Feature: NMU flows con PA New pagamento OK
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
             | idPSP                 | #psp#                                         |
-            | idBrokerPSP           | #psp#                                         |
+            | idBrokerPSP           | #id_broker_psp#                               |
             | idChannel             | #canale_versione_primitive_2#                 |
             | paymentMethod         | CP                                            |
             | transactionId         | #transaction_id#                              |
@@ -18083,8 +18083,8 @@ Feature: NMU flows con PA New pagamento OK
         And check outcome is OK of v2/closepayment response
         And wait 1 seconds for expiration
         Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP | idChannel                     | password   | paymentToken                                  | outcome |
-            | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
