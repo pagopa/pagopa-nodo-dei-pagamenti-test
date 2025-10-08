@@ -1,28 +1,16 @@
- Feature: Syntax checks for verificaBollettino - OK 1399
- 
- Background:
-    Given systems up
-    And initial XML verificaBollettino
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <nod:verificaBollettinoReq>
-               <idPSP>POSTE3</idPSP>
-               <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-               <idChannel>POSTE3</idChannel>
-               <password>pwdpwdpwd</password>
-               <ccPost>#ccPoste#</ccPost>
-               <noticeNumber>#notice_number#</noticeNumber>
-            </nod:verificaBollettinoReq>
-         </soapenv:Body>
-      </soapenv:Envelope>
-      """
- 
- @ALL @PRIMITIVE @NM3    
- Scenario: SIN_VB_00
-    When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
-    Then check outcome is OK of verificaBollettino response
-      
-      
-      
+Feature: Syntax checks for verificaBollettino - OK 1399
+
+   Background:
+      Given systems up
+
+
+   @ALL @PRIMITIVE @NM3 @NM3VBLSNTKO @NM3VBLSNTKO_1
+   Scenario: SIN_VB_00
+      Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+         | idPSP  | idBrokerPSP | idChannel | password   | ccPost    | noticeNumber |
+         | POSTE3 | BANCOPOSTA  | POSTE3    | #password# | #ccPoste# | 302#iuv#     |
+      When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+      Then check outcome is OK of verificaBollettino response
+
+
+
