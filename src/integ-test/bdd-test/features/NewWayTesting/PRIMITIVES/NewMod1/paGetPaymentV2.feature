@@ -3,1180 +3,13 @@ Feature: response tests for paGetPaymentV2 967
     Background:
         Given systems up
 
-    Scenario: activateV2
-        And initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>6000</expirationTime>
-            <amount>10.00</amount>
-            <paymentNote>responseFull</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
 
-    Scenario: paGetPaymentV2
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 with 6 transfers
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>1.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyTer</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info2</remittanceInformation>
-            <transferCategory>category2</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyQua</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info3</remittanceInformation>
-            <transferCategory>category3</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>4</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyCin</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info4</remittanceInformation>
-            <transferCategory>category4</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>5</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySei</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info5</remittanceInformation>
-            <transferCategory>category5</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>6</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySet</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info6</remittanceInformation>
-            <transferCategory>category6</transferCategory>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 with 16 mapEntry inside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>1.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <transfer>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </transfer>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyTer</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info2</remittanceInformation>
-            <transferCategory>category2</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyQua</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info3</remittanceInformation>
-            <transferCategory>category3</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>4</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyCin</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info4</remittanceInformation>
-            <transferCategory>category4</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>5</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySei</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info5</remittanceInformation>
-            <transferCategory>category5</transferCategory>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 with 16 mapEntry outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>1.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <transfer>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </transfer>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyTer</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info2</remittanceInformation>
-            <transferCategory>category2</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyQua</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info3</remittanceInformation>
-            <transferCategory>category3</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>4</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyCin</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info4</remittanceInformation>
-            <transferCategory>category4</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>5</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySei</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info5</remittanceInformation>
-            <transferCategory>category5</transferCategory>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 with idTransfer not inside enumeration
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyTer</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 without mapEntry with subtags outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <key>1</key>
-            <value>22</value>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 with empty mapEntry outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 without metadata outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 without metadata with subtags outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 with empty metadata outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 without key outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 KO without faultBean
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>KO</outcome>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paGetPaymentV2 without value outside transfer
-        Given initial XML paGetPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Body>
-            <paf:paGetPaymentV2Response>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>test</description>
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>DE</country>
-            <!--Optional:-->
-            <e-mail>paGetPaymentV2@provatest.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
     @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_1
     # KO tests
     Scenario Outline: KO tests
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
@@ -1319,7 +152,7 @@ Feature: response tests for paGetPaymentV2 967
     Scenario Outline: OK tests
         Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
         And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
             | outcome                     | OK                                  |
             | creditorReferenceId         | 10$iuv                              |
@@ -1353,105 +186,159 @@ Feature: response tests for paGetPaymentV2 967
             | stateProvinceRegion | None                                  |
             | streetName          | None                                  |
             | civicNumber         | None                                  |
-    @ALL @PRIMITIVE @NMU @company
-    # 6 transfers
-    Scenario: 6 transfers
-        Given the paGetPaymentV2 with 6 transfers scenario executed successfully
+
+    @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_3
+    # KO test 6 transfers
+    Scenario: KO test
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 12.00  |
+        And from body with datatable vertical paGetPaymentV2_6_transfer_full initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 12.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 2.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA6               | $activatePaymentNoticeV2.fiscalCode |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # 16 mapEntry inside trasfer
-    Scenario: 16 mapEntry inside transfer
-        Given the paGetPaymentV2 with 16 mapEntry inside transfer scenario executed successfully
+
+
+    @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_4
+    # KO test 16 mapEntry inside transfers
+    Scenario: KO test
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPaymentV2_16_inside_mapEntry initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 12.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 2.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # 16 mapEntry outside transfer
-    Scenario: 16 mapEntry outside transfer
-        Given the paGetPaymentV2 with 16 mapEntry outside transfer scenario executed successfully
+
+    @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_5
+    # KO test 16 mapEntry outside trasfer
+    Scenario: KO test
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPaymentV2_16_outside_mapEntry initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 12.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 2.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # different amount and paymentAmount
-    Scenario: different amount and paymentAmount
-        Given the paGetPaymentV2 scenario executed successfully
-        And amount with 11.00 in activatePaymentNoticeV2
+
+    @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_6
+    # OK test different amount and paymentAmount
+    Scenario: OK test
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 11.00  |
+        And from body with datatable vertical paGetPaymentV2_full initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 10.00                               |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # idTransfer not inside enumeration
-    Scenario: idTransfer not inside enumeration
-        Given the paGetPaymentV2 with idTransfer not inside enumeration scenario executed successfully
+
+    @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_7
+    # KO test idTransfer not inside enumeration
+    Scenario: KO test
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPaymentV2_3_transfer_incomplete initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 10.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | companyName                         |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 5.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # no mapEntry with subtags outside transfer
-    Scenario: no mapEntry with subtags outside transfer
-        Given the paGetPaymentV2 without mapEntry with subtags outside transfer scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # empty mapEntry outside transfer
-    Scenario: empty mapEntry outside transfer
-        Given the paGetPaymentV2 with empty mapEntry outside transfer scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # no metadata outside transfer
-    Scenario: no metadata outside transfer
-        Given the paGetPaymentV2 without metadata outside transfer scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # no metadata with subtags outside transfer
-    Scenario: no metadata with subtags outside transfer
-        Given the paGetPaymentV2 without metadata with subtags outside transfer scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # empty metadata outside transfer
-    Scenario: empty metadata outside transfer
-        Given the paGetPaymentV2 with empty metadata outside transfer scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # no key outside transfer
-    Scenario: no key outside transfer
-        Given the paGetPaymentV2 without key outside transfer scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # response KO without faultBeam
-    Scenario: response KO without faultBeam
-        Given the paGetPaymentV2 KO without faultBean scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @ALL @PRIMITIVE @NMU @company
-    # no value outside transfer
-    Scenario: no value outside transfer
-        Given the paGetPaymentV2 without value outside transfer scenario executed successfully
+
+    @ALL @PRIMITIVE @NMU @NMU_PAGETPAYV2 @NMU_PAGETPAYV2_8
+    # KO test response KO without faultBean
+    Scenario: KO test
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 310#iuv#     | 10.00  |
+        And from body with datatable vertical paGetPaymentV2_no_faultBean initial XML paGetPaymentV2
+            | outcome | KO |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response

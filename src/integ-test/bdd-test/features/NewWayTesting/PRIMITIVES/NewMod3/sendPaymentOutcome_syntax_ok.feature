@@ -3,142 +3,35 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
   Background:
     Given systems up
 
-    And initial XML activatePaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
-      </qrCode>
-      <expirationTime>120000</expirationTime>
-      <amount>10.00</amount>
-      <dueDate>2021-12-31</dueDate>
-      <paymentNote>causale</paymentNote>
-      </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
 
-  @ALL @PRIMITIVE @NM3
+  @ALL @PRIMITIVE @NM3 @NM3SPOSNTOK @M3SPOSNTOK_1
   # [SIN_SPO_00]
   Scenario: Check sendPaymentOutcome response with mandatory fields
-    Given initial XML sendPaymentOutcome
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <!--Optional:-->
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <!--Optional:-->
-      <paymentChannel>app</paymentChannel>
-      <fee>2.00</fee>
-      <!--Optional:-->
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>name</fullName>
-      <!--Optional:-->
-      <streetName>street</streetName>
-      <!--Optional:-->
-      <civicNumber>civic</civicNumber>
-      <!--Optional:-->
-      <postalCode>postal</postalCode>
-      <!--Optional:-->
-      <city>city</city>
-      <!--Optional:-->
-      <stateProvinceRegion>state</stateProvinceRegion>
-      <!--Optional:-->
-      <country>IT</country>
-      <!--Optional:-->
-      <e-mail>prova@provatest.it</e-mail>
-      </payer>
-      <applicationDate>2021-12-12</applicationDate>
-      <transferDate>2021-12-11</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+    Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+      | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 120000         |
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                                | outcome | idempotencyKey    |
+      | #psp# | #psp#       | #canale#  | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
     And idempotencyKey with None in sendPaymentOutcome
     And paymentChannel with None in sendPaymentOutcome
-    And payer with None in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  @ALL @PRIMITIVE @NM3
+
+  @ALL @PRIMITIVE @NM3 @NM3SPOSNTOK @M3SPOSNTOK_2
   # element value check
   Scenario Outline: Check sendPaymentOutcome response with missing optional fields
-    Given initial XML sendPaymentOutcome
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <!--Optional:-->
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <!--Optional:-->
-      <paymentChannel>app</paymentChannel>
-      <fee>2.00</fee>
-      <!--Optional:-->
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>name</fullName>
-      <!--Optional:-->
-      <streetName>street</streetName>
-      <!--Optional:-->
-      <civicNumber>civic</civicNumber>
-      <!--Optional:-->
-      <postalCode>postal</postalCode>
-      <!--Optional:-->
-      <city>city</city>
-      <!--Optional:-->
-      <stateProvinceRegion>state</stateProvinceRegion>
-      <!--Optional:-->
-      <country>IT</country>
-      <!--Optional:-->
-      <e-mail>prova@provatest.it</e-mail>
-      </payer>
-      <applicationDate>2021-12-12</applicationDate>
-      <transferDate>2021-12-11</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    And <elem> with <value> in sendPaymentOutcome
+    Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+      | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 120000         |
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                                | outcome | idempotencyKey    |
+      | #psp# | #psp#       | #canale#  | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     Examples:
@@ -162,81 +55,16 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
       | e-mail              | None        | SIN_SPO_70  |
       | idempotencyKey      | None        | SIN_SPO_80  |
 
-@ALL @PRIMITIVE @NM3
-Scenario: SPO with alphanumeric idempotency key
-    Given initial XML activatePaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#alpha_idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
-      </qrCode>
-      <expirationTime>120000</expirationTime>
-      <amount>10.00</amount>
-      <dueDate>2021-12-31</dueDate>
-      <paymentNote>causale</paymentNote>
-      </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+
+  @ALL @PRIMITIVE @NM3 @NM3SPOSNTOK @M3SPOSNTOK_3
+  Scenario: SPO with alphanumeric idempotency key
+    Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+      | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | idempotencyKey          | amount | expirationTime |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | #alpha_idempotency_key# | 10.00  | 120000         |
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    Given initial XML sendPaymentOutcome
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <!--Optional:-->
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <!--Optional:-->
-      <paymentChannel>app</paymentChannel>
-      <fee>2.00</fee>
-      <!--Optional:-->
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>name</fullName>
-      <!--Optional:-->
-      <streetName>street</streetName>
-      <!--Optional:-->
-      <civicNumber>civic</civicNumber>
-      <!--Optional:-->
-      <postalCode>postal</postalCode>
-      <!--Optional:-->
-      <city>city</city>
-      <!--Optional:-->
-      <stateProvinceRegion>state</stateProvinceRegion>
-      <!--Optional:-->
-      <country>IT</country>
-      <!--Optional:-->
-      <e-mail>prova@provatest.it</e-mail>
-      </payer>
-      <applicationDate>2021-12-12</applicationDate>
-      <transferDate>2021-12-11</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+    Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                                | outcome | idempotencyKey                        |
+      | #psp# | #psp#       | #canale#  | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | $activatePaymentNotice.idempotencyKey |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response

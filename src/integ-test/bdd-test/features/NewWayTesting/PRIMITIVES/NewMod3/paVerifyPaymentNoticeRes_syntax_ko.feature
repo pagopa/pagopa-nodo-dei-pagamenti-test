@@ -2,46 +2,18 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO 1387
 
    Background:
       Given systems up
-      And initial XML verifyPaymentNotice
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <nod:verifyPaymentNoticeReq>
-         <idPSP>#psp#</idPSP>
-         <idBrokerPSP>#psp#</idBrokerPSP>
-         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-         <password>pwdpwdpwd</password>
-         <qrCode>
-         <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>#notice_number#</noticeNumber>
-         </qrCode>
-         </nod:verifyPaymentNoticeReq>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-      
 
-   @ALL @PRIMITIVE @NM3
-   # element value check
+
+   @ALL @PRIMITIVE @NM3 @NM3PAVNRSSNTKO @NM3PAVNRSSNTKO_1
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-      Given initial XML paVerifyPaymentNotice
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <paf:paVerifyPaymentNoticeRes>
-         <outcome>#outcome#</outcome>
-         <fault>
-         <faultCode>#faultCode#</faultCode>
-         <faultString>#faultString#</faultString>
-         <id>#id#</id>
-         <description>#description#</description>
-         </fault>
-         </paf:paVerifyPaymentNoticeRes>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
+      Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+         | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
+         | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
+      And from body with datatable vertical paVerifyPaymentNotice_KO initial XML paVerifyPaymentNotice
+         | outcome     | #outcome#     |
+         | faultCode   | #faultCode#   |
+         | faultString | #description# |
+         | id          | #id#          |
       And <elem> with <value> in paVerifyPaymentNotice
       And if outcome is KO set fault to None in paVerifyPaymentNotice
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
@@ -60,40 +32,22 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO 1387
          | outcome                      | PP           | SIN_PVPNR_09 |
          | outcome                      | KO           | SIN_PVPNR_10 |
 
-   @ALL @PRIMITIVE @NM3
+
+   @ALL @PRIMITIVE @NM3 @NM3PAVNRSSNTKO @NM3PAVNRSSNTKO_2
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-      Given initial XML paVerifyPaymentNotice
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <paf:paVerifyPaymentNoticeRes>
-         <outcome>OK</outcome>
-         <paymentList>
-         <!--1 to 5 repetitions:-->
-         <paymentOptionDescription>
-         <amount>10.00</amount>
-         <options>EQ</options>
-         <!--Optional:-->
-         <dueDate>2021-12-31</dueDate>
-         <!--Optional:-->
-         <detailDescription>test</detailDescription>
-         <!--Optional:-->
-         <allCCP>1</allCCP>
-         </paymentOptionDescription>
-         </paymentList>
-         <!--Optional:-->
-         <paymentDescription>test</paymentDescription>
-         <!--Optional:-->
-         <fiscalCodePA>#fiscalCodePA#</fiscalCodePA>
-         <!--Optional:-->
-         <companyName>company</companyName>
-         <!--Optional:-->
-         <officeName>office</officeName>
-         </paf:paVerifyPaymentNoticeRes>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
+      Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+         | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
+         | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
+      And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
+         | outcome            | OK             |
+         | amount             | 10.00          |
+         | options            | EQ             |
+         | dueDate            | 2021-12-31     |
+         | allCCP             | 1              |
+         | paymentDescription | test           |
+         | fiscalCodePA       | #fiscalCodePA# |
+         | companyName        | company        |
+         | officeName         | office         |
       And <tag> with <value> in paVerifyPaymentNotice
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
@@ -139,5 +93,5 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO 1387
          | allCCP                   | None                                                                                                                                            | SIN_PVPNR_31 |
          | paymentDescription       | None                                                                                                                                            | SIN_PVPNR_34 |
          | fiscalCodePA             | None                                                                                                                                            | SIN_PVPNR_37 |
-         | companyName              | None                                                                                                                                            | SIN_PVPNR_41 |
+
 

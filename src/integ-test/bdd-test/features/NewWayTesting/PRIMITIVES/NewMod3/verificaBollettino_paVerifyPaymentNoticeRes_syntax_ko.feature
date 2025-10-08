@@ -2,47 +2,23 @@ Feature: syntax checks for paVerifyPaymentNotice - KO 1345
 
   Background:
     Given systems up
-    And initial XML verificaBollettino
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-        <nod:verificaBollettinoReq>
-          <idPSP>#pspPoste#</idPSP>
-          <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
-          <idChannel>#channelPoste#</idChannel>
-          <password>pwdpwdpwd</password>
-          <ccPost>#ccPoste#</ccPost>
-          <noticeNumber>#notice_number#</noticeNumber>
-        </nod:verificaBollettinoReq>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    
 
+
+  @ALL @PRIMITIVE @NM3 @NM3VBLPVNRSNTKO @NM3VBLPVNRSNTKO_1
   # element value check
-  @runnable
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given initial XML paVerifyPaymentNotice
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-        <paf:paVerifyPaymentNoticeRes>
-          <outcome>KO</outcome>
-          <fault>
-            <faultCode>PAA_SEMANTICA</faultCode>
-            <faultString>chiamata da rifiutare</faultString>
-            <id>#creditor_institution_code#</id>
-            <description>haloo</description>
-          </fault>
-        </paf:paVerifyPaymentNoticeRes>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
+    Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+      | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+      | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
+    And from body with datatable vertical paVerifyPaymentNotice_KO initial XML paVerifyPaymentNotice
+      | faultCode   | PAA_SEMANTICA               |
+      | faultString | chiamata da rifiutare       |
+      | id          | #creditor_institution_code# |
+      | outcome     | KO                          |
+      | description | haloo                       |
     And <elem> with <value> in paVerifyPaymentNotice
     And if outcome is KO set fault to None in paVerifyPaymentNotice
-    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is KO of verificaBollettino response
     And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of verificaBollettino response
@@ -57,41 +33,22 @@ Feature: syntax checks for paVerifyPaymentNotice - KO 1345
       | outcome                      | PP    | SIN_VBR_09  |
       | outcome                      | KO    | SIN_VBR_10  |
 
-  @runnable
+
+  @ALL @PRIMITIVE @NM3 @NM3VBLPVNRSNTKO @NM3VBLPVNRSNTKO_2
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-    Given initial XML paVerifyPaymentNotice
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-       <soapenv:Header/>
-       <soapenv:Body>
-          <paf:paVerifyPaymentNoticeRes>
-             <outcome>OK</outcome>
-             <paymentList>
-                <!--1 to 5 repetitions:-->
-                <paymentOptionDescription>
-                   <amount>10.00</amount>
-                   <options>EQ</options>
-                   <!--Optional:-->
-                   <dueDate>2021-12-31</dueDate>
-                   <!--Optional:-->
-                   <detailDescription>test</detailDescription>
-                   <!--Optional:-->
-                   <allCCP>1</allCCP>
-                </paymentOptionDescription>
-             </paymentList>
-             <!--Optional:-->
-             <paymentDescription>test</paymentDescription>
-             <!--Optional:-->
-             <fiscalCodePA>#fiscalCodePA#</fiscalCodePA>
-             <!--Optional:-->
-             <companyName>company</companyName>
-             <!--Optional:-->
-             <officeName>office</officeName>
-          </paf:paVerifyPaymentNoticeRes>
-       </soapenv:Body>
-    </soapenv:Envelope>
-    """
+    Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
+      | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
+      | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
+    And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
+      | outcome            | OK             |
+      | amount             | 10.00          |
+      | options            | EQ             |
+      | allCCP             | 1              |
+      | paymentDescription | test           |
+      | fiscalCodePA       | #fiscalCodePA# |
+      | companyName        | test           |
     And <elem> with <value> in paVerifyPaymentNotice
+    And if outcome is KO set fault to None in paVerifyPaymentNotice
     And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is KO of verificaBollettino response
@@ -133,3 +90,4 @@ Feature: syntax checks for paVerifyPaymentNotice - KO 1345
       | companyName              | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | SIN_VBR_43  |
       | officeName               | Empty                                                                                                                                           | SIN_VBR_45  |
       | officeName               | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | SIN_VBR_46  |
+
