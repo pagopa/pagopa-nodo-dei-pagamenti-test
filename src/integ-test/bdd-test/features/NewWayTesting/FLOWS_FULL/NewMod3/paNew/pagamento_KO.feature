@@ -2527,22 +2527,7 @@ Feature: NM3 flows con pagamento fallito
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
         # IDEMPOTENCY_CACHE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                             |
-            | ID                 | NotNone                           |
-            | PRIMITIVA          | sendPaymentOutcomeV2              |
-            | PSP_ID             | $activatePaymentNotice.idPSP      |
-            | PA_FISCAL_CODE     | None                              |
-            | NOTICE_ID          | None                              |
-            | TOKEN              | 798c6a817ed9482fa5659c45f4a25f286 |
-            | VALID_TO           | NotNone                           |
-            | HASH_REQUEST       | NotNone                           |
-            | RESPONSE           | NotNone                           |
-            | INSERTED_TIMESTAMP | NotNone                           |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                         |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
 
@@ -2736,7 +2721,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys | where_values                        |
             | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
         # IDEMPOTENCY_CACHE
-        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
         # POSITION_PAYMENT
@@ -6843,22 +6828,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys      | where_values                          |
             | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
         # IDEMPOTENCY_CACHE sendPaymentOutcome
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                             |
-            | ID                 | NotNone                           |
-            | PRIMITIVA          | sendPaymentOutcome                |
-            | PSP_ID             | $activatePaymentNotice.idPSP      |
-            | PA_FISCAL_CODE     | None                              |
-            | NOTICE_ID          | None                              |
-            | TOKEN              | 798c6a817ed9482fa5659c45f4a25f287 |
-            | VALID_TO           | #CURRENTDATE# +2 00:00:00         |
-            | HASH_REQUEST       | NotNone                           |
-            | RESPONSE           | NotNone                           |
-            | INSERTED_TIMESTAMP | NotNone                           |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                       |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####
@@ -8896,9 +8866,9 @@ Feature: NM3 flows con pagamento fallito
             | column             | value                                       |
             | ID                 | NotNone                                     |
             | PRIMITIVA          | sendPaymentOutcome                          |
-            | PSP_ID             | $activatePaymentNotice.idPSP,40000000001    |
-            | PA_FISCAL_CODE     | #creditor_institution_code#,None            |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber,None    |
+            | PSP_ID             | $activatePaymentNotice.idPSP                |
+            | PA_FISCAL_CODE     | #creditor_institution_code#                 |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
             | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
             | VALID_TO           | #CURRENTDATE# +2 00:00:00                   |
             | HASH_REQUEST       | NotNone                                     |
@@ -8908,7 +8878,7 @@ Feature: NM3 flows con pagamento fallito
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
             | ORDER BY        | INSERTED_TIMESTAMP,ID ASC          |
-        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####

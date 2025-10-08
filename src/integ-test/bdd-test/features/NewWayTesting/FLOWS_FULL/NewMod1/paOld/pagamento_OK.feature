@@ -8151,7 +8151,7 @@ Feature: NMU flows PA Old con pagamento OK
       | where_keys | where_values                          |
       | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
     # IDEMPOTENCY_CACHE
-    And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys      | where_values                         |
       | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
     # PM_SESSION_DATA

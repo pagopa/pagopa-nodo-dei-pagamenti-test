@@ -3601,7 +3601,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
             | PRIMITIVA       | activatePaymentNotice              |
         # IDEMPOTENCY_CACHE SPO
-        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
             | PRIMITIVA       | sendPaymentOutcome                 |
@@ -9584,22 +9584,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys      | where_values                          |
             | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
         # IDEMPOTENCY_CACHE sendPaymentOutcome
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                             |
-            | ID                 | NotNone                           |
-            | PRIMITIVA          | sendPaymentOutcome                |
-            | PSP_ID             | $activatePaymentNotice.idPSP      |
-            | PA_FISCAL_CODE     | None                              |
-            | NOTICE_ID          | None                              |
-            | TOKEN              | 798c6a817ed9482fa5659c45f4a25f286 |
-            | VALID_TO           | #CURRENTDATE# +2 00:00:00         |
-            | HASH_REQUEST       | NotNone                           |
-            | RESPONSE           | NotNone                           |
-            | INSERTED_TIMESTAMP | NotNone                           |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                       |
-            | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####
@@ -10432,8 +10417,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | idPSP | idBrokerPSP     | idChannel                    | password   | idempotencyKey                     | paymentToken                                | outcome |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $sendPaymentOutcome.idempotencyKey | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response
         And wait 1 seconds for expiration
         # POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
@@ -10549,13 +10533,13 @@ Feature: NM3 flows PA Old con pagamento KO
             | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                |
             | IDEMPOTENCY_KEY            | NotNone                                     |
             | AMOUNT                     | $activatePaymentNotice.amount               |
-            | FEE                        | None                                        |
-            | OUTCOME                    | None                                        |
-            | PAYMENT_METHOD             | None                                        |
-            | PAYMENT_CHANNEL            | NA                                          |
-            | TRANSFER_DATE              | None                                        |
-            | PAYER_ID                   | None                                        |
-            | APPLICATION_DATE           | None                                        |
+            | FEE                        | 2.00                                        |
+            | OUTCOME                    | NotNone                                     |
+            | PAYMENT_METHOD             | creditCard                                  |
+            | PAYMENT_CHANNEL            | app                                         |
+            | TRANSFER_DATE              | 2021-12-11                                  |
+            | PAYER_ID                   | NotNone                                     |
+            | APPLICATION_DATE           | NotNone                                     |
             | INSERTED_TIMESTAMP         | NotNone                                     |
             | UPDATED_TIMESTAMP          | NotNone                                     |
             | FK_PAYMENT_PLAN            | NotNone                                     |
@@ -10568,7 +10552,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | FLAG_ACTIVATE_RESP_MISSING | None                                        |
             | FLAG_PAYPAL                | None                                        |
             | INSERTED_BY                | activatePaymentNotice                       |
-            | UPDATED_BY                 | activatePaymentNotice                       |
+            | UPDATED_BY                 | sendPaymentOutcome                          |
             | TRANSACTION_ID             | None                                        |
             | CLOSE_VERSION              | None                                        |
             | FEE_PA                     | None                                        |
@@ -10576,7 +10560,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | BUNDLE_PA_ID               | None                                        |
             | PM_INFO                    | None                                        |
             | MBD                        | N                                           |
-            | FEE_SPO                    | None                                        |
+            | FEE_SPO                    | 2                                           |
             | PAYMENT_NOTE               | responseFull                                |
             | FLAG_STANDIN               | N                                           |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
@@ -10589,17 +10573,17 @@ Feature: NM3 flows PA Old con pagamento KO
             | ID                    | NotNone                                     |
             | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
-            | STATUS                | PAYING                                      |
+            | STATUS                | PAYING,PAID_NORPT                           |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | CREDITOR_REFERENCE_ID | 12$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
-            | INSERTED_BY           | activatePaymentNotice                       |
+            | INSERTED_BY           | activatePaymentNotice,sendPaymentOutcome    |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
             | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
-        And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -10611,12 +10595,12 @@ Feature: NM3 flows PA Old con pagamento KO
             | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
             | CREDITOR_REFERENCE_ID | 12$iuv                                      |
             | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
-            | STATUS                | PAYING                                      |
+            | STATUS                | PAID_NORPT                                  |
             | INSERTED_TIMESTAMP    | NotNone                                     |
             | UPDATED_TIMESTAMP     | NotNone                                     |
             | FK_POSITION_PAYMENT   | NotNone                                     |
             | INSERTED_BY           | activatePaymentNotice                       |
-            | UPDATED_BY            | activatePaymentNotice                       |
+            | UPDATED_BY            | sendPaymentOutcome                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -10634,37 +10618,22 @@ Feature: NM3 flows PA Old con pagamento KO
             | where_keys | where_values |
             | IUV        | 12$iuv       |
         # IDEMPOTENCY_CACHE activatePaymentNotice
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                       |
-            | ID                 | NotNone                                     |
-            | PRIMITIVA          | activatePaymentNotice                       |
-            | PSP_ID             | $activatePaymentNotice.idPSP                |
-            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode           |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
-            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
-            | VALID_TO           | NotNone                                     |
-            | HASH_REQUEST       | NotNone                                     |
-            | RESPONSE           | NotNone                                     |
-            | INSERTED_TIMESTAMP | NotNone                                     |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys      | where_values                          |
-            | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                          |
             | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
         # IDEMPOTENCY_CACHE sendPaymentOutcome
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                             |
-            | ID                 | NotNone                           |
-            | PRIMITIVA          | sendPaymentOutcome                |
-            | PSP_ID             | $activatePaymentNotice.idPSP      |
-            | PA_FISCAL_CODE     | None                              |
-            | NOTICE_ID          | None                              |
-            | TOKEN              | 798c6a817ed9482fa5659c45f4a25f286 |
-            | VALID_TO           | #CURRENTDATE# +2 00:00:00         |
-            | HASH_REQUEST       | NotNone                           |
-            | RESPONSE           | NotNone                           |
-            | INSERTED_TIMESTAMP | NotNone                           |
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | PRIMITIVA          | sendPaymentOutcome                          |
+            | PSP_ID             | $activatePaymentNotice.idPSP                |
+            | PA_FISCAL_CODE     | #creditor_institution_code#                 |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
+            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
+            | VALID_TO           | #CURRENTDATE# +2 00:00:00                   |
+            | HASH_REQUEST       | NotNone                                     |
+            | RESPONSE           | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
@@ -10766,7 +10735,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeResp
-        And from $sendPaymentOutcomeResp.outcome xml check value KO in position 0
+        And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
 
 
 
@@ -11005,22 +10974,22 @@ Feature: NM3 flows PA Old con pagamento KO
             | IDEMPOTENCY_KEY | $activatePaymentNotice.idempotencyKey |
         # IDEMPOTENCY_CACHE sendPaymentOutcome
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                    |
-            | ID                 | NotNone                                  |
-            | PRIMITIVA          | sendPaymentOutcome                       |
-            | PSP_ID             | $activatePaymentNotice.idPSP,70000000001 |
-            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode,None   |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber,None |
-            | TOKEN              | $sendPaymentOutcome.paymentToken         |
-            | VALID_TO           | #CURRENTDATE# +2 00:00:00                |
-            | HASH_REQUEST       | NotNone                                  |
-            | RESPONSE           | NotNone                                  |
-            | INSERTED_TIMESTAMP | NotNone                                  |
+            | column             | value                                       |
+            | ID                 | NotNone                                     |
+            | PRIMITIVA          | sendPaymentOutcome                          |
+            | PSP_ID             | $activatePaymentNotice.idPSP                |
+            | PA_FISCAL_CODE     | #creditor_institution_code#                 |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
+            | TOKEN              | $activatePaymentNoticeResponse.paymentToken |
+            | VALID_TO           | #CURRENTDATE# +2 00:00:00                   |
+            | HASH_REQUEST       | NotNone                                     |
+            | RESPONSE           | NotNone                                     |
+            | INSERTED_TIMESTAMP | NotNone                                     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
             | ORDER BY        | INSERTED_TIMESTAMP,ID ASC          |
-        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                       |
             | IDEMPOTENCY_KEY | $sendPaymentOutcome.idempotencyKey |
         # RE #####
