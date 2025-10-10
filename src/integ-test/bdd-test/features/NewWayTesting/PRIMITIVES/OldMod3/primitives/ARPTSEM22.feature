@@ -3,7 +3,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1404
     Given systems up
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTKO @OM3NDATRPTKO_1
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_1
   Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error
     Given from body with datatable vertical nodoAttivaRPT initial XML nodoAttivaRPT
       | identificativoIntermediarioPSPPagamento | #psp#                        |

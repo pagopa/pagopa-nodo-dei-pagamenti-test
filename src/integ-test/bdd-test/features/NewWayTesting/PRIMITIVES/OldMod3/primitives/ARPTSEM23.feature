@@ -3,7 +3,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1405
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTKO @OM3NDATRPTKO_2
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_2
     Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on identificativoIntermediarioPA not in configuration
         Given from body with datatable vertical nodoAttivaRPT_full initial XML nodoAttivaRPT
             | idIntermediarioPSPPagamento    | #psp#                        |
