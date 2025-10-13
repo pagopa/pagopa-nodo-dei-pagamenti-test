@@ -1,32 +1,21 @@
 Feature: Semantic checks KO for nodoVerificaRPT 1411
     Background:
         Given systems up
-        And initial XML nodoVerificaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoVerificaRPT>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-            <codiceIdRPT><qrc:QrCode>
-            <qrc:CF>#id_broker#</qrc:CF>
-            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
-            <qrc:AuxDigit>0</qrc:AuxDigit>
-            <qrc:CodIUV>#iuv#</qrc:CodIUV>
-            </qrc:QrCode></codiceIdRPT>
-            </ws:nodoVerificaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
 
-@ALL @PRIMITIVE @OLDMOD3
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_1
     Scenario Outline: Check faultCode error on non-existent or invalid field
-        Given <field> with <value> in nodoVerificaRPT
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | #psp#                        |
+            | identificativoIntermediarioPSP | #psp#                        |
+            | identificativoCanale           | #canale_ATTIVATO_PRESSO_PSP# |
+            | codiceContestoPagamento        | CCD01                        |
+            | codificaInfrastrutturaPSP      | QR-CODE                      |
+            | CF                             | #id_broker#                  |
+            | CodStazPA                      | #cod_segr#                   |
+            | AuxDigit                       | 0                            |
+            | CodIUV                         | #iuv#                        |
+        And <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is <resp_error> of nodoVerificaRPT response
         Examples:
@@ -40,77 +29,103 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
             | password                       | test_wrong_pwd     | PPT_AUTENTICAZIONE                 | VRPTSEM7    |
             | codificaInfrastrutturaPSP      | codificaErrata     | PPT_CODIFICA_PSP_SCONOSCIUTA       | VRPTSEM8    |
 
-@ALL @PRIMITIVE @OLDMOD3
+
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_2
     Scenario Outline: Check faultCode on invalid body element
-        Given <field_1> with <value_1> in nodoVerificaRPT
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | #psp#                        |
+            | identificativoIntermediarioPSP | #psp#                        |
+            | identificativoCanale           | #canale_ATTIVATO_PRESSO_PSP# |
+            | codiceContestoPagamento        | CCD01                        |
+            | codificaInfrastrutturaPSP      | QR-CODE                      |
+            | CF                             | #id_broker#                  |
+            | CodStazPA                      | #cod_segr#                   |
+            | AuxDigit                       | 0                            |
+            | CodIUV                         | #iuv#                        |
+        And <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is <faultCode> of nodoVerificaRPT response
         Examples:
-            | field_1      | value_1 | field_2    | value_2           |   faultCode                              |soapUI test |
-            | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 |  PPT_SEMANTICA                           |VRPTSEM9    |
-            | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   |  PPT_SEMANTICA                           |VRPTSEM10   |
+            | field_1      | value_1 | field_2    | value_2           | faultCode     | soapUI test |
+            | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 | PPT_SEMANTICA | VRPTSEM9    |
+            | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   | PPT_SEMANTICA | VRPTSEM10   |
 
-@ALL @PRIMITIVE @OLDMOD3
+
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_3
     Scenario Outline: Check faultCode error on invalid iuv
-        Given <field_1> with <value_1> in nodoVerificaRPT
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | #psp#                        |
+            | identificativoIntermediarioPSP | #psp#                        |
+            | identificativoCanale           | #canale_ATTIVATO_PRESSO_PSP# |
+            | codiceContestoPagamento        | CCD01                        |
+            | codificaInfrastrutturaPSP      | QR-CODE                      |
+            | CF                             | #id_broker#                  |
+            | CodStazPA                      | #cod_segr#                   |
+            | AuxDigit                       | 0                            |
+            | CodIUV                         | #iuv#                        |
+        And <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
         And <field_3> with <value_3> in nodoVerificaRPT
         And <field_4> with <value_4> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is <resp_error> of nodoVerificaRPT response
         Examples:
-            | field_1      | value_1 | field_2         | value_2    | field_3          |value_3          |field_4 |value_4        | resp_error                      |soapUI test |
-            | qrc:AuxDigit | 3       | qrc:CodStazPA   | None       | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_STAZIONE_INT_PA_SCONOSCIUTA  |VRPTSEM11   |
-            | qrc:AuxDigit | 3       | qrc:CodStazPA   | 02         | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_SEMANTICA                    |VRPTSEM12   |
+            | field_1      | value_1 | field_2       | value_2 | field_3    | value_3           | field_4 | value_4         | resp_error                      | soapUI test |
+            | qrc:AuxDigit | 3       | qrc:CodStazPA | None    | qrc:CodIUV | 00012711162144900 | qrc:CF  | #id_broker_old# | PPT_STAZIONE_INT_PA_SCONOSCIUTA | VRPTSEM11   |
+            | qrc:AuxDigit | 3       | qrc:CodStazPA | 02      | qrc:CodIUV | 00012711162144900 | qrc:CF  | #id_broker_old# | PPT_SEMANTICA                   | VRPTSEM12   |
 
-@ALL @PRIMITIVE @OLDMOD3
+
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_4
     Scenario: Check faultCode error PPT_INTERMEDIARIO_PA_DISABILITATO [VRPTSEM13]
-        Given initial XML nodoVerificaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoVerificaRPT>
-                <identificativoPSP>40000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>40000000001_01</identificativoCanale>
-                <password>pwdpwdpwd</password>
-                <codiceContestoPagamento>130191402011917</codiceContestoPagamento>
-                <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>10</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015261508179300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
-            </ws:nodoVerificaRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | 40000000001                 |
+            | identificativoIntermediarioPSP | 40000000001                 |
+            | identificativoCanale           | 40000000001_01              |
+            | codiceContestoPagamento        | 130191402011917             |
+            | codificaInfrastrutturaPSP      | QR-CODE                     |
+            | CF                             | #creditor_institution_code# |
+            | CodStazPA                      | 10                          |
+            | AuxDigit                       | 0                           |
+            | CodIUV                         | 015261508179300             |
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoVerificaRPT response
 
-@ALL @PRIMITIVE @OLDMOD3
+
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_5
     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SCONOSCIUTA [VRPTSEM15]
-        Given initial XML nodoVerificaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoVerificaRPT>
-                <identificativoPSP>40000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>40000000001_01</identificativoCanale>
-                <password>pwdpwdpwd</password>
-                <codiceContestoPagamento>122331398916990</codiceContestoPagamento>
-                <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>44444444444</qrc:CF> <qrc:CodStazPA>98</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>014501764115600</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
-            </ws:nodoVerificaRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | 40000000001     |
+            | identificativoIntermediarioPSP | 40000000001     |
+            | identificativoCanale           | 40000000001_01  |
+            | codiceContestoPagamento        | 122331398916990 |
+            | codificaInfrastrutturaPSP      | QR-CODE         |
+            | CF                             | 44444444444     |
+            | CodStazPA                      | 98              |
+            | AuxDigit                       | 0               |
+            | CodIUV                         | 014501764115600 |
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoVerificaRPT response
 
-@ALL @PRIMITIVE @OLDMOD3
+
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_6
     Scenario Outline: Check faultCode error on unknown or invalid CodStazPA
-        Given <field> with <value> in nodoVerificaRPT
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | #psp#                        |
+            | identificativoIntermediarioPSP | #psp#                        |
+            | identificativoCanale           | #canale_ATTIVATO_PRESSO_PSP# |
+            | codiceContestoPagamento        | CCD01                        |
+            | codificaInfrastrutturaPSP      | QR-CODE                      |
+            | CF                             | #id_broker#                  |
+            | CodStazPA                      | #cod_segr#                   |
+            | AuxDigit                       | 0                            |
+            | CodIUV                         | #iuv#                        |
+        And <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is <resp_error> of nodoVerificaRPT response
         Examples:
@@ -120,46 +135,19 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
             | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM18   |
             | qrc:CodStazPA | None        | PPT_SEMANTICA           | VRPTSEM19   |
 
-@ALL @PRIMITIVE @OLDMOD3
-    Scenario: Check faultCode error PPT_AUTORIZZAZIONE [VRPTSEM20]
-        Given initial XML nodoVerificaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoVerificaRPT>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>91000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_01</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <codiceContestoPagamento>153041492411187</codiceContestoPagamento>
-                    <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                    <codiceIdRPT><qrc:QrCode>  <qrc:CF>44444444444</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>013601115164900</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
-                </ws:nodoVerificaRPT>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
 
-@ALL @PRIMITIVE @OLDMOD3
-    Scenario: Check PPT_AUTORIZZAZIONE error on unreachable station [VRPTSEM21]
-        Given initial XML nodoVerificaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoVerificaRPT>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>91000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_01</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <codiceContestoPagamento>153041492411187</codiceContestoPagamento>
-                    <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                    <codiceIdRPT><qrc:QrCode>  <qrc:CF>44444444444</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>013601115164900</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
-                </ws:nodoVerificaRPT>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
+
+    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_7
+    Scenario: Check faultCode error PPT_AUTORIZZAZIONE [VRPTSEM20]
+        Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
+            | identificativoPSP              | 40000000001     |
+            | identificativoIntermediarioPSP | 91000000001     |
+            | identificativoCanale           | 40000000001_01  |
+            | codiceContestoPagamento        | 153041492411187 |
+            | codificaInfrastrutturaPSP      | QR-CODE         |
+            | CF                             | 44444444444     |
+            | CodStazPA                      | 02              |
+            | AuxDigit                       | 0               |
+            | CodIUV                         | 013601115164900 |
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
