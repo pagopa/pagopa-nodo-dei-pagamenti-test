@@ -1,0 +1,20 @@
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+          <soapenv:Header/>
+          <soapenv:Body>
+              <ws:nodoVerificaRPT>
+                  <identificativoPSP>$identificativoPSP</identificativoPSP>
+                  <identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
+                  <identificativoCanale>$identificativoCanale</identificativoCanale>
+                  <password>pwdpwdpwd</password>
+                  <codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
+                  <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+                  <codiceIdRPT>
+                    <bc:BarCode>
+                      <bc:Gln>$Gln</bc:Gln>
+                      <bc:AuxDigit>$AuxDigit</bc:AuxDigit>
+                      <bc:CodIUV>$CodIUV</bc:CodIUV>
+                    </bc:BarCode>
+                  </codiceIdRPT>
+              </ws:nodoVerificaRPT>
+          </soapenv:Body>
+        </soapenv:Envelope>
