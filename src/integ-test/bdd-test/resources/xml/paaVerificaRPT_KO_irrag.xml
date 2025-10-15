@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+<soapenv:Header/>
+<soapenv:Body>
+    <ws:paaVerificaRPTRisposta>
+        <paaVerificaRPTRisposta>
+        <irraggiungibile/>
+            <fault>
+            <faultCode>$faultCode</faultCode>
+            <faultString>$faultString</faultString>
+            <id>1</id>
+            </fault>            
+            <esito>$esito</esito>
+        </paaVerificaRPTRisposta>
+    </ws:paaVerificaRPTRisposta>
+</soapenv:Body>
+</soapenv:Envelope>

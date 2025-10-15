@@ -5,15 +5,16 @@
                   <identificativoPSP>$identificativoPSP</identificativoPSP>
                   <identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
                   <identificativoCanale>$identificativoCanale</identificativoCanale>
-                  <password>$password</password>
+                  <password>pwdpwdpwd</password>
                   <codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
                   <codificaInfrastrutturaPSP>$codificaInfrastrutturaPSP</codificaInfrastrutturaPSP>
                   <codiceIdRPT>
-                    <bc:BarCode>
-                      <bc:Gln>$Gln</bc:Gln>
-                      <bc:AuxDigit>$AuxDigit</bc:AuxDigit>
-                      <bc:CodIUV>$CodIUV</bc:CodIUV>
-                    </bc:BarCode>
+                    <aim:aim128>
+                      <aim:CCPost>$CCPost</aim:CCPost>
+                      <aim:CodStazPA>$CodStazPA</aim:CodStazPA>
+                      <aim:AuxDigit>$AuxDigit</aim:AuxDigit>
+                      <aim:CodIUV>$CodIUV</aim:CodIUV>
+                    </aim:aim128>
                   </codiceIdRPT>
               </ws:nodoVerificaRPT>
           </soapenv:Body>
