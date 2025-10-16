@@ -4,7 +4,7 @@ Feature: Syntax checks for verificaBollettino - OK 1399
       Given systems up
 
 
-   @ALL @PRIMITIVE @NM3 @NM3VBLSNTKO @NM3VBLSNTKO_1
+   @ALL @PRIMITIVE @NM3 @NM3VBLSNTOK @NM3VBLSNTOK_1
    Scenario: SIN_VB_00
       Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
          | idPSP  | idBrokerPSP | idChannel | password   | ccPost    | noticeNumber |

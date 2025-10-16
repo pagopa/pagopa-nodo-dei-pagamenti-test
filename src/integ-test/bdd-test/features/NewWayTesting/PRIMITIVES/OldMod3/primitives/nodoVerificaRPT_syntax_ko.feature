@@ -3,7 +3,7 @@ Feature: Syntax check OK for nodoVerificaRPT 1412
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSNTKO @NM3NOVERPSNTKO_1
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSNTKO @OM3NOVERPSNTKO_1
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -25,7 +25,7 @@ Feature: Syntax check OK for nodoVerificaRPT 1412
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSNTKO @NM3NOVERPSNTKO_2
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSNTKO @OM3NOVERPSNTKO_2
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -62,7 +62,7 @@ Feature: Syntax check OK for nodoVerificaRPT 1412
             | codificaInfrastrutturaPSP      | None                                 | VRPTSIN22   |
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSNTKO @NM3NOVERPSNTKO_3
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSNTKO @OM3NOVERPSNTKO_3
     Scenario: check faultCode PPT_CODIFICA_PSP_SCONOSCIUTA on empty field codificaInfrastrutturaPSP [VRPTSIN23]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -80,7 +80,7 @@ Feature: Syntax check OK for nodoVerificaRPT 1412
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSNTKO @NM3NOVERPSNTKO_4
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSNTKO @OM3NOVERPSNTKO_4
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -101,7 +101,7 @@ Feature: Syntax check OK for nodoVerificaRPT 1412
             | codiceIdRPT | Empty | VRPTSIN25   |
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSNTKO @NM3NOVERPSNTKO_5
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSNTKO @OM3NOVERPSNTKO_5
     Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on missing or empty body elements
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -127,7 +127,7 @@ Feature: Syntax check OK for nodoVerificaRPT 1412
             | bc:CodIUV   | 123456789012345678 | VRPTSIN32   |
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSNTKO @NM3NOVERPSNTKO_6
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSNTKO @OM3NOVERPSNTKO_6
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |

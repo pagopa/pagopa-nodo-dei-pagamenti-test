@@ -3,7 +3,7 @@ Feature: Semantic checks for verifyPaymentReq - KO 1400
   Background:
     Given systems up
 
-  @ALL @PRIMITIVE @NM3 @NM3VPNSEMKO @NM3VPNSEMKO_1
+  @ALL @PRIMITIVE @NM3 @NM3VPNSEMKO @NM3VPNSEMKO_5
   Scenario Outline: Semantic checks for verifyPaymentReq - KO
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber       |
@@ -30,7 +30,7 @@ Feature: Semantic checks for verifyPaymentReq - KO 1400
       | noticeNumber | 010456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | Intermediario dominio disabilitato.                  | SEM_VPNR_15 |
 
 
-  @ALL @PRIMITIVE @NM3 @NM3VPNSEMKO @NM3VPNSEMKO_2
+  @ALL @PRIMITIVE @NM3 @NM3VPNSEMKO @NM3VPNSEMKO_6
   # password value check: wrong password for an idChannel [SEM_VPNR_08]
   Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
@@ -43,7 +43,7 @@ Feature: Semantic checks for verifyPaymentReq - KO 1400
     And check faultCode is PPT_AUTENTICAZIONE of verifyPaymentNotice response
 
 
-  @ALL @PRIMITIVE @NM3 @NM3VPNSEMKO @NM3VPNSEMKO_3
+  @ALL @PRIMITIVE @NM3 @NM3VPNSEMKO @NM3VPNSEMKO_7
   # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_VPNR_11]
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice

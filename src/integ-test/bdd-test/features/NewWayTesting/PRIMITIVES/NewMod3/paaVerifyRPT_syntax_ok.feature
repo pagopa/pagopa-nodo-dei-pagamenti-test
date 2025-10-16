@@ -4,7 +4,7 @@ Feature: check syntax OK for paaVerificaRPTRes 1381
         Given systems up
 
 
-    @ALL @PRIMITIVE @NM3 @NM3NM3PAVRPTSNT0OK @NM3NM3PAVRPTSNTOK_1
+    @ALL @PRIMITIVE @NM3 @NM3PAVRPTSNTOK @NM3NM3PAVRPTSNTOK_1
     Scenario Outline: check syntax OK paaVerificaRPTRes
         Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber |

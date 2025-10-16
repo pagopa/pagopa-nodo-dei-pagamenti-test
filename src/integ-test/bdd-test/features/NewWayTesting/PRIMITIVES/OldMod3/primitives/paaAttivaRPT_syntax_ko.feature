@@ -3,7 +3,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1413
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAATRPTSNTKO @OM3NDPAATRPTSNTKO_1
+    @ALL @PRIMITIVE @OM3 @OM3PAATRPTSNTKO @OM3PAATRPTSNTKO_1
     Scenario: Execute nodoAttivaRPT [ARPTRES1]
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC_incomplete initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                                 |
@@ -28,7 +28,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1413
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAATRPTSNTKO @OM3NDPAATRPTSNTKO_2
+    @ALL @PRIMITIVE @OM3 @OM3PAATRPTSNTKO @OM3PAATRPTSNTKO_2
     Scenario: Execute nodoAttivaRPT [ARPTRES2]
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC_incomplete initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                                 |
@@ -55,7 +55,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1413
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAATRPTSNTKO @OM3NDPAATRPTSNTKO_3
+    @ALL @PRIMITIVE @OM3 @OM3PAATRPTSNTKO @OM3PAATRPTSNTKO_3
     Scenario Outline: Execute nodoAttivaRPT
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC_incomplete initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                                 |
@@ -90,8 +90,8 @@ Feature: Syntax checks KO for nodoAttivaRPT 1413
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAATRPTSNTKO @OM3NDPAATRPTSNTKO_4
-    Scenario Outline: Execute nodoAttivaRPT
+    @ALL @PRIMITIVE @OM3 @OM3PAATRPTSNTKO @OM3PAATRPTSNTKO_4
+    Scenario: Execute nodoAttivaRPT
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC_incomplete initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                                 |
             | identificativoCanalePagamento           | #canale#                              |
@@ -111,7 +111,6 @@ Feature: Syntax checks KO for nodoAttivaRPT 1413
             | id                       | #creditor_institution_code_secondary# |
             | esito                    | OK                                    |
             | importoSingoloVersamento | 100.00                                |
-        And <field> with <value> in paaAttivaRPT
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response

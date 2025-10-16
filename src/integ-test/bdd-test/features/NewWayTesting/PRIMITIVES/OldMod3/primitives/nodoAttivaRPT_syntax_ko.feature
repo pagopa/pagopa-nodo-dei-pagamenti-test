@@ -3,7 +3,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_1
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_2
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -29,7 +29,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_2
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_3
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -55,7 +55,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_3
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_4
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -173,7 +173,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_4
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_5
     Scenario Outline: Check faultCode PPT_SINTASSI_XSD on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -202,7 +202,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_5
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_6
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -228,7 +228,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_6
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_7
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -254,7 +254,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_7
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_8
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |
@@ -281,7 +281,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1409
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_8
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSNTKO @OM3NDATRPTSNTKO_9
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD or PPT_AUTORIZZAZIONE error on invalid body element value
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                        |

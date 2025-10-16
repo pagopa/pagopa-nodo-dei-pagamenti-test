@@ -3,7 +3,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_1
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_1
     Scenario: Execute nodoVerificaRPT [VRPTRES1]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -28,7 +28,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoVerificaRPT response
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_2
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_2
     Scenario Outline: Execute nodoVerificaRPT [VRPTRES2]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -57,7 +57,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
             | fault | None  | VRPTRES2    |
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_3
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_3
     Scenario: Execute nodoVerificaRPT [VRPTRES3]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -82,7 +82,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoVerificaRPT response
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_4
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_4
     Scenario Outline: Execute nodoVerificaRPT [VRPTRES4]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -112,7 +112,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
 
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_5
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_5
     Scenario: Execute nodoVerificaRPT [VRPTRES5]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -137,7 +137,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoVerificaRPT response
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_6
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_6
     Scenario Outline: Execute nodoVerificaRPT [VRPTRES6]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -166,7 +166,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
             | fault | None  | VRPTRES6    |
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_7
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_7
     Scenario Outline: Execute nodoVerificaRPT [VRPTRES7]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |
@@ -197,7 +197,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
             | fault  | None   | causaleVersamento | None   | importoSingoloVersamento | Empty  | VRPTRES7    |
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDPAVERPTSNTKO @OM3NDPAVERPTSNTKO_8
+    @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_8
     Scenario Outline: Execute nodoVerificaRPT [VRPTRES8]
         Given from body with datatable vertical nodoVerificaRPT_namespace_bc_noOptional initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                                 |

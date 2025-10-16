@@ -3,7 +3,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
     Given systems up
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_2
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_3
   Scenario Outline: Semantic checks KO for nodoAttivaRPT
     Given from body with datatable vertical nodoAttivaRPT_full initial XML nodoAttivaRPT
       | idIntermediarioPSPPagamento    | #psp#                        |
@@ -41,7 +41,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_3
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_4
   # IUV value check: IUV dimension check
   Scenario Outline: Check PPT_SEMANTICA error on wrong IUV dimension
     Given from body with datatable vertical nodoAttivaRPT_full initial XML nodoAttivaRPT
@@ -69,7 +69,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_4
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_5
   # codiceIdRPT value check: segregation code check
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on segregation code not in configuration or disabled
     Given from body with datatable vertical nodoAttivaRPT_full initial XML nodoAttivaRPT
@@ -98,7 +98,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_5
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_6
   # importoSingoloVersamento KO value check  [ARPTSEM16]
   Scenario: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on importoSingoloVersamento not in configuration
     Given from body with datatable vertical nodoAttivaRPT_full initial XML nodoAttivaRPT
@@ -124,7 +124,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_6
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_7
   # identificativoStazioneIntermediarioPA value check [ARPTSEM24]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on identificativoStazioneIntermediarioPA not in configuration
     Given from body with datatable vertical nodoAttivaRPT initial XML nodoAttivaRPT
@@ -146,7 +146,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_7
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_8
   # identificativoDominio value check: identificativoDominio disabled [ARPTSEM27]
   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on identificativoDominio disabled
     Given from body with datatable vertical nodoAttivaRPT initial XML nodoAttivaRPT
@@ -168,7 +168,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_8
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_9
   # Check PPT_SEMANTICA error [ARPTSEM29]
   Scenario Outline: Check PPT_SEMANTICA error on wrong noticeNumber
     Given from body with datatable vertical nodoAttivaRPT_namespace_BC initial XML nodoAttivaRPT
@@ -194,7 +194,7 @@ Feature: Semantic checks KO for nodoAttivaRPT 1407
 
 
 
-  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_9
+  @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMKO @OM3NDATRPTSEMKO_10
   # Check PPT_SEMANTICA error [ARPTSEM30]
   Scenario Outline: Check PPT_SEMANTICA error on wrong noticeNumber
     Given from body with datatable vertical nodoAttivaRPT initial XML nodoAttivaRPT

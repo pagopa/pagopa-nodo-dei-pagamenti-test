@@ -3,7 +3,7 @@ Feature: Syntax checks ok for nodoAttivaRPT 1410
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMOK @OM3NDATRPTSEMOK_1
+    @ALL @PRIMITIVE @OM3 @OM3NDATRPTSEMOK @OM3NDATRPTSEMOK_3
     Scenario Outline: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on identificativoIntermediarioPA not in configuration
         Given from body with datatable vertical nodoAttivaRPT_full initial XML nodoAttivaRPT
             | idIntermediarioPSPPagamento    | #psp#                        |

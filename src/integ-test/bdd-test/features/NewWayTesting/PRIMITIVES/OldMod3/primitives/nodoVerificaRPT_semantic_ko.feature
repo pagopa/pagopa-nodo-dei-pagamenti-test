@@ -3,7 +3,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
         Given systems up
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_1
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_1
     Scenario Outline: Check faultCode error on non-existent or invalid field
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -31,7 +31,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_2
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_2
     Scenario Outline: Check faultCode on invalid body element
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -54,7 +54,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_3
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_3
     Scenario Outline: Check faultCode error on invalid iuv
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -79,7 +79,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_4
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_4
     Scenario: Check faultCode error PPT_INTERMEDIARIO_PA_DISABILITATO [VRPTSEM13]
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | 40000000001                 |
@@ -96,7 +96,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_5
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_5
     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SCONOSCIUTA [VRPTSEM15]
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | 40000000001     |
@@ -113,7 +113,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_6
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_6
     Scenario Outline: Check faultCode error on unknown or invalid CodStazPA
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | #psp#                        |
@@ -137,7 +137,7 @@ Feature: Semantic checks KO for nodoVerificaRPT 1411
 
 
 
-    @ALL @PRIMITIVE @OM3 @NM3NOVERPSEKO @NM3NOVERPSEKO_7
+    @ALL @PRIMITIVE @OM3 @OM3NOVERPSEKO @OM3NOVERPSEKO_7
     Scenario: Check faultCode error PPT_AUTORIZZAZIONE [VRPTSEM20]
         Given from body with datatable vertical nodoVerificaRPT_complete initial XML nodoVerificaRPT
             | identificativoPSP              | 40000000001     |
