@@ -38,7 +38,7 @@
 	<pay_i:enteBeneficiario>
 		<pay_i:identificativoUnivocoBeneficiario>
 			<pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-			<pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+			<pay_i:codiceIdentificativoUnivoco>$codiceIdentificativoUnivoco</pay_i:codiceIdentificativoUnivoco>
 		</pay_i:identificativoUnivocoBeneficiario>
 		<pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
 		<pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
@@ -53,7 +53,7 @@
 	<pay_i:datiVersamento>
 		<pay_i:dataEsecuzionePagamento>$dataEsecuzionePagamento</pay_i:dataEsecuzionePagamento>
 		<pay_i:importoTotaleDaVersare>$importoTotaleDaVersare</pay_i:importoTotaleDaVersare>
-		<pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+		<pay_i:tipoVersamento>$tipoVersamento</pay_i:tipoVersamento>
 		<pay_i:identificativoUnivocoVersamento>$identificativoUnivocoVersamento</pay_i:identificativoUnivocoVersamento>
 		<pay_i:codiceContestoPagamento>$codiceContestoPagamento</pay_i:codiceContestoPagamento>
 		<pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
@@ -61,7 +61,7 @@
 		<pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
 		<pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>$importoSingoloVersamento</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.25</pay_i:commissioneCaricoPA>
+            <pay_i:commissioneCaricoPA>$commissioneCaricoPA</pay_i:commissioneCaricoPA>
 			<pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
 			<pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
@@ -70,9 +70,9 @@
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             <pay_i:datiMarcaBolloDigitale>
-            <pay_i:tipoBollo>01</pay_i:tipoBollo>
-            <pay_i:hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
-            <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
+				<pay_i:tipoBollo>01</pay_i:tipoBollo>
+				<pay_i:hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
+				<pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
             </pay_i:datiMarcaBolloDigitale>
 		</pay_i:datiSingoloVersamento>
 	</pay_i:datiVersamento>

@@ -134,7 +134,6 @@ def step_impl(context):
         raise e
 
 
-
 @step('from body with datatable {type_table} {filebody} initial XML {primitive}')
 def step_impl(context, primitive, type_table, filebody):
     try:
@@ -809,7 +808,225 @@ def step_impl(context, filebody, type_table):
         # Interrompiamo il test
         raise e
 
+@step('RPT body generation {filebody} with datatable {type_table}')
+def step_impl(context, filebody, type_table):
+    try:
 
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                current_directory = os.getcwd()
+                
+                substring_current_directory = ""
+                
+                substring_current_directory = current_directory[:-2]
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+
+        setattr(context, 'date', date)
+        setattr(context, 'timedate', timedate)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+
+        pa = context.config.userdata.get(
+            'global_configuration').get('creditor_institution_code')
+
+        if "#iuv#" in payload:
+            iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, 'iuv', iuv)
+
+        if "#ccp#" in payload:
+            ccp = str(int(time.time() * 1000))
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
+
+        if "#ccp1#" in payload:
+            ccp1 = str(utils.current_milli_time())
+            payload = payload.replace('#ccp1#', ccp1)
+            setattr(context, "1ccp", ccp1)
+
+        if "#CCP#" in payload:
+            CCP = 'CCP' + '-' + \
+                str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CCP#', CCP)
+            setattr(context, "CCP", CCP)
+
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
+        if '#IuV#' in payload:
+            iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                            2000)) + str(random.randint(1000, 2000)) + '00'
+            payload = payload.replace('#IuV#', iuv)
+            setattr(context, 'IuV', iuv)
+
+        if '#iuv2#' in payload:
+            iuv = 'IUV' + '-' + \
+                str(date + '-' +
+                    datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#iuv2#', iuv)
+            setattr(context, '2iuv', iuv)
+
+        if '#IUVspecial#' in payload:
+            IUVspecial = '!ìUV[#à°]_' + \
+                        datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
+            payload = payload.replace('#IUVspecial#', IUVspecial)
+            setattr(context, 'IUVspecial', IUVspecial)
+
+        if '#IUV_#' in payload:
+            IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV_#', IUV_)
+            setattr(context, 'IUV_', IUV_)
+
+        if '#IUV#' in payload:
+            IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV#', IUV)
+            setattr(context, 'IUV', IUV)
+
+        if '#idCarrello#' in payload:
+            idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#idCarrello#', idCarrello)
+            setattr(context, 'idCarrello', idCarrello)
+
+        if '#CARRELLO#' in payload:
+            CARRELLO = "CARRELLO" + "-" + \
+                    str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CARRELLO#', CARRELLO)
+            setattr(context, 'CARRELLO', CARRELLO)
+
+        if '#carrello#' in payload:
+            prova = utils.random_s()
+            print('############', prova)
+            carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
+            print(carrello)
+            payload = payload.replace('#carrello#', carrello)
+            setattr(context, 'carrello', carrello)
+
+        if '#carrello1#' in payload:
+            carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+            payload = payload.replace('#carrello1#', carrello1)
+            setattr(context, 'carrello1', carrello1)
+
+        if '#secCarrello#' in payload:
+            secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#secCarrello#', secCarrello)
+            setattr(context, 'secCarrello', secCarrello)
+
+        if '#thrCarrello#' in payload:
+            thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#thrCarrello#', thrCarrello)
+            setattr(context, 'thrCarrello', thrCarrello)
+
+        if '#carrNOTENABLED#' in payload:
+            carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+            setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
+        if '#sdf#' in payload:
+            timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#sdf#', timedate)
+            setattr(context, 'sdf', timedate)
+
+        if '#mills_time#' in payload:
+            millisec = str(int(time.time() * 1000))
+            payload = payload.replace('#mills_time#', millisec)
+            setattr(context, 'mills_time', millisec)
+
+        payload = utils.replace_global_variables(payload, context)
+
+        setattr(context, 'rptAttachmentBody', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+    
+@step('RPT {payloadBody} to base64')
+def step_impl(context, payloadBody):
+    try:
+        
+        # convert body to base64
+        payload = getattr(context, payloadBody) 
+        if payload and str(payload).strip():
+            
+            print(f"RPT body: {payload}\n")
+            payload_b = bytes(payload, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            print("RPT generato: ", payload)
+            setattr(context, 'rptAttachment', payload)
+        else:
+            print("RPT body vuoto! ")
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 @given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
@@ -1034,6 +1251,124 @@ def step_impl(context, number, filebody, type_table):
         # Interrompiamo il test
         raise e
 
+
+@step('RT body generation {filebody} with datatable {type_table}')
+def step_impl(context, filebody, type_table):
+    try:
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+        
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                current_directory = os.getcwd()
+                
+                substring_current_directory = ""
+                
+                substring_current_directory = current_directory[:-2]
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        payload = utils.replace_global_variables(payload, context)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+
+        if '#date#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            payload = payload.replace('#date#', date)
+            setattr(context, 'date', date)
+
+        if "#timedate#" in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
+        if "#ccp#" in payload:
+            ccp = str(utils.current_milli_time())
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
+
+        # setattr(context, 'rt', payload)
+
+        # payload_b = bytes(payload, 'UTF-8')
+        # payload_uni = b64.b64encode(payload_b)
+        # payload = f"{payload_uni}".split("'")[1]
+
+        print("RT body generato: ", payload)
+        setattr(context, 'rtAttachmentBody', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+    
+    
+@step('RT {payloadBody} to base64')
+def step_impl(context, payloadBody):
+    try:
+        
+        # convert body to base64
+        payload = getattr(context, payloadBody) 
+        if payload and str(payload).strip():
+            
+            print(f"RT body: {payload}\n")
+            payload_b = bytes(payload, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            print("RT generato: ", payload)
+            setattr(context, 'rtAttachment', payload)
+        else:
+            print("RT body vuoto! ")
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('RT generation {filebody} with datatable {type_table}')
