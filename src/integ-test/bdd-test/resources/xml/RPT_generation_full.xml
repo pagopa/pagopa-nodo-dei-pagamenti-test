@@ -56,7 +56,7 @@
 		<pay_i:tipoVersamento>$tipoVersamento</pay_i:tipoVersamento>
 		<pay_i:identificativoUnivocoVersamento>$identificativoUnivocoVersamento</pay_i:identificativoUnivocoVersamento>
 		<pay_i:codiceContestoPagamento>$codiceContestoPagamento</pay_i:codiceContestoPagamento>
-		<pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+		<pay_i:ibanAddebito>$ibanAddebito</pay_i:ibanAddebito>
 		<pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
 		<pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
 		<pay_i:datiSingoloVersamento>

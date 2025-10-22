@@ -62,9 +62,7 @@ Feature: Semantic checks for nodoInviaRPT - OK 1579
       | identificativoUnivocoVersamento   | #iuv#                       |
       | codiceContestoPagamento           | CCD01                       |
       | tipoVersamento                    | PO                          |
-      | ibanAccredito                     | IT96R0123454321000000012345 |
       | ibanAddebito                      | IT96R0123454321000000012345 |
-      | ibanAppoggio                      | IT96R0123454321000000012345 |
       | importoSingoloVersamento          | 1.01                        |
       | anagraficaPagatore                | Gesualdo;Riccitelli         |
       | indirizzoPagatore                 | via del gesu                |
