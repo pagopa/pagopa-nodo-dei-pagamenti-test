@@ -1320,13 +1320,6 @@ def step_impl(context, filebody, type_table):
             payload = payload.replace('#ccp#', ccp)
             setattr(context, "ccp", ccp)
 
-        # setattr(context, 'rt', payload)
-
-        # payload_b = bytes(payload, 'UTF-8')
-        # payload_uni = b64.b64encode(payload_b)
-        # payload = f"{payload_uni}".split("'")[1]
-
-        print("RT body generato: ", payload)
         setattr(context, 'rtAttachmentBody', payload)
 
     except AssertionError as e:

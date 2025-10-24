@@ -10,7 +10,7 @@
 	<pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
 	<pay_i:istitutoAttestante>
 		<pay_i:identificativoUnivocoAttestante>
-			<pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+			<pay_i:IdentificativoUnivoco>G</pay_i:IdentificativoUnivoco>
 			<pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
 		</pay_i:identificativoUnivocoAttestante>
 		<pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
@@ -25,7 +25,7 @@
 	</pay_i:istitutoAttestante>
 	<pay_i:enteBeneficiario>
 		<pay_i:identificativoUnivocoBeneficiario>
-			<pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+			<pay_i:IdentificativoUnivoco>G</pay_i:IdentificativoUnivoco>
 			<pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
 		</pay_i:identificativoUnivocoBeneficiario>
 		<pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
@@ -40,7 +40,7 @@
 	</pay_i:enteBeneficiario>
 	<pay_i:soggettoVersante>
 		<pay_i:identificativoUnivocoVersante>
-			<pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+			<pay_i:IdentificativoUnivoco>F</pay_i:IdentificativoUnivoco>
 			<pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
 		</pay_i:identificativoUnivocoVersante>
 		<pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
@@ -54,7 +54,7 @@
 	</pay_i:soggettoVersante>
 	<pay_i:soggettoPagatore>
 		<pay_i:identificativoUnivocoPagatore>
-			<pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+			<pay_i:IdentificativoUnivoco>F</pay_i:IdentificativoUnivoco>
 			<pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
 		</pay_i:identificativoUnivocoPagatore>
 		<pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
