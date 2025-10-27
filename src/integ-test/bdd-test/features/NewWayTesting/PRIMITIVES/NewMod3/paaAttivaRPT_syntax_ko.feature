@@ -5,9 +5,9 @@ Feature: check syntax KO for paaAttivaRPT 1377
 
     @ALL @PRIMITIVE @NM3 @NM3PAARPTSNTKO @NM3PAARPTSNTKO_1
     Scenario Outline: syntax check on paaAttivaRPTRes
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 4000           |
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  |
         And from body with datatable vertical paaAttivaRPT_beneficiario_full initial XML paaAttivaRPT
             | esito                      | OK                            |
             | importoSingoloVersamento   | $activatePaymentNotice.amount |

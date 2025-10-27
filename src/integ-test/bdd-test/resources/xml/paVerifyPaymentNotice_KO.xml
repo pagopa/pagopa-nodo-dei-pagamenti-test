@@ -7,7 +7,7 @@
 				<faultCode>$faultCode</faultCode>
 				<faultString>$faultString</faultString>
 				<id>$id</id>
-				<description>#description#</description>
+				<description>$description</description>
 			</fault>
 		</paf:paVerifyPaymentNoticeRes>
 	</soapenv:Body>

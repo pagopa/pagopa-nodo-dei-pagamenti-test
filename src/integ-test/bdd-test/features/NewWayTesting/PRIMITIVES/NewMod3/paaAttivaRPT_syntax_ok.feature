@@ -5,15 +5,15 @@ Feature: check syntax OK for paaAttivaRPT 1378
 
     @ALL @PRIMITIVE @NM3 @NM3PAARPTSNTOK @NM3PAARPTSNTOK_1
     Scenario Outline: syntax check on paaAttivaRPTRes
-        Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount | expirationTime |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  | 4000           |
-        And from body with datatable vertical paaAttivaRPT_beneficiario_full initial XML paaAttivaRPT
-            | esito                      | OK                            |
-            | importoSingoloVersamento   | $activatePaymentNotice.amount |
-            | denominazioneBeneficiario  | #broker_AGID#                 |
-            | codiceUnitOperBeneficiario | #canale_AGID_02#              |
-            | causaleVersamento          | $iuv                          |
+        Given from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                      | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code_old# | 312#iuv#     | 10.00  |
+        And from body with datatable vertical paaAttivaRPT_complete initial XML paaAttivaRPT
+            | esito                       | OK           |
+            | importoSingoloVersamento    | 2.00         |
+            | codiceIdentificativoUnivoco | ${stz}       |
+            | denominazioneBeneficiario   | ${intermPsp} |
+            | codiceUnitOperBeneficiario  | ${can}       |
         And <tag> with <tag_value> in paaAttivaRPT
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti

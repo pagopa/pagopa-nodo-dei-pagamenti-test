@@ -13,7 +13,8 @@ Feature: Semantic checks for verificaBollettino - OK [SEM_VB_15] 1397
             | importoSingoloVersamento | 1.00                     |
             | ibanAccredito            | IT45R0760103200#ccPoste# |
             | causaleVersamento        | pagamentoTest            |
-        And pag:indirizzoBeneficiario with 44444444444_05 in paaVerificaRPT
+        And pag:codiceIdentificativoUnivoco with 44444444444_05 in paaVerificaRPT
+        And pag:indirizzoBeneficiario with 'paaVerificaRPT' in paaVerificaRPT
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response

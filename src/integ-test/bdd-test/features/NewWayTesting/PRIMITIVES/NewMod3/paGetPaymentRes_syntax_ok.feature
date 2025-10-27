@@ -19,7 +19,7 @@ Feature: Syntax checks for paGetPaymentRes - OK 1385
 			| entityUniqueIdentifierValue | 77777777777                 |
 			| fullName                    | Massimo Benvegnù            |
 			| transferAmount              | 10.00                       |
-			| fiscalCodePA                | #creditor_institution_code# |
+			| fiscalCodePA                | 77777777777                 |
 			| IBAN                        | IT45R0760103200000000001016 |
 			| remittanceInformation       | testPaGetPayment            |
 			| transferCategory            | paGetPaymentTest            |

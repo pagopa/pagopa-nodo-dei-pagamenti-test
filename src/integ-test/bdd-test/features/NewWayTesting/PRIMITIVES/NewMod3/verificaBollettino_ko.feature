@@ -74,7 +74,7 @@ Feature: NM3 verifyPaymentNotice KO
 
 
 
-    @ALL @PRIMITIVE @NM3VERIFICABOL_3 @NM3
+    @ALL @PRIMITIVE @NM3 @NM3VBLPVNRSNTKO @NM3VBLPVNRSNTKO_3
     Scenario: NM3 PaOLD verificaBollettino con ccPost #ccPoste_noIBAN# -> verificaBollettino con KO e PPT_IBAN_ACCREDITO (OLD_NM3-24M)
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost           | noticeNumber |
@@ -93,7 +93,7 @@ Feature: NM3 verifyPaymentNotice KO
 
 
 
-    @ALL @PRIMITIVE @NM3VERIFICABOL_4 @NM3
+    @ALL @PRIMITIVE @NM3 @NM3VBLPVNRSNTKO @NM3VBLPVNRSNTKO_4
     Scenario: NM3 PaOLD verificaBollettino con ccPost #ccPoste_noIBAN# -> con override paaVerificaRPT KO e PAA_SEMANTICA -> verificaBollettino con KO e PPT_ERRORE_EMESSO_DA_PAA (OLD_NM3-25M)
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost           | noticeNumber |

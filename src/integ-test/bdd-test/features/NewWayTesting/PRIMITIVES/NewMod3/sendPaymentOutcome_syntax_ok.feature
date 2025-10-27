@@ -13,10 +13,11 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
-      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                                | outcome | idempotencyKey    |
-      | #psp# | #psp#       | #canale#  | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
+      | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey    |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
     And idempotencyKey with None in sendPaymentOutcome
     And paymentChannel with None in sendPaymentOutcome
+    And payer with None in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
@@ -30,8 +31,9 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
-      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                                | outcome | idempotencyKey    |
-      | #psp# | #psp#       | #canale#  | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
+      | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey    |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | #idempotency_key# |
+    And <elem> with <value> in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     Examples:
@@ -59,12 +61,17 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
   @ALL @PRIMITIVE @NM3 @NM3SPOSNTOK @M3SPOSNTOK_3
   Scenario: SPO with alphanumeric idempotency key
     Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
+      | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | expirationTime |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  | 120000         |
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    Given from body with datatable horizontal activatePaymentNoticeBody_with_expiration_full initial XML activatePaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | idempotencyKey          | amount | expirationTime |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | #alpha_idempotency_key# | 10.00  | 120000         |
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
-      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                                | outcome | idempotencyKey                        |
-      | #psp# | #psp#       | #canale#  | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | $activatePaymentNotice.idempotencyKey |
+      | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                                | outcome | idempotencyKey                        |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      | $activatePaymentNotice.idempotencyKey |
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response

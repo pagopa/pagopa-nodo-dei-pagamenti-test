@@ -7,9 +7,9 @@ Feature: Syntax checks for sendPaymentOutcome - KO 1392
   @ALL @PRIMITIVE @NM3 @NM3SPOSNTKO @M3SPOSNTKO_1
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-    Given from body with datatable horizontal sendPaymentOutcomeBody_full initial XML sendPaymentOutcome
-      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                     | outcome |
-      | #psp# | #psp#       | #canale#  | #password# | 12345678901234567890123456789012 | OK      |
+    Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
+      | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                     | idempotencyKey    | outcome |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | #idempotency_key# | OK      |
     And <attribute> set <value> for <elem> in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
@@ -17,14 +17,14 @@ Feature: Syntax checks for sendPaymentOutcome - KO 1392
     Examples:
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_SPO_01  |
-                                                                                                                                                                                                                               | SIN_SPO_84   |
+
 
   @ALL @PRIMITIVE @NM3 @NM3SPOSNTKO @M3SPOSNTKO_2
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given from body with datatable horizontal sendPaymentOutcomeBody_idempotency_full initial XML sendPaymentOutcome
-      | idPSP | idBrokerPSP | idChannel | password   | paymentToken                     | idempotencyKey    | outcome |
-      | #psp# | #psp#       | #canale#  | #password# | 12345678901234567890123456789012 | #idempotency_key# | OK      |
+      | idPSP | idBrokerPSP | idChannel                    | password   | paymentToken                     | idempotencyKey    | outcome |
+      | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | 12345678901234567890123456789012 | #idempotency_key# | OK      |
     And <elem> with <value> in sendPaymentOutcome
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
