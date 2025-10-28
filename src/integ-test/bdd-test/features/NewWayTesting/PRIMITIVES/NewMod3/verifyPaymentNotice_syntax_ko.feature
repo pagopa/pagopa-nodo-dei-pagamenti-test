@@ -78,6 +78,7 @@ Feature: Syntax checks for verifyPaymentReq - KO 1402
       | outcome     | KO            |
       | faultCode   | #faultCode#   |
       | faultString | #faultString# |
+      | description | description   |
       | id          | 1             |
     And faultCode with <faultCodeValue> in paVerifyPaymentNotice
     And faultString with <faultStringValue> in paVerifyPaymentNotice

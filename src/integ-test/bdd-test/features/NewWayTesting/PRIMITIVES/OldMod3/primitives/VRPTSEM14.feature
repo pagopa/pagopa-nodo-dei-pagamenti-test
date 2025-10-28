@@ -17,10 +17,10 @@ Feature: Semantic checks KO for nodoVerificaRPT 1415
             | AuxDigit                       | 0                            |
             | CodIUV                         | 016101258167700              |
         And from body with datatable vertical paaVerificaRPT_KO_irrag initial XML paaVerificaRPT
-            | faultCode   | PAA_SEMANTICA                   |
-            | faultString | chiamata da rifiutare           |
-            | id          | #creditor_institution_code_old# |
-            | esito       | KO                              |
+            | faultCode   | PAA_SEMANTICA         |
+            | faultString | chiamata da rifiutare |
+            | esito       | KO                    |
+        And id with #creditor_institution_code_old# in paaVerificaRPT
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response

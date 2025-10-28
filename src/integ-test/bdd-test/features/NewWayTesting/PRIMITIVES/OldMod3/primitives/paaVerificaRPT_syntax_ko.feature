@@ -157,13 +157,14 @@ Feature: Syntax checks KO for nodoAttivaRPT 1414
             | importoSingoloVersamento | 12                                    |
             | ibanAccredito            | IT45R0760103200000000001016           |
             | causaleVersamento        | Prova                                 |
-        And <field> with <value> in paaVerificaRPT
+        And <elem1> with <value1> in paaVerificaRPT
+        And <elem2> with <value2> in paaVerificaRPT
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoVerificaRPT response
         Examples:
-            | field | value | soapUI test |
-            | fault | None  | VRPTRES6    |
+            | elem1 | value1 | elem2           | value2 | soapUI test |
+            | fault | None   | datiPagamentoPA | None   | VRPTRES6    |
 
 
     @ALL @PRIMITIVE @OM3 @OM3PAVERPTSNTKO @OM3PAVERPTSNTKO_7

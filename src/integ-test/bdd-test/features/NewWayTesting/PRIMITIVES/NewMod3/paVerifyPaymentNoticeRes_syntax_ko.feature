@@ -150,10 +150,11 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO 1387
          | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
          | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
       And from body with datatable vertical paVerifyPaymentNotice_KO initial XML paVerifyPaymentNotice
-         | outcome     | #outcome#     |
-         | faultCode   | #faultCode#   |
-         | faultString | #description# |
-         | id          | #id#          |
+         | outcome     | KO            |
+         | faultCode   | faultCode     |
+         | faultString | description   |
+         | id          | 1             |
+         | description | error message |
       And <elem> with <value> in paVerifyPaymentNotice
       And if outcome is KO set fault to None in paVerifyPaymentNotice
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice

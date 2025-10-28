@@ -18,6 +18,7 @@ Feature: Semantic checks for paVerifyPaymentNoticeRes 1386
          | faultCode   | PAA_SEMANTICA    |
          | faultString | Errore semantico |
          | id          | 1                |
+         | description | description      |
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
       When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       Then check outcome is KO of verifyPaymentNotice response

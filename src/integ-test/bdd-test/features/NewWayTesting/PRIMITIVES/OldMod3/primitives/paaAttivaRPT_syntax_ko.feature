@@ -91,7 +91,7 @@ Feature: Syntax checks KO for nodoAttivaRPT 1413
 
 
     @ALL @PRIMITIVE @OM3 @OM3PAATRPTSNTKO @OM3PAATRPTSNTKO_4
-    Scenario: Execute nodoAttivaRPT
+    Scenario Outline: Execute nodoAttivaRPT
         Given from body with datatable vertical nodoAttivaRPT_namespace_BC_incomplete initial XML nodoAttivaRPT
             | identificativoIntermediarioPSPPagamento | #psp#                                 |
             | identificativoCanalePagamento           | #canale#                              |

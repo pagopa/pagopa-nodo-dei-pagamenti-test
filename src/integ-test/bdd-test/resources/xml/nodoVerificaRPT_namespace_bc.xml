@@ -7,7 +7,7 @@
                   <identificativoCanale>$identificativoCanale</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
-                  <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+                  <codificaInfrastrutturaPSP>$codificaInfrastrutturaPSP</codificaInfrastrutturaPSP>
                   <codiceIdRPT>
                     <bc:BarCode>
                       <bc:Gln>$Gln</bc:Gln>
