@@ -187,7 +187,7 @@ Feature: Semantic checks for nodoInviaRT - OK 1583
         And check esito is OK of nodoInviaRT response
 
 
-    @ALL @PRIMITIVE @RTSNTOK @RTSNTOK_4
+    @ALL @PRIMITIVE @RTSNTOK @RTSNTOK_3
     #SULL'EXCEL DA PPT_SEMANTICA MENTRE SU SOAPUI OK
     Scenario Outline: Semantic check of nodoInviaRT
         Given RPT generation RPT_generation_full with datatable vertical
@@ -264,7 +264,7 @@ Feature: Semantic checks for nodoInviaRT - OK 1583
             | pay_i:e-mailPagatore    | None  | RTSEM85 |
 
 
-    @ALL @PRIMITIVE @RTSNTOK @RTSNTOK_5
+    @ALL @PRIMITIVE @RTSNTOK @RTSNTOK_4
     Scenario: Semantic checks of nodoInviaRT [RTSEM94]
         Given RPT generation RPT_generation_full with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
@@ -323,7 +323,7 @@ Feature: Semantic checks for nodoInviaRT - OK 1583
         And check esito is OK of nodoInviaRT response
 
 
-    @ALL @PRIMITIVE @RTSNTOK @RTSNTOK_6
+    @ALL @PRIMITIVE @RTSNTOK @RTSNTOK_5
     Scenario: Semantic checks of nodoInviaRT [RTSEM89]
         Given RPT generation RPT_generation_with_2_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |

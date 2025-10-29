@@ -2,7 +2,6 @@ Feature: Syntax checks for RPT - KO 1580
 
   Background:
     Given systems up
-                                                                                                                                                                                                                                                                   
 
   @ALL @PRIMITIVE @RPTSNTKO @RPTSNTKO_1
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RPT tag

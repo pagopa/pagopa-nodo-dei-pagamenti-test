@@ -195,7 +195,7 @@ Feature: Semantic checks for nodoInviaRT - KO 1582
 
 
     @ALL @PRIMITIVE @RTSNTKO @RTSNTKO_4
-    Scenario: Execute nodoInviaRPT 
+    Scenario: Execute nodoInviaRPT
         Given RPT generation RPT_generation_full with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | #id_station_old#                |

@@ -1,24 +1,11 @@
 Feature: Semantic checks KO for nodoChiediCatalogoServizi 215
     Background:
         Given systems up
-    
-    @runnable
-    Scenario: Check SEM_NCCS_01 
-    Given initial XML nodoChiediCatalogoServizi
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediCatalogoServizi>
-                <identificativoPSP>sconosciuto</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
-                <password>pwdpwdpwd</password>
-                <!--Optional:-->
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            </ws:nodoChiediCatalogoServizi>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-    When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti 
-    Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoChiediCatalogoServizi response
+
+    @ALL @FLOW @FLOW_FULL @NM1 @NM1INSEMNCCS @NM1INSEMNCCS_1
+    Scenario: Check SEM_NCCS_01
+        Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio           |
+            | sconosciuto       | #psp#                          | #canale#             | #password# | #creditor_institution_code_old# |
+        When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
+        Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoChiediCatalogoServizi response
