@@ -1,24 +1,15 @@
 Feature: Semantic checks KO for nodoChiediCatalogoServizi 240
     Background:
         Given systems up
-    
-    @runnable
-    Scenario: Check SIN_NCCS_15
-    Given initial XML nodoChiediCatalogoServizi
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediCatalogoServizi>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
-                <password>passwor</password>
-                <!--Optional:-->
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            </ws:nodoChiediCatalogoServizi>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-    When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti 
-    Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCatalogoServizi response
+
+    @ALL @FLOW @FLOW_FULL @NM1 @NM1INSINCCS @NM1INSINCCS_15
+    Scenario Outline: Check SIN_NCCS_15
+        Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio       |
+            | #psp#             | #psp#                          | #canale#             | #password# | #creditor_institution_code# |
+        And <elem> with <value> in nodoChiediCatalogoServizi
+        When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCatalogoServizi response
+        Examples:
+            | elem     | value   | soapUI test |
+            | password | passwor | SIN_NCCS_15 |

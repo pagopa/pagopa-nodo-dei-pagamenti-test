@@ -1,24 +1,17 @@
 Feature: Semantic checks KO for nodoChiediCatalogoServizi 226
     Background:
         Given systems up
-    
-    @runnable
-    Scenario: Check SIN_NCCS_01
-    Given initial XML nodoChiediCatalogoServizi
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediCatalogoServizi>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
-                <password>pwdpwdpwd</password>
-                <!--Optional:-->
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            </ws:nodoChiediCatalogoServizi>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
-    When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti 
-    Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCatalogoServizi response
+
+    @ALL @PRIMITIVE @NM1INSINCCS @NM1INSINCCS_1
+    Scenario Outline: Check SIN_NCCS_01
+        Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio       |
+            | #psp#             | #psp#                          | #canale#             | #password# | #creditor_institution_code# |
+        And <attribute> set <value> for <elem> in nodoChiediCatalogoServizi
+        When psp sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCatalogoServizi response
+        Examples:
+            | elem             | attribute     | value                                     | soapUI test |
+            | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_NCCS_01 |
+
+

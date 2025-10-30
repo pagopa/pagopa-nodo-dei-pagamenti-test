@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi 222
     Background:
         Given systems up
 
-    @ALL @FLOW @FLOW_FULL @NM1 @NM1INSEMNCCS @NM1INSEMNCCS_8
+    @ALL @PRIMITIVE @NM1INSEMNCCS @NM1INSEMNCCS_8
     Scenario: Check SEM_NCCS_08
         Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio       |
