@@ -1,12 +1,11 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
 	<soapenv:Header/>
 	<soapenv:Body>
-		<ws:nodoChiediInformativaPA>
+		<ws:nodoChiediTemplateInformativaPSP>
 			<identificativoPSP>$identificativoPSP</identificativoPSP>
 			<identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
 			<identificativoCanale>$identificativoCanale</identificativoCanale>
 			<password>$password</password>
-			<identificativoDominio>$identificativoDominio</identificativoDominio>
-		</ws:nodoChiediInformativaPA>
+		</ws:nodoChiediTemplateInformativaPSP>
 	</soapenv:Body>
 </soapenv:Envelope>

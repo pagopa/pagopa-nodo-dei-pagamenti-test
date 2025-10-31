@@ -1,22 +1,15 @@
 Feature: Semantic checks KO for nodoChiediInformativaPA 257
     Background:
         Given systems up
-    
-    @runnable
-    Scenario: Check CTIPSPSEM2
-    Given initial XML nodoChiediTemplateInformativaPSP
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoChiediTemplateInformativaPSP>
-                    <identificativoPSP>NOT_ENABLED</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                </ws:nodoChiediTemplateInformativaPSP>
-            </soapenv:Body>
-            </soapenv:Envelope>
-        """
-    When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti 
-    Then check faultCode is PPT_PSP_DISABILITATO of nodoChiediTemplateInformativaPSP response
+
+    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSEMCTIP_2
+    Scenario Outline: Check CTIPSPSEM2
+        Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
+            | #psp#             | #psp#                          | #canale#             | #password# |
+        And <elem> with <value> in nodoChiediTemplateInformativaPSP
+        When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
+        Then check faultCode is PPT_PSP_DISABILITATO of nodoChiediTemplateInformativaPSP response
+        Examples:
+            | elem              | value       | soapUI test |
+            | identificativoPSP | NOT_ENABLED | CTIPSPSEM2  |

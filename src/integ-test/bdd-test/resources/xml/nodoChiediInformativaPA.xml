@@ -6,7 +6,6 @@
 			<identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
 			<identificativoCanale>$identificativoCanale</identificativoCanale>
 			<password>$password</password>
-			<identificativoDominio>$identificativoDominio</identificativoDominio>
 		</ws:nodoChiediInformativaPA>
 	</soapenv:Body>
 </soapenv:Envelope>

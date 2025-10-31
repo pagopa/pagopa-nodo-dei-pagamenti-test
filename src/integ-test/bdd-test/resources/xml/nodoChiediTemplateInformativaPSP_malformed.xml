@@ -1,0 +1,13 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+	<soapenv:Header>
+		<ppt:nodoChiediTemplateInformativaPSP>ciao</ppt:nodoChiediTemplateInformativaPSP>
+	</soapenv:Header>
+	<soapenv:Body>
+		<ws:nodoChiediTemplateInformativaPSP>
+			<identificativoPSP>$identificativoPSP</identificativoPSP>
+			<identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
+			<identificativoCanale>$identificativoCanale</identificativoCanale>
+			<password>$password</password>
+		</ws:nodoChiediTemplateInformativaPSP>
+	</soapenv:Body>
+</soapenv:Envelope>

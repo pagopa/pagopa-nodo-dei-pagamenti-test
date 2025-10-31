@@ -2,22 +2,12 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP 264
     Background:
         Given systems up
 
-    @runnable
+
+    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_1
     Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive
-        Given initial XML nodoChiediTemplateInformativaPSP
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoChiediTemplateInformativaPSP>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            </ws:nodoChiediTemplateInformativaPSP>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
+            | #psp#             | #psp#                          | #canale#             | #password# |
         And <elem> with <value> in nodoChiediTemplateInformativaPSP
         When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
@@ -39,59 +29,37 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP 264
             | password                            | s7fhr2                               | CTIPSPSIN17 |
             | password                            | qertyuop234dcvgtresd567yhbvfrteesd56 | CTIPSPSIN18 |
 
-    @runnable
+
+    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_2
     Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN1]
-        Given initial XML nodoChiediTemplateInformativaPSP
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:nodoChiediTemplateInformativaPSP>ciao</ppt:nodoChiediTemplateInformativaPSP>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoChiediTemplateInformativaPSP>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            </ws:nodoChiediTemplateInformativaPSP>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable horizontal nodoChiediTemplateInformativaPSP_malformed initial XML nodoChiediTemplateInformativaPSP
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
+            | #psp#             | #psp#                          | #canale#             | #password# |
         When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
 
-    @runnable
-    Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN3]
-        Given initial XML nodoChiediTemplateInformativaPSP
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-            <soapenv:Header/>
-            <!--<soapenv:Body>
-            <ws:nodoChiediTemplateInformativaPSP>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            </ws:nodoChiediTemplateInformativaPSP>
-            </soapenv:Body>-->
-            </soapenv:Envelope>
-            """
-        When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
 
-    @runnable
-    Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN5]
-        Given initial XML nodoChiediTemplateInformativaPSP
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_3
+    Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN3]
+        Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
+            | #psp#             | #psp#                          | #canale#             | #password# |
+        And <elem> with <value> in nodoChiediTemplateInformativaPSP
         When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
+        Examples:
+            | elem         | value | SoapUI     |
+            | soapenv:Body | None  | CTIPSPSIN3 |
+
+
+    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_4
+    Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN5]
+        Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
+            | #psp#             | #psp#                          | #canale#             | #password# |
+        And <elem> with <value> in nodoChiediTemplateInformativaPSP
+        When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
+        Examples:
+            | elem                                | value        | SoapUI     |
+            | ws:nodoChiediTemplateInformativaPSP | RemoveParent | CTIPSPSIN5 |

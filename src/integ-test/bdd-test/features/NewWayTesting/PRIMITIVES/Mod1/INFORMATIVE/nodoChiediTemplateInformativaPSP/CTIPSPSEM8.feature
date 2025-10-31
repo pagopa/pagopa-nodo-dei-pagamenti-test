@@ -1,22 +1,16 @@
 Feature: Semantic checks KO for nodoChiediInformativaPA 263
     Background:
         Given systems up
-    
-    @runnable
-    Scenario: Check CTIPSPSEM8
-    Given initial XML nodoChiediTemplateInformativaPSP
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoChiediTemplateInformativaPSP>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>91000000001_03</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                </ws:nodoChiediTemplateInformativaPSP>
-            </soapenv:Body>
-            </soapenv:Envelope>
-        """
-    When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti 
-    Then check faultCode is PPT_AUTORIZZAZIONE of nodoChiediTemplateInformativaPSP response
+
+
+    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSEMCTIP_8
+    Scenario Outline: Check CTIPSPSEM8
+        Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
+            | #psp#             | #psp#                          | #canale#             | #password# |
+        And <elem> with <value> in nodoChiediTemplateInformativaPSP
+        When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoChiediTemplateInformativaPSP response
+        Examples:
+            | elem                 | value          | soapUI test |
+            | identificativoCanale | 91000000001_03 | CTIPSPSEM8  |
