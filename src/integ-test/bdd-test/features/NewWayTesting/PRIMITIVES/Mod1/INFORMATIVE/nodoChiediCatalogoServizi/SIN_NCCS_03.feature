@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi 228
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @NM1 @NM1INSINCCS @NM1INSINCCS_3
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCCSKO @MOD1SINCCSKO_3
     Scenario Outline: Check SIN_NCCS_03
         Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio       |

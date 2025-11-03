@@ -2,21 +2,12 @@ Feature: process tests for nodoPAChiediInformativaPA 316
 
     Background:
         Given systems up
-@ALL @PRIMITIVE @MOD1
+
+
+    @ALL @PRIMITIVE @MOD1 @MOD1CIPA @MOD1CIPA_1
     Scenario: Send nodoPAChiediInformativaPA
-        Given initial XML nodoPAChiediInformativaPA
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoPAChiediInformativaPA>
-                    <identificativoIntermediarioPA>#creditor_institution_code_secondary#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station_secondary#</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
-                </ws:nodoPAChiediInformativaPA>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable horizontal nodoPAChiediInformativaPA_full initial XML nodoPAChiediInformativaPA
+            | identificativoIntermediarioPA         | identificativoStazioneIntermediarioPA | password   | identificativoDominio                 |
+            | #creditor_institution_code_secondary# | #id_station_secondary#                | #password# | #creditor_institution_code_secondary# |
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
         Then check xmlInformativa field exists in nodoPAChiediInformativaPA response

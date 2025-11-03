@@ -3,7 +3,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi 223
         Given systems up
 
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMNCCS @NM1INSEMNCCS_9
+    @ALL @PRIMITIVE @MOD1 @MOD1SEMNCCSKO @MOD1SEMNCCSKO_9
     Scenario: Check SEM_NCCS_09
         Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio |

@@ -3,45 +3,22 @@ Feature: process tests for nodoChiediCatalogoServizi 318
     Background:
         Given systems up
 
-@ALL @PRIMITIVE @MOD1
+
+    @ALL @PRIMITIVE @MD1 @MOD1CICSE @MOD1CICSE_1
     Scenario: Send nodoChiediCatalogoServizi
-        Given initial XML nodoChiediCatalogoServizi
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoChiediCatalogoServizi>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <!-- questo campo manda in eccezione il Nodo3 ma non il 4 -->
-                    <identificativoDominio>00493410583</identificativoDominio>
-                </ws:nodoChiediCatalogoServizi>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio |
+            | #psp#             | #psp#                          | #canale#             | #password# | 00493410583           |
         When PSP sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
         Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServizi response
         And check nodoChiediNumeroAvvisoRisposta field exists in nodoChiediCatalogoServizi response
 
-@ALL @PRIMITIVE @MOD1
-        Scenario: Send second nodoChiediCatalogoServizi
-        Given initial XML nodoChiediCatalogoServizi
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoChiediCatalogoServizi>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                </ws:nodoChiediCatalogoServizi>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+
+    @ALL @PRIMITIVE @MOD1 @MOD1CICSE @MOD1CICSE_2
+    Scenario: Send second nodoChiediCatalogoServizi
+        Given from body with datatable horizontal nodoChiediCatalogoServizi_full initial XML nodoChiediCatalogoServizi
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   | identificativoDominio           |
+            | #psp#             | #psp#                          | #canale#             | #password# | #creditor_institution_code_old# |
         When PSP sends SOAP nodoChiediCatalogoServizi to nodo-dei-pagamenti
         Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServizi response
         And check nodoChiediNumeroAvvisoRisposta field exists in nodoChiediCatalogoServizi response

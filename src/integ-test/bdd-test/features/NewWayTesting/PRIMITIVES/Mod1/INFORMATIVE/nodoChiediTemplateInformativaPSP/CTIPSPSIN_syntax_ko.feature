@@ -3,7 +3,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP 264
         Given systems up
 
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_1
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCTIPKO @MOD1SINCTIPKO_1
     Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive
         Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
@@ -30,7 +30,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP 264
             | password                            | qertyuop234dcvgtresd567yhbvfrteesd56 | CTIPSPSIN18 |
 
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_2
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCTIPKO @MOD1SINCTIPKO_2
     Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN1]
         Given from body with datatable horizontal nodoChiediTemplateInformativaPSP_malformed initial XML nodoChiediTemplateInformativaPSP
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
@@ -39,7 +39,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP 264
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
 
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_3
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCTIPKO @MOD1SINCTIPKO_3
     Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN3]
         Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
@@ -52,7 +52,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP 264
             | soapenv:Body | None  | CTIPSPSIN3 |
 
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSINCTIPKO_4
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCTIPKO @MOD1SINCTIPKO_4
     Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN5]
         Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |

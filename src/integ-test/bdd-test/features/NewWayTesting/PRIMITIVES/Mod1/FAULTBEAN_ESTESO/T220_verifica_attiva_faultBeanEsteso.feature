@@ -3,7 +3,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso 214
     Background:
         Given systems up
 
-    @ALL @FLOW @FLOW_FULL @NM1 @NM1FBENST @NM1FBENST_1 @after
+    @ALL @PRIMITIVE @MOD1 @MOD1FBENST @MOD1FBENST_1 @after
     Scenario: Execute nodoVerificaRPT with FAULT_BEAN_ESTESO = 'Y'
         Given update for table INTERMEDIARI_PSP with parameter FAULT_BEAN_ESTESO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |

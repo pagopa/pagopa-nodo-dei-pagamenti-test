@@ -3,7 +3,7 @@ Feature: Semantic checks KO for nodoChiediInformativaPA 259
         Given systems up
 
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMCTIP @NM1INSEMCTIP_4
+    @ALL @PRIMITIVE @MOD1 @MOD1SEMCTIPKO @MOD1SEMCTIPKO_4
     Scenario Outline: Check CTIPSPSEM4
         Given from body with datatable horizontal nodoChiediTemplateInformativaPSP initial XML nodoChiediTemplateInformativaPSP
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |

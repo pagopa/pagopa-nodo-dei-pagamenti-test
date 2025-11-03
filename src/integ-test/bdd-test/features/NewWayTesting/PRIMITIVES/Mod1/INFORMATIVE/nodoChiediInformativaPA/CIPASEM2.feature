@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoChiediInformativaPA 247
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @NM1 @NM1INSEMCIPA @NM1INSEMCIPA_2
+    @ALL @PRIMITIVE @MOD1 @MOD1SEMCIPAKO @MOD1SEMCIPAKO_2
     Scenario Outline: Check SCheck CIPASEM2
         Given from body with datatable horizontal nodoChiediInformativaPA initial XML nodoChiediInformativaPA
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale | password   |
