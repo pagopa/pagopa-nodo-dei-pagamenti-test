@@ -1,29 +1,20 @@
 Feature: T105_ChiediListaPendentiRPT_soloObbligatori 612
-   Background:
+    Background:
         Given systems up
 
-@runnable     
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCLPROK @MOD1SINCLPROK_2
     Scenario: Execute nodoChiediListaPendentiRPT request
-        Given initial XML nodoChiediListaPendentiRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:nodoChiediListaPendentiRPT>
-                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <password>pwdpwdpwd</password>
-                <!--identificativoDominio>#creditor_institution_code#</identificativoDominio-->
-                <rangeDa>#yesterday_date#</rangeDa>
-                <rangeA>#tomorrow_date#</rangeA>
-                <dimensioneLista>5</dimensioneLista>
-            </ws:nodoChiediListaPendentiRPT>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+        Given from body with datatable vertical nodoChiediListaPendentiRPT_full initial XML nodoChiediListaPendentiRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code# |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | password                              | #password#                  |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | dimensioneLista                       | 5                           |
+            | rangeDa                               | #yesterday_date#            |
+            | rangeA                                | #tomorrow_date#             |
+        And identificativoDominio with None in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
         Then check totRestituiti field exists in nodoChiediListaPendentiRPT response
         And check listaRPTPendenti field exists in nodoChiediListaPendentiRPT response
         And check identificativoUnivocoVersamento field exists in nodoChiediListaPendentiRPT response
-        #And checks identificativoDominio contains #creditor_institution_code# of nodoChiediListaPendentiRPT response
-        #And checks identificativoUnivocoVersamento contains $iuv of nodoChiediListaPendentiRPT response

@@ -3,70 +3,43 @@ Feature: Syntax checks for nodoChiediCopiaRT - KO 1426
     Background:
         Given systems up
 
-@ALL @PRIMITIVE
-    # [CCRTSIN1]
-    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive
-        Given initial XML nodoChiediCopiaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header>
-                    <ppt:nodoChiediCopiaRT>ciao</ppt:nodoChiediCopiaRT>
-                </soapenv:Header>
-                <soapenv:Body>
-                    <ws:nodoChiediCopiaRT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
-                        <identificativoUnivocoVersamento>IUV846</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>codiceContestoPagamento</codiceContestoPagamento>
-                    </ws:nodoChiediCopiaRT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCCRTKO @MOD1SINCCRTKO_1
+    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive [CCRTSIN1]
+        Given from body with datatable vertical nodoChiediCopiaRT_malformed initial XML nodoChiediCopiaRT
+            | identificativoIntermediarioPA         | 44444444444             |
+            | identificativoStazioneIntermediarioPA | 44444444444_01          |
+            | password                              | #password#              |
+            | identificativoDominio                 | 44444444444             |
+            | identificativoUnivocoVersamento       | IUV846                  |
+            | codiceContestoPagamento               | codiceContestoPagamento |
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCopiaRT response
 
-@ALL @PRIMITIVE
-    # [CCRTSIN5]
-    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive
-        Given initial XML nodoChiediCopiaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead">
-                <soapenv:Header />
-                <soapenv:Body>
-                    <ppt:nodoChiediCopiaRT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
-                        <identificativoUnivocoVersamento>IUV846</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>codiceContestoPagamento</codiceContestoPagamento>
-                    </ppt:nodoChiediCopiaRT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCCRTKO @MOD1SINCCRTKO_2
+    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive [CCRTSIN5]
+        Given from body with datatable vertical nodoChiediCopiaRT_namespace_ppt initial XML nodoChiediCopiaRT
+            | identificativoIntermediarioPA         | 44444444444             |
+            | identificativoStazioneIntermediarioPA | 44444444444_01          |
+            | password                              | #password#              |
+            | identificativoDominio                 | 44444444444             |
+            | identificativoUnivocoVersamento       | IUV846                  |
+            | codiceContestoPagamento               | codiceContestoPagamento |
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCopiaRT response
 
-@ALL @PRIMITIVE
+
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCCRTKO @MOD1SINCCRTKO_3
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediCopiaRT primitive
-        Given initial XML nodoChiediCopiaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header />
-                <soapenv:Body>
-                    <ws:nodoChiediCopiaRT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
-                        <identificativoUnivocoVersamento>IUV846</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>codiceContestoPagamento</codiceContestoPagamento>
-                    </ws:nodoChiediCopiaRT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable vertical nodoChiediCopiaRT initial XML nodoChiediCopiaRT
+            | identificativoIntermediarioPA         | 44444444444             |
+            | identificativoStazioneIntermediarioPA | 44444444444_01          |
+            | password                              | #password#              |
+            | identificativoDominio                 | 44444444444             |
+            | identificativoUnivocoVersamento       | IUV846                  |
+            | codiceContestoPagamento               | codiceContestoPagamento |
         And <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediCopiaRT response

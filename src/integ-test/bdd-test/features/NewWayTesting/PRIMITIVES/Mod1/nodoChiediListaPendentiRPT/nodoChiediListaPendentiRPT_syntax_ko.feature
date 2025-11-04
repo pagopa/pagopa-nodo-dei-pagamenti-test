@@ -3,48 +3,31 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - KO 1429
     Background:
         Given systems up
 
-@runnable
-    # [CLPRPTSIN1]
-    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediListaPendentiRPT primitive
-        Given initial XML nodoChiediListaPendentiRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wss="http://ws.pagamenti.telematici.gov/wsshead/">
-                <soapenv:Header />
-                <soapenv:Body>
-                    <wss:nodoChiediListaPendentiRPT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
-                        <rangeDa>2001-02-02T12:00:00</rangeDa>
-                        <rangeA>2017-11-11T12:00:00</rangeA>
-                        <dimensioneLista>10</dimensioneLista>
-                    </wss:nodoChiediListaPendentiRPT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCLPRKO @MOD1SINCLPRKO_1
+    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediListaPendentiRPT primitive [CLPRPTSIN1]
+        Given from body with datatable vertical nodoChiediListaPendentiRPT initial XML nodoChiediListaPendentiRPT
+            | identificativoIntermediarioPA         | 44444444444    |
+            | identificativoStazioneIntermediarioPA | 44444444444_01 |
+            | password                              | #password#     |
+            | identificativoDominio                 | 44444444444    |
+            | dimensioneLista                       | 10             |
+        And <attribute> set <value> for <elem> in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediListaPendentiRPT response
+        Examples:
+            | elem             | attribute | value                                       | soapUI test |
+            | soapenv:Envelope | xmlns:ws  | http://ws.pagamenti.telematici.gov/wsshead/ | CLPRPTSIN1  |
 
-@runnable
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SINCLPRKO @MOD1SINCLPRKO_2
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediListaPendentiRPT primitive
-        Given initial XML nodoChiediListaPendentiRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header />
-                <soapenv:Body>
-                    <ws:nodoChiediListaPendentiRPT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
-                        <rangeDa>2001-02-02T12:00:00</rangeDa>
-                        <rangeA>2017-11-11T12:00:00</rangeA>
-                        <dimensioneLista>10</dimensioneLista>
-                    </ws:nodoChiediListaPendentiRPT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable vertical nodoChiediListaPendentiRPT initial XML nodoChiediListaPendentiRPT
+            | identificativoIntermediarioPA         | 44444444444    |
+            | identificativoStazioneIntermediarioPA | 44444444444_01 |
+            | password                              | #password#     |
+            | identificativoDominio                 | 44444444444    |
+            | dimensioneLista                       | 10             |
         And <tag> with <tag_value> in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediListaPendentiRPT response
@@ -78,4 +61,3 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - KO 1429
             | dimensioneLista                       | 2.51                                 | CLPRPTSIN24 |
             | dimensioneLista                       | -11                                  | CLPRPTSIN25 |
             | dimensioneLista                       | 0                                    | CLPRPTSIN26 |
-

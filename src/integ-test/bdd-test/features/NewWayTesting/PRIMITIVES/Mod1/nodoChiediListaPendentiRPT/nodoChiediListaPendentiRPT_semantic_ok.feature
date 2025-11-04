@@ -3,25 +3,15 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - OK 1428
     Background:
         Given systems up
 
-@runnable
+
+    @ALL @PRIMITIVE @MOD1 @MOD1SEMNCLPROK @MOD1SEMNCLPROK_1
     Scenario Outline: Check semantic errors for nodoChiediListaPendentiRPT primitive
-        Given initial XML nodoChiediListaPendentiRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header />
-                <soapenv:Body>
-                    <ws:nodoChiediListaPendentiRPT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-                        <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
-                        <rangeDa>2020-08-01T12:00:00</rangeDa>
-                        <rangeA>2020-08-01T12:00:00</rangeA>
-                        <dimensioneLista>10</dimensioneLista>
-                    </ws:nodoChiediListaPendentiRPT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        Given from body with datatable vertical nodoChiediListaPendentiRPT initial XML nodoChiediListaPendentiRPT
+            | identificativoIntermediarioPA         | 44444444444    |
+            | identificativoStazioneIntermediarioPA | 44444444444_01 |
+            | password                              | #password#     |
+            | identificativoDominio                 | 44444444444    |
+            | dimensioneLista                       | 10             |
         And rangeDa with <rangeDa_value> in nodoChiediListaPendentiRPT
         And rangeA with <rangeA_value> in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti

@@ -3708,3 +3708,12 @@ def step_impl(context, primitive_resp, xsd):
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
+    
+
+@step("through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
+def step_impl(context, query_name, param, position, row_number, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[row_number][position]
+    print(f'{param}: {selected_element}')
+    setattr(context, key, selected_element)
