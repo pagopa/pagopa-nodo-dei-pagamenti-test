@@ -609,6 +609,99 @@ def step_impl(context, number, filebody, type_table):
         # Interrompiamo il test
         raise e
 
+@step('RPT{number:d} body generation {filebody} with datatable {type_table}')
+def step_impl(context, number, filebody, type_table):
+    try:
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                current_directory = os.getcwd()
+                
+                substring_current_directory = ""
+                
+                substring_current_directory = current_directory[:-2]
+
+                print("La directory corrente è:", current_directory)
+
+                file_path = f"{substring_current_directory}/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+                
+                print("Il file path corrente è:", file_path)
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+
+        setattr(context, 'date', date)
+        setattr(context, 'timedate', timedate)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+
+        pa = context.config.userdata.get(
+            'global_configuration').get('creditor_institution_code')
+
+        if f'#iuv{number}#' in payload:
+            iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
+                datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+            payload = payload.replace(f'#iuv{number}#', iuv)
+            setattr(context, f'{number}iuv', iuv)
+
+        if f"#ccp{number}#" in payload:
+            ccp = str(int(time.time() * 1000))
+            payload = payload.replace(f'#ccp{number}#', ccp)
+            setattr(context, f"{number}ccp", ccp)
+
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
+
+        payload = utils.replace_global_variables(payload, context)
+
+        setattr(context, f'rpt{number}AttachmentBody', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('RPT generation {filebody} with datatable {type_table}')
@@ -1007,13 +1100,42 @@ def step_impl(context, payloadBody):
         payload = getattr(context, payloadBody) 
         if payload and str(payload).strip():
             
-            print(f"RPT body: {payload}\n")
+            #print(f"RPT body: {payload}\n")
             payload_b = bytes(payload, 'UTF-8')
             payload_uni = b64.b64encode(payload_b)
             payload = f"{payload_uni}".split("'")[1]
 
             print("RPT generato: ", payload)
             setattr(context, 'rptAttachment', payload)
+        else:
+            print("RPT body vuoto! ")
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+    
+@step('RPT {payloadBody} to base64 as {name}')
+def step_impl(context, payloadBody, name):
+    try:
+        
+        # convert body to base64
+        payload = getattr(context, payloadBody) 
+        if payload and str(payload).strip():
+            
+            #print(f"RPT body: {payload}\n")
+            payload_b = bytes(payload, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            print("RPT generato: ", payload)
+            setattr(context, f"{name}", payload)
         else:
             print("RPT body vuoto! ")
 
@@ -1342,7 +1464,7 @@ def step_impl(context, payloadBody):
         payload = getattr(context, payloadBody) 
         if payload and str(payload).strip():
             
-            print(f"RT body: {payload}\n")
+            #print(f"RT body: {payload}\n")
             payload_b = bytes(payload, 'UTF-8')
             payload_uni = b64.b64encode(payload_b)
             payload = f"{payload_uni}".split("'")[1]
