@@ -4,450 +4,556 @@ Feature: T001_CarrelloRPT_5RPT_2versamenti 509
     Background:
         Given systems up
 
-    @runnable
-    Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given RPT generation
-            """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
-            <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-            </pay_i:dominio>
-            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
-            <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
-            <pay_i:soggettoPagatore>
-            <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoPagatore>
-            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
-            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
-            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
-            <pay_i:capPagatore>00186</pay_i:capPagatore>
-            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
-            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
-            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-            </pay_i:soggettoPagatore>
-            <pay_i:enteBeneficiario>
-            <pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
-            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
-            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
-            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
-            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
-            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
-            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
-            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-            </pay_i:enteBeneficiario>
-            <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
-            <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
-            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            </pay_i:datiVersamento>
-            </pay_i:RPT>
-            """
-        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And RPT2 generation
-            """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
-            <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-            </pay_i:dominio>
-            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
-            <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
-            <pay_i:soggettoPagatore>
-            <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoPagatore>
-            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
-            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
-            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
-            <pay_i:capPagatore>00186</pay_i:capPagatore>
-            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
-            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
-            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-            </pay_i:soggettoPagatore>
-            <pay_i:enteBeneficiario>
-            <pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
-            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
-            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
-            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
-            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
-            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
-            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
-            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-            </pay_i:enteBeneficiario>
-            <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
-            <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
-            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            </pay_i:datiVersamento>
-            </pay_i:RPT>
-            """
-        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And RPT3 generation
-            """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
-            <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-            </pay_i:dominio>
-            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
-            <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
-            <pay_i:soggettoPagatore>
-            <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoPagatore>
-            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
-            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
-            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
-            <pay_i:capPagatore>00186</pay_i:capPagatore>
-            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
-            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
-            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-            </pay_i:soggettoPagatore>
-            <pay_i:enteBeneficiario>
-            <pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
-            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
-            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
-            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
-            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
-            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
-            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
-            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-            </pay_i:enteBeneficiario>
-            <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
-            <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
-            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            </pay_i:datiVersamento>
-            </pay_i:RPT>
-            """
-        And generate 3 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And RPT4 generation
-            """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
-            <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-            </pay_i:dominio>
-            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
-            <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
-            <pay_i:soggettoPagatore>
-            <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoPagatore>
-            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
-            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
-            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
-            <pay_i:capPagatore>00186</pay_i:capPagatore>
-            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
-            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
-            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-            </pay_i:soggettoPagatore>
-            <pay_i:enteBeneficiario>
-            <pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
-            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
-            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
-            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
-            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
-            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
-            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
-            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-            </pay_i:enteBeneficiario>
-            <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
-            <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
-            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            </pay_i:datiVersamento>
-            </pay_i:RPT>
-            """
-        And generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And RPT5 generation
-            """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
-            <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
-            </pay_i:dominio>
-            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
-            <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
-            <pay_i:soggettoPagatore>
-            <pay_i:identificativoUnivocoPagatore>
-            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoPagatore>
-            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
-            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
-            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
-            <pay_i:capPagatore>00186</pay_i:capPagatore>
-            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
-            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
-            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
-            </pay_i:soggettoPagatore>
-            <pay_i:enteBeneficiario>
-            <pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
-            </pay_i:identificativoUnivocoBeneficiario>
-            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
-            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
-            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
-            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
-            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
-            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
-            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
-            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
-            </pay_i:enteBeneficiario>
-            <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$4iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
-            <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
-            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            </pay_i:datiVersamento>
-            </pay_i:RPT>
-            """
+    # @runnable @test1
+    # Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
+    #     Given RPT generation
+    #         """
+    #         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+    #         <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+    #         <pay_i:dominio>
+    #         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+    #         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+    #         </pay_i:dominio>
+    #         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+    #         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+    #         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+    #         <pay_i:soggettoPagatore>
+    #         <pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+    #         <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+    #         <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+    #         <pay_i:capPagatore>00186</pay_i:capPagatore>
+    #         <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+    #         <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+    #         <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+    #         <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+    #         </pay_i:soggettoPagatore>
+    #         <pay_i:enteBeneficiario>
+    #         <pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+    #         <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+    #         <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+    #         <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+    #         <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+    #         <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+    #         <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+    #         <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+    #         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+    #         </pay_i:enteBeneficiario>
+    #         <pay_i:datiVersamento>
+    #         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+    #         <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
+    #         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+    #         <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
+    #         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+    #         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+    #         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+    #         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         </pay_i:datiVersamento>
+    #         </pay_i:RPT>
+    #         """
+    #     And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+    #     And RPT2 generation
+    #         """
+    #         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+    #         <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+    #         <pay_i:dominio>
+    #         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+    #         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+    #         </pay_i:dominio>
+    #         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+    #         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+    #         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+    #         <pay_i:soggettoPagatore>
+    #         <pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+    #         <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+    #         <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+    #         <pay_i:capPagatore>00186</pay_i:capPagatore>
+    #         <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+    #         <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+    #         <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+    #         <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+    #         </pay_i:soggettoPagatore>
+    #         <pay_i:enteBeneficiario>
+    #         <pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+    #         <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+    #         <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+    #         <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+    #         <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+    #         <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+    #         <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+    #         <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+    #         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+    #         </pay_i:enteBeneficiario>
+    #         <pay_i:datiVersamento>
+    #         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+    #         <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
+    #         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+    #         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+    #         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+    #         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+    #         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+    #         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         </pay_i:datiVersamento>
+    #         </pay_i:RPT>
+    #         """
+    #     And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+    #     And RPT3 generation
+    #         """
+    #         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+    #         <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+    #         <pay_i:dominio>
+    #         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+    #         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+    #         </pay_i:dominio>
+    #         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+    #         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+    #         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+    #         <pay_i:soggettoPagatore>
+    #         <pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+    #         <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+    #         <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+    #         <pay_i:capPagatore>00186</pay_i:capPagatore>
+    #         <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+    #         <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+    #         <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+    #         <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+    #         </pay_i:soggettoPagatore>
+    #         <pay_i:enteBeneficiario>
+    #         <pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+    #         <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+    #         <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+    #         <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+    #         <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+    #         <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+    #         <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+    #         <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+    #         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+    #         </pay_i:enteBeneficiario>
+    #         <pay_i:datiVersamento>
+    #         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+    #         <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
+    #         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+    #         <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+    #         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+    #         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+    #         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+    #         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         </pay_i:datiVersamento>
+    #         </pay_i:RPT>
+    #         """
+    #     And generate 3 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+    #     And RPT4 generation
+    #         """
+    #         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+    #         <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+    #         <pay_i:dominio>
+    #         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+    #         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+    #         </pay_i:dominio>
+    #         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+    #         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+    #         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+    #         <pay_i:soggettoPagatore>
+    #         <pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+    #         <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+    #         <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+    #         <pay_i:capPagatore>00186</pay_i:capPagatore>
+    #         <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+    #         <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+    #         <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+    #         <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+    #         </pay_i:soggettoPagatore>
+    #         <pay_i:enteBeneficiario>
+    #         <pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+    #         <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+    #         <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+    #         <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+    #         <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+    #         <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+    #         <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+    #         <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+    #         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+    #         </pay_i:enteBeneficiario>
+    #         <pay_i:datiVersamento>
+    #         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+    #         <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
+    #         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+    #         <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
+    #         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+    #         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+    #         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+    #         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         </pay_i:datiVersamento>
+    #         </pay_i:RPT>
+    #         """
+    #     And generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+    #     And RPT5 generation
+    #         """
+    #         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+    #         <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
+    #         <pay_i:dominio>
+    #         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+    #         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+    #         </pay_i:dominio>
+    #         <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+    #         <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+    #         <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+    #         <pay_i:soggettoPagatore>
+    #         <pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoPagatore>
+    #         <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+    #         <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+    #         <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+    #         <pay_i:capPagatore>00186</pay_i:capPagatore>
+    #         <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+    #         <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+    #         <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+    #         <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+    #         </pay_i:soggettoPagatore>
+    #         <pay_i:enteBeneficiario>
+    #         <pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+    #         <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+    #         </pay_i:identificativoUnivocoBeneficiario>
+    #         <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+    #         <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+    #         <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+    #         <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+    #         <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+    #         <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+    #         <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+    #         <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+    #         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+    #         </pay_i:enteBeneficiario>
+    #         <pay_i:datiVersamento>
+    #         <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+    #         <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
+    #         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+    #         <pay_i:identificativoUnivocoVersamento>$4iuv</pay_i:identificativoUnivocoVersamento>
+    #         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+    #         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+    #         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+    #         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         <pay_i:datiSingoloVersamento>
+    #         <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
+    #         <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+    #         <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+    #         <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+    #         <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+    #         <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+    #         <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+    #         <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+    #         <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+    #         </pay_i:datiSingoloVersamento>
+    #         </pay_i:datiVersamento>
+    #         </pay_i:RPT>
+    #         """
 
-        And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>#CARRELLO#</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt3Attachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt4Attachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$4iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt5Attachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+    #     And initial XML nodoInviaCarrelloRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header>
+    #         <ppt:intestazioneCarrelloPPT>
+    #         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+    #         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+    #         <identificativoCarrello>#CARRELLO#</identificativoCarrello>
+    #         </ppt:intestazioneCarrelloPPT>
+    #         </soapenv:Header>
+    #         <soapenv:Body>
+    #         <ws:nodoInviaCarrelloRPT>
+    #         <password>pwdpwdpwd</password>
+    #         <identificativoPSP>#psp#</identificativoPSP>
+    #         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+    #         <identificativoCanale>#canale#</identificativoCanale>
+    #         <listaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rptAttachment</rpt>
+    #         </elementoListaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rpt2Attachment</rpt>
+    #         </elementoListaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rpt3Attachment</rpt>
+    #         </elementoListaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rpt4Attachment</rpt>
+    #         </elementoListaRPT>
+    #         <elementoListaRPT>
+    #         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$4iuv</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         <rpt>$rpt5Attachment</rpt>
+    #         </elementoListaRPT>
+    #         </listaRPT>
+    #         </ws:nodoInviaCarrelloRPT>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     And initial XML pspInviaCarrelloRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header/>
+    #         <soapenv:Body>
+    #         <ws:pspInviaCarrelloRPTResponse>
+    #         <pspInviaCarrelloRPTResponse>
+    #         <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+    #         <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+    #         <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+    #         </pspInviaCarrelloRPTResponse>
+    #         </ws:pspInviaCarrelloRPTResponse>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+    #     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+    #     Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+    #     And check url field exists in nodoInviaCarrelloRPT response
+
+
+
+    @ALL @PRIMITIVE @MOD1 @MOD1VALNICROK @MOD1VALNICROK_4
+    Scenario: CarrelloRPT_5RPT_2versamenti
+        Given RPT1 body generation RPT_generation_with_2_payments with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 3.00                        |
+            | identificativoUnivocoVersamento   | #iuv1#                      |
+            | codiceContestoPagamento           | CCD01                       |
+            | tipoVersamento                    | BBT                         |
+            | ibanAddebito                      | IT96R0123454321000000012345 |
+            | importoSingoloVersamento          | 1.50                        |
+        And pay_i:soggettoVersante with None in rpt1AttachmentBody
+        And RPT rpt1AttachmentBody to base64 as rpt1Attachment
+        And RPT2 body generation RPT_generation_with_2_payments with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 3.00                        |
+            | identificativoUnivocoVersamento   | #iuv2#                      |
+            | codiceContestoPagamento           | CCD01                       |
+            | tipoVersamento                    | BBT                         |
+            | ibanAddebito                      | IT96R0123454321000000012345 |
+            | importoSingoloVersamento          | 1.50                        |
+        And pay_i:soggettoVersante with None in rpt2AttachmentBody
+        And RPT rpt2AttachmentBody to base64 as rpt2Attachment
+        And RPT3 body generation RPT_generation_with_2_payments with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 3.00                        |
+            | identificativoUnivocoVersamento   | #iuv3#                      |
+            | codiceContestoPagamento           | CCD01                       |
+            | tipoVersamento                    | BBT                         |
+            | ibanAddebito                      | IT96R0123454321000000012345 |
+            | importoSingoloVersamento          | 1.50                        |
+        And pay_i:soggettoVersante with None in rpt3AttachmentBody
+        And RPT rpt3AttachmentBody to base64 as rpt3Attachment
+        And RPT4 body generation RPT_generation_with_2_payments with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 3.00                        |
+            | identificativoUnivocoVersamento   | #iuv4#                      |
+            | codiceContestoPagamento           | CCD01                       |
+            | tipoVersamento                    | BBT                         |
+            | ibanAddebito                      | IT96R0123454321000000012345 |
+            | importoSingoloVersamento          | 1.50                        |
+        And pay_i:soggettoVersante with None in rpt4AttachmentBody
+        And RPT rpt4AttachmentBody to base64 as rpt4Attachment
+        And RPT5 body generation RPT_generation_with_2_payments with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 3.00                        |
+            | identificativoUnivocoVersamento   | #iuv5#                      |
+            | codiceContestoPagamento           | CCD01                       |
+            | tipoVersamento                    | BBT                         |
+            | ibanAddebito                      | IT96R0123454321000000012345 |
+            | importoSingoloVersamento          | 1.50                        |
+        And pay_i:soggettoVersante with None in rpt5AttachmentBody
+        And RPT rpt5AttachmentBody to base64 as rpt5Attachment
+        And from body with datatable vertical nodoInviaCarrelloRPT_5elemLista initial XML nodoInviaCarrelloRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code# |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | identificativoCarrello                | #CARRELLO#                  |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp#                       |
+            | identificativoIntermediarioPSP        | #psp#                       |
+            | identificativoCanale                  | #canale#                    |
+            | identificativoDominio1                | #creditor_institution_code# |
+            | identificativoUnivocoVersamento1      | $1iuv                       |
+            | codiceContestoPagamento1              | CCD01                       |
+            | rpt1                                  | $rpt1Attachment             |
+            | identificativoDominio2                | #creditor_institution_code# |
+            | identificativoUnivocoVersamento2      | $2iuv                       |
+            | codiceContestoPagamento2              | CCD01                       |
+            | rpt2                                  | $rpt2Attachment             |
+            | identificativoDominio3                | #creditor_institution_code# |
+            | identificativoUnivocoVersamento3      | $3iuv                       |
+            | codiceContestoPagamento3              | CCD01                       |
+            | rpt3                                  | $rpt3Attachment             |
+            | identificativoDominio4                | #creditor_institution_code# |
+            | identificativoUnivocoVersamento4      | $4iuv                       |
+            | codiceContestoPagamento4              | CCD01                       |
+            | rpt4                                  | $rpt4Attachment             |
+            | identificativoDominio5                | #creditor_institution_code# |
+            | identificativoUnivocoVersamento5      | $5iuv                       |
+            | codiceContestoPagamento5              | CCD01                       |
+            | rpt5                                  | $rpt5Attachment             |
+        And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
+            | esitoComplessivoOperazione  | OK                                                        |
+            | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello |
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
