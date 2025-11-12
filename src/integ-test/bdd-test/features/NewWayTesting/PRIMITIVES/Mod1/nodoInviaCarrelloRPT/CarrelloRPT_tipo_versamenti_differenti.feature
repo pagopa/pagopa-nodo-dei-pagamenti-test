@@ -3,7 +3,7 @@ Feature: CarrelloRPT_tipo_versamenti_differenti 488
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @MOD1 @MOD1CARPTOK @MMOD1CARPTOK
+    @ALL @PRIMITIVE @MOD1 @MOD1INCARPTOK @MOD1INCARPTOK_1
     Scenario Outline: Check outcome is OK for nodoInviaCarrelloRPT
         Given RPT body generation RPT_generation_complete with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |

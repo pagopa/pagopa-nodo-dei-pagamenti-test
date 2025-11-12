@@ -3,7 +3,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD 508
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @MOD1 @MOD1VALNICROK @MOD1VALNICROK_2
+    @ALL @PRIMITIVE @MOD1 @MOD1INCARPTOK @MOD1INCARPTOK_2
     Scenario: CarrelloRPT_4RPT_5versamenti_validazioneXSD
         Given RPT1 body generation RPT_generation_with_5_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |

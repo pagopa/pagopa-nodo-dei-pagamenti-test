@@ -3,7 +3,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti 507
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @MOD1 @MOD1VALNICROK @MOD1VALNICROK_3
+    @ALL @PRIMITIVE @MOD1 @MOD1INCARPTOK @MOD1INCARPTOK_3
     Scenario: CarrelloRPT_4RPT_5versamenti
         Given RPT1 body generation RPT_generation_with_5_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |

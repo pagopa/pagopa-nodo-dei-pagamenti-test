@@ -4,7 +4,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT 921
       Given systems up
 
    # [SEM_MB_15]
-   @ALL @PRIMITIVE @MOD1 @MOD1SEMNIVCRKO @MOD1SEMNIVCRKO_1
+   @ALL @PRIMITIVE @MOD1 @MOD1INCARPTKO @MOD1INCARPTKO_1
    Scenario: Semantic checks for nodoInviaCarrelloRPT
       Given RPT1 generation RPT_generation_complete with datatable vertical
          | identificativoDominio             | #creditor_institution_code# |
