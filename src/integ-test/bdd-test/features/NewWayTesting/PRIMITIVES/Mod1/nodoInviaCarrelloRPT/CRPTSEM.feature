@@ -297,7 +297,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM] 326
             | ibanAccredito                     | IT96R0123454321000000012345     |
             | ibanAppoggio                      | IT96R0123454321000000012345     |
             | importoSingoloVersamento          | 10.00                           |
-        And RPT2 generation RPT_generation_payer with datatable vertical
+        And RPT2 generation RPT_generation_pagatore_full with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | #id_station_old#                |
             | dataOraMessaggioRichiesta         | #timedate#                      |
