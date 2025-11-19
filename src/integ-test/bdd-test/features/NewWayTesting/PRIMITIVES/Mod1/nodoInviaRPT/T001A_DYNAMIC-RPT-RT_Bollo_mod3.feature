@@ -252,7 +252,7 @@ Feature: process tests for RPT-RT bollo 792
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check faultCode is PPT_CANALE_SERVIZIO_NONATTIVO of nodoInviaRPT response
 
-   @runnable
+   @runnable @test1
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT
@@ -275,5 +275,70 @@ Feature: process tests for RPT-RT bollo 792
          </soapenv:Body>
          </soapenv:Envelope>
          """
+      When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+      Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoInviaRT response
+
+
+
+   @ALL @PRIMITIVE @MOD1 @MOD1MBIRPTKO @MOD1MBIRPTKO_1
+   Scenario: tests for RPT-RT bollo
+      Given MB generation MBD_generation_diff_DGV with datatable vertical
+         | CodiceFiscale | 12345678901                                  |
+         | Denominazione | #psp#                                        |
+         | IUBD          | #iubd#                                       |
+         | OraAcquisto   | 2022-02-06T15:00:44.659+01:00                |
+         | Importo       | 10.00                                        |
+         | TipoBollo     | 01                                           |
+         | DigestValue   | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
+      And RPT generation RPT_generation_with_MBD_noIBAN with datatable vertical
+         | identificativoDominio             | #creditor_institution_code# |
+         | identificativoStazioneRichiedente | #id_station#                |
+         | dataOraMessaggioRichiesta         | #timedate#                  |
+         | dataEsecuzionePagamento           | #date#                      |
+         | importoTotaleDaVersare            | 10.00                       |
+         | tipoVersamento                    | PO                          |
+         | identificativoUnivocoVersamento   | #IUV#                       |
+         | codiceContestoPagamento           | CCD01                       |
+         | codiceIdentificativoUnivoco       | 11111111117                 |
+         | importoSingoloVersamento          | 10.00                       |
+         | commissioneCaricoPA               | 1.00                        |
+      And RT generation RT_generation_with_MBD with datatable vertical
+         | identificativoDominio             | #creditor_institution_code# |
+         | identificativoStazioneRichiedente | #id_station#                |
+         | dataOraMessaggioRicevuta          | #timedate#                  |
+         | importoTotalePagato               | 10.00                       |
+         | identificativoUnivocoVersamento   | $IUV                        |
+         | identificativoUnivocoRiscossione  | $IUV                        |
+         | CodiceContestoPagamento           | CCD01                       |
+         | codiceEsitoPagamento              | 0                           |
+         | singoloImportoPagato              | 10.00                       |
+         | testoAllegato                     | $bollo                      |
+      And from body with datatable vertical nodoInviaRPTBody_full initial XML nodoInviaRPT
+         | identificativoIntermediarioPA         | #creditor_institution_code# |
+         | identificativoStazioneIntermediarioPA | #id_station#                |
+         | identificativoDominio                 | #creditor_institution_code# |
+         | identificativoUnivocoVersamento       | $IUV                        |
+         | codiceContestoPagamento               | CCD01                       |
+         | password                              | #password#                  |
+         | identificativoPSP                     | #psp#                       |
+         | identificativoIntermediarioPSP        | #psp#                       |
+         | identificativoCanale                  | #canale#                    |
+         | rpt                                   | $rptAttachment              |
+      And from body with datatable horizontal pspInviaRPT initial XML pspInviaRPT
+         | esitoComplessivoOperazione | identificativoCarrello                        | parametriPagamentoImmediato                                |
+         | OK                         | $nodoInviaRPT.identificativoUnivocoVersamento | idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento |
+      And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+      When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+      Then check faultCode is PPT_CANALE_SERVIZIO_NONATTIVO of nodoInviaRPT response
+      Given from body with datatable vertical nodoInviaRT initial XML nodoInviaRT
+         | identificativoIntermediarioPSP  | #psp#             |
+         | identificativoCanale            | #canale#          |
+         | password                        | #password#        |
+         | identificativoPSP               | #psp#             |
+         | identificativoDominio           | #intermediarioPA# |
+         | identificativoUnivocoVersamento | $IUV              |
+         | codiceContestoPagamento         | CCD01             |
+         | forzaControlloSegno             | 1                 |
+         | rt                              | $rtAttachment     |
       When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
       Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoInviaRT response

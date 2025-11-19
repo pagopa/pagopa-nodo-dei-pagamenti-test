@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT_Mod3_PO 799
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+    @runnable @test1
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -89,40 +89,75 @@ Feature: process tests for nodoInviaRT_Mod3_PO 799
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>test</codiceContestoPagamento>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>test</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
-                <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-                <tipoFirma></tipoFirma>
-                <rpt>$rptAttachment</rpt>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And initial XML pspInviaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And check url field not exists in nodoInviaRPT response
+
+
+    @ALL @PRIMITIVE @MOD1 @MOD1MBIRPTOK @MOD1MBIRPTOK_5
+    Scenario: tests for nodoInviaRT_Mod3_PO
+        Given RPT generation RPT_generation_complete with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | #iuv2#                      |
+            | codiceContestoPagamento           | test                        |
+            | tipoVersamento                    | PO                          |
+            | ibanAddebito                      | IT45R0760103200000000001016 |
+            | ibanAccredito                     | IT45R0760103200000000001016 |
+            | ibanAppoggio                      | IT96R0123454321000000012345 |
+            | importoSingoloVersamento          | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #intermediarioPA#            |
+            | identificativoStazioneIntermediarioPA | #id_station#                 |
+            | identificativoDominio                 | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento       | $2iuv                        |
+            | codiceContestoPagamento               | test                         |
+            | password                              | #password#                   |
+            | identificativoPSP                     | #psp#                        |
+            | identificativoIntermediarioPSP        | #psp#                        |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
+            | rpt                                   | $rptAttachment               |
+        And from body with datatable horizontal pspInviaRPT initial XML pspInviaRPT
+            | esitoComplessivoOperazione | identificativoCarrello                        | parametriPagamentoImmediato                                |
+            | OK                         | $nodoInviaRPT.identificativoUnivocoVersamento | idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento |
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
