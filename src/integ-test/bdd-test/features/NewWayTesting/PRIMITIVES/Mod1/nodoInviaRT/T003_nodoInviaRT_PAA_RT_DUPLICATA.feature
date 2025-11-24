@@ -89,21 +89,21 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA 795
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>$CCP</codiceContestoPagamento>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$CCP</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
-                <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
-                <tipoFirma></tipoFirma>
-                <rpt>$rptAttachment</rpt>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -216,7 +216,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA 795
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+    @runnable @test1
     Scenario: Execute nodoInviaRT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT
@@ -240,23 +240,23 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA 795
             </soapenv:Envelope>
             """
         And initial XML paaInviaRT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
             <ws:paaInviaRTRisposta>
-                <paaInviaRTRisposta>
-                    <fault>
-                    <faultCode>PAA_RT_DUPLICATA</faultCode>
-                    <faultString>tegba</faultString>
-                    <id>66666666666</id>
-                    </fault>
-                    <esito>KO</esito>
-                </paaInviaRTRisposta>
+            <paaInviaRTRisposta>
+            <fault>
+            <faultCode>PAA_RT_DUPLICATA</faultCode>
+            <faultString>tegba</faultString>
+            <id>66666666666</id>
+            </fault>
+            <esito>KO</esito>
+            </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>
-        </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
@@ -265,3 +265,80 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA 795
         And through the query rt_stati retrieve param idSessione at position 0 and save it under the key idSessione
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
+
+
+
+    @ALL @PRIMITIVE @MOD1 @MOD1NIRTOK @MOD1NIRTOK_9
+    Scenario: tests for nodoInviaRT_PAA_RT_DUPLICATA
+        Given RPT generation RPT_generation_complete with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | #iuv#                       |
+            | codiceContestoPagamento           | #ccp#                       |
+            | tipoVersamento                    | BBT                         |
+            | ibanAddebito                      | IT45R0760103200000000001016 |
+            | ibanAccredito                     | IT45R0760103200000000001016 |
+            | ibanAppoggio                      | IT45R0760103200000000001016 |
+            | importoSingoloVersamento          | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code# |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp#                       |
+            | identificativoIntermediarioPSP        | #psp#                       |
+            | identificativoCanale                  | #canale#                    |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | $iuv                        |
+            | codiceContestoPagamento               | $ccp                        |
+            | rpt                                   | $rptAttachment              |
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
+            | esitoComplessivoOperazione  | OK                                                         |
+            | identificativoCarrello      | $nodoInviaRPT.identificativoUnivocoVersamento              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRicevuta          | #timedate#                  |
+            | importoTotalePagato               | 10.00                       |
+            | identificativoUnivocoVersamento   | $iuv                        |
+            | identificativoUnivocoRiscossione  | $iuv                        |
+            | CodiceContestoPagamento           | $ccp                        |
+            | codiceEsitoPagamento              | 0                           |
+            | esitoSingoloPagamento             | TUTTO_OK                    |
+            | singoloImportoPagato              | 10.00                       |
+        And from body with datatable vertical nodoInviaRT initial XML nodoInviaRT
+            | identificativoDominio           | #creditor_institution_code# |
+            | identificativoUnivocoVersamento | $iuv                        |
+            | codiceContestoPagamento         | $ccp                        |
+            | password                        | #password#                  |
+            | identificativoPSP               | #psp#                       |
+            | identificativoIntermediarioPSP  | #psp#                       |
+            | identificativoCanale            | #canaleRtPush#              |
+            | rt                              | $rtAttachment               |
+            | forzaControlloSegno             | 1                           |
+        And from body with datatable horizontal paaInviaRT_KO initial XML paaInviaRT
+            | faultCode        | faultString | id          | description | esito |
+            | PAA_RT_DUPLICATA | tegba       | 66666666666 | test        | KO    |
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+        And wait 2 seconds for expiration
+        # RT
+        And execution query to get value result_query on the table RT, with the columns ID_SESSIONE with db name nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $iuv         |
+        And through the query result_query retrieve param id_sessione at position 0 and save it under the key idSessione
+
+
+#And execution query rt_stati to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
+# And through the query rt_stati retrieve param idSessione at position 0 and save it under the key idSessione
+# And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
+# And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
+
+

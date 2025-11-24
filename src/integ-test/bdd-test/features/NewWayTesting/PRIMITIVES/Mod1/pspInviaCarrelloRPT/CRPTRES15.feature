@@ -2,7 +2,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES15] 340
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @MOD1 @MODCRPTRESKO @MODCRPTRESKO_5
+    @ALL @PRIMITIVE @MOD1 @MOD1CRPTRESKO @MOD1CRPTRESKO_5
     Scenario: tests for pspInviaCarrelloRPT
         Given RPT generation RPT_generation_complete with datatable vertical
             | identificativoDominio             | #intermediarioPA#           |

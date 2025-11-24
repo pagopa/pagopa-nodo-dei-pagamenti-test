@@ -1149,6 +1149,30 @@ def step_impl(context, payloadBody, name):
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
+    
+@step('remove xml declaration from {primitive}')
+def step_impl(context, primitive):
+    try:
+        payload = getattr(context, primitive)
+        if payload is None:
+            return
+        # assicurati sia stringa
+        if isinstance(payload, bytes):
+            payload = payload.decode('utf-8', errors='ignore')
+        # rimuovi eventuale BOM e spazi iniziali
+        payload = payload.lstrip('\ufeff').lstrip()
+        if payload.startswith('<?xml'):
+            # rimuove la prima dichiarazione <?xml ...?>
+            parts = payload.split('?>', 1)
+            if len(parts) > 1:
+                payload = parts[1]
+            else:
+                # caso improbabile: elimina tutta la linea iniziale
+                payload = '\n'.join(payload.splitlines()[1:])
+        setattr(context, primitive, payload)
+    except Exception as e:
+        print(f"----->>>> Exception removing xml declaration from {primitive}: {e}")
+        raise e   
 
 @given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):

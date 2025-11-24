@@ -91,43 +91,43 @@ Feature: pspInviaCarrelloRPT_malformata_chiediAvanzamento 1417
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazioneCarrelloPPT>
-                    <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1carrello</identificativoCarrello>
-                </ppt:intestazioneCarrelloPPT>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#id_broker#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:nodoInviaCarrelloRPT>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <listaRPT>
-                        <elementoListaRPT>
-                            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
-                            <rpt>$rpt1Attachment</rpt>
-                        </elementoListaRPT>
-                    </listaRPT>
-                </ws:nodoInviaCarrelloRPT>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
+            <rpt>$rpt1Attachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
@@ -142,25 +142,29 @@ Feature: pspInviaCarrelloRPT_malformata_chiediAvanzamento 1417
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-@runnable
+    @runnable @test1
     # [pspChiediAvanzamentoRPT -> OK]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
             """
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspChiediAvanzamentoRPTResponse>
-                        <pspChiediAvanzamentoRPTResponse>
-                            <value>OK</value>
-                        </pspChiediAvanzamentoRPTResponse>
-                    </ws:pspChiediAvanzamentoRPTResponse>
-                </soapenv:Body>
-                </soapenv:Envelope>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediAvanzamentoRPTResponse>
+            <pspChiediAvanzamentoRPTResponse>
+            <value>OK</value>
+            </pspChiediAvanzamentoRPTResponse>
+            </ws:pspChiediAvanzamentoRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
+
+    @ALL @PRIMITIVE @MOD1 @MOD1CRPTRESKO @MOD1CRPTRESKO_6
+    Scenario: tests for pspInviaCarrelloRPT
+
