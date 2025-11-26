@@ -89,21 +89,21 @@ Feature: process tests for nodoInviaRT_esito=1 796
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
-                <password>pwdpwdpwd</password>
-                <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
-                <tipoFirma></tipoFirma>
-                <rpt>$rptAttachment</rpt>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -240,10 +240,74 @@ Feature: process tests for nodoInviaRT_esito=1 796
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        
-    @runnable
+
+    @runnable @test1
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
+
+
+
+
+    @ALL @PRIMITIVE @MOD1 @MOD1NIRTKO @MOD1NIRTKO_1
+    Scenario: tests for nodoInviaRT_esito=1
+        Given RPT2 generation RPT_generation_full with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | tipoVersamento                    | BBT                         |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | #iuv2#                      |
+            | ibanAddebito                      | IT96R0123454321000000012345 |
+            | codiceContestoPagamento           | CCD01                       |
+            | importoSingoloVersamento          | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #intermediarioPA#           |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp#                       |
+            | identificativoIntermediarioPSP        | #psp#                       |
+            | identificativoCanale                  | #canale#                    |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | $2iuv                       |
+            | codiceContestoPagamento               | CCD01                       |
+            | rpt                                   | $rpt2Attachment             |
+        And from body with datatable vertical pspInviaRPT initial XML pspInviaRPT
+            | esitoComplessivoOperazione  | OK                                                         |
+            | identificativoCarrello      | $nodoInviaRPT.identificativoUnivocoVersamento              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given RT body generation RT_generation_full with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRicevuta          | #timedate#                  |
+            | importoTotalePagato               | 0.00                        |
+            | identificativoUnivocoVersamento   | $2iuv                       |
+            | identificativoUnivocoRiscossione  | $2iuv                       |
+            | CodiceContestoPagamento           | CCD01                       |
+            | codiceEsitoPagamento              | 1                           |
+            | singoloImportoPagato              | 0.00                        |
+            | esitoSingoloPagamento             | NON_PAGATO                  |
+        And pay_i:commissioniApplicatePSP with <value> in rtAttachmentBody
+        And RT rtAttachmentBody to base64   
+        And from body with datatable vertical nodoInviaRT initial XML nodoInviaRT
+            | identificativoDominio           | #creditor_institution_code# |
+            | identificativoUnivocoVersamento | $2iuv                       |
+            | codiceContestoPagamento         | CCD01                       |
+            | password                        | #password#                  |
+            | identificativoPSP               | #psp#                       |
+            | identificativoIntermediarioPSP  | #psp#                       |
+            | identificativoCanale            | #canale#                    |
+            | rt                              | $rtAttachment               |
+            | forzaControlloSegno             | 1                           |
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
+        And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
+
