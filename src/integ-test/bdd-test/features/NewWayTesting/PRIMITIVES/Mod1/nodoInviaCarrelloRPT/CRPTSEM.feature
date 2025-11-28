@@ -682,7 +682,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM] 326
             | ibanAppoggio                      | IT96R0123454321000000012345     |
             | importoSingoloVersamento          | 10.00                           |
         And <tag> with <tag_value> in rpt2AttachmentBody
-        And RPT rpt2AttachmentBody to base64 as rpt2Attachment
+        And RPT2 rpt2AttachmentBody to base64
         And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |

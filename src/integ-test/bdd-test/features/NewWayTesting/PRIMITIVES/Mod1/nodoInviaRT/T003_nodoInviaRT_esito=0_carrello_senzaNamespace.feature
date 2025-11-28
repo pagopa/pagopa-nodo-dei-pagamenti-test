@@ -4,7 +4,7 @@ Feature: T003_nodoInviaRT_esito=0_carrello_senzaNamespace 512
         Given systems up
 
 
-    @ALL @PRIMITIVE @MOD1 @MOD1NIRTOK @OD1NIRTOK_1
+    @ALL @PRIMITIVE @MOD1 @MOD1NIRTOK @MOD1NIRTOK_1
     Scenario: nodoInviaRT_esito=0_carrello_senzaNamespace
         Given RPT1 generation RPT_generation_complete with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |

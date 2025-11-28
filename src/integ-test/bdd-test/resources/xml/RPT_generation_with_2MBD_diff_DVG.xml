@@ -10,7 +10,7 @@
 	<pay_i:soggettoVersante>
 		<pay_i:identificativoUnivocoVersante>
 			<pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-			<pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
+			<pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
 		</pay_i:identificativoUnivocoVersante>
 		<pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
 		<pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -53,7 +53,7 @@
 	<pay_i:datiVersamento>
 		<pay_i:dataEsecuzionePagamento>$dataEsecuzionePagamento</pay_i:dataEsecuzionePagamento>
 		<pay_i:importoTotaleDaVersare>$importoTotaleDaVersare</pay_i:importoTotaleDaVersare>
-		<pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+		<pay_i:tipoVersamento>$tipoVersamento</pay_i:tipoVersamento>
 		<pay_i:identificativoUnivocoVersamento>$identificativoUnivocoVersamento</pay_i:identificativoUnivocoVersamento>
 		<pay_i:codiceContestoPagamento>$codiceContestoPagamento</pay_i:codiceContestoPagamento>
 		<pay_i:ibanAddebito>$ibanAddebito</pay_i:ibanAddebito>
@@ -61,27 +61,31 @@
 		<pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
 		<pay_i:datiSingoloVersamento>
 			<pay_i:importoSingoloVersamento>$importoSingoloVersamento</pay_i:importoSingoloVersamento>
-			<pay_i:commissioneCaricoPA>$commissioneCaricoPA</pay_i:commissioneCaricoPA>
-			<pay_i:ibanAccredito>$ibanAccredito</pay_i:ibanAccredito>
+			<pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
 			<pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-			<pay_i:ibanAppoggio>$ibanAppoggio</pay_i:ibanAppoggio>
+			<pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
 			<pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
 			<pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-			<pay_i:causaleVersamento>RPT 2 versamento 1</pay_i:causaleVersamento>
-			<pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-		</pay_i:datiSingoloVersamento>
-		<pay_i:datiSingoloVersamento>
-			<pay_i:importoSingoloVersamento>$importoSingoloVersamento</pay_i:importoSingoloVersamento>
-			<pay_i:commissioneCaricoPA>$commissioneCaricoPA</pay_i:commissioneCaricoPA>
-			<pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-			<pay_i:ibanAppoggio>$ibanAppoggio</pay_i:ibanAppoggio>
-			<pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-			<pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-			<pay_i:causaleVersamento>RPT 2 versamento 2</pay_i:causaleVersamento>
+			<pay_i:causaleVersamento>RPT 1 versamento 1</pay_i:causaleVersamento>
 			<pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
 			<pay_i:datiMarcaBolloDigitale>
 				<pay_i:tipoBollo>01</pay_i:tipoBollo>
-				<pay_i:hashDocumento>4HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
+				<pay_i:hashDocumento>$hashDocumento1</pay_i:hashDocumento>
+				<pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
+			</pay_i:datiMarcaBolloDigitale>
+		</pay_i:datiSingoloVersamento>
+		<pay_i:datiSingoloVersamento>
+			<pay_i:importoSingoloVersamento>$importoSingoloVersamento</pay_i:importoSingoloVersamento>
+			<pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
+			<pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+			<pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+			<pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+			<pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+			<pay_i:causaleVersamento>RPT 1 versamento 2</pay_i:causaleVersamento>
+			<pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+			<pay_i:datiMarcaBolloDigitale>
+				<pay_i:tipoBollo>01</pay_i:tipoBollo>
+				<pay_i:hashDocumento>$hashDocumento1</pay_i:hashDocumento>
 				<pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
 			</pay_i:datiMarcaBolloDigitale>
 		</pay_i:datiSingoloVersamento>

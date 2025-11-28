@@ -3,7 +3,7 @@ Feature: T005_nodoInviaRT_esito=2 520
         Given systems up
 
     @ALL @PRIMITIVE @MOD1 @MOD1NIRTOK @MOD1NIRTOK_11
-    Scenario: test nodoInviaRT_esito=
+    Scenario: test nodoInviaRT_esito=2
         Given RPT1 generation RPT_generation_complete with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |

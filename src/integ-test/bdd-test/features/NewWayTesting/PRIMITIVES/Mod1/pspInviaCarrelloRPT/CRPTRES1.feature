@@ -4,7 +4,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES1] 338
 
 
     @ALL @PRIMITIVE @MOD1 @MODCRPTRESKO @MODCRPTRESKO_1
-    Scenario: tests for pspInviaCarrelloRPT
+    Scenario Outline: tests for pspInviaCarrelloRPT
         Given RPT generation RPT_generation_complete with datatable vertical
             | identificativoDominio             | #intermediarioPA#           |
             | identificativoStazioneRichiedente | #id_station#                |
@@ -18,7 +18,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES1] 338
             | ibanAccredito                     | IT45R0760103200000000001016 |
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 10.00                       |
-        And from body with datatable vertical pspInviaCarrelloRPT_respKO initial XML pspInviaCarrelloRPT
+        And from body with datatable vertical pspInviaCarrelloRPT_resp initial XML pspInviaCarrelloRPT
             | esitoComplessivoOperazione | KO                       |
             | identificativoCarrello     | $iuv                     |
             | id                         | IDPSPFNZ                 |
@@ -26,6 +26,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES1] 338
             | faultString1               | La busta non è corretta  |
             | faultCode2                 | CANALE_FIRMA_SCONOSCIUTA |
             | faultString2               | La firma è sconosciuta   |
+        And <attribute> set <value> for <elem> in pspInviaCarrelloRPT
         And from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #intermediarioPA#               |
             | identificativoStazioneIntermediarioPA | #id_station#                    |
@@ -42,4 +43,6 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES1] 338
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
-
+        Examples:
+            | elem             | attribute     | value                                     |
+            | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ |
