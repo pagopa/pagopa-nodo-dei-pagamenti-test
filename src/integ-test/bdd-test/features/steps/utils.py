@@ -305,6 +305,110 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 
+def manipulate_soap_action2(soap_action, cmd, elem, value):
+    TYPE_ELEMENT = 1
+    doc = parseString(soap_action)
+
+    # Recupera tutte le occorrenze del tag
+    elements = doc.getElementsByTagName(elem)
+    
+    # -------------------------------------------------
+    # 1) removeOccurrence, tag n
+    # -------------------------------------------------
+    if cmd == "removeOccurrence":
+        occ = int(value)
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            node.parentNode.removeChild(node)
+        return doc.toxml()
+
+    # -------------------------------------------------
+    # 2) changeOccurrence, tag n, new_value
+    # -------------------------------------------------
+    if cmd == "changeOccurrence":
+        occ = int(value.split(",")[0])
+        new_value = value.split(",", 1)[1]
+
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            # Cancella vecchi nodi di testo
+            for child in list(node.childNodes):
+                if child.nodeType != TYPE_ELEMENT:
+                    node.removeChild(child)
+
+            # Imposta il nuovo valore
+            node.appendChild(doc.createTextNode(new_value))
+        return doc.toxml()
+
+    # -------------------------------------------------
+    # 3) changeOccurrence, tag n
+    # -------------------------------------------------
+    if cmd == "clearOccurrence":
+        occ = int(value)
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            for child in list(node.childNodes):
+                node.removeChild(child)
+        return doc.toxml()
+    
+    # -------------------------------------------------
+    # 4) removeParentOccurrence, tag n
+    # -------------------------------------------------
+    if cmd == "removeParentOccurrence":
+        occ = int(value)
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            parent = node.parentNode
+            children = list(node.childNodes)
+
+            # Rimuovi il tag contenitore
+            parent.removeChild(node)
+
+            # Sposta tutti i figli nel parent
+            for child in children:
+                parent.appendChild(child)
+
+        return doc.toxml()
+
+
+
+    # -------------------------------------------------
+    # Logica precedente
+    # -------------------------------------------------
+    if value == "None":
+        element = elements[0]
+        element.parentNode.removeChild(element)
+
+    elif value == "Empty":
+        element = elements[0]
+        for child in list(element.childNodes):
+            if child.nodeType != TYPE_ELEMENT:
+                child.nodeValue = ""
+            else:
+                child.parentNode.removeChild(child)
+
+    elif value == 'RemoveParent':
+        element = elements[0]
+        parent = element.parentNode
+        children = list(element.childNodes)
+        parent.removeChild(element)
+        for child in children:
+            if child.nodeType == TYPE_ELEMENT:
+                parent.appendChild(child)
+
+    elif str(value).startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        original_node = elements[0]
+        cloned_node = original_node.cloneNode(True)
+        for i in range(occurrences - 1):
+            original_node.parentNode.insertBefore(cloned_node, original_node)
+            original_node = cloned_node
+            cloned_node = original_node.cloneNode(True)
+
+    return doc.toxml()
+
+
+
 def replace_context_variables_for_query(body, context):
     pattern = re.compile('\\s\\$\\w+(?![.\\w])')
     match = pattern.findall(body)

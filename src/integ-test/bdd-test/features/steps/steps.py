@@ -1992,6 +1992,65 @@ def step_impl(context, elem, value, action):
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
+    
+    
+@given('replace in {action} tag {elem} with {value}')
+def step_impl(context, elem, value, action):
+    try:
+        if elem != "-":
+            # Sostituzioni variabili
+            value = utils.replace_local_variables(value, context)
+            value = utils.replace_context_variables(value, context)
+            value = utils.replace_global_variables(value, context)
+
+            # -----------------------------------------------------
+            # PARSING VALUE PER I NUOVI COMANDI
+            #
+            # value può essere (n occorrenza):
+            #   - "removeOccurrence,2"
+            #   - "changeOccurrence,2,value"
+            #   - "clearOccurrence,2"
+            #   - "removeParentOccurrence,2"
+            #   - oppure un valore normale (no comando)
+            # -----------------------------------------------------
+            cmd = None
+            real_value = value
+            tag = elem
+
+            if "," in value:
+                parts = value.split(",")
+                possible_cmd = parts[0]
+
+                if possible_cmd in ["removeOccurrence", "changeOccurrence", "clearOccurrence", "removeParentOccurrence"]:
+                    cmd = possible_cmd
+                    real_value = ",".join(parts[1:])   # es: "2"   oppure "2,valore"
+
+            # -----------------------------------------------------
+            # Chiamata funzione nuova
+            #   cmd = None → comportamento originale (compatibile)
+            # -----------------------------------------------------
+            xml = utils.manipulate_soap_action2(
+                getattr(context, action),
+                cmd,
+                tag,
+                real_value
+            )
+
+            # Codifica solo per la variabile "bollo"
+            if action == "bollo":
+                xml_b = bytes(xml, 'UTF-8')
+                xml_uni = b64.b64encode(xml_b)
+                xml = f"{xml_uni}".split("'")[1]
+
+            setattr(context, action, xml)
+
+    except AssertionError as e:
+        print("----->>>> Assertion Error:", e)
+        raise AssertionError(str(e))
+    except Exception as e:
+        print("----->>>> Exception:", e)
+        raise e
+    
 
 @given('replace {old_tag} tag in {action} with {new_tag}')
 def step_impl(context, old_tag, new_tag, action):

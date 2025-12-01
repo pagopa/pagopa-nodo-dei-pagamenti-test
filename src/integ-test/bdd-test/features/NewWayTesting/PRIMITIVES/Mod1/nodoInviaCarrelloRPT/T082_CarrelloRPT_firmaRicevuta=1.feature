@@ -20,7 +20,7 @@ Feature: T082_CarrelloRPT_firmaRicevuta=1 602
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 10.00                       |
         And pay_i:firmaRicevuta with 1 in rpt1AttachmentBody
-        And RPT rpt1AttachmentBody to base64 as rpt1Attachment
+        And RPT1 rpt1AttachmentBody to base64
         And RPT2 generation RPT_generation_complete_soggPag with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |

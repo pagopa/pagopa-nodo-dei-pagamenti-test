@@ -19,7 +19,7 @@ Feature: T084_CarrelloRPT_tipCont=0 604
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 10.00                       |
         And pay_i:datiSpecificiRiscossione with 0/abc in rpt1AttachmentBody
-        And RPT rpt1AttachmentBody to base64 as rpt1Attachment
+        And RPT1 rpt1AttachmentBody to base64
         And RPT2 generation RPT_generation_complete_soggPag with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |

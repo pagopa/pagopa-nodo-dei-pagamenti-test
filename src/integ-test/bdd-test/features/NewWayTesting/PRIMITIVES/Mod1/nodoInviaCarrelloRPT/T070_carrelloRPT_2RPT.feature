@@ -18,7 +18,7 @@ Feature: T070_carrelloRPT_2RPT 595
             | ibanAddebito                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 6.20                        |
         And pay_i:soggettoVersante with None in rpt1AttachmentBody
-        And RPT rpt1AttachmentBody to base64 as rpt1Attachment
+        And RPT1 rpt1AttachmentBody to base64
         And RPT2 body generation RPT_generation_with_2_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
@@ -31,7 +31,7 @@ Feature: T070_carrelloRPT_2RPT 595
             | ibanAddebito                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 6.20                        |
         And pay_i:soggettoVersante with None in rpt2AttachmentBody
-        And RPT rpt2AttachmentBody to base64 as rpt2Attachment
+        And RPT2 rpt2AttachmentBody to base64
         And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #creditor_institution_code# |
             | identificativoStazioneIntermediarioPA | #id_station#                |

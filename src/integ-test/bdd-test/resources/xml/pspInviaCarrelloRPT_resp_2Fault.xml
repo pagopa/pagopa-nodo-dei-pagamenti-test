@@ -12,12 +12,14 @@
 				<identificativoCarrello>$identificativoCarrello</identificativoCarrello>
 				<listaErroriRPT>
 					<fault>
-						<!--
 						<faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
 						<faultString>La firma è sconosciuta</faultString>
 						<id>IDPSPFNZ</id>
-						<serial>1</serial>
-						-->
+					</fault>
+					<fault>
+						<faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
+						<faultString>La firma è sconosciuta</faultString>
+						<id>IDPSPFNZ</id>
 					</fault>
 				</listaErroriRPT>
 			</pspInviaCarrelloRPTResponse>

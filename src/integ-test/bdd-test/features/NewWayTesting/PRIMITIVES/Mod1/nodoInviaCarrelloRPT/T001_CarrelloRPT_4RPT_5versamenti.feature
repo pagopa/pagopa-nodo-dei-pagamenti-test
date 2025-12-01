@@ -19,7 +19,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti 507
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 1.50                        |
         And pay_i:soggettoVersante with None in rpt1AttachmentBody
-        And RPT rpt1AttachmentBody to base64 as rpt1Attachment
+        And RPT1 rpt1AttachmentBody to base64
         And RPT2 body generation RPT_generation_with_5_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
@@ -34,7 +34,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti 507
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 1.50                        |
         And pay_i:soggettoVersante with None in rpt2AttachmentBody
-        And RPT rpt2AttachmentBody to base64 as rpt2Attachment
+        And RPT2 rpt2AttachmentBody to base64
         And RPT3 body generation RPT_generation_with_5_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
@@ -49,7 +49,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti 507
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 1.50                        |
         And pay_i:soggettoVersante with None in rpt3AttachmentBody
-        And RPT rpt3AttachmentBody to base64 as rpt3Attachment
+        And RPT3 rpt3AttachmentBody to base64
         And RPT4 body generation RPT_generation_with_5_payments with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
@@ -64,7 +64,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti 507
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 1.50                        |
         And pay_i:soggettoVersante with None in rpt4AttachmentBody
-        And RPT rpt4AttachmentBody to base64 as rpt4Attachment
+        And RPT4 rpt4AttachmentBody to base64
         And from body with datatable vertical nodoInviaCarrelloRPT_4elemLista initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #creditor_institution_code# |
             | identificativoStazioneIntermediarioPA | #id_station#                |

@@ -18,7 +18,7 @@ Feature: T003_nodoInviaRT_esito=0_causaleRPT_140caratteri_accenti 513
             | ibanAppoggio                      | IT96R0123454321000000012345 |
             | importoSingoloVersamento          | 10.00                       |
         And <elem> with <value> in rpt1AttachmentBody
-        And RPT rpt1AttachmentBody to base64 as rpt1Attachment
+        And RPT1 rpt1AttachmentBody to base64
         And RT1 generation RT_generation_NO_namespace with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |
