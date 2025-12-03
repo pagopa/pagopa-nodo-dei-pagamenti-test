@@ -1150,34 +1150,6 @@ def step_impl(context, number, payloadBody):
         # Interrompiamo il test
         raise e
     
-@step('RPT {payloadBody} to base64 as {name}')
-def step_impl(context, payloadBody, name):
-    try:
-        
-        # convert body to base64
-        payload = getattr(context, payloadBody) 
-        if payload and str(payload).strip():
-            
-            #print(f"RPT body: {payload}\n")
-            payload_b = bytes(payload, 'UTF-8')
-            payload_uni = b64.b64encode(payload_b)
-            payload = f"{payload_uni}".split("'")[1]
-
-            print("RPT generato: ", payload)
-            setattr(context, f"{name}", payload)
-        else:
-            print("RPT body vuoto! ")
-
-    except AssertionError as e:
-        # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
-        # Interrompiamo il test
-        raise AssertionError(str(e))
-    except Exception as e:
-        # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
-        # Interrompiamo il test
-        raise e
     
 @step('remove xml declaration from {primitive}')
 def step_impl(context, primitive):
