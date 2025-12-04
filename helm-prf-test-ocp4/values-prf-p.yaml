@@ -38,10 +38,10 @@ deployments:
         resources:
           limits:
             cpu: 5000m
-            memory: 4Gi
+            memory: 8Gi
           requests:
-            cpu: 2500m
-            memory: 3Gi
+            cpu: 3000m
+            memory: 4Gi
 
         securityContext:
           allowPrivilegeEscalation: false
