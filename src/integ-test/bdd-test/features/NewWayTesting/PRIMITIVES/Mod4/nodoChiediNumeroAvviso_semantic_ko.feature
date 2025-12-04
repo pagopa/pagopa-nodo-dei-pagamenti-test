@@ -3,7 +3,7 @@ Feature: semantic checks 927
     Background:
         Given systems up
 
-    @ALL @PRIMITIVE @NM4 @NM4SENODCAKO @NM4SENODCAKO_1
+    @ALL @PRIMITIVE @NM4 @NM4SEMODCAKO @NM4SEMODCAKO_1
     Scenario Outline: tests for demandPaymentNotice
         Given from body with datatable horizontal nodoChiediNumeroAvviso initial XML nodoChiediNumeroAvviso
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | idServizio | idDominioErogatoreServizio  |
@@ -19,7 +19,7 @@ Feature: semantic checks 927
             | idServizio                     | 00200       | PPT_VERSIONE_SERVIZIO    | Versione servizio incompatibile con la chiamata  |
             | identificativoIntermediarioPSP | 91000000001 | PPT_AUTORIZZAZIONE       | Configurazione intermediario-canale non corretta |
 
-    @ALL @PRIMITIVE @NM4 @NM4SENODCAKO @NM4SENODCAKO_2
+    @ALL @PRIMITIVE @NM4 @NM4SEMODCAKO @NM4SEMODCAKO_2
     Scenario Outline: KO
         Given from body with datatable horizontal nodoChiediNumeroAvviso initial XML nodoChiediNumeroAvviso
             | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   | idServizio | idDominioErogatoreServizio  |

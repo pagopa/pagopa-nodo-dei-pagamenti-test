@@ -160,10 +160,38 @@ Feature: response tests for paDemandPaymentNotice 930
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @ALL @PRIMITIVE @NM4 
+    # @ALL @PRIMITIVE @NM4 @test1
+    # Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
+    #     Given the demandPaymentNotice scenario executed successfully
+    #     And the paDemandPaymentNotice scenario executed successfully
+    #     And <elem> with <value> in paDemandPaymentNotice
+    #     And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+    #     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+    #     Then check outcome is OK of demandPaymentNotice response
+    #     Examples:
+    #         | elem              | value | soapUI test  |
+    #         | soapenv:Header    | None  | TRES_PDPN_01 |
+    #         | dueDate           | None  | TRES_PDPN_39 |
+    #         | detailDescription | None  | TRES_PDPN_42 |
+    #         | officeName        | None  | TRES_PDPN_58 |
+
+
+    @ALL @PRIMITIVE @NM4 @NM4PADPNOK @NM4PADPNOK_1
     Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_full initial XML paDemandPaymentNotice
+            | outcome            | OK                          |
+            | fiscalCode         | #creditor_institution_code# |
+            | noticeNumber       | 302#iuv#                    |
+            | amount             | 10.00                       |
+            | options            | EQ                          |
+            | allCCP             | false                       |
+            | paymentDescription | paymentDescription          |
+            | fiscalCodPA        | #creditor_institution_code# |
+            | companyName        | companyName                 |
+            | officeName         | officeName                  |
         And <elem> with <value> in paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
@@ -175,18 +203,124 @@ Feature: response tests for paDemandPaymentNotice 930
             | detailDescription | None  | TRES_PDPN_42 |
             | officeName        | None  | TRES_PDPN_58 |
 
+
+
+    # # TRES_PDPN_02
+    # @ALL @PRIMITIVE @NM4 @test2
+    # Scenario: TRES_PDPN_02
+    #     Given the demandPaymentNotice scenario executed successfully
+    #     And the paDemandPaymentNotice scenario executed successfully
+    #     And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+    #     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+    #     Then check outcome is OK of demandPaymentNotice response
+
+
+    @ALL @PRIMITIVE @NM4 @NM4PADPNOK @NM4PADPNOK_2
     # TRES_PDPN_02
-    @ALL @PRIMITIVE @NM4 
     Scenario: TRES_PDPN_02
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_full initial XML paDemandPaymentNotice
+            | outcome            | OK                          |
+            | fiscalCode         | #creditor_institution_code# |
+            | noticeNumber       | 302#iuv#                    |
+            | amount             | 10.00                       |
+            | options            | EQ                          |
+            | allCCP             | false                       |
+            | paymentDescription | paymentDescription          |
+            | fiscalCodPA        | #creditor_institution_code# |
+            | companyName        | companyName                 |
+            | officeName         | officeName                  |
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
-    @ALL @PRIMITIVE @NM4 
+
+    # @ALL @PRIMITIVE @NM4 @test3
+    # Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
+    #     Given the demandPaymentNotice scenario executed successfully
+    #     And the paDemandPaymentNotice scenario executed successfully
+    #     And <elem> with <value> in paDemandPaymentNotice
+    #     And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
+    #     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
+    #     Then check outcome is KO of demandPaymentNotice response
+    #     And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
+    #     Examples:
+    #         | elem                              | value                                                                                                                                           | soapUI test  |
+    #         | soapenv:Body                      | None                                                                                                                                            | TRES_PDPN_03 |
+    #         | soapenv:Body                      | Empty                                                                                                                                           | TRES_PDPN_04 |
+    #         | paf:paDemandPaymentNoticeResponse | None                                                                                                                                            | TRES_PDPN_05 |
+    #         | paf:paDemandPaymentNoticeResponse | RemoveParent                                                                                                                                    | TRES_PDPN_06 |
+    #         | paf:paDemandPaymentNoticeResponse | Empty                                                                                                                                           | TRES_PDPN_07 |
+    #         | outcome                           | None                                                                                                                                            | TRES_PDPN_08 |
+    #         | outcome                           | Empty                                                                                                                                           | TRES_PDPN_09 |
+    #         | outcome                           | PP                                                                                                                                              | TRES_PDPN_10 |
+    #         | qrCode                            | None                                                                                                                                            | TRES_PDPN_12 |
+    #         | qrCode                            | RemoveParent                                                                                                                                    | TRES_PDPN_13 |
+    #         | qrCode                            | Empty                                                                                                                                           | TRES_PDPN_14 |
+    #         | fiscalCode                        | None                                                                                                                                            | TRES_PDPN_15 |
+    #         | fiscalCode                        | 1234567890                                                                                                                                      | TRES_PDPN_16 |
+    #         | fiscalCode                        | 123456789012                                                                                                                                    | TRES_PDPN_17 |
+    #         | fiscalCode                        | 1234567890a                                                                                                                                     | TRES_PDPN_18 |
+    #         | fiscalCode                        | 1234567890à                                                                                                                                     | TRES_PDPN_18 |
+    #         | noticeNumber                      | None                                                                                                                                            | TRES_PDPN_19 |
+    #         | noticeNumber                      | 12345678901234567                                                                                                                               | TRES_PDPN_20 |
+    #         | noticeNumber                      | 1234567890123456789                                                                                                                             | TRES_PDPN_21 |
+    #         | noticeNumber                      | 12345678901234567a                                                                                                                              | TRES_PDPN_22 |
+    #         | noticeNumber                      | 12345678901234567à                                                                                                                              | TRES_PDPN_22 |
+    #         | paymentList                       | None                                                                                                                                            | TRES_PDPN_23 |
+    #         | paymentList                       | RemoveParent                                                                                                                                    | TRES_PDPN_24 |
+    #         | paymentList                       | Empty                                                                                                                                           | TRES_PDPN_25 |
+    #         | paymentOptionDescription          | None                                                                                                                                            | TRES_PDPN_27 |
+    #         | paymentOptionDescription          | Empty                                                                                                                                           | TRES_PDPN_28 |
+    #         | amount                            | None                                                                                                                                            | TRES_PDPN_30 |
+    #         | amount                            | Empty                                                                                                                                           | TRES_PDPN_31 |
+    #         | amount                            | 11,34                                                                                                                                           | TRES_PDPN_32 |
+    #         | amount                            | 11.342                                                                                                                                          | TRES_PDPN_33 |
+    #         | amount                            | 1219087657.34                                                                                                                                   | TRES_PDPN_34 |
+    #         | amount                            | ciao                                                                                                                                            | TRES_PDPN_35 |
+    #         | options                           | None                                                                                                                                            | TRES_PDPN_36 |
+    #         | options                           | Empty                                                                                                                                           | TRES_PDPN_37 |
+    #         | options                           | KK                                                                                                                                              | TRES_PDPN_38 |
+    #         | dueDate                           | Empty                                                                                                                                           | TRES_PDPN_40 |
+    #         | dueDate                           | 20220613                                                                                                                                        | TRES_PDPN_41 |
+    #         | dueDate                           | 12-09-22                                                                                                                                        | TRES_PDPN_41 |
+    #         | dueDate                           | 12-08-2022T12:00:678                                                                                                                            | TRES_PDPN_41 |
+    #         | detailDescription                 | Empty                                                                                                                                           | TRES_PDPN_43 |
+    #         | detailDescription                 | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_44 |
+    #         | allCCP                            | None                                                                                                                                            | TRES_PDPN_45 |
+    #         | allCCP                            | Empty                                                                                                                                           | TRES_PDPN_46 |
+    #         | allCCP                            | 3                                                                                                                                               | TRES_PDPN_47 |
+    #         | paymentDescription                | None                                                                                                                                            | TRES_PDPN_48 |
+    #         | paymentDescription                | Empty                                                                                                                                           | TRES_PDPN_49 |
+    #         | paymentDescription                | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_50 |
+    #         | fiscalCodePA                      | None                                                                                                                                            | TRES_PDPN_51 |
+    #         | fiscalCodePA                      | Empty                                                                                                                                           | TRES_PDPN_52 |
+    #         | fiscalCodePA                      | 123456789012                                                                                                                                    | TRES_PDPN_53 |
+    #         | fiscalCodePA                      | 12345jh%lk9                                                                                                                                     | TRES_PDPN_54 |
+    #         | companyName                       | None                                                                                                                                            | TRES_PDPN_55 |
+    #         | companyName                       | Empty                                                                                                                                           | TRES_PDPN_56 |
+    #         | companyName                       | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_57 |
+    #         | officeName                        | Empty                                                                                                                                           | TRES_PDPN_59 |
+    #         | officeName                        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_60 |
+
+
+    @ALL @PRIMITIVE @NM4 @NM4PADPNOK @NM4PADPNOK_3
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_full initial XML paDemandPaymentNotice
+            | outcome            | OK                          |
+            | fiscalCode         | #creditor_institution_code# |
+            | noticeNumber       | 302#iuv#                    |
+            | amount             | 10.00                       |
+            | options            | EQ                          |
+            | allCCP             | false                       |
+            | paymentDescription | paymentDescription          |
+            | fiscalCodPA        | #creditor_institution_code# |
+            | companyName        | companyName                 |
+            | officeName         | officeName                  |
         And <elem> with <value> in paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
@@ -251,8 +385,9 @@ Feature: response tests for paDemandPaymentNotice 930
             | officeName                        | Empty                                                                                                                                           | TRES_PDPN_59 |
             | officeName                        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_60 |
 
+
     # TRES_PDPN_11
-    @ALL @PRIMITIVE @NM4 
+    @ALL @PRIMITIVE @NM4 @test4
     Scenario: TRES_PDPN_11
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
@@ -266,7 +401,7 @@ Feature: response tests for paDemandPaymentNotice 930
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
     # TRES_PDPN_26
-    @ALL @PRIMITIVE @NM4 
+    @ALL @PRIMITIVE @NM4 @test5
     Scenario: TRES_PDPN_26
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice with 2 paymentList scenario executed successfully
@@ -276,7 +411,7 @@ Feature: response tests for paDemandPaymentNotice 930
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
     # TRES_PDPN_29
-    @ALL @PRIMITIVE @NM4 
+    @ALL @PRIMITIVE @NM4 @test6
     Scenario: TRES_PDPN_29
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice with 2 paymentOptionDescription scenario executed successfully
@@ -299,7 +434,7 @@ Feature: response tests for paDemandPaymentNotice 930
         And check originalFaultCode field exists in demandPaymentNotice response
         And check originalFaultString field exists in demandPaymentNotice response
         And check originalDescription field exists in demandPaymentNotice response
-    @ALL @PRIMITIVE @NM4 
+    @ALL @PRIMITIVE @NM4 @test7
     Scenario: TRES_PDPN_61 (part 2)
         Given the TRES_PDPN_61 (part 1) scenario executed successfully
         And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg
