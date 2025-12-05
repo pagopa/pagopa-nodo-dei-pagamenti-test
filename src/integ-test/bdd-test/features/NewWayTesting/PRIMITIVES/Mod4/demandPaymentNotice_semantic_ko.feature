@@ -167,12 +167,12 @@ Feature:  semantic checks for demandPaymentNoticeReq 925
         And update for table INTERMEDIARI_PA with parameter ENABLED = 'N' on db nodo_cfg with where datatable horizontal
             | where_keys          | where_values |
             | ID_INTERMEDIARIO_PA | 77777777777  |
-        And refresh job ALL triggered after 10 seconds
+        And waiting after triggered refresh job ALL
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         And update for table INTERMEDIARI_PA with parameter ENABLED = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys          | where_values |
             | ID_INTERMEDIARIO_PA | 77777777777  |
-        And refresh job ALL triggered after 10 seconds
+        And waiting after triggered refresh job ALL
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
 

@@ -160,21 +160,6 @@ Feature: response tests for paDemandPaymentNotice 930
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    # @ALL @PRIMITIVE @NM4 @test1
-    # Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
-    #     Given the demandPaymentNotice scenario executed successfully
-    #     And the paDemandPaymentNotice scenario executed successfully
-    #     And <elem> with <value> in paDemandPaymentNotice
-    #     And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
-    #     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-    #     Then check outcome is OK of demandPaymentNotice response
-    #     Examples:
-    #         | elem              | value | soapUI test  |
-    #         | soapenv:Header    | None  | TRES_PDPN_01 |
-    #         | dueDate           | None  | TRES_PDPN_39 |
-    #         | detailDescription | None  | TRES_PDPN_42 |
-    #         | officeName        | None  | TRES_PDPN_58 |
-
 
     @ALL @PRIMITIVE @NM4 @NM4PADPNOK @NM4PADPNOK_1
     Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
@@ -204,17 +189,6 @@ Feature: response tests for paDemandPaymentNotice 930
             | officeName        | None  | TRES_PDPN_58 |
 
 
-
-    # # TRES_PDPN_02
-    # @ALL @PRIMITIVE @NM4 @test2
-    # Scenario: TRES_PDPN_02
-    #     Given the demandPaymentNotice scenario executed successfully
-    #     And the paDemandPaymentNotice scenario executed successfully
-    #     And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
-    #     When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-    #     Then check outcome is OK of demandPaymentNotice response
-
-
     @ALL @PRIMITIVE @NM4 @NM4PADPNOK @NM4PADPNOK_2
     # TRES_PDPN_02
     Scenario: TRES_PDPN_02
@@ -236,7 +210,8 @@ Feature: response tests for paDemandPaymentNotice 930
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
 
-    # @ALL @PRIMITIVE @NM4 @test3
+    # in questo scenario falliscono due test!
+    # @ALL @PRIMITIVE @NM4
     # Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
     #     Given the demandPaymentNotice scenario executed successfully
     #     And the paDemandPaymentNotice scenario executed successfully
@@ -305,7 +280,7 @@ Feature: response tests for paDemandPaymentNotice 930
     #         | officeName                        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_60 |
 
 
-    @ALL @PRIMITIVE @NM4 @NM4PADPNOK @NM4PADPNOK_3
+    @ALL @PRIMITIVE @NM4 @NM4PADPNKO @NM4PADPNKO_1
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
@@ -386,11 +361,23 @@ Feature: response tests for paDemandPaymentNotice 930
             | officeName                        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_60 |
 
 
+    @ALL @PRIMITIVE @NM4 @NM4PADPNKO @NM4PADPNKO_2
     # TRES_PDPN_11
-    @ALL @PRIMITIVE @NM4 @test4
     Scenario: TRES_PDPN_11
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_full initial XML paDemandPaymentNotice
+            | outcome            | OK                          |
+            | fiscalCode         | #creditor_institution_code# |
+            | noticeNumber       | 302#iuv#                    |
+            | amount             | 10.00                       |
+            | options            | EQ                          |
+            | allCCP             | false                       |
+            | paymentDescription | paymentDescription          |
+            | fiscalCodPA        | #creditor_institution_code# |
+            | companyName        | companyName                 |
+            | officeName         | officeName                  |
         And outcome with KO in paDemandPaymentNotice
         And qrCode with None in paDemandPaymentNotice
         And paymentList with None in paDemandPaymentNotice
@@ -400,33 +387,59 @@ Feature: response tests for paDemandPaymentNotice 930
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
+
+    @ALL @PRIMITIVE @NM4 @NM4PADPNKO @NM4PADPNKO_3
     # TRES_PDPN_26
-    @ALL @PRIMITIVE @NM4 @test5
-    Scenario: TRES_PDPN_26
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice with 2 paymentList scenario executed successfully
+    Scenario: TRES_PDPN_11
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_2payments initial XML paDemandPaymentNotice
+            | outcome      | OK                          |
+            | fiscalCodePA | #creditor_institution_code# |
+            | fiscalCode   | #creditor_institution_code# |
+            | noticeNumber | 302#iuv#                    |
+            | amount       | 10.00                       |
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
-    # TRES_PDPN_29
-    @ALL @PRIMITIVE @NM4 @test6
+
+    @ALL @PRIMITIVE @NM4 @NM4PADPNKO @NM4PADPNKO_4
+    # TTRES_PDPN_29
     Scenario: TRES_PDPN_29
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice with 2 paymentOptionDescription scenario executed successfully
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_2paymentDesc initial XML paDemandPaymentNotice
+            | outcome      | OK                          |
+            | fiscalCodePA | #creditor_institution_code# |
+            | fiscalCode   | #creditor_institution_code# |
+            | noticeNumber | 302#iuv#                    |
+            | amount       | 10.00                       |
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
-    # TRES_PDPN_61
 
-    Scenario: TRES_PDPN_61 (part 1)
-        Given updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y under macro Mod4 on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
-        And the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice KO scenario executed successfully
+    @ALL @PRIMITIVE @NM4 @NM4PADPNKO @NM4PADPNKO_5 @after
+    # TRES_PDPN_61
+    Scenario: TRES_PDPN_61
+        Given update for table INTERMEDIARI_PSP with parameter FAULT_BEAN_ESTESO = 'Y' on db nodo_cfg with where datatable horizontal
+            | where_keys           | where_values |
+            | ID_INTERMEDIARIO_PSP | #psp#        |
+        And waiting after triggered refresh job ALL
+        Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |
+        And from body with datatable vertical paDemandPaymentNotice_KO initial XML paDemandPaymentNotice
+            | outcome     | KO                          |
+            | faultCode   | PAA_SEMANTICA               |
+            | faultString | chiamata da rifiutare       |
+            | id          | #creditor_institution_code# |
+            | description | chiamata da rifiutare       |
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
@@ -434,11 +447,10 @@ Feature: response tests for paDemandPaymentNotice 930
         And check originalFaultCode field exists in demandPaymentNotice response
         And check originalFaultString field exists in demandPaymentNotice response
         And check originalDescription field exists in demandPaymentNotice response
-    @ALL @PRIMITIVE @NM4 @test7
-    Scenario: TRES_PDPN_61 (part 2)
-        Given the TRES_PDPN_61 (part 1) scenario executed successfully
-        And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
+        Given update for table INTERMEDIARI_PSP with parameter FAULT_BEAN_ESTESO = 'N' on db nodo_cfg with where datatable horizontal
+            | where_keys           | where_values |
+            | ID_INTERMEDIARIO_PSP | #psp#        |
+        And waiting after triggered refresh job ALL
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
