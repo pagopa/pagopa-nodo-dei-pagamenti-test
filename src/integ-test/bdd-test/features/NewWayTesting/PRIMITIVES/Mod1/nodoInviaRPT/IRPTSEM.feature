@@ -526,7 +526,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM] 328
     #     When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     #     Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-    # @ALL @PRIMITIVE @MOD1 @test4
+    # @ALL @PRIMITIVE @MOD1
     # Scenario: (phase 3) Execute nodoInviaRPT3 request
     #     Given the (phase 3) Execute nodoInviaRPT1 request scenario executed successfully
     #     And initial XML nodoInviaRPT

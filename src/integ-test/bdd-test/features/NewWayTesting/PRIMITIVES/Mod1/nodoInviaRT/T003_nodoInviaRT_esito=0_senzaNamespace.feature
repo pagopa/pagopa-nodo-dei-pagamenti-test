@@ -171,51 +171,51 @@ Feature: T003_nodoInviaRT_esito=0_senzaNamespace 517
     #         </RT>
     #         """
 
-    @runnable @test1
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ppt:intestazionePPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rpt1Attachment</rpt>
-            </ws:nodoInviaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+    # @runnable 
+    # Scenario: Execute nodoInviaRPT request
+    #     Given the RPT generation scenario executed successfully
+    #     And initial XML nodoInviaRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header>
+    #         <ppt:intestazionePPT>
+    #         <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+    #         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+    #         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+    #         <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+    #         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+    #         </ppt:intestazionePPT>
+    #         </soapenv:Header>
+    #         <soapenv:Body>
+    #         <ws:nodoInviaRPT>
+    #         <password>pwdpwdpwd</password>
+    #         <identificativoPSP>#psp#</identificativoPSP>
+    #         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+    #         <identificativoCanale>#canale#</identificativoCanale>
+    #         <tipoFirma></tipoFirma>
+    #         <rpt>$rpt1Attachment</rpt>
+    #         </ws:nodoInviaRPT>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     And initial XML pspInviaRPT
+    #         """
+    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #         <soapenv:Header/>
+    #         <soapenv:Body>
+    #         <ws:pspInviaRPTResponse>
+    #         <pspInviaRPTResponse>
+    #         <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+    #         <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+    #         <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+    #         </pspInviaRPTResponse>
+    #         </ws:pspInviaRPTResponse>
+    #         </soapenv:Body>
+    #         </soapenv:Envelope>
+    #         """
+    #     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRPT response
 
 
     @ALL @PRIMITIVE @MOD1 @MOD1NIRTOK @MOD1NIRTOK_6

@@ -300,9 +300,13 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA 584
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url field exists in nodoInviaCarrelloRPT response
         #DB check
-        And replace idCarrello content with $carrello content
         And wait 20 seconds for expiration
-        And checks the value codiceConvenzione$iuv of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                 |
+            | CODICE_CONVENZIONE | codiceConvenzione$iuv |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table CARRELLO retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys  | where_values |
+            | ID_CARRELLO | $carrello    |
         Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
             | identificativoIntermediarioPSP  | #psp#                       |
             | identificativoCanale            | #canale#                    |
