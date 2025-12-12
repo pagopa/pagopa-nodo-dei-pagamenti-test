@@ -1,7 +1,7 @@
 import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
-import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
+import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
 import { inoltraEsitoPagamentoCarta } from './api/inoltraEsitoPagamentoCarta.js';
 import { RPT_Carrello_2 } from './api/RPT_Carrello_2.js';

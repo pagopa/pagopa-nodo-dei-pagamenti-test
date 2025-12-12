@@ -1,0 +1,24 @@
+{{- $namespace := .Values.namespace }}
+{{- $app := .Values.name }}
+{{- range .Values.network.services }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: "{{ $app }}" 
+  name: "{{ .name }}" 
+  namespace: "{{ $namespace }}"
+spec:
+  ports:
+    {{- toYaml .ports | nindent 2 }}
+  selector:
+    app: "{{ tpl (.selector) $ }}"
+  type: ClusterIP
+
+---
+{{- end }}
+
+
+
+
+

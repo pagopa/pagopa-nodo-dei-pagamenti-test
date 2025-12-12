@@ -4,15 +4,39 @@ import os
 import datetime
 from webbrowser import get
 from xml.dom.minidom import parseString
+import random
+import string
+import uuid
 
 from behave.__main__ import main as behave_main
 import time
 from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+import xmltodict
+
+from urllib.parse import urlparse
+from behave.model import Table, Row
+
+# from azure.eventhub import EventHubConsumerClient
+# from azure.eventhub.exceptions import EventHubError
+
+
+try:
+    import cx_Oracle
+except ModuleNotFoundError:
+    print(">>>>>>>>>>>>>>>>>No import CX_ORACLE for Postgres pipeline")
+
+# Decommentare per test in pipeline
+# from requests.packages.urllib3.util.retry import Retry
+
+# Commentare per test in pipeline
+from urllib3.util.retry import Retry
 
 import xml.etree.ElementTree as ET
+
+RESPONSE = "Response"
+
 
 def random_s():
     import random
@@ -22,6 +46,12 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
     return strNumRand
+
+
+def genera_stringa():
+    lunghezza = random.randint(2, 18)
+    caratteri = string.ascii_letters + string.digits
+    return ''.join(random.choice(caratteri) for _ in range(lunghezza))
 
 
 def compare_lists(lista_api, lista_query):
@@ -82,7 +112,6 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediNumeroAvviso": "/nodo-per-psp-richiesta-avvisi/v1",
         "nodoChiediStatoRPT": "/nodo-per-pa/v1",
         "nodoChiediTemplateInformativaPSP": "/nodo-per-psp/v1",
-        "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
         "nodoInviaCarrelloRPT": "/nodo-per-pa/v1",
         "nodoInviaRPT": "/nodo-per-pa/v1",
         "nodoInviaRT": "/nodo-per-psp/v1",
@@ -91,19 +120,18 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediInformativaPSP": "/nodo-per-pa/v1",
         "nodoChiediElencoQuadraturePA": "/nodo-per-pa/v1",
         "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
-        #"nodoChiediSceltaWISP":"//v1"
+        # "nodoChiediSceltaWISP":"//v1"
     }
-   
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service").strip() == "":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
-        return  context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
             + context.config.userdata.get("services").get(
                 "nodo-dei-pagamenti").get("soap_service")
 
-        
+
 def get_rest_url_nodo(context, primitive):
-    primitive_mapping = { 
+    primitive_mapping = {
         "avanzamentoPagamento": "/nodo-per-pm/v1",
         "checkPosition": "/nodo-per-pm/v1",
         "informazioniPagamento": "/nodo-per-pm/v1",
@@ -117,7 +145,7 @@ def get_rest_url_nodo(context, primitive):
         "v2/closepayment": "/nodo-per-pm",
         "v1/parkedList": "/nodo-per-pm"
     }
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
         if "avanzamentoPagamento" in primitive:
             primitive = "avanzamentoPagamento"
         elif "informazioniPagamento" in primitive:
@@ -130,11 +158,11 @@ def get_rest_url_nodo(context, primitive):
             primitive = "v1/parkedList"
         elif "_json" in primitive:
             primitive = primitive.split('_')[0]
-            if "v2/closepayment" in primitive:
-                primitive = "v2/closepayment"
+        if "v2/closepayment" in primitive:
+            primitive = "v2/closepayment"
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
-        return ""
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + "/" + primitive
 
 
 def get_soap_mock_ec(context):
@@ -173,9 +201,14 @@ def get_soap_mock_psp2(context):
 
 def get_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
-        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('url') \
-            + context.config.userdata.get('services').get(
-                'nodo-dei-pagamenti').get('refresh_config_service')
+        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service')
+    else:
+        return ""
+
+
+def get_forcing_refresh_config_url(context):
+    if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('forcing_refresh_config_service') is not None:
+        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('forcing_refresh_config_service')
     else:
         return ""
 
@@ -196,12 +229,26 @@ def get_rest_mock_psp(context):
         return ""
 
 
-def save_soap_action(mock, primitive, soap_action, override=False):
+def save_soap_action(context, mock, primitive, soap_action, override=False):
     # set what your server accepts
+    dbRun = getattr(context, "dbRun")
     headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
-    response = requests.post(
-        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
+
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
+    response = None
+    if dbRun == "Postgres":
+        response = requests.post(f"{mock}/response/{primitive}?override={override}",
+                                 soap_action, headers=headers, verify=False, proxies=getattr(context, 'proxies'))
+    elif dbRun == "Oracle":
+        response = requests.post(
+            f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
     print(response.content, response.status_code)
     return response.status_code
 
@@ -258,22 +305,199 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 
-def replace_context_variables(body, context):
-    pattern = re.compile('\\$\\w+')
+def manipulate_soap_action2(soap_action, cmd, elem, value):
+    TYPE_ELEMENT = 1
+    doc = parseString(soap_action)
+
+    # Recupera tutte le occorrenze del tag
+    elements = doc.getElementsByTagName(elem)
+    
+    # -------------------------------------------------
+    # 1) removeOccurrence, tag n
+    # -------------------------------------------------
+    if cmd == "removeOccurrence":
+        occ = int(value)
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            node.parentNode.removeChild(node)
+        return doc.toxml()
+
+    # -------------------------------------------------
+    # 2) changeOccurrence, tag n, new_value
+    # -------------------------------------------------
+    if cmd == "changeOccurrence":
+        occ = int(value.split(",")[0])
+        new_value = value.split(",", 1)[1]
+
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            # Cancella vecchi nodi di testo
+            for child in list(node.childNodes):
+                if child.nodeType != TYPE_ELEMENT:
+                    node.removeChild(child)
+
+            # Imposta il nuovo valore
+            node.appendChild(doc.createTextNode(new_value))
+        return doc.toxml()
+
+    # -------------------------------------------------
+    # 3) changeOccurrence, tag n
+    # -------------------------------------------------
+    if cmd == "clearOccurrence":
+        occ = int(value)
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            for child in list(node.childNodes):
+                node.removeChild(child)
+        return doc.toxml()
+    
+    # -------------------------------------------------
+    # 4) removeParentOccurrence, tag n
+    # -------------------------------------------------
+    if cmd == "removeParentOccurrence":
+        occ = int(value)
+        if len(elements) >= occ:
+            node = elements[occ - 1]
+            parent = node.parentNode
+            children = list(node.childNodes)
+
+            # Rimuovi il tag contenitore
+            parent.removeChild(node)
+
+            # Sposta tutti i figli nel parent
+            for child in children:
+                parent.appendChild(child)
+
+        return doc.toxml()
+
+
+
+    # -------------------------------------------------
+    # Logica precedente
+    # -------------------------------------------------
+    if value == "None":
+        element = elements[0]
+        element.parentNode.removeChild(element)
+
+    elif value == "Empty":
+        element = elements[0]
+        for child in list(element.childNodes):
+            if child.nodeType != TYPE_ELEMENT:
+                child.nodeValue = ""
+            else:
+                child.parentNode.removeChild(child)
+
+    elif value == 'RemoveParent':
+        element = elements[0]
+        parent = element.parentNode
+        children = list(element.childNodes)
+        parent.removeChild(element)
+        for child in children:
+            if child.nodeType == TYPE_ELEMENT:
+                parent.appendChild(child)
+
+    elif str(value).startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        original_node = elements[0]
+        cloned_node = original_node.cloneNode(True)
+        for i in range(occurrences - 1):
+            original_node.parentNode.insertBefore(cloned_node, original_node)
+            original_node = cloned_node
+            cloned_node = original_node.cloneNode(True)
+
+    return doc.toxml()
+
+
+
+def replace_context_variables_for_query(body, context):
+    pattern = re.compile('\\s\\$\\w+(?![.\\w])')
     match = pattern.findall(body)
-    for field in match:
-        saved_elem = getattr(context, field.replace('$', ''))
-        value = str(saved_elem)
-        body = body.replace(field, value)
+
+    if len(match) > 0:
+        # CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
+        initial_indexes = [i for i, x in enumerate(body) if x == "$"]
+        j = 0
+        dict_values = {}
+        new_indexes = initial_indexes
+
+        for field in match:
+            if j > 0:
+                new_indexes = []
+                # RICALCULATE INDEX VALUE AFTER REPLAE $$
+                indexes = [i for i, x in enumerate(body) if x == "$"]
+                new_indexes = indexes[(4*j):]
+
+            dict_values.update(
+                {field.replace('$', '').strip(): new_indexes[0]})
+            saved_elem = getattr(context, field.replace('$', '').strip())
+            value = str(saved_elem)
+
+            index_my_interest = dict_values[field.replace('$', '').strip()]-1
+
+            if body[index_my_interest] == " ":
+                body = replace_specific_string(body, field, f'$${value}$$')
+            else:
+                body = replace_specific_string(body, field, value)
+            j += 1
+            print(f'Query in costruzione: step {j} per la query{body}')
     return body
 
 
-def replace_local_variables(body, context):
-    pattern = re.compile('\\$\\w+\\.\\w+')
+def manipulate_json(data, key, value):
+    json_temp = ""
+    if value == "None":
+        if key in data:
+            del data[key]
+    elif value == "Empty":
+        json_temp = json.loads(data)
+        if key in data and isinstance(json_temp.get(key), list):
+            json_temp[key] = []
+        elif key in data and isinstance(json_temp.get(key), dict):
+            json_temp[key] = {}
+        elif key in data:
+            data[key] = ""
+    elif value == 'RemoveParent':
+        parent_key = key.rsplit('.', 1)[0]
+        if parent_key in data and isinstance(data[parent_key], dict):
+            if key in data[parent_key]:
+                data[parent_key][key] = data[key]
+            del data[key]
+    elif value.startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        if key in data and isinstance(data[key], list):
+            data[key] = data[key] * occurrences
+    else:
+        if key in data:
+            json_temp = json.loads(data)
+            json_temp[key] = value
+    return json.dumps(json_temp)
+
+
+def replace_context_variables(body, context):
+    pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
+    # pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
+
+    if len(match) > 0:
+        # aggiunge ai valori della lista match il simbolo $ all'inizio
+        for i in range(len(match)):
+            match[i] = f"${match[i]}"
+
+        for field in match:
+            saved_elem = getattr(context, field.replace('$', ''))
+            value = str(saved_elem)
+            body = body.replace(field, value)
+    return body
+
+
+def replace_local_variables_for_query(body, context):
+    pattern = re.compile('\\$\\w+\\.\\w+(?:-\\w+)?')
+    match = pattern.findall(body)
+
     for field in match:
         saved_elem = getattr(context, field.replace('$', '').split('.')[0])
         value = saved_elem
+        tag_finale = ''
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[1]
             if isinstance(saved_elem, str):
@@ -281,8 +505,160 @@ def replace_local_variables(body, context):
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            value = document.getElementsByTagNameNS(
-                '*', tag)[0].firstChild.data
+            try:
+                if '-' in tag:
+                    tag_finale = tag.split('-')[1]
+                    value = document.getElementsByTagNameNS(
+                        '*', tag.split('-')[0])[0].firstChild.data
+                else:
+                    value = document.getElementsByTagNameNS(
+                        '*', tag)[0].firstChild.data
+            except Exception as e:
+                raise Exception(
+                    f"Errore nel metodo replace_local_variables_for_query: il Tag '{tag}' non esiste nel contesto") from e
+        if len(tag_finale) > 1:
+            body = body.replace(field, f'$${value}-{tag_finale}$$')
+        else:
+            body = body.replace(field, f'$${value}$$')
+    return body
+
+
+
+def check_exists_tag_in_payload(context, tag, payload, posizione):
+    from xml.etree.ElementTree import fromstring 
+    
+    try:
+        posizione = int(posizione)
+    except ValueError as e:
+        raise Exception(
+                    f"La posizione non può essere convertita in un intero!") from e
+ 
+    root = fromstring(payload)
+    elements = root.findall(".//{}".format(tag))
+    
+    return not elements or not (0 <= posizione < len(elements))
+
+
+
+def replace_local_variables_with_position(body, position, context, type_body):
+    list_tag = body.split(".")
+    size_list = len(list_tag)
+
+    string_pattern = ''
+
+    for i in range(0, size_list):
+        if i == 0:
+            string_pattern = '\\$\\w+\\'
+        else:
+            string_pattern += '.\\w+'
+
+    dbRun = getattr(context, "dbRun")
+    pattern = re.compile(string_pattern)
+    match = pattern.findall(body)
+
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[size_list-1]
+            
+            if dbRun == "Postgres":
+                if isinstance(saved_elem, str):
+                    modify_xmlns = False
+                    try:
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem, position)
+            
+                        if check_tag_exists:
+                            return None
+                        document = parseString(saved_elem)
+                    except Exception as e:
+                        modify_xmlns = True
+
+                    if modify_xmlns:
+                        saved_elem = saved_elem.replace('psp', 'pfn')
+                        document = parseString(saved_elem)
+                else:
+                    if type_body == 'xml':
+
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, saved_elem, position)
+            
+                        if check_tag_exists:
+                            return None
+                        
+                        document = parseString(saved_elem.content)
+                    elif type_body == 'json':
+                        jsonDict = json.loads(saved_elem[0][0].tobytes().decode('utf-8'))
+                        payload = json2xml(jsonDict)
+                        payload = '<root>' + payload + '</root>'
+                        payload = payload.replace('\n', '').replace('\t', '')
+
+                        check_tag_exists = check_exists_tag_in_payload(context, tag, payload, position)
+            
+                        if check_tag_exists:
+                            return None
+                        document = parseString(payload)
+            elif dbRun == "Oracle":
+                if isinstance(saved_elem, str):
+                    modify_xmlns = False
+                    try:
+                        document = parseString(saved_elem)
+                    except Exception as e:
+                        modify_xmlns = True
+
+                    if modify_xmlns:
+                        saved_elem = saved_elem.replace('psp', 'pfn')
+                        document = parseString(saved_elem)
+                elif isinstance(saved_elem, cx_Oracle.LOB):
+                    document = parseString(saved_elem.read())
+                else:
+                    if type_body == 'xml':
+                        document = parseString(saved_elem.content)
+                    elif type_body == 'json':
+                        selected_element = saved_elem[0][0]
+                        selected_element = selected_element.read()
+                        selected_element = selected_element.decode("utf-8")
+                        jsonDict = json.loads(selected_element)
+                        payload = json2xml(jsonDict)
+                        payload = '<root>' + payload + '</root>'
+                        payload = payload.replace('\n', '').replace('\t', '')
+                        document = parseString(payload)
+            try:
+                value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data
+            except Exception as e:
+                raise Exception(
+                    f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
+        body = body.replace(field, value)
+    return body
+
+
+def replace_local_variables(body, context):
+    dbRun = getattr(context, "dbRun")
+    pattern = re.compile('\\$\\w+\\.\\w+')
+    match = pattern.findall(body)
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[1]
+            if dbRun == "Postgres":
+                if isinstance(saved_elem, str):
+                    document = parseString(saved_elem)
+                else:
+                    document = parseString(saved_elem.content)
+            elif dbRun == "Oracle":
+                if isinstance(saved_elem, str):
+                    document = parseString(saved_elem)
+                elif isinstance(saved_elem, cx_Oracle.LOB):
+                    document = parseString(saved_elem.read())
+                else:
+                    document = parseString(saved_elem.content)
+            try:
+                value = document.getElementsByTagNameNS(
+                    '*', tag)[0].firstChild.data
+            except Exception as e:
+                raise Exception(
+                    f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
         body = body.replace(field, value)
     return body
 
@@ -298,7 +674,7 @@ def replace_global_variables(payload, context):
     return payload
 
 
-def get_history(rest_mock, notice_number, primitive):
+def get_history(context, rest_mock, notice_number, primitive):
     s = requests.Session()
     response = requests_retry_session(session=s).get(
         f"{rest_mock}/history/{notice_number}/{primitive}")
@@ -306,12 +682,24 @@ def get_history(rest_mock, notice_number, primitive):
 
 
 def query_json(context, name_query, name_macro):
-    query = json.load(open(os.path.join(
-        context.config.base_dir + "/../resources/query_AutomationTest.json")))
+    dbRun = getattr(context, "dbRun")
+    query = ''
+    if dbRun == "Postgres":
+        query = json.load(open(os.path.join(
+            context.config.base_dir + "/../resources/query_AutomationTest_postgres.json")))
+    elif dbRun == "Oracle":
+        query = json.load(open(os.path.join(
+            context.config.base_dir + "/../resources/query_AutomationTest_oracle.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
-        selected_query = replace_local_variables(selected_query, context)
-        selected_query = replace_context_variables(selected_query, context)
+        if dbRun == "Postgres":
+            selected_query = replace_local_variables_for_query(
+                selected_query, context)
+            selected_query = replace_context_variables_for_query(
+                selected_query, context)
+        elif dbRun == "Oracle":
+            selected_query = replace_local_variables(selected_query, context)
+            selected_query = replace_context_variables(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
@@ -321,6 +709,14 @@ def isFloat(string: str) -> bool:
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
 
 
+def isNumeric(string: str) -> bool:
+    return string.isnumeric()
+
+
+def isDecimal(string: str) -> bool:
+    return string.isdecimal()
+
+
 def isDate(string: str):
     try:
         return string == datetime.datetime.strptime(string, '%Y-%m-%d')
@@ -328,42 +724,686 @@ def isDate(string: str):
         return False
 
 
-def single_thread(context, soap_primitive, type):
+def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel):
+    print("single_thread_evolution")
+
+    if '_' in primitive: 
+        soap_action = primitive.split("_")[0]
+    else:
+        soap_action = primitive
+
+    dbRun = getattr(context, "dbRun")
+    myconfigfile = getattr(context, 'myconfigfile')
+    flag_subscription = context.config.userdata.get("services").get(
+        "nodo-dei-pagamenti").get("subscription_key_name")
+
+    db_online = ''
+    db_offline = ''
+    db_re = ''
+    db_wfesp = ''
+
+    import base64 as b64
+    import db_operation_postgres
+    import db_operation_oracle
+    import db_operation_apicfg_testing_support as db
+
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
+    if dbRun == "Postgres":
+        db_online = db_operation_postgres
+        db_offline = db_operation_postgres
+        db_re = db_operation_postgres
+        db_wfesp = db_operation_postgres
+    elif dbRun == "Oracle":
+        db_online = db_operation_oracle
+        db_offline = db_operation_oracle
+        db_re = db_operation_oracle
+        db_wfesp = db_operation_oracle
+
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get("nodo_online")
+
+    print(f"primitives to launch in parallel: {primitive} with type: {tipo}")
+
+    i = 0
+    payment_token = ''
+    payload_support = ''
+
+    if 'nodoInviaRPT' in primitive:
+        if '_' in primitive:
+            primitive_full = primitive
+            primitive = primitive.split('_')[0]
+            payload_support = primitive_full.split('_')[1]
+            payload_support = replace_context_variables(
+                payload_support, context)
+
+            # RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
+            notice_number = ''
+            fiscal_code = ''
+
+            for single_primitive_in_parallel in all_primitive_in_parallel:
+                if 'activatePaymentNotice' in single_primitive_in_parallel:
+                    notice_number = f"${single_primitive_in_parallel}.noticeNumber"
+                    fiscal_code = f"${single_primitive_in_parallel}.fiscalCode"
+                    break
+
+            notice_number = replace_local_variables(notice_number, context)
+            fiscal_code = replace_local_variables(fiscal_code, context)
+
+            select_get_token = f"SELECT PAYMENT_TOKEN FROM RPT_ACTIVATIONS WHERE NOTICE_ID = '{notice_number}' AND PA_FISCAL_CODE = '{fiscal_code}'"
+
+            db_name = 'nodo_online'
+
+            adopted_db, conn = get_db_connection(
+                db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            exec_query = adopted_db.executeQuery(
+                context, conn, select_get_token)
+            assert exec_query != None and len(
+                exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
+
+            payment_token = exec_query[0][0]
+            # REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
+            payload_support = payload_support.replace(
+                'paymentToken', payment_token)
+
+            payload_b = bytes(payload_support, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            setattr(context, 'token_by_rptActivations', payment_token)
+            setattr(context, 'rptAttachment', payload)
+    # LANCIO JOB
+    if tipo == 'JOB':
+        try:
+            user_profile = None
+
+            try:
+                user_profile = getattr(context, "user_profile")
+            except AttributeError as e:
+                print(f"User Profile None: {e} ->>> remote run!")
+
+            dbRun = getattr(context, "dbRun")
+
+            url_nodo = ''
+            if dbRun == "Postgres":
+                url_nodo = (context.config.userdata.get("services").get("nodo-dei-pagamenti").get("refresh_config_service")).split("config")[0]
+            elif dbRun == 'Oracle':
+                url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")       
+
+            flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+            headers = ''
+            header_host = estrapola_header_host(url_nodo)
+
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml', 'Host': header_host}
+
+            nodo_response = None 
+            
+            if dbRun == "Postgres":
+                nodo_response = requests.get(f"{url_nodo}jobs/trigger/{primitive}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                print(f">>>>>>>>>>>>>>>>>> {url_nodo}jobs/trigger/{primitive} with proxies {getattr(context,'proxies')}")
+            elif dbRun == "Oracle":
+                #RUN DA LOCALE
+                if user_profile != None:
+                    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{primitive}", headers=headers, verify=False)
+                    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{primitive}")
+                #RUN DA REMOTO
+                else:
+                    nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{primitive}", headers=headers, verify=False)
+                    print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{primitive}")
+
+            setattr(context, primitive + RESPONSE, nodo_response)
+
+        except AssertionError as e:
+            # Stampiamo il messaggio di errore dell'assert
+            print("----->>>> Assertion Error: ", e)
+            # Interrompiamo il test
+            raise AssertionError(str(e))
+        except Exception as e:
+            # Gestione di tutte le altre eccezioni
+            print("----->>>> Exception:", e)
+            # Interrompiamo il test
+            raise e
+    # LANCIO DELLE PRIMITIVE
+    # LANCIO GET
+    if tipo == 'GET':
+        if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        else:
+            url_nodo = get_rest_url_nodo(context, primitive)
+        print(f"url: {url_nodo}")
+
+        header_host = estrapola_header_host(url_nodo)
+        headers = ''
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_action,
+                       'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Content-Type': 'application/xml',
+                       'SOAPAction': soap_action, 'Host': header_host}
+
+        get_response = ''
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False)
+        else:
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
+        setattr(context, primitive + "Response", get_response)
+
+        print("get response: ", get_response.content)
+        print(primitive + "Response")
+    # LANCIO POST
+    elif tipo == 'POST':
+        body = ''
+        if 'nodoInviaRPT' in primitive:
+            body = getattr(context, primitive)
+            body = body.replace('rptAttachment', getattr(
+                context, 'rptAttachment')).replace('paymentToken', payment_token)
+        else:
+            body = getattr(context, primitive)
+
+        response = ''
+        url_nodo = ''
+
+        if 'xml' in getattr(context, primitive):
+            url_nodo = get_soap_url_nodo(context, primitive)
+            print(f"url: {url_nodo}")
+
+            header_host = estrapola_header_host(url_nodo)
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_action,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': soap_action, 'Host': header_host}
+            print(f"primitive: {primitive} ---> body: {body}")
+
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+        else:
+            if '<' in body:
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                        body["importoTotalePagato"] = float(
+                            body["importoTotalePagato"])
+                    if ('RRN' in body.keys()) and (body["RRN"] != None):
+                        body["RRN"] = float(body["RRN"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(
+                            body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                    print(f"body: {body}")
+
+            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            else:
+                url_nodo = get_rest_url_nodo(context, primitive)
+
+            print(f"url: {url_nodo}")
+
+            header_host = estrapola_header_host(url_nodo)
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_action,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': soap_action, 'Host': header_host}
+
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
+        setattr(context, primitive + "Response", response)
+        print(f'response content: {response.content}')
+        print(f'response content header: {response.headers}')
+        print(primitive + "Response")
+
+
+def single_thread_with_update(context, primitive, tipo, all_primitive_in_parallel):
+    print("single_thread_evolution")
+
+    dbRun = getattr(context, "dbRun")
+    myconfigfile = getattr(context, 'myconfigfile')
+    flag_subscription = context.config.userdata.get("services").get(
+        "nodo-dei-pagamenti").get("subscription_key_name")
+
+    db_online = ''
+    db_offline = ''
+    db_re = ''
+    db_wfesp = ''
+
+    import base64 as b64
+    import db_operation_postgres
+    import db_operation_oracle
+    import db_operation_apicfg_testing_support as db
+
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
+    if dbRun == "Postgres":
+        db_online = db_operation_postgres
+        db_offline = db_operation_postgres
+        db_re = db_operation_postgres
+        db_wfesp = db_operation_postgres
+    elif dbRun == "Oracle":
+        db_online = db_operation_oracle
+        db_offline = db_operation_oracle
+        db_re = db_operation_oracle
+        db_wfesp = db_operation_oracle
+
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get("nodo_online")
+
+    print(f"primitives to launch in parallel: {primitive} with type: {tipo}")
+
+    i = 0
+    payment_token = ''
+    payload_support = ''
+
+    if 'nodoInviaRPT' in primitive:
+        if '_' in primitive:
+            primitive_full = primitive
+            primitive = primitive.split('_')[0]
+            payload_support = primitive_full.split('_')[1]
+            payload_support = replace_context_variables(
+                payload_support, context)
+
+            # RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
+            notice_number = ''
+            fiscal_code = ''
+
+            for single_primitive_in_parallel in all_primitive_in_parallel:
+
+                if 'activatePaymentNotice' in single_primitive_in_parallel:
+                    notice_number = f"${single_primitive_in_parallel}.noticeNumber"
+                    fiscal_code = f"${single_primitive_in_parallel}.fiscalCode"
+
+                elif 'activatePaymentNoticeV2' in single_primitive_in_parallel:
+                    notice_number = f"${single_primitive_in_parallel}.noticeNumber"
+                    fiscal_code = f"${single_primitive_in_parallel}.fiscalCode"
+                    break
+
+            notice_number = replace_local_variables(notice_number, context)
+            fiscal_code = replace_local_variables(fiscal_code, context)
+
+            select_get_token = f"SELECT PAYMENT_TOKEN FROM RPT_ACTIVATIONS WHERE NOTICE_ID = '{notice_number}' AND PA_FISCAL_CODE = '{fiscal_code}'"
+
+            db_name = 'nodo_online'
+
+            adopted_db, conn = get_db_connection(
+                db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            exec_query = adopted_db.executeQuery(
+                context, conn, select_get_token)
+            assert exec_query != None and len(
+                exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
+
+            payment_token = exec_query[0][0]
+            # REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
+            payload_support = payload_support.replace(
+                'paymentToken', payment_token)
+
+            # UPDATE DELLA TABELLA RT
+            update_table = f"UPDATE RT_GI SET CCP = '{payment_token}' WHERE IDENT_DOMINIO = '{fiscal_code}' AND IUV = '$iuv' AND CCP = '$ccp'"
+
+            update_query = replace_context_variables(update_table, context)
+
+            db_name = 'nodo_online'
+
+            adopted_db, conn = get_db_connection(
+                db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            exec_query = adopted_db.executeQuery(context, conn, update_query)
+
+            payload_b = bytes(payload_support, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            setattr(context, 'token_by_rptActivations', payment_token)
+            setattr(context, 'rptAttachment', payload)
+    # LANCIO DELLE PRIMITIVE
+    # LANCIO GET
+    if tipo == 'GET':
+        if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        else:
+            url_nodo = get_rest_url_nodo(context, primitive)
+        print(f"url: {url_nodo}")
+
+        header_host = estrapola_header_host(url_nodo)
+        headers = ''
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                       'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Content-Type': 'application/xml',
+                       'SOAPAction': primitive, 'Host': header_host}
+
+        get_response = ''
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False)
+        else:
+            get_response = requests.get(
+                url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
+        setattr(context, primitive + "Response", get_response)
+
+        print("get response: ", get_response.content)
+        print(primitive + "Response")
+    # LANCIO POST
+    elif tipo == 'POST':
+        body = ''
+        if 'nodoInviaRPT' in primitive:
+            body = getattr(context, primitive)
+            body = body.replace('rptAttachment', getattr(
+                context, 'rptAttachment')).replace('paymentToken', payment_token)
+        else:
+            body = getattr(context, primitive)
+
+        response = ''
+        url_nodo = ''
+
+        if 'xml' in getattr(context, primitive):
+            url_nodo = get_soap_url_nodo(context, primitive)
+            print(f"url: {url_nodo}")
+
+            header_host = estrapola_header_host(url_nodo)
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
+            print(
+                f"primitive: {primitive} ---> body: {body} headers: {headers}")
+
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+        else:
+            if '<' in body:
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                        body["importoTotalePagato"] = float(
+                            body["importoTotalePagato"])
+                    if ('RRN' in body.keys()) and (body["RRN"] != None):
+                        body["RRN"] = float(body["RRN"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(
+                            body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                    print(f"body: {body}")
+
+            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            else:
+                url_nodo = get_rest_url_nodo(context, primitive)
+
+            print(f"url: {url_nodo}")
+
+            header_host = estrapola_header_host(url_nodo)
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
+
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
+        setattr(context, primitive + "Response", response)
+        print("response: ", response.content)
+        print(primitive + "Response")
+
+
+def single_thread(context, soap_primitive, tipo):
     print("single_thread")
+    myconfigfile = getattr(context, 'myconfigfile')
+    flag_subscription = context.config.userdata.get("services").get(
+        "nodo-dei-pagamenti").get("subscription_key_name")
+
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
-    
-    if type == 'GET':
-        
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-        if 'SUBSCRIPTION_KEY' in os.environ:
-            headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-        print(url_nodo)
-        soap_response = requests.get(url_nodo, headers=headers, verify=False)
-    elif type == 'POST':
+    print(f"primitive: {primitive}")
+
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
+    if tipo == 'GET':
+        if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        else:
+            url_nodo = get_rest_url_nodo(context, primitive)
+        print(f"url: {url_nodo}")
+
+        header_host = estrapola_header_host(url_nodo)
+        headers = ''
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                       'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+        else:
+            headers = {'Content-Type': 'application/xml',
+                       'SOAPAction': primitive, 'Host': header_host}
+
+        soap_response = ''
+        if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+            soap_response = requests.get(
+                url_nodo, headers=headers, verify=False)
+        else:
+            soap_response = requests.get(
+                url_nodo, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+        print("response: ", soap_response.content)
+
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split(
+            "_")[1] + "Response", soap_response)
+    elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
-        if 'xml' in getattr(context, primitive):
-            # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-            url_nodo = get_soap_url_nodo(context, primitive)
-        else:
-            # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-        soap_response = requests.post(
-            url_nodo, body, headers=headers, verify=False)
 
-    print("nodo soap_response: ", soap_response.content)
-    print(soap_primitive.split("_")[1] + "Response")
-    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
+        response = ''
+        url_nodo = ''
+
+        if 'xml' in getattr(context, primitive):
+            url_nodo = get_soap_url_nodo(context, primitive)
+            print(f"url: {url_nodo}")
+
+            # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            header_host = estrapola_header_host(url_nodo)
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/xml',
+                           'SOAPAction': primitive, 'Host': header_host}
+
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+        else:
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            print(f"url: {url_nodo}")
+
+            header_host = estrapola_header_host(url_nodo)
+            headers = ''
+            if flag_subscription == 'Y':
+                headers = {'Content-Type': 'application/json', 'SOAPAction': primitive,
+                           'Host': header_host, 'Ocp-Apim-Subscription-Key': getattr(context, "SUBKEY")}
+            else:
+                headers = {'Content-Type': 'application/json',
+                           'SOAPAction': primitive, 'Host': header_host}
+
+            if '<' in body:
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                        body["importoTotalePagato"] = float(
+                            body["importoTotalePagato"])
+                    if ('RRN' in body.keys()) and (body["RRN"] != None):
+                        body["RRN"] = float(body["RRN"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(
+                            body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                    print(f"body: {body}")
+
+            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            else:
+                url_nodo = get_rest_url_nodo(context, primitive)
+
+            print(f"url: {url_nodo}")
+
+            if 'postgres_apim' in myconfigfile or 'oracle' in myconfigfile:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False)
+            else:
+                response = requests.post(
+                    url_nodo, body, headers=headers, verify=False, proxies=getattr(context, "proxies"))
+
+        setattr(context, soap_primitive.split("_")[1] + "Response", response)
+        print("response: ", response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+
+
+def threading_evolution(context, primitive_list, list_of_type, delay):
+    i = 0
+
+    threads = list()
+    all_primitive_in_parallel = primitive_list
+
+    while i < len(primitive_list):
+        t = Thread(target=single_thread_evolution, args=(
+            context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
+        threads.append(t)
+        time.sleep(delay/1000)
+        # Avvia il thread
+        t.start()
+        i += 1
+
+    for thread in threads:
+        # Attende che il thread completi l'esecuzione
+        thread.join()
+
+    print('Thread completed!')
+
+
+def threading_update(context, primitive_list, list_of_type, delay):
+    i = 0
+
+    threads = list()
+    all_primitive_in_parallel = primitive_list
+
+    while i < len(primitive_list):
+        t = Thread(target=single_thread_with_update, args=(
+            context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
+        threads.append(t)
+        time.sleep(delay/1000)
+        # Avvia il thread
+        t.start()
+        i += 1
+
+    for thread in threads:
+        # Attende che il thread completi l'esecuzione
+        thread.join()
+
+    print('Thread completed!')
 
 
 def threading(context, primitive_list, list_of_type):
@@ -410,26 +1450,54 @@ def json2xml(json_obj, line_padding=""):
                 for key in sub_obj:
                     sub_sub_obj = sub_obj[key]
                     result_list.append("%s<%s>" % (line_padding, key))
-                    result_list.append(json2xml(sub_sub_obj, "\t" + line_padding))
+                    result_list.append(
+                        json2xml(sub_sub_obj, "\t" + line_padding))
                     result_list.append("%s</%s>" % (line_padding, key))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             elif type(sub_obj) is list:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
                 if tag_name == 'paymentTokens':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "paymentToken"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "paymentToken"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "paymentToken"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "paymentToken"))
                 if tag_name == 'positionslist':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "position"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "position"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "position"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "position"))
                 if tag_name == 'payments':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "payment"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "payment"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "payment"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "payment"))
+                if tag_name == 'idPspList':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "idPspListContent"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "idPspListContent"))
+                if tag_name == 'transferList':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (
+                            line_padding, "transferListContent"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append(
+                            "%s</%s>" % (line_padding, "transferListContent"))
+                if tag_name == 'bundleOptions':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (
+                            line_padding, "bundleOptionsContent"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append(
+                            "%s</%s>" % (line_padding, "bundleOptionsContent"))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             else:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
@@ -443,34 +1511,630 @@ def parallel_executor(context, feature_name, scenario):
     # os.chdir(testenv.PARALLEACTIONS_PATH)
     behave_main(
         '-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
-    
+
 
 def searchValueTag(xml_string, path_tag, flag_all_value_tag):
-  list_tag = path_tag.split(".")
-  size_list = len(list_tag)
+    list_tag = path_tag.split(".")
+    size_list = len(list_tag)
 
-  tag_padre = list_tag[0]
-  tag = list_tag[size_list-1]
+    tag_padre = list_tag[0]
+    tag = list_tag[size_list-1]
 
-  tree = ET.ElementTree(ET.fromstring(xml_string))
-  root = tree.getroot()
-  list_value_tag = []
-  full_list_tag = []
-  for single_tag in root.findall('.//' + tag_padre):
-    list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
-    full_list_tag.append(list_value_tag)
-    if flag_all_value_tag == False:
-      if list_value_tag: break
-  return full_list_tag
+    tree = ET.ElementTree(ET.fromstring(xml_string))
+    root = tree.getroot()
+    list_value_tag = []
+    full_list_tag = []
+    for single_tag in root.findall('.//' + tag_padre):
+        list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
+        full_list_tag.append(list_value_tag)
+        if flag_all_value_tag == False:
+            if list_value_tag:
+                break
+    return full_list_tag
 
 
 def searchValueTagRecursive(tag_padre, tag, single_tag):
-  list_tag = []
+    list_tag = []
 
-  if tag_padre == tag:
-    list_tag = single_tag.text
-  else:
-    for next_tag in single_tag:
-      list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
-      if list_tag: break
-  return list_tag    
+    if tag_padre == tag:
+        list_tag = single_tag.text
+    else:
+        for next_tag in single_tag:
+            list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
+            if list_tag:
+                break
+    return list_tag
+
+
+def estrapola_header_host(url):
+    parsed_url = urlparse(url)
+    port = 443
+    dominio = parsed_url.netloc
+    # if "localhost" in dominio:
+    #     host = dominio
+    # else:
+    #     host = f"{dominio}:{port}"
+    host = dominio
+    return host
+
+
+def replace_specific_string(original_string, target_string, replacement):
+    # Verifica se la stringa di destinazione è presente nella stringa originale
+    if target_string in original_string:
+        # Verifica se la stringa di destinazione è una corrispondenza esatta
+        start_index = original_string.find(target_string)
+        end_index = start_index + len(target_string)
+
+        # Verifica che la sottostringa prima e dopo la target_string sia uno spazio o che sia alla fine della stringa
+        if (original_string[start_index] == ' ') and (original_string.endswith('') or original_string[end_index] == ' '):
+            # Effettua il replace solo se la condizione è soddisfatta
+            updated_string = original_string[:start_index] + \
+                replacement + original_string[end_index:]
+            return updated_string
+        else:
+            # Se la condizione non è soddisfatta, restituisci la stringa originale senza modifiche
+            return original_string
+    else:
+        # Se la stringa di destinazione non è presente, restituisci la stringa originale senza modifiche
+        return original_string
+
+
+# def get_proxy_settings():
+#     try:
+#         # Apre la chiave di registro corrispondente alle impostazioni del proxy
+#         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings")
+
+#         # Legge il valore dell'URL dello script PAC
+#         pac_url, _ = winreg.QueryValueEx(key, "AutoConfigURL")
+#         return pac_url if pac_url else None
+#     except FileNotFoundError:
+#         print("Impossibile trovare le impostazioni del proxy nel Registro di sistema.")
+#         return None
+#     except Exception as e:
+#         print("Errore durante la lettura delle impostazioni del proxy:", e)
+#         return None
+
+
+# # Funzione per ottenere l'URL del proxy da un file PAC
+# def get_proxy(pac_file):
+#     # Carica il file PAC
+#     pac = pacparser.parse_pac_file(pac_file)
+
+#     # Imposta il percorso del file PAC
+#     pac.init()
+
+#     # Ottieni l'URL del proxy per l'URL specificato
+#     proxy_url = pac.find_proxy(pac_file)
+
+#     return proxy_url
+
+# metodo override del get_db_connection per l'environment
+def get_db_connection_for_env(db_name, db_cfg, db_selected):
+    return get_db_connection(db_name, db_cfg, '', '', '', '', db_selected)
+
+
+def get_db_connection(db_name, db_cfg, db_online, db_offline, db_re, db_wfesp, db_selected):
+    db = None
+    conn = None
+    if db_name.lower() == "nodo_online":
+        db = db_online
+        conn = db_online.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    elif db_name.lower() == "nodo_offline":
+        db = db_offline
+        conn = db_offline.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    elif db_name.lower() == "re":
+        db = db_re
+        conn = db_re.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    elif db_name.lower() == "wfesp":
+        db = db_wfesp
+        conn = db_wfesp.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    else:
+        db = db_cfg
+        conn = db_cfg.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    return db, conn
+
+# Ricerca chiavi in json
+# obj = oggetto json deserializzato
+# ricerca = chiave da cercare
+
+
+def ricerca_chiavi(obj, ricerca, chiavi_trovate=None):
+    if chiavi_trovate is None:
+        chiavi_trovate = set()
+
+    if isinstance(obj, dict):
+        for chiave, valore in obj.items():
+            if chiave == ricerca:
+                chiavi_trovate.add(chiave)
+            ricerca_chiavi(valore, ricerca, chiavi_trovate)
+    elif isinstance(obj, list):
+        for elemento in obj:
+            ricerca_chiavi(elemento, ricerca, chiavi_trovate)
+
+    return list(chiavi_trovate)
+
+
+# METODO PER VERIFICARE CHE LA STRINGA ABBIA CARATTERI SPECIALI
+def contiene_caratteri_speciali(stringa):
+    caratteri_speciali = string.punctuation
+    for carattere in stringa:
+        if carattere in caratteri_speciali:
+            return True
+    return False
+
+
+# METODO PER VERIFICARE CHE LA STRINGA ABBIA IL CARATTERE APICE
+def contiene_carattere_apice(stringa):
+    caratteri_apice = "'"
+    for carattere in stringa:
+        if carattere in caratteri_apice:
+            return True
+    return False
+
+
+# METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA TABLE
+def transpose_table(table):
+    i = 0
+    transposed_table_dict = {}
+    for row in table:
+        if i < 1:
+            transposed_table_dict[row.headings[0]] = row.headings[1]
+        else:
+            transposed_table_dict[row[0]] = row[1]
+        i += 1
+
+   # Ottiene le chiavi del dict come intestazioni delle colonne
+    headers = list(transposed_table_dict.keys())
+    # Costruisci una lista di righe della tabella
+    rows = [list(transposed_table_dict.values())]
+
+    return Table(headings=headers, rows=rows)
+
+
+# METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE TRANSPOSTA
+def transpose_table_to_dict(table):
+    i = 0
+    transposed_table_dict = {}
+    for row in table:
+        if i < 1:
+            transposed_table_dict[row.headings[0]] = row.headings[1]
+        else:
+            transposed_table_dict[row[0]] = row[1]
+        i += 1
+
+    return transposed_table_dict
+
+# METODO PER CREARE UNA DICT DA UNA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE
+
+
+def table_to_dict(table, type_table):
+    dict_table = {}
+    # Definisco i valori predefiniti
+    predefined_values = {'horizontal', 'vertical'}
+
+    if type_table == 'horizontal':
+        for row in table:
+            for field, value in row.items():
+                # Aggiunge la chiave e il valore al dict
+                if field in dict_table:
+                    dict_table[field].append(value)
+                else:
+                    dict_table[field] = [value]
+    elif type_table == 'vertical':
+        if len(table.rows) == 0:
+            dict_table[table.headings[0]] = [table.headings[1]]
+        else:
+            for row in table:
+                dict_table[row.headings[0]] = [row.headings[1]]
+                break
+
+            for row in table:
+                dict_table[row[0]] = [row[1]]
+
+    else:
+        raise ValueError(
+            f"Invalid value of type table: {type_table}. It should be one of {predefined_values}")
+
+    return dict_table
+
+
+# METODO PER CREARE UNA SELECT CON WHERE
+def generate_select(dict_fields_values):
+    list_where_keys = []
+    list_where_values = []
+    dict_where = {}
+
+    selected_query = 'SELECT columns FROM table_name'
+
+    for fields, values in dict_fields_values.items():
+        for value in values:
+            if fields == 'where_keys':
+                list_where_keys.append(value)
+            elif fields == 'where_values':
+                list_where_values.append(value)
+
+    for j in range(0, len(list_where_keys)):
+        dict_where[list_where_keys[j]] = list_where_values[j]
+
+    i = 0
+    for where_key, where_value in dict_where.items():
+        if i == 0:
+            if "(" in where_value:
+                selected_query += f" WHERE {where_key} IN {where_value}"
+            elif "None" in where_value:
+                selected_query += f" WHERE {where_key} IS NULL"
+            elif "!=" in where_value:
+                selected_query += f" WHERE {where_key} <> '{where_value[2:]}'"
+            else:
+                selected_query += f" WHERE {where_key} = '{where_value}'"
+        else:
+            if 'INSERTED_TIMESTAMP' in where_key:
+                selected_query += f" AND {where_key} > {where_value}"
+            elif where_key == 'ORDER BY':
+                selected_query += f" {where_key} {where_value}"
+            else:
+                if "(" in where_value:
+                    selected_query += f" AND {where_key} IN {where_value}"
+                elif "None" in where_value:
+                    selected_query += f" AND {where_key} IS NULL"
+                elif "!=" in where_value:
+                    selected_query += f" AND {where_key} <> '{where_value[2:]}'"
+                else:
+                    selected_query += f" AND {where_key} = '{where_value}'"
+        i += 1
+
+    return selected_query
+
+
+# METODO PER CREARE UNA UPDATE CON WHERE
+def generate_update(dict_fields_values):
+    list_where_keys = []
+    list_where_values = []
+    dict_where = {}
+
+    upd_query = 'UPDATE table_name SET param'
+
+    for fields, values in dict_fields_values.items():
+        for value in values:
+            if fields == 'where_keys':
+                list_where_keys.append(value)
+            elif fields == 'where_values':
+                list_where_values.append(value)
+
+    for j in range(0, len(list_where_keys)):
+        dict_where[list_where_keys[j]] = list_where_values[j]
+
+    i = 0
+    for where_key, where_value in dict_where.items():
+        if i == 0:
+            if "(" in where_value:
+                upd_query += f" WHERE {where_key} IN {where_value}"
+            else:
+                upd_query += f" WHERE {where_key} = '{where_value}'"
+        else:
+            if "(" in where_value:
+                upd_query += f" AND {where_key} IN {where_value}"
+            else:
+                upd_query += f" AND {where_key} = '{where_value}'"
+        i += 1
+
+    return upd_query
+
+# METODO PER CREARE UNA DELETE CON WHERE
+def generate_delete(dict_fields_values):
+    list_where_keys = []
+    list_where_values = []
+    dict_where = {}
+
+    delete_query = 'DELETE FROM table_name'
+
+    for fields, values in dict_fields_values.items():
+        for value in values:
+            if fields == 'where_keys':
+                list_where_keys.append(value)
+            elif fields == 'where_values':
+                list_where_values.append(value)
+
+    for j in range(0, len(list_where_keys)):
+        dict_where[list_where_keys[j]] = list_where_values[j]
+
+    i = 0
+    for where_key, where_value in dict_where.items():
+        if i == 0:
+            if "(" in where_value:
+                delete_query += f" WHERE {where_key} IN {where_value}"
+            else:
+                delete_query += f" WHERE {where_key} = '{where_value}'"
+        else:
+            if "(" in where_value:
+                delete_query += f" AND {where_key} IN {where_value}"
+            else:
+                delete_query += f" AND {where_key} = '{where_value}'"
+        i += 1
+
+    return delete_query
+
+
+# METODO PER CREARE UNA SELECT CON WHERE
+def generate_string_column_table(list_col_split):
+    i = 0
+    columns = ''
+    for single_columns in list_col_split:
+        if i == len(list_col_split)-1:
+            columns += single_columns
+        else:
+            columns += single_columns + ','
+        i += 1
+    return columns
+
+# METODO PER CREARE LIST VALUES EXPECTED E SIZE VALUE CON COMMA
+
+
+def generate_list_values_exp_and_size_value_comma(dict_fields_values_expected):
+    count_comma_value = 0
+    count_comma_value_max = 0
+    list_values_expected = list()
+    size_values_comma_expected = 0
+
+    for field, value in dict_fields_values_expected.items():
+        count_comma_value_temp = count_comma_value
+        if ',' in value:
+            count_comma_value = value.count(',')
+            if count_comma_value > count_comma_value_temp:
+                count_comma_value_max = count_comma_value
+
+            count_comma_value_temp = count_comma_value
+
+    size_values_comma_expected = count_comma_value_max
+
+    for i in range(0, size_values_comma_expected+1):
+        list_values_expected_single = list()
+        list_value = list()
+        for field, value in dict_fields_values_expected.items():
+            if ',' in value:
+                list_value = value.split(',')
+                list_values_expected_single.append(list_value[i])
+            else:
+                list_values_expected_single.append(value)
+
+        list_values_expected.append(list_values_expected_single)
+
+    return list_values_expected, size_values_comma_expected
+
+
+# METODO PER CREARE LIST DI DICT VALUES EXPECTED BY SIZE
+def generate_list_dict_values_exp(list_col_split, size_dict_fields_values_expected, list_values_expected):
+    list_dict_fields_values_expected = list()
+
+    for i in range(0, size_dict_fields_values_expected+1):
+        dict_fields_values_expected_temp = {}
+        for field, value_obt in zip(list_col_split, list_values_expected[i]):
+            dict_fields_values_expected_temp[field] = value_obt
+        list_dict_fields_values_expected.append(
+            dict_fields_values_expected_temp)
+
+    return list_dict_fields_values_expected
+
+
+# METODO PER CREARE LIST DI DICT VALUES OBTAINED
+def generate_list_dict_values_obt(list_col_split, exec_query):
+    list_dict_fields_values_obtained = list()
+
+    size_result_query = len(exec_query)
+
+    for i in range(0, size_result_query):
+        dict_fields_values_obtained = {}
+        for field, value_obt in zip(list_col_split, exec_query[i]):
+            dict_fields_values_obtained[field] = value_obt
+        list_dict_fields_values_obtained.append(dict_fields_values_obtained)
+
+    return list_dict_fields_values_obtained
+
+
+# def consumer():
+
+#     # Definisci la stringa di connessione e altri dettagli
+#     connection_str = ''
+#     consumer_group = '$Default'
+#     eventhub_name = 'nodo-dei-pagamenti-biz-evt'
+
+#     # Callback per la gestione degli eventi ricevuti
+#     def on_event(partition_context, event):
+#         print(f"Ricevuto evento: {event.body_as_str()}")
+#         # Conferma dell'evento
+#         partition_context.update_checkpoint(event)
+
+#     # Callback per la gestione degli errori
+#     def on_error(partition_context, error):
+#         print(f"Errore nella partizione: {partition_context.partition_id}. Errore: {error}")
+
+#     # Callback per la gestione della chiusura delle partizioni
+#     def on_partition_close(partition_context, reason):
+#         print(f"Chiusura della partizione: {partition_context.partition_id}. Motivo: {reason}")
+
+#     # Configura il client del consumatore
+#     client = EventHubConsumerClient.from_connection_string(
+#         conn_str=connection_str,
+#         consumer_group=consumer_group,
+#         eventhub_name=eventhub_name
+#     )
+
+#     try:
+#         # Avvia la ricezione degli eventi dall'inizio del topic
+#         with client:
+#             client.receive(
+#                 on_event=on_event,
+#                 on_error=on_error,
+#                 on_partition_close=on_partition_close,
+#                 starting_position="-1",  # Legge dall'inizio del topic
+#                 partition_id='0'         # Legge dalla partizione 0
+#             )
+#     except KeyboardInterrupt:
+#         print("Ricezione degli eventi interrotta.")
+#     except EventHubError as e:
+#         print(f"Errore durante la ricezione degli eventi: {e}")
+#     finally:
+#         client.close()
+
+
+def find_file(filename, search_directory='.'):
+    # Cammina attraverso tutte le directory e sottodirectory a partire da 'search_directory'
+    for root, dirs, files in os.walk(search_directory):
+        if filename in files:
+            # Restituisce il percorso completo del file trovato
+            return os.path.join(root, filename)
+
+    # Se il file non è trovato, restituisci None
+    return None
+
+
+# METODO PER EFFETTUARE QUERY CON POLLING
+def query_with_polling(context, conn, adopted_db, selected_query, size_record_expected):
+    exec_query = ''
+    exec_query_updated = ''
+    polling_time = 60
+    print(f"Polling time set to: {polling_time} seconds")
+    sec = 0
+    while polling_time > 0:
+
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
+
+        if size_record_expected == 0:
+            if exec_query is not None and len(exec_query) == size_record_expected:
+                print(f"Results found after {sec} seconds!!!")
+                break
+            else:
+                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+        else:
+            if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
+
+                print(f"Results found after {sec} seconds!!!")
+                break
+            else:
+                print(f"result query has size: {len(exec_query)} but expected: {size_record_expected}")
+
+        sec += 1
+        polling_time -= 1
+        print(f"{polling_time} seconds left before timeout...")
+        current_timestamp = datetime.datetime.now()
+        print(f"{current_timestamp} current timestamp")
+        time.sleep(1)
+
+    if polling_time == 0 and (exec_query is None or len(exec_query) == 0):
+        print("Polling timed out with no results!")
+    elif polling_time == 0 and exec_query is None or (len(exec_query) != size_record_expected):
+        print("Polling timed out with size results different!")
+    return exec_query
+
+    # METODO PER EFFETTUARE QUERY CON POLLING
+
+
+def update_query(context, conn, adopted_db, upd_query):
+    exec_query = ''
+
+    print(f"Updating query...")
+
+    exec_query = adopted_db.executeQuery(context, conn, upd_query, True)
+
+    print(f"Update query: {upd_query} completed")
+
+    return exec_query
+
+def delete_query(context, conn, adopted_db, del_query):
+    exec_query = ''
+
+    print(f"Deleting record...")
+
+    exec_query = adopted_db.executeQuery(context, conn, del_query, True)
+
+    print(f"Delete query: {del_query} completed")
+
+    return exec_query
+
+
+# METODO PER EFFETTUARE QUERY ALLA CACHE
+def query_new_record_cache(context, conn, adopted_db, dbRun):
+    new_record_cache = False
+
+    wait_time = 20
+    print(f"Timeout new record refresh set to: {wait_time} seconds")
+    sec = 0
+
+    size_record_expected = 1
+    selected_query = ''
+
+    if dbRun == 'Postgres':
+        selected_query = "SELECT * FROM cache c WHERE c.time > (NOW() - interval '25' second) ORDER BY c.time DESC limit 1"
+    elif dbRun == 'Oracle':
+        selected_query = "SELECT * FROM cache c WHERE c.time > (CURRENT_TIMESTAMP - INTERVAL '25' SECOND) ORDER BY c.time DESC limit 1"
+
+    while wait_time > 0:
+        exec_query = adopted_db.executeQuery(context, conn, selected_query)
+
+        if exec_query is not None and len(exec_query) != 0 and len(exec_query) == size_record_expected:
+            new_record_cache = True
+            print(f"New record found table cache after {sec} seconds!!!")
+            break
+        else:
+            print(f"New record cache search in progress...")
+
+        sec += 1
+        wait_time -= 1
+        print(f"{wait_time} seconds left before timeout...")
+        current_timestamp = datetime.datetime.now()
+        print(f"{current_timestamp} current timestamp")
+        time.sleep(1)
+
+    if wait_time == 0 and (exec_query is None or len(exec_query) == 0):
+        print("Wait timed out with no results.")
+
+    return new_record_cache
+
+
+# Effettua una richiesta HTTP utilizzando un proxy configurato manualmente
+def make_request_with_manual_proxy():
+
+    # Crea il dizionario delle configurazioni del proxy
+    # proxies = {
+    #         'http': 'http://172.31.253.47:8080',
+    #         'https': 'http://172.31.253.47:8080',
+    # }
+
+    proxies = None
+
+    try:
+        response = requests.get(
+            'https://test.nexi.ndp.pagopa.it/nodo-p-sit.nexigroup.com/monitor', proxies=proxies)
+        response.raise_for_status()  # Solleva un'eccezione se la richiesta non va a buon fine
+        print("Richiesta effettuata con successo!")
+        print(response)
+    except requests.exceptions.RequestException as e:
+        print(f"Errore durante la richiesta: {e}")
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
+
+
+
+def replace_placeholders(value):
+
+    if isinstance(value, str) and "#CURRENTDATE#" in value:
+        match = re.search(r"#CURRENTDATE#\s*(\+(\d+))?\s*(\d{2}:\d{2}:\d{2})?", value)
+        
+        if match:
+            offset = int(match.group(2)) if match.group(2) else 0  
+            time = match.group(3) if match.group(3) else "00:00:00" 
+            
+            new_date = (datetime.date.today() + datetime.timedelta(days=offset)).strftime("%Y-%m-%d")
+            new_date_with_time = new_date + " " + time
+            return value.replace(match.group(0), new_date_with_time)
+    
+    return value
+
+

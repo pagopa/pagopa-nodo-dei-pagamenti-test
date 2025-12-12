@@ -1,0 +1,27 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<paf:paDemandPaymentNoticeResponse>
+			<outcome>$outcome</outcome>
+			<qrCode>
+				<fiscalCode>$fiscalCode</fiscalCode>
+				<noticeNumber>$noticeNumber</noticeNumber>
+			</qrCode>
+			<paymentList>
+				<paymentOptionDescription>
+					<amount>$amount</amount>
+					<options>$options</options>
+					<!--Optional:-->
+            		<dueDate>2022-06-25</dueDate>
+            		<!--Optional:-->
+					<detailDescription>descrizione dettagliata lato PA</detailDescription>
+					<allCCP>$allCCP</allCCP>
+				</paymentOptionDescription>
+			</paymentList>
+			<paymentDescription>$paymentDescription</paymentDescription>
+			<fiscalCodePA>$fiscalCodPA</fiscalCodePA>
+			<companyName>$companyName</companyName>
+			<officeName>$officeName</officeName>
+		</paf:paDemandPaymentNoticeResponse>
+	</soapenv:Body>
+</soapenv:Envelope>

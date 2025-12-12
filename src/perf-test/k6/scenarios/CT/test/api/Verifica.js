@@ -44,7 +44,7 @@ console.log(verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP,
   );
   
   console.debug("Verifica RES");
-  console.debug(JSON.stringify(res.timings));
+  console.debug(JSON.stringify(res));
   
 
    Verifica_Trend.add(res.timings.duration);
