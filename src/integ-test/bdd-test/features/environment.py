@@ -49,6 +49,11 @@ def before_all(context):
     setattr(context, 'dbRun', dbRun)
     setattr(context, 'myconfigfile', myconfigfile)
 
+    # Aggiunge tutte le variabili da global_configuration al contesto
+    global_config = context.config.userdata.get("global_configuration")
+    for key, value in global_config.items():
+        setattr(context, key, value)
+
     print(f"config file -----> {myconfigfile}")
 
     if user_profile != None:

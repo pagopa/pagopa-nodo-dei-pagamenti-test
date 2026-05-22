@@ -107,11 +107,12 @@
       "brokerEcommerce": "36892710904",
       "canaleEcommerce": "36892710904_02",
       "ragione_sociale": "PA paolo",
-      "pspFittizio": "15376371009",
-      "brokerFittizio": "15376371009",
-      "canaleFittizio": "15376371009_01",
-      "stazioneFittizia": "15376371009_02"
-   },
+       "pspFittizio": "15376371009",
+       "brokerFittizio": "15376371009",
+       "canaleFittizio": "15376371009_01",
+       "stazioneFittizia": "15376371009_02",
+       "postepay_toggle_enabled": "true"
+    },
    "db_configuration": {
       "nodo_cfg": {
          "host": "10.221.83.180",
