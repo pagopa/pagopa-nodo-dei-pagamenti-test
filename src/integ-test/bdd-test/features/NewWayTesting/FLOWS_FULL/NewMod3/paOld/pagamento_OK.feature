@@ -3856,6 +3856,13 @@ Feature: NM3 flows PA Old con pagamento OK
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
@@ -5822,6 +5829,13 @@ Feature: NM3 flows PA Old con pagamento OK
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 312#iuv#     |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
@@ -6215,6 +6229,13 @@ Feature: NM3 flows PA Old con pagamento OK
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 14748        |
