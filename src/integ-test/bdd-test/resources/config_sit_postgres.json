@@ -111,6 +111,7 @@
        "brokerFittizio": "15376371009",
        "canaleFittizio": "15376371009_01",
        "stazioneFittizia": "15376371009_02",
+       "channelPosteNonListed": "POSTE3",
        "postepay_toggle_enabled": "true"
     },
    "db_configuration": {

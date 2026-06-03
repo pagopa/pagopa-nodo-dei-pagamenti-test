@@ -27855,6 +27855,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                          |
       | OBJ_ID     | ('16640','1340001','16641','1380001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -28373,6 +28379,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -29045,6 +29057,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                          |
       | OBJ_ID     | ('16640','1340001','16641','1380001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -29563,6 +29581,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -41368,6 +41392,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                       |
       | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -42289,6 +42319,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                       |
       | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -43224,6 +43260,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                       |
       | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal activatePaymentNoticeBody_full initial XML activatePaymentNotice
       | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber | amount |
@@ -44145,6 +44187,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                       |
       | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -55573,6 +55621,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -56302,6 +56356,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -58029,6 +58089,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -59065,6 +59131,12 @@ Feature: NM3 flows PA New con pagamento OK
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |

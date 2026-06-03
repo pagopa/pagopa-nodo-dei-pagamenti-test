@@ -4970,6 +4970,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -5383,6 +5389,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -5768,6 +5780,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6153,6 +6171,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6537,6 +6561,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6941,6 +6971,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -7330,6 +7366,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -7731,6 +7773,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -14230,6 +14278,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -15231,6 +15285,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -16226,6 +16286,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
