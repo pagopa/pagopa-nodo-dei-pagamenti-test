@@ -1266,6 +1266,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 14748        |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -12131,6 +12137,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
       | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
       | outcome            | OK                          |
       | amount             | 10.00                       |
@@ -12632,6 +12644,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 14748        |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -13135,6 +13153,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
       | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
       | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
       | outcome            | OK                          |
       | amount             | 10.00                       |
@@ -13633,6 +13657,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | OBJ_ID     | 14748        |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -14633,6 +14663,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
       | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 302#iuv#     |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
       | outcome            | OK                          |
       | amount             | 10.00                       |
@@ -20746,6 +20782,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
       | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
       | outcome            | OK                          |
       | amount             | 10.00                       |
@@ -21243,6 +21285,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
       | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 310#iuv#     |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
       | outcome            | OK                          |
       | amount             | 10.00                       |
@@ -25723,6 +25771,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                          |
       | OBJ_ID     | ('16640','1340001','16641','1380001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -26186,6 +26240,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                          |
       | OBJ_ID     | ('16640','1340001','16641','1380001') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -26649,6 +26709,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -27252,6 +27318,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And waiting after triggered refresh job ALL
     And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
       | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -37664,6 +37736,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
@@ -38598,6 +38676,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
@@ -39532,6 +39616,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
@@ -40466,6 +40556,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
@@ -49146,6 +49242,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
@@ -54958,6 +55060,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                         |
       | OBJ_ID     | ('16640','1340001','16641','1380001','4328','11993') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values |
       | CONFIG_KEY | gec.enabled  |
@@ -57089,6 +57197,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
@@ -73108,6 +73222,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values             |
       | OBJ_ID     | ('7','15131', '1200001') |
@@ -74067,6 +74187,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
@@ -75032,6 +75158,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values             |
       | OBJ_ID     | ('7','15131', '1200001') |
@@ -75992,6 +76124,12 @@ Feature: NM3 flows PA New con pagamento OK
     Given update for table PA_STAZIONE_PA with parameter BROADCAST = 'Y' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values                                                           |
       | OBJ_ID     | ('4328','4329','11991','11993','13','15134','15133','16640','1340001') |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
     And update for table STAZIONI with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
       | where_keys | where_values  |
       | OBJ_ID     | ('7','15131') |
