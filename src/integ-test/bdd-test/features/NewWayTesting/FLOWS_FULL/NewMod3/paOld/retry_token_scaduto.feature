@@ -14256,6 +14256,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                            |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTV2Resp
         And from $paaInviaRTV2Resp.esito xml check value OK in position 0
+        #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -15011,6 +15019,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                              |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTV2Resp
         And from $paaInviaRTV2Resp.esito xml check value OK in position 0
+         #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -15768,7 +15784,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                              |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTV2Resp
         And from $paaInviaRTV2Resp.esito xml check value OK in position 0
-
+          #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -16524,6 +16547,14 @@ Feature: NM3 flows PA Old con retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                            |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTV2Resp
         And from $paaInviaRTV2Resp.esito xml check value OK in position 0
+        #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 

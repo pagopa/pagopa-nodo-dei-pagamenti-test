@@ -5381,6 +5381,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -5770,6 +5778,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+             #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -6161,6 +6177,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+         #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -6552,6 +6576,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -6958,12 +6990,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
-
-
-
-
-
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_17 @after
@@ -7353,12 +7387,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
-
-
-
-
-
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_18 @after
@@ -7762,7 +7798,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -8169,6 +8212,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -15265,7 +15316,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
             | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+            #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_30 @after
@@ -16272,7 +16330,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
             | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+          #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_31 @after
@@ -17016,6 +17081,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
         And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 

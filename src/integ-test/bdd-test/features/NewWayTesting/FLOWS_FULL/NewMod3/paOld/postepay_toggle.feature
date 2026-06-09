@@ -1,5 +1,3 @@
-
-
 Feature: PostePay Toggle Configuration Tests
 Background:
  Given systems up
@@ -13,7 +11,7 @@ Background:
             | where_keys | where_values       |
             | CONFIG_KEY | postepay_in_poste  |
           And waiting after triggered refresh job ALL
-          ANd from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
+          And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
               | idPSP      | idBrokerPSP      | idChannel      | password   | fiscalCode                  | noticeNumber |
               | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #creditor_institution_code# | 305#iuv#     |
           And from body with datatable vertical paVerifyPaymentNoticeBody_full initial XML paVerifyPaymentNotice
@@ -196,7 +194,7 @@ Background:
               | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
           # POSITION_PAYMENT_STATUS
           And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-              | column                | value                                                                           |
+              | column                | value                                                                          |
               | ID                    | NotNone                                                                         |
               | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode                                               |
               | NOTICE_ID             | $activatePaymentNotice.noticeNumber                                             |
@@ -471,6 +469,14 @@ Background:
               | ORDER BY           | DATA_ORA_EVENTO ASC                         |
           And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
           And from $paaInviaRTResp.esito xml check value OK in position 0
+          # RESTORE
+          Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+              | where_keys | where_values       |
+              | CONFIG_KEY | postepay_in_poste  |
+          And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+              | where_keys | where_values       |
+              | CONFIG_KEY | lista_canali_poste |
+          And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @POSTEPAY @POSTEPAYNEW @POSTEPAY_TOGGLE_06
@@ -725,6 +731,7 @@ Background:
           And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
               | where_keys | where_values                        |
               | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+              | ORDER BY   | ID ASC                              |
           # STATI_RPT
           And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
               | column                | value                                                                                                                         |

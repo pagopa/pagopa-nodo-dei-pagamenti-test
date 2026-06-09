@@ -848,6 +848,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
 
@@ -1674,6 +1682,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_5 @after
@@ -12635,6 +12651,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
 
@@ -13146,6 +13170,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_31
@@ -14158,6 +14190,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_33
@@ -15168,6 +15208,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_35 @after
@@ -21278,6 +21326,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY           | DATA_ORA_EVENTO ASC                         |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_47 @after
@@ -21785,6 +21841,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY           | DATA_ORA_EVENTO ASC                           |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
     And from $paSendRTV2Resp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_48 @after
@@ -26233,6 +26297,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_56 @after
@@ -26702,6 +26774,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_57 @after
@@ -27311,6 +27391,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    # RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_58 @after
@@ -27920,6 +28008,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_59 @after
@@ -28444,6 +28540,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2BC1Resp
     And from $paSendRTV2BC1Resp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_60 @after
@@ -29122,6 +29226,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_61 @after
@@ -29646,6 +29758,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2BC1Resp
     And from $paSendRTV2BC1Resp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_62 @after
@@ -30324,6 +30444,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_63 @after
@@ -38669,7 +38797,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                              |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                            |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
-
+      # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_72 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activate Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-141)
@@ -39609,7 +39744,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                              |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                            |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
-
+     # RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_73 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-143)
@@ -40549,7 +40691,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_74 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP POSTE vp2, FLOW con broadcast paPrinc!=paSec: activateV2 Poste -> paGetPayment con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRT principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-145)
@@ -41475,7 +41624,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_75 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1, FLOW con broadcast paPrinc!=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-155)
@@ -42402,7 +42558,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                              |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                            |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_76 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-157)
@@ -43343,7 +43506,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_77 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp1 activate e PSP POSTE vp2 spo, FLOW con broadcast paPrinc!=paSec: activate Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spoV2+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-161)
@@ -44270,7 +44440,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                              |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                            |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_78 @after
   Scenario: NM3 flow OK con PA New vp2 e PSP POSTE vp2 activate e PSP POSTE vp1 spo, FLOW con broadcast paPrinc!=paSec: verificaBollettino -> paVerify, activateV2 Poste -> paGetPaymentV2 con 5 transfer, la PA principale non fa parte dei transfer, la PA principale ha broadcast sia vp1 che vp2, le PA secondarie hanno broadcast alcune vp1, altre vp2 e altre senza broadcast. spo+ Poste -> paSendRTV2 principale, paSendRT broadcast secondarie, paSendRTV2 broadcast secondarie, no paSendRT/V2 verso bradcast PA principale, BIZ+ (NM3-163)
@@ -45211,7 +45388,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_79 @after
   Scenario: NM3 flow OK con PA New vp1 e PSP vp2 activate e PSP vp1 spo, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK, spo+ -> paSendRT BIZ+ (NM3-70)
@@ -49899,6 +50083,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
   @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_FULL_87 @after
@@ -55717,6 +55909,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
 
@@ -56452,6 +56652,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -57187,6 +57395,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
     And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -58185,7 +58401,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      # RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
 
@@ -59227,7 +59450,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -60225,7 +60455,14 @@ Feature: NM3 flows PA New con pagamento OK
       | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
       | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -74178,6 +74415,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_BC7Resp
     And from $paSendRTV2_BC7Resp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -75149,6 +75394,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_BC7Resp
     And from $paSendRTV2_BC7Resp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -76114,6 +76367,14 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_BC7Resp
     And from $paSendRTV2_BC7Resp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
 
 
@@ -77086,4 +77347,12 @@ Feature: NM3 flows PA New con pagamento OK
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_BC7Resp
     And from $paSendRTV2_BC7Resp.outcome xml check value OK in position 0
+    #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 

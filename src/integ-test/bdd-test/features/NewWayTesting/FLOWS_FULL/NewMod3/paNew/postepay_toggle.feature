@@ -49,7 +49,7 @@ Background:
       | IBAN                        | IT45R0760103200000000001016    |
       | remittanceInformation       | testPostePay                   |
       | transferCategory            | PostePay                       |
-      | transferType                | POSTAL                         |
+
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNoticeV2 response
@@ -108,7 +108,7 @@ Background:
         | IBAN                        | IT45R0760103200000000001016       |
         | remittanceInformation       | testPaGetPayment                  |
         | transferCategory            | paGetPaymentTest                  |
-        | transferType                | POSTAL                            |
+
       And EC replies to nodo-dei-pagamenti with the paGetPayment
       When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
@@ -480,6 +480,22 @@ Background:
         | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
       And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
       And from $paSendRTResp.outcome xml check value OK in position 0
+        #RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
+      #RESTORE
+    Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | postepay_in_poste  |
+    And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+      | where_keys | where_values       |
+      | CONFIG_KEY | lista_canali_poste |
+    And waiting after triggered refresh job ALL
 
  @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @POSTEPAY @POSTEPAYNEW @POSTEPAY_TOGGLE_03
   Scenario: NM3 flow OK, FLOW: verify -> paVerify activate -> paGetPayment --> spo+ -> paSendRT BIZ+ (NM3-1)
@@ -917,6 +933,14 @@ Background:
       | ORDER BY                 | INSERTED_TIMESTAMP ASC                      |
     And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
     And from $paSendRTResp.outcome xml check value OK in position 0
+      #RESTORE
+     Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+       | where_keys | where_values       |
+       | CONFIG_KEY | postepay_in_poste  |
+     And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+       | where_keys | where_values       |
+       | CONFIG_KEY | lista_canali_poste |
+     And waiting after triggered refresh job ALL
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @POSTEPAY @POSTEPAYNEW @POSTEPAY_TOGGLE_04
 Scenario: POSTEPAY_TOGGLE_04 PostePay Toggle FALSE + lista_canali_poste VUOTA: pagamento Poste storico - comportamento legacy attivo
@@ -962,7 +986,7 @@ Scenario: POSTEPAY_TOGGLE_04 PostePay Toggle FALSE + lista_canali_poste VUOTA: p
     | IBAN                        | IT45R0760103200000000001016         |
     | remittanceInformation       | testPosteToggle04                   |
     | transferCategory            | PostePay                            |
-    | transferType                | POSTAL                              |
+
   And EC replies to nodo-dei-pagamenti with the paGetPayment
   When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
   Then check outcome is OK of activatePaymentNoticeV2 response
