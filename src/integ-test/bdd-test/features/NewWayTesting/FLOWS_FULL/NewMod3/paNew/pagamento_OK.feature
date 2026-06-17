@@ -62377,8 +62377,8 @@ Feature: NM3 flows PA New con pagamento OK
       | UPDATED_BY            | activatePaymentNoticeV2                            |
       | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
       | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-      | SUGGESTED_USER_FEE    | 130                                                |
-      | SUGGESTED_PA_FEE      | 20                                                 |
+      | SUGGESTED_USER_FEE    | 1.30                                                |
+      | SUGGESTED_PA_FEE      | 0.2                                                 |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -62580,8 +62580,8 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
     And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
     And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
     ### TRANSFER 1
     And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -62864,8 +62864,8 @@ Feature: NM3 flows PA New con pagamento OK
       | UPDATED_BY            | activatePaymentNoticeV2                            |
       | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
       | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-      | SUGGESTED_USER_FEE    | 130                                                |
-      | SUGGESTED_PA_FEE      | 20                                                 |
+      | SUGGESTED_USER_FEE    | 1.30                                                |
+      | SUGGESTED_PA_FEE      | 0.2                                                 |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -63067,8 +63067,8 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
     And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
     And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
     ### TRANSFER 1
     And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -63841,8 +63841,8 @@ Feature: NM3 flows PA New con pagamento OK
       | UPDATED_BY            | activatePaymentNoticeV2                            |
       | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
       | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-      | SUGGESTED_USER_FEE    | 130                                                |
-      | SUGGESTED_PA_FEE      | 20                                                 |
+      | SUGGESTED_USER_FEE    | 1.30                                                |
+      | SUGGESTED_PA_FEE      | 0.2                                                    |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -64045,8 +64045,8 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
     And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
     And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
     ### TRANSFER 1
     And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -64817,8 +64817,8 @@ Feature: NM3 flows PA New con pagamento OK
       | UPDATED_BY            | activatePaymentNoticeV2                            |
       | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
       | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-      | SUGGESTED_USER_FEE    | 130                                                |
-      | SUGGESTED_PA_FEE      | 20                                                 |
+      | SUGGESTED_USER_FEE    | 1.30                                                |
+      | SUGGESTED_PA_FEE      | 0.2                                                 |
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys     | where_values                          |
       | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -65020,8 +65020,8 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
     And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
     And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
     ### TRANSFER 1
     And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
