@@ -64045,8 +64045,8 @@ Feature: NM3 flows PA New con pagamento OK
     And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
     And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
     And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+    And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
     And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
     ### TRANSFER 1
     And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
