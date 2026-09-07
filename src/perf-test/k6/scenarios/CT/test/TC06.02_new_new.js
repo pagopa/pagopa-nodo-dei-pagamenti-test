@@ -5,6 +5,7 @@ import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
+import { paymentStatus } from './api/paymentStatus.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 
@@ -84,6 +85,7 @@ export const options = {
         'http_req_duration{checkPosition:http_req_duration}': [],
         'http_req_duration{activatePaymentNoticeV2:http_req_duration}': [],
         'http_req_duration{closePaymentV2:http_req_duration}': [],
+        'http_req_duration{checkStatus:http_req_duration}': [],
         'http_req_duration{sendPaymentOutcomeV2:http_req_duration}': [],
         'http_req_duration{ALL:http_req_duration}': [],
         'checks{checkPosition:over_sla300}': [],
@@ -110,6 +112,14 @@ export const options = {
         'checks{closePaymentV2:over_sla1000}': [],
         'checks{closePaymentV2:ok_rate}': [],
         'checks{closePaymentV2:ko_rate}': [],
+        'checks{checkStatus:over_sla300}': [],
+        'checks{checkStatus:over_sla400}': [],
+        'checks{checkStatus:over_sla500}': [],
+        'checks{checkStatus:over_sla600}': [],
+        'checks{checkStatus:over_sla800}': [],
+        'checks{checkStatus:over_sla1000}': [],
+        'checks{checkStatus:ok_rate}': [],
+        'checks{checkStatus:ko_rate}': [],
         'checks{ALL:over_sla300}': [],
         'checks{ALL:over_sla400}': [],
         'checks{ALL:over_sla500}': [],
@@ -151,6 +161,7 @@ export function total() {
 
     let outcome = 'KO';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.amount);
+    res = paymentStatus(baseRestUrl, paymentToken, 'eCommerce', 2);
 }
 
 export default function () {

@@ -5,6 +5,7 @@ import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
+import { paymentStatus } from './api/paymentStatus.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -86,6 +87,7 @@ export const options = {
         'http_req_duration{checkPosition:http_req_duration}': [],
         'http_req_duration{activatePaymentNoticeV2:http_req_duration}': [],
         'http_req_duration{closePaymentV2:http_req_duration}': [],
+        'http_req_duration{checkStatus:http_req_duration}': [],
         'http_req_duration{sendPaymentOutcomeV2:http_req_duration}': [],
         'http_req_duration{ALL:http_req_duration}': [],
         'checks{checkPosition:over_sla300}': [],
@@ -112,6 +114,14 @@ export const options = {
         'checks{closePaymentV2:over_sla1000}': [],
         'checks{closePaymentV2:ok_rate}': [],
         'checks{closePaymentV2:ko_rate}': [],
+        'checks{checkStatus:over_sla300}': [],
+        'checks{checkStatus:over_sla400}': [],
+        'checks{checkStatus:over_sla500}': [],
+        'checks{checkStatus:over_sla600}': [],
+        'checks{checkStatus:over_sla800}': [],
+        'checks{checkStatus:over_sla1000}': [],
+        'checks{checkStatus:ok_rate}': [],
+        'checks{checkStatus:ko_rate}': [],
         'checks{sendPaymentOutcomeV2:over_sla300}': [],
         'checks{sendPaymentOutcomeV2:over_sla400}': [],
         'checks{sendPaymentOutcomeV2:over_sla500}': [],
@@ -153,20 +163,34 @@ export function total() {
     let idempotencyKey = genIdempotencyKey();
     let transactionId = common.transaction_id();
     let pspTransactionId = common.transaction_id();
+    console.log(`[FLOW] TC06.01_new_new START env=${__ENV.env} notice=${noticeNmbr} idempotencyKey=${idempotencyKey}`);
 
+    console.log(`[FLOW] STEP checkPosition START notice=${noticeNmbr}`);
     let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
+    console.log(`[FLOW] STEP checkPosition END status=${res.status}`);
 
+    console.log(`[FLOW] STEP activatePaymentNoticeV2 START`);
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "causale");
     let paymentToken = res.paymentToken;
     let importoTotaleDaVersare = res.amount;
+    console.log(`[FLOW] STEP activatePaymentNoticeV2 END paymentToken=${paymentToken} amount=${importoTotaleDaVersare}`);
 
 
     let outcome = 'OK';
+    console.log(`[FLOW] STEP closePaymentV2 START outcome=${outcome}`);
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
+    console.log(`[FLOW] STEP closePaymentV2 END status=${res.status}`);
+
+    console.log(`[FLOW] STEP checkStatus START paymentToken=${paymentToken}`);
+    res = paymentStatus(baseRestUrl, paymentToken, 'eCommerce', 2);
+    console.log(`[FLOW] STEP checkStatus END status=${res.status}`);
 
     sleep(5);
 
+    console.log(`[FLOW] STEP sendPaymentOutcomeV2 START paymentToken=${paymentToken}`);
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
+    console.log(`[FLOW] STEP sendPaymentOutcomeV2 END status=${res.status}`);
+    console.log(`[FLOW] TC06.01_new_new END`);
 }
 
 export default function () {
