@@ -14,22 +14,20 @@ export function paymentStatusBody(caller, daysToGoBack) {
 }
 
 export function paymentStatus(baseUrl, paymentToken, caller, daysToGoBack) {
-    const url = getBasePath(baseUrl, "paymentStatus") + "?paymenttoken=" + paymentToken;
-    const body = paymentStatusBody(caller, daysToGoBack);
+    const url =
+        getBasePath(baseUrl, "paymentStatus") +
+        "?paymenttoken=" + paymentToken +
+        "&caller=" + encodeURIComponent(caller) +
+        "&daysToGoBack=" + encodeURIComponent(daysToGoBack);
+
     console.log(`[FLOW] checkStatus REQUEST url=${url} caller=${caller} daysToGoBack=${daysToGoBack}`);
 
     console.debug("paymentStatus URL: " + url);
-    console.debug("paymentStatus BODY: " + body);
 
-    const res = http.request(
-        'GET',
-        url,
-        body,
-        {
-            headers: getHeaders({ 'Content-Type': 'application/json' }),
-            tags: { checkStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "checkStatus" }
-        }
-    );
+    const res = http.get(url, {
+        headers: getHeaders({ 'Content-Type': 'application/json' }),
+        tags: { checkStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "checkStatus" }
+    });
 
     console.debug("paymentStatus RES");
     console.debug(JSON.stringify(res));
