@@ -3,7 +3,7 @@ import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 import { getBasePath, getHeaders } from "../util/base_path_util.js";
 
-export const checkStatus_Trend = new Trend('checkStatus');
+export const paymentStatus_Trend = new Trend('paymentStatus');
 export const All_Trend = new Trend('ALL');
 
 export function paymentStatusBody(caller, daysToGoBack) {
@@ -26,49 +26,49 @@ export function paymentStatus(baseUrl, paymentToken, caller, daysToGoBack) {
 
     const res = http.get(url, {
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        tags: { checkStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "checkStatus" }
+        tags: { paymentStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "paymentStatus" }
     });
 
     console.debug("paymentStatus RES");
     console.debug(JSON.stringify(res));
 
-    checkStatus_Trend.add(res.timings.duration);
+    paymentStatus_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
 
     check(res, {
-        'checkStatus:over_sla300': (r) => r.timings.duration > 300,
+        'paymentStatus:over_sla300': (r) => r.timings.duration > 300,
     },
-        { checkStatus: 'over_sla300', ALL: 'over_sla300' }
+        { paymentStatus: 'over_sla300', ALL: 'over_sla300' }
     );
 
     check(res, {
-        'checkStatus:over_sla400': (r) => r.timings.duration > 400,
+        'paymentStatus:over_sla400': (r) => r.timings.duration > 400,
     },
-        { checkStatus: 'over_sla400', ALL: 'over_sla400' }
+        { paymentStatus: 'over_sla400', ALL: 'over_sla400' }
     );
 
     check(res, {
-        'checkStatus:over_sla500': (r) => r.timings.duration > 500,
+        'paymentStatus:over_sla500': (r) => r.timings.duration > 500,
     },
-        { checkStatus: 'over_sla500', ALL: 'over_sla500' }
+        { paymentStatus: 'over_sla500', ALL: 'over_sla500' }
     );
 
     check(res, {
-        'checkStatus:over_sla600': (r) => r.timings.duration > 600,
+        'paymentStatus:over_sla600': (r) => r.timings.duration > 600,
     },
-        { checkStatus: 'over_sla600', ALL: 'over_sla600' }
+        { paymentStatus: 'over_sla600', ALL: 'over_sla600' }
     );
 
     check(res, {
-        'checkStatus:over_sla800': (r) => r.timings.duration > 800,
+        'paymentStatus:over_sla800': (r) => r.timings.duration > 800,
     },
-        { checkStatus: 'over_sla800', ALL: 'over_sla800' }
+        { paymentStatus: 'over_sla800', ALL: 'over_sla800' }
     );
 
     check(res, {
-        'checkStatus:over_sla1000': (r) => r.timings.duration > 1000,
+        'paymentStatus:over_sla1000': (r) => r.timings.duration > 1000,
     },
-        { checkStatus: 'over_sla1000', ALL: 'over_sla1000' }
+        { paymentStatus: 'over_sla1000', ALL: 'over_sla1000' }
     );
 
     let httpStatus = 0;
@@ -80,17 +80,17 @@ export function paymentStatus(baseUrl, paymentToken, caller, daysToGoBack) {
     check(
         res,
         {
-            'checkStatus:ok_rate': (r) => httpStatus === 200,
+            'paymentStatus:ok_rate': (r) => httpStatus === 200,
         },
-        { checkStatus: 'ok_rate', ALL: 'ok_rate' }
+        { paymentStatus: 'ok_rate', ALL: 'ok_rate' }
     );
 
     if (check(
         res,
         {
-            'checkStatus:ko_rate': (r) => httpStatus !== 200,
+            'paymentStatus:ko_rate': (r) => httpStatus !== 200,
         },
-        { checkStatus: 'ko_rate', ALL: 'ko_rate' }
+        { paymentStatus: 'ko_rate', ALL: 'ko_rate' }
     )) {
         fail("paymentStatus status != 200: " + httpStatus);
     }
