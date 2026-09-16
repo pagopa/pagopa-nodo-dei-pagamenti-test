@@ -20,17 +20,13 @@ export function paymentStatus(baseUrl, paymentToken, caller, daysToGoBack) {
         "&caller=" + encodeURIComponent(caller) +
         "&daysToGoBack=" + encodeURIComponent(daysToGoBack);
 
-    console.log(`[FLOW] checkStatus REQUEST url=${url} caller=${caller} daysToGoBack=${daysToGoBack}`);
-
-    console.debug("paymentStatus URL: " + url);
 
     const res = http.get(url, {
         headers: getHeaders({ 'Content-Type': 'application/json' }),
         tags: { paymentStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "paymentStatus" }
     });
 
-    console.debug("paymentStatus RES");
-    console.debug(JSON.stringify(res));
+
 
     paymentStatus_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
@@ -75,7 +71,6 @@ export function paymentStatus(baseUrl, paymentToken, caller, daysToGoBack) {
     try {
         httpStatus = res.status;
     } catch (error) {}
-    console.log(`[FLOW] checkStatus RESPONSE status=${httpStatus}`);
 
     check(
         res,
