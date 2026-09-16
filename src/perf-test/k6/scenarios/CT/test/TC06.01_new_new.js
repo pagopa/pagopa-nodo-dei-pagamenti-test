@@ -163,34 +163,22 @@ export function total() {
     let idempotencyKey = genIdempotencyKey();
     let transactionId = common.transaction_id();
     let pspTransactionId = common.transaction_id();
-    console.log(`[FLOW] TC06.01_new_new START env=${__ENV.env} notice=${noticeNmbr} idempotencyKey=${idempotencyKey}`);
 
-    console.log(`[FLOW] STEP checkPosition START notice=${noticeNmbr}`);
-    let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
-    console.log(`[FLOW] STEP checkPosition END status=${res.status}`);
+     let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
 
-    console.log(`[FLOW] STEP activatePaymentNoticeV2 START`);
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "causale");
     let paymentToken = res.paymentToken;
     let importoTotaleDaVersare = res.amount;
-    console.log(`[FLOW] STEP activatePaymentNoticeV2 END paymentToken=${paymentToken} amount=${importoTotaleDaVersare}`);
 
 
     let outcome = 'OK';
-    console.log(`[FLOW] STEP closePaymentV2 START outcome=${outcome}`);
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
-    console.log(`[FLOW] STEP closePaymentV2 END status=${res.status}`);
 
-    console.log(`[FLOW] STEP checkStatus START paymentToken=${paymentToken}`);
     res = paymentStatus(baseRestUrl, paymentToken, 'eCommerce', 2);
-    console.log(`[FLOW] STEP checkStatus END status=${res.status}`);
 
     sleep(5);
 
-    console.log(`[FLOW] STEP sendPaymentOutcomeV2 START paymentToken=${paymentToken}`);
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
-    console.log(`[FLOW] STEP sendPaymentOutcomeV2 END status=${res.status}`);
-    console.log(`[FLOW] TC06.01_new_new END`);
 }
 
 export default function () {
