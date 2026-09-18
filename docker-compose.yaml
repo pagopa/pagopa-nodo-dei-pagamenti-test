@@ -14,7 +14,7 @@ services:
   #     - nginx
 
   nginx:
-    image: nginx
+    image: nginx@sha256:cb29e33d254e8b72164ad5b8b9014f44e98e6e5f6d51ef02ee859f96708c90fe
     container_name: nginx
     volumes:
       - '${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf'
