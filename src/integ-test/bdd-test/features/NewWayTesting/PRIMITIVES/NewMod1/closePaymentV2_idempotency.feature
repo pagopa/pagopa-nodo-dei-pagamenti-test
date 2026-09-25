@@ -61,6 +61,22 @@ Feature: NM1 closePaymentV2 with idempotency
             | IDEMPOTENCY_KEY | #transaction_id#              |
             | PSP_ID          | #psp#                         |
             | PRIMITIVA       | closePaymentV2                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | column             | value                        |
+            | ID                 | NotNone                      |
+            | PRIMITIVA          | closePaymentV2               |
+            | PSP_ID             | #psp#                        |
+            | PA_FISCAL_CODE     | #creditor_institution_code#  |
+            | NOTICE_ID          | 302#iuv                      |
+            | IDEMPOTENCY_KEY    | #transaction_id#             |
+            | TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+            | HASH_REQUEST       | NotNone                      |
+            | RESPONSE           | NotNone                      |
+            | VALID_TO           | NotNone                      |
+            | INSERTED_TIMESTAMP | NotNone                      |
+            | UPDATED_TIMESTAMP  | NotNone                      |
+            | INSERTED_BY        | closePaymentV2               |
+            | UPDATED_BY         | closePaymentV2               |
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                  |
             | TRANSACTION_ID | #transaction_id#              |
@@ -145,4 +161,8 @@ Feature: NM1 closePaymentV2 with idempotency
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 409
         And check outcome is KO of v2/closepayment response
-
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys      | where_values                  |
+            | IDEMPOTENCY_KEY | #transaction_id#              |
+            | PSP_ID          | #psp#                         |
+            | PRIMITIVA       | closePaymentV2                |
