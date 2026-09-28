@@ -5,10 +5,10 @@ Feature: NM1 closePaymentV2 with idempotency
 
 
     @ALL @PRIMITIVE @NM1 @CLOSE_IDMP_1 @after
-    Scenario: closePaymentV2 idempotency - same transactionId same payload (cache HIT)
+    Scenario: closePaymentV2 idempotency - OK with payment already acquired (same transactionId, same payload -> cache HIT)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 6000           | 10.00  |
+            | idPSP    | idBrokerPSP | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
+            | AGID_01  | 97735020584 | 97735020584_09 | #password# | #creditor_institution_code# | 302#iuv#     | 6000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
@@ -30,9 +30,9 @@ Feature: NM1 closePaymentV2 with idempotency
         Given from body with datatable vertical closePaymentV2Body_full initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
-            | idPSP                 | #psp#                                         |
-            | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_versione_primitive_2#                 |
+            | idPSP                 | AGID_01                                       |
+            | idBrokerPSP           | 97735020584                                   |
+            | idChannel             | 97735020584_02                                |
             | paymentMethod         | TPAY                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -51,13 +51,15 @@ Feature: NM1 closePaymentV2 with idempotency
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 15 seconds for expiration
         # Seconda chiamata: STESSO transactionId (riuso $transaction_id) e STESSO payload byte-per-byte -> cache HIT
+        # Il pagamento risulta gia' acquisito (chiuso dalla prima chiamata) ma la risposta e' 200 OK dalla cache di idempotenza
         Given from body with datatable vertical closePaymentV2Body_full initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
-            | idPSP                 | #psp#                                         |
-            | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_versione_primitive_2#                 |
+            | idPSP                 | AGID_01                                       |
+            | idBrokerPSP           | 97735020584                                   |
+            | idChannel             | 97735020584_02                                |
             | paymentMethod         | TPAY                                          |
             | transactionId         | $transaction_id                               |
             | totalAmountExt        | 12                                            |
@@ -81,7 +83,7 @@ Feature: NM1 closePaymentV2 with idempotency
             | column             | value                                         |
             | ID                 | NotNone                                       |
             | PRIMITIVA          | closePaymentV2                                |
-            | PSP_ID             | #psp#                                         |
+            | PSP_ID             | AGID_01                                       |
             | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode           |
             | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber         |
             | IDEMPOTENCY_KEY    | $transaction_id                               |
@@ -96,12 +98,12 @@ Feature: NM1 closePaymentV2 with idempotency
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values     |
             | IDEMPOTENCY_KEY | $transaction_id  |
-            | PSP_ID          | #psp#            |
+            | PSP_ID          | AGID_01          |
             | PRIMITIVA       | closePaymentV2   |
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values     |
             | IDEMPOTENCY_KEY | $transaction_id  |
-            | PSP_ID          | #psp#            |
+            | PSP_ID          | AGID_01          |
             | PRIMITIVA       | closePaymentV2   |
         # POSITION_PAYMENT: la posizione risulta chiusa con il transactionId corretto
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
@@ -112,10 +114,10 @@ Feature: NM1 closePaymentV2 with idempotency
 
 
     @ALL @PRIMITIVE @NM1 @CLOSE_IDMP_2 @after
-    Scenario: closePaymentV2 idempotency - same transactionId different payload (409 Conflict)
+    Scenario: closePaymentV2 idempotency - ppt_error_idempotency (same transactionId, different payload -> 409 Conflict)
         Given from body with datatable horizontal activatePaymentNoticeV2Body_with_expiration_full initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 303#iuv#     | 6000           | 10.00  |
+            | idPSP    | idBrokerPSP | idChannel      | password   | fiscalCode                  | noticeNumber | expirationTime | amount |
+            | AGID_01  | 97735020584 | 97735020584_09 | #password# | #creditor_institution_code# | 303#iuv#     | 6000           | 10.00  |
         And from body with datatable vertical paGetPayment_full initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
@@ -137,9 +139,9 @@ Feature: NM1 closePaymentV2 with idempotency
         Given from body with datatable vertical closePaymentV2Body_full initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
-            | idPSP                 | #psp#                                         |
-            | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_versione_primitive_2#                 |
+            | idPSP                 | AGID_01                                       |
+            | idBrokerPSP           | 97735020584                                   |
+            | idChannel             | 97735020584_09                                |
             | paymentMethod         | TPAY                                          |
             | transactionId         | #transaction_id#                              |
             | totalAmountExt        | 12                                            |
@@ -162,9 +164,9 @@ Feature: NM1 closePaymentV2 with idempotency
         Given from body with datatable vertical closePaymentV2Body_full initial json v2/closepayment
             | token1                | $activatePaymentNoticeV2Response.paymentToken |
             | outcome               | OK                                            |
-            | idPSP                 | #psp#                                         |
-            | idBrokerPSP           | #psp#                                         |
-            | idChannel             | #canale_versione_primitive_2#                 |
+            | idPSP                 | AGID_01                                       |
+            | idBrokerPSP           | 97735020584                                   |
+            | idChannel             | 97735020584_09                                |
             | paymentMethod         | TPAY                                          |
             | transactionId         | $transaction_id                               |
             | totalAmountExt        | 13                                            |
@@ -183,11 +185,14 @@ Feature: NM1 closePaymentV2 with idempotency
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 409
         And check outcome is KO of v2/closepayment response
+        # TODO: confermare il testo esatto restituito dall'ambiente e decommentare, in analogia a quanto fatto per
+        # activatePaymentNotice/sendPaymentOutcome (faultCode PPT_ERRORE_IDEMPOTENZA)
+        # And check description is <ppt_error_idempotency description> of v2/closepayment response
         # Il record in cache resta quello della prima chiamata (nessuna sovrascrittura)
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values     |
             | IDEMPOTENCY_KEY | $transaction_id  |
-            | PSP_ID          | #psp#            |
+            | PSP_ID          | AGID_01          |
             | PRIMITIVA       | closePaymentV2   |
 
 
