@@ -34,7 +34,7 @@ export const options = {
     mixed_scenario: {
       preAllocatedVUs: 1500, // how large the initial pool of VUs would be
           executor: 'ramping-arrival-rate',
-          timeUnit: '3.2s', //'3.5s'
+          timeUnit: '3.4s', //'3.5s'
           //maxVUs: 2500,
                 stages: [
             { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
