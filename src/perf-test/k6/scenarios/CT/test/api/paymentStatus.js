@@ -23,7 +23,7 @@ export function paymentStatus(baseUrl, paymentToken, caller, daysToGoBack) {
 
     const res = http.get(url, {
         headers: getHeaders({ 'Content-Type': 'application/json' }),
-        tags: { paymentStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "paymentStatus" }
+        tags: { name: 'paymentStatus', paymentStatus: 'http_req_duration', ALL: 'http_req_duration', primitiva: "paymentStatus" }
     });
 
 
