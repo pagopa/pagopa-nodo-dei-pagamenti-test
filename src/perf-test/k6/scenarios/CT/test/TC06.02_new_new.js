@@ -79,7 +79,7 @@ export const options = {
 
     },
     summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.5)', 'p(99.9)', 'p(99.99)', 'p(100)', 'count'],
-    discardResponseBodies: true,
+    discardResponseBodies: false,
     thresholds: {
 
         'http_req_duration{checkPosition:http_req_duration}': [],
