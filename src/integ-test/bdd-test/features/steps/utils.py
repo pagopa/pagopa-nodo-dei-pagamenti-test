@@ -1825,6 +1825,47 @@ def generate_update(dict_fields_values):
 
     return upd_query
 
+# METODO PER CREARE UNA INSERT DA DATATABLE column_name/value
+def generate_insert(dict_fields_values):
+    list_columns = dict_fields_values.get('column_name', [])
+    list_values = dict_fields_values.get('value', [])
+
+    columns_str = ', '.join(list_columns)
+    values_str = ', '.join(
+        'NULL' if value == '' else f"'{value}'" for value in list_values
+    )
+
+    insert_query = f"INSERT INTO table_name ({columns_str}) VALUES ({values_str})"
+
+    return insert_query
+
+
+# METODO PER CREARE UNA INSERT DA DATATABLE column_name/value SOLO SE NON ESISTE GIA' UN RECORD CON GLI STESSI VALORI
+def generate_insert_if_not_exists(dict_fields_values, dbRun='Postgres'):
+    list_columns = dict_fields_values.get('column_name', [])
+    list_values = dict_fields_values.get('value', [])
+
+    columns_str = ', '.join(list_columns)
+    select_values_str = ', '.join(
+        'NULL' if value == '' else f"'{value}'" for value in list_values
+    )
+
+    where_clause = ' AND '.join(
+        f"{column} IS NULL" if value == '' else f"{column} = '{value}'"
+        for column, value in zip(list_columns, list_values)
+    )
+
+    from_clause = ' FROM DUAL' if dbRun == 'Oracle' else ''
+
+    insert_query = (
+        f"INSERT INTO table_name ({columns_str}) "
+        f"SELECT {select_values_str}{from_clause} "
+        f"WHERE NOT EXISTS (SELECT 1 FROM table_name WHERE {where_clause})"
+    )
+
+    return insert_query
+
+
 # METODO PER CREARE UNA DELETE CON WHERE
 def generate_delete(dict_fields_values):
     list_where_keys = []
@@ -2042,6 +2083,18 @@ def update_query(context, conn, adopted_db, upd_query):
     exec_query = adopted_db.executeQuery(context, conn, upd_query, True)
 
     print(f"Update query: {upd_query} completed")
+
+    return exec_query
+
+
+def insert_query(context, conn, adopted_db, ins_query):
+    exec_query = ''
+
+    print(f"Inserting record...")
+
+    exec_query = adopted_db.executeQuery(context, conn, ins_query, True)
+
+    print(f"Insert query: {ins_query} completed")
 
     return exec_query
 

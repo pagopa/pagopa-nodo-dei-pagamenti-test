@@ -8261,6 +8261,12 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -8589,14 +8595,30 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+        #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_8 @after
+
+
+  @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_8 @after
     Scenario: NM3 flow KO, FLOW con PA Old e PSP POSTE vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP Timeout -> paaInviaRT- BIZ+ (NM3-95)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -8925,15 +8947,30 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+        #RESTORE
+      Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | postepay_in_poste  |
+      And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+        | where_keys | where_values       |
+        | CONFIG_KEY | lista_canali_poste |
+      And waiting after triggered refresh job ALL
 
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_11 @after
+
+  @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3ATTFALLITAPAOLD @NM3ATTFALLITAPAOLD_FULL_11 @after
     Scenario: NM3 flow KO, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ- (NM3-97)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 14748        |
@@ -9265,6 +9302,14 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+         #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -9273,6 +9318,12 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 14748        |
@@ -9604,8 +9655,14 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
-
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -10984,6 +11041,12 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
             | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | #ccPoste# | 305#iuv#     |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And from body with datatable vertical paaVerificaRPT_full initial XML paaVerificaRPT
             | esito                    | OK                          |
             | importoSingoloVersamento | 10.00                       |
@@ -11292,14 +11355,29 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+            #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_14 @after
+
+  @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_14 @after
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-96)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 14748        |
@@ -11615,14 +11693,30 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+        #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
-    @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_15 @after
+
+
+  @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_15 @after
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-99)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         Given from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -11939,6 +12033,14 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
+            #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -11947,6 +12049,12 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         Given update for table STAZIONI with parameter INVIO_RT_ISTANTANEO = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 16635        |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And update for table CANALI_NODO with parameter VERSIONE_PRIMITIVE = '2' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values |
             | OBJ_ID     | 14748        |
@@ -12264,8 +12372,14 @@ Feature: TEST DI CONCORRENZA (CHIAMATE IN PARALLELO)
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key nodoInviaRPTResp
         And from $nodoInviaRPTResp.esito xml check value OK in position 0
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
-
-
+          #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_FULL_17
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+ REQ -> lock nodoInviaRPT REQ -> aspetta lock spo+ RESP nodoInviaRPT RESP -> paaInviaRT+ BIZ+ (NM3-105)

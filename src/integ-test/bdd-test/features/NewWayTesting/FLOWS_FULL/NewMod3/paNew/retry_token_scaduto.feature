@@ -4970,6 +4970,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -5375,6 +5381,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -5383,6 +5397,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -5758,6 +5778,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+             #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -5768,6 +5796,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6143,6 +6177,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+         #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -6153,6 +6195,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6528,6 +6576,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -6537,6 +6593,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -6928,12 +6990,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
-
-
-
-
-
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_17 @after
@@ -6941,6 +7005,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -7317,12 +7387,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
-
-
-
-
-
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_18 @after
@@ -7330,6 +7402,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -7720,7 +7798,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
-
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -7731,6 +7816,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         Given update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -8121,6 +8212,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 
@@ -8198,8 +8297,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -8424,8 +8523,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -8881,8 +8980,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9084,8 +9183,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -9605,8 +9704,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -9808,8 +9907,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeResp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeResp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeResp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeResp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeResp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeResp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeResp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeResp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeResp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -10098,8 +10197,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -10301,8 +10400,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -10596,8 +10695,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -10799,8 +10898,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -11328,8 +11427,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -11531,8 +11630,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.20 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -12314,8 +12413,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -12517,8 +12616,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -13301,8 +13400,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -13504,8 +13603,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -13795,8 +13894,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -13998,8 +14097,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -14230,6 +14329,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -14296,8 +14401,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -14499,8 +14604,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -15211,7 +15316,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
             | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+            #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_30 @after
@@ -15231,6 +15343,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CONFIGURATION_KEYS with parameter config_value = 'true' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | scheduler.jobName_paSendRt.enabled |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -15297,8 +15415,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.2                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -15500,8 +15618,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -16212,7 +16330,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
             | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
             | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
-
+          #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
     @ALL @FLOW @FLOW_FULL @NM3 @NM3PANEW @NM3PANEWRETRY @NM3PANEWRETRY_FULL_31 @after
@@ -16226,6 +16351,12 @@ Feature: NM3 flows con PA New retry a token scaduto
         And update for table CONFIGURATION_KEYS with parameter config_value = '1000' on db nodo_cfg with where datatable horizontal
             | where_keys | where_values                       |
             | CONFIG_KEY | default_durata_estensione_token_IO |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '$postepay_toggle_enabled' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'POSTE3,POSTE1' on db nodo_cfg with where datatable horizontal
+            | where_keys | where_values       |
+            | CONFIG_KEY | lista_canali_poste |
         And waiting after triggered refresh job ALL
         And from body with datatable horizontal verificaBollettino initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -16292,8 +16423,8 @@ Feature: NM3 flows con PA New retry a token scaduto
             | UPDATED_BY            | activatePaymentNoticeV2                            |
             | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
             | SUGGESTED_IDCIBUNDLE  | 1                                                  |
-            | SUGGESTED_USER_FEE    | 130                                                |
-            | SUGGESTED_PA_FEE      | 20                                                 |
+            | SUGGESTED_USER_FEE    | 1.30                                                |
+            | SUGGESTED_PA_FEE      | 0.20                                                 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -16495,8 +16626,8 @@ Feature: NM3 flows con PA New retry a token scaduto
         And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
         And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 130 in position 0
-        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 20 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 1.30 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0.2 in position 0
         And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 1 in position 0
         ### TRANSFER 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
@@ -16950,6 +17081,14 @@ Feature: NM3 flows con PA New retry a token scaduto
             | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2SecResp
         And from $paSendRTV2SecResp.outcome xml check value OK in position 0
+           #RESTORE
+        Given update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = 'false' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | postepay_in_poste  |
+        And update for table CONFIGURATION_KEYS with parameter CONFIG_VALUE = '' on db nodo_cfg with where datatable horizontal
+          | where_keys | where_values       |
+          | CONFIG_KEY | lista_canali_poste |
+        And waiting after triggered refresh job ALL
 
 
 

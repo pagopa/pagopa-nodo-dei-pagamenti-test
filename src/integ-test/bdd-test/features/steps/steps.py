@@ -2753,6 +2753,77 @@ def step_impl(context, param, value):
         raise e
     
     
+@step(u"insert into table {table_name} with datatable horizontal on db {db_name:w}")
+def step_impl(context, table_name, db_name):
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable column_name/value e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, 'horizontal')
+        # Costruisce la query di insert a partire dalla datatable
+        ins_query = utils.generate_insert(dict_fields_values)
+
+        ins_query = ins_query.replace("table_name", table_name)
+        ins_query = utils.replace_global_variables(ins_query, context)
+        ins_query = utils.replace_local_variables(ins_query, context)
+        ins_query = utils.replace_context_variables(ins_query, context)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        exec_query = utils.insert_query(context, conn, adopted_db, ins_query)
+
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
+
+
+@step(u"insert into table {table_name} with datatable horizontal on db {db_name:w} if not exists")
+def step_impl(context, table_name, db_name):
+    try:
+        dbRun = getattr(context, "dbRun")
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable column_name/value e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, 'horizontal')
+        # Costruisce la query di insert (idempotente) a partire dalla datatable
+        ins_query = utils.generate_insert_if_not_exists(dict_fields_values, dbRun)
+
+        ins_query = ins_query.replace("table_name", table_name)
+        ins_query = utils.replace_global_variables(ins_query, context)
+        ins_query = utils.replace_local_variables(ins_query, context)
+        ins_query = utils.replace_context_variables(ins_query, context)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        exec_query = utils.insert_query(context, conn, adopted_db, ins_query)
+
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
+
+
 @step("update parameter {param} on configuration keys with value {value}")
 def step_impl(context, param, value):
     try:
