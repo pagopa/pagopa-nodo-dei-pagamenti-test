@@ -1,6 +1,6 @@
 import { check } from 'k6';
 import { SharedArray } from 'k6/data';
-import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
+import papaparse from './util/papaparse.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { Verifica } from './api/Verifica.js';
 import * as common from '../../CommonScript.js';

@@ -1,0 +1,8 @@
+{
+    "idPagamento": "$idPagamento",
+    "identificativoPsp": "$identificativoPsp",
+    "tipoVersamento": "$tipoVersamento",
+    "identificativoIntermediario": "$identificativoIntermediario",
+    "identificativoCanale": "$identificativoCanale",
+    "tipoOperazione": "$tipoOperazione"
+}

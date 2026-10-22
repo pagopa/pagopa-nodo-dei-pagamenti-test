@@ -1,0 +1,10 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:pspChiediRTResponse>
+			<pspChiediRTResponse>
+				<rt>$rt</rt>
+			</pspChiediRTResponse>
+		</ws:pspChiediRTResponse>
+	</soapenv:Body>
+</soapenv:Envelope>

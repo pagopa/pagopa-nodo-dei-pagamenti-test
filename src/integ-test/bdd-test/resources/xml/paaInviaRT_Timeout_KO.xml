@@ -1,0 +1,11 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:paaInviaRTRisposta>
+			<paaInviaRTRisposta>
+				<esito>$esito</esito>
+				<delay>$delay</delay>
+			</paaInviaRTRisposta>
+		</ws:paaInviaRTRisposta>
+	</soapenv:Body>
+</soapenv:Envelope>

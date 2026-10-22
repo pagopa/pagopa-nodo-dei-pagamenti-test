@@ -1,0 +1,51 @@
+            
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    <soapenv:Header>
+        <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>$identificativoIntermediarioPA</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>$identificativoStazioneIntermediarioPA</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$identificativoCarrello</identificativoCarrello>
+        </ppt:intestazioneCarrelloPPT>
+    </soapenv:Header>
+    <soapenv:Body>
+        <ws:nodoInviaCarrelloRPT>
+            <password>$password</password>
+            <identificativoPSP>$identificativoPSP</identificativoPSP>
+            <identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
+            <identificativoCanale>$identificativoCanale</identificativoCanale>
+            <listaRPT>
+                <!--1 or more repetitions:-->
+                <elementoListaRPT>
+                    <identificativoDominio>$identificativoDominio1</identificativoDominio>
+                    <identificativoUnivocoVersamento>$identificativoUnivocoVersamento1</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$codiceContestoPagamento1</codiceContestoPagamento>
+                    <rpt>$rpt1</rpt>
+                </elementoListaRPT>
+                <elementoListaRPT>
+                    <identificativoDominio>$identificativoDominio2</identificativoDominio>
+                    <identificativoUnivocoVersamento>$identificativoUnivocoVersamento2</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$codiceContestoPagamento2</codiceContestoPagamento>
+                    <rpt>$rpt2</rpt>
+                </elementoListaRPT>
+                <elementoListaRPT>
+                    <identificativoDominio>$identificativoDominio3</identificativoDominio>
+                    <identificativoUnivocoVersamento>$identificativoUnivocoVersamento3</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$codiceContestoPagamento3</codiceContestoPagamento>
+                    <rpt>$rpt3</rpt>
+                </elementoListaRPT>
+                <elementoListaRPT>
+                    <identificativoDominio>$identificativoDominio4</identificativoDominio>
+                    <identificativoUnivocoVersamento>$identificativoUnivocoVersamento4</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$codiceContestoPagamento4</codiceContestoPagamento>
+                    <rpt>$rpt4</rpt>
+                </elementoListaRPT>
+                <elementoListaRPT>
+                    <identificativoDominio>$identificativoDominio5</identificativoDominio>
+                    <identificativoUnivocoVersamento>$identificativoUnivocoVersamento5</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$codiceContestoPagamento5</codiceContestoPagamento>
+                    <rpt>$rpt5</rpt>
+                </elementoListaRPT>    
+            </listaRPT>
+        </ws:nodoInviaCarrelloRPT>
+    </soapenv:Body>
+</soapenv:Envelope>

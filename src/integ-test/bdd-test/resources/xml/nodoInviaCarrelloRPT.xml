@@ -1,0 +1,27 @@
+            
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    <soapenv:Header>
+        <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>$identificativoIntermediarioPA</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>$identificativoStazioneIntermediarioPA</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$identificativoCarrello</identificativoCarrello>
+        </ppt:intestazioneCarrelloPPT>
+    </soapenv:Header>
+    <soapenv:Body>
+        <ws:nodoInviaCarrelloRPT>
+            <password>$password</password>
+            <identificativoPSP>$identificativoPSP</identificativoPSP>
+            <identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
+            <identificativoCanale>$identificativoCanale</identificativoCanale>
+            <listaRPT>
+                <!--1 or more repetitions:-->
+                <elementoListaRPT>
+                    <identificativoDominio>$identificativoDominio</identificativoDominio>
+                    <identificativoUnivocoVersamento>$identificativoUnivocoVersamento</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
+                    <rpt>$rpt</rpt>
+                </elementoListaRPT>
+            </listaRPT>
+        </ws:nodoInviaCarrelloRPT>
+    </soapenv:Body>
+</soapenv:Envelope>

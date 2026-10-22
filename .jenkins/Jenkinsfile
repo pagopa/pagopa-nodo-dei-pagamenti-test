@@ -1,0 +1,44 @@
+pipeline {
+    agent { label 'NodoPagoPA' }
+    environment {
+        DOCKER_REGISTRY = "https://toolbox.sia.eu/docker_nodo_pagopa" 
+    } 
+    stages {
+        
+        stage('Checkout Repo Test') {
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId: 'openshift-server-sia', gitToolName: 'git-tool')]) {
+                        sh 'git config --global http.sslVerify "false" '
+                        sh 'git config --global http.postBuffer 1048576000'
+                        sh 'git config --global http.proxy http://csproxy:8080'
+                        sh 'git config --global https.proxy http://csproxy:8080'
+                        sh 'git config --global -l'
+                        sh 'git clone -b $BRANCH https://github.com/pagopa/pagopa-nodo-dei-pagamenti-test.git .'
+                }
+            }
+        }
+
+        stage('Build Integration Test image') {
+            steps {
+                script {
+                    tag = "toolbox.sia.eu/docker_nodo_pagopa/integration-test:latest"
+                    
+                     docker.withRegistry("${env.DOCKER_REGISTRY}", 'accenture_user' ) {
+                        dockerImage = docker.build("${tag}", '--build-arg="tags=$TAGS" --build-arg="folder=$FOLDER" .')
+                     }
+                }
+            }
+        }
+
+        stage('Push Integration Test image') {
+            steps{
+                script {
+                     docker.withRegistry("${env.DOCKER_REGISTRY}", 'accenture_user' ) {
+                         dockerImage.push()
+                     }
+                    sh("docker rmi ${tag}")
+                }
+            }
+        }
+    }    
+}

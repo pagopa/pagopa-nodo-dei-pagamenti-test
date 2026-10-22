@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+	<pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
+	<pay_i:dominio>
+		<pay_i:identificativoDominio>$identificativoDominio</pay_i:identificativoDominio>
+		<pay_i:identificativoStazioneRichiedente>$identificativoStazioneRichiedente</pay_i:identificativoStazioneRichiedente>
+	</pay_i:dominio>
+	<pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+	<pay_i:dataOraMessaggioRichiesta>$dataOraMessaggioRichiesta</pay_i:dataOraMessaggioRichiesta>
+	<pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+	<pay_i:soggettoPagatore>
+		<pay_i:identificativoUnivocoPagatore>
+			<pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+			<pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+		</pay_i:identificativoUnivocoPagatore>
+		<pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+	</pay_i:soggettoPagatore>
+	<pay_i:enteBeneficiario>
+		<pay_i:identificativoUnivocoBeneficiario>
+			<pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+			<pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+		</pay_i:identificativoUnivocoBeneficiario>
+		<pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+	</pay_i:enteBeneficiario>
+	<pay_i:datiVersamento>
+		<pay_i:dataEsecuzionePagamento>$dataEsecuzionePagamento</pay_i:dataEsecuzionePagamento>
+		<pay_i:importoTotaleDaVersare>$importoTotaleDaVersare</pay_i:importoTotaleDaVersare>
+		<pay_i:tipoVersamento>$tipoVersamento</pay_i:tipoVersamento>
+		<pay_i:identificativoUnivocoVersamento>$identificativoUnivocoVersamento</pay_i:identificativoUnivocoVersamento>
+		<pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+		<pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+		<pay_i:datiSingoloVersamento>
+			<pay_i:importoSingoloVersamento>$importoSingoloVersamento</pay_i:importoSingoloVersamento>
+			<pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+			<pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+			<pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+		</pay_i:datiSingoloVersamento>
+	</pay_i:datiVersamento>
+</pay_i:RPT>

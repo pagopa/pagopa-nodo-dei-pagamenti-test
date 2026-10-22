@@ -1,0 +1,16 @@
+            
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ws:paaVerificaRPTRisposta>
+            <paaVerificaRPTRisposta>
+                <esito>$esito</esito>
+                <datiPagamentoPA>
+                    <importoSingoloVersamento>$importoSingoloVersamento</importoSingoloVersamento>
+                    <ibanAccredito>$ibanAccredito</ibanAccredito>
+                    <causaleVersamento>$causaleVersamento</causaleVersamento>
+                </datiPagamentoPA>
+            </paaVerificaRPTRisposta>
+        </ws:paaVerificaRPTRisposta>
+    </soapenv:Body>
+</soapenv:Envelope>

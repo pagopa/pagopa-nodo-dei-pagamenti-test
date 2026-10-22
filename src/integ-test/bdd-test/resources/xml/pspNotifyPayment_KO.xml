@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<pfn:pspNotifyPaymentRes>
+			<outcome>$outcome</outcome>
+			<!--Optional:-->
+			<fault>
+				<faultCode>$faultCode</faultCode>
+				<faultString>Errore semantico dal psp</faultString>
+				<id>1</id>
+				<!--Optional:-->
+				<description>Errore dal psp</description>
+			</fault>
+		</pfn:pspNotifyPaymentRes>
+	</soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <pfn:pspNotifyPaymentRes>
+            <delay>$delay</delay>
+            <outcome>$outcome</outcome>
+        </pfn:pspNotifyPaymentRes>
+    </soapenv:Body>
+</soapenv:Envelope>
