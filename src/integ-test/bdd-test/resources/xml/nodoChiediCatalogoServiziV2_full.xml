@@ -1,0 +1,14 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<nod:nodoChiediCatalogoServiziV2Request>
+			<identificativoPSP>$identificativoPSP</identificativoPSP>
+			<identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
+			<identificativoCanale>$identificativoCanale</identificativoCanale>
+			<password>$password</password>
+			<identificativoDominio>$identificativoDominio</identificativoDominio>
+			<categoria>$categoria</categoria>
+			<commissione>Y</commissione>
+		</nod:nodoChiediCatalogoServiziV2Request>
+	</soapenv:Body>
+</soapenv:Envelope>

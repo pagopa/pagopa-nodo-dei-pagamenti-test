@@ -1,0 +1,22 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:paaAttivaRPTRisposta>
+			<paaAttivaRPTRisposta>
+				<esito>$esito</esito>
+			<datiPagamentoPA>
+            	<importoSingoloVersamento>$importoSingoloVersamento</importoSingoloVersamento>
+            	<causaleVersamento>/RFB/IUV1908/10.0/TXT/pagamento fotocopie pratica</causaleVersamento>
+				<spezzoniCausaleVersamento>
+					<!--You have a CHOICE of the next 2 items at this level-->
+					<spezzoneCausaleVersamento>/RFB/IUV1908/10.0/TXT/pagamento fotocopie pratica</spezzoneCausaleVersamento>
+					<spezzoneStrutturatoCausaleVersamento>
+						<causaleSpezzone>/RFB/IUV1908/10.0/TXT/pagamento fotocopie pratica1</causaleSpezzone>
+						<importoSpezzone>10.00</importoSpezzone>
+					</spezzoneStrutturatoCausaleVersamento>
+            	</spezzoniCausaleVersamento>
+            </datiPagamentoPA>
+			</paaAttivaRPTRisposta>
+		</ws:paaAttivaRPTRisposta>
+	</soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,58 @@
+{{- if .Values.deployments.performance_test }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployments.performance_test.name }}
+  namespace: {{ .Values.namespace_performance_tests }}
+#  annotations:
+#    helm.sh/hook: post-install,post-upgrade
+#    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  replicas: {{ .Values.deployments.performance_test.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployments.performance_test.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployments.performance_test.name }}
+      annotations:
+        rollme: {{ randAlphaNum 10 | quote }}
+    spec:
+      containers:
+      - name: {{ .Values.deployments.performance_test.name }}
+        image: {{ .Values.deployments.performance_test.registry_url }}/{{ .Values.deployments.performance_test.image_name }}:{{ .Values.deployments.performance_test.image_version }}
+        imagePullPolicy: {{ .Values.deployments.performance_test.imagePullPolicy }}
+        env:
+            {{- tpl (.Values.deployments.performance_test.environment | toYaml) . | nindent 10 }}
+        ports:
+            {{- toYaml .Values.deployments.performance_test.ports | nindent 10 }} 
+        resources:
+            {{- toYaml .Values.deployments.performance_test.resources | nindent 12 }}
+          {{- if .Values.deployments.performance_test.volumeMounts }}
+        volumeMounts:
+            {{- tpl (.Values.deployments.performance_test.volumeMounts | toYaml) . | nindent 10 }}
+          {{- end }}
+      {{- if .Values.deployments.performance_test.image_pull_secret }}
+      imagePullSecrets: 
+      {{- toYaml  .Values.deployments.performance_test.image_pull_secret | nindent 6 }}
+      {{- end }}
+      {{- if .Values.deployments.performance_test.hostAliases }}
+      hostAliases:
+      {{- toYaml .Values.deployments.performance_test.hostAliases | nindent 6 }}
+      {{- end }}
+      {{- if .Values.deployments.performance_test.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.deployments.performance_test.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.deployments.performance_test.tolerations }}
+      tolerations:
+        {{- toYaml .Values.deployments.performance_test.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if .Values.deployments.performance_test.volumes }}
+      volumes:
+        {{- tpl (.Values.deployments.performance_test.volumes | toYaml) . | nindent 8 }}
+      {{- end }}
+{{- end }}

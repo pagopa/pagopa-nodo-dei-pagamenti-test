@@ -11,7 +11,7 @@ parameters:
     values:
       - dev
       - sit
-    default: dev
+    default: sit
 
   - name: folder
     displayName: Integration test folder
@@ -22,14 +22,20 @@ parameters:
     default: runnable,test
     displayName: Integration test tags
 
+
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
   destinationFolderExtractArtifact: nodo/extracted
   deploy-pool: nodopagamenti-agent-pool-sit
   ${{ if eq(parameters['env'], 'dev') }}:
-    NODO_URL: "https://api.dev.platform.pagopa.it/nodo-dev"    
+    NODO_URL: "https://api.dev.platform.pagopa.it/nodo-dev"
+    file_config: $(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config_dev.json
+    file_behave: src/integ-test/bdd-test/resources/config_dev.json    
   ${{ if eq(parameters['env'], 'sit') }}:
     NODO_URL: "https://api.dev.platform.pagopa.it/nodo"
+    # NODO_URL: "http://10.70.66.200:80/nodo-sit"
+    file_config: $(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config_sit_oracle.json
+    file_behave: src/integ-test/bdd-test/resources/config_sit_oracle.json
 
 stages:
   - stage: prepare_env
@@ -46,7 +52,7 @@ stages:
 
           - task: AzureKeyVault@2
             inputs:
-              connectedServiceName: $(kv-service-connection-${{ parameters.env }})
+              connectedServiceName: $(kv-service-connection-dev)
               keyVaultName: $(az-kv-name-${{ parameters.env }})
               secretsFilter: "*"
               runAsPreJob: true
@@ -73,7 +79,8 @@ stages:
                   contents=$(jq "$key = \"$value\"" $file) && echo "${contents}" > $file
               }
 
-              file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
+              file=$(file_config)
+              echo ">>>>>>>>>>>>> name is $file"
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
               # replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
@@ -82,35 +89,53 @@ stages:
               # replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/ALL"
 
               replace $file ".services.\"nodo-dei-pagamenti\".url"           "$(NODO_URL)"
-              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
-              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  " "
-              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  " "
-              replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/ALL"
+              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "-monitoring/monitoring/v1/monitor/health"
+              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
+              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
+              replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "https://api.dev.platform.pagopa.it/nodo-monitoring/monitoring/v1/config/refresh/ALL"
+              replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
+
+              # replace $file ".services.\"nodo-dei-pagamenti\".url"           "$(NODO_URL)"
+              # replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
+              # replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
+              # replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "runlocal"
+              # replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "http://10.70.66.200:80/nodo-sit/config/refresh/ALL"
+              # replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  "N"
 
               replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
               replace $file ".services.\"mock-ec\".healthcheck"   "/info"
               replace $file ".services.\"mock-ec\".soap_service"  ""
               replace $file ".services.\"mock-ec\".rest_service"  ""
+              replace $file ".services.\"mock-ec\".subscription_key_name"  "Y"
 
               replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
               replace $file ".services.\"secondary-mock-ec\".healthcheck"   "/info"
               replace $file ".services.\"secondary-mock-ec\".soap_service"  ""
               replace $file ".services.\"secondary-mock-ec\".rest_service"  ""
+              replace $file ".services.\"secondary-mock-ec\".subscription_key_name"  "Y"
 
               replace $file ".services.\"mock-psp\".url"           "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1"
               replace $file ".services.\"mock-psp\".healthcheck"   "/info"
               replace $file ".services.\"mock-psp\".soap_service"  ""
               replace $file ".services.\"mock-psp\".rest_service"  ""
+              replace $file ".services.\"mock-psp\".subscription_key_name"  "Y"
 
               replace $file ".services.\"secondary-mock-psp\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1"
               replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
               replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
               replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
+              replace $file ".services.\"secondary-mock-psp\".subscription_key_name"  "Y"
 
-              replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
-              replace $file ".services.\"mock-pm\".healthcheck"   "/info"
-              replace $file ".services.\"mock-pm\".soap_service"  ""
-              replace $file ".services.\"mock-pm\".rest_service"  ""
+              replace $file ".services.\"apicfg-testing-support\".url"           "https://api.dev.platform.pagopa.it/apiconfig/testing-support/p/v1"
+              replace $file ".services.\"apicfg-testing-support\".healthcheck"   "/info"
+              replace $file ".services.\"apicfg-testing-support\".soap_service"  ""
+              replace $file ".services.\"apicfg-testing-support\".rest_service"  ""
+              replace $file ".services.\"apicfg-testing-support\".subscription_key_name"  "Y"
+
+              # replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+              # replace $file ".services.\"mock-pm\".healthcheck"   "/info"
+              # replace $file ".services.\"mock-pm\".soap_service"  ""
+              # replace $file ".services.\"mock-pm\".rest_service"  ""
 
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
@@ -143,6 +168,8 @@ stages:
               replace $file ".db_configuration.wfesp.password"  $(db-wfesp-password-${{ parameters.env }})     
               replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
 
+              replace $file ".env.SUBKEY"      $(apim-subscription-key-${{ parameters.env }})
+
               jq . $file
             displayName: "Configure Global Properties"
 
@@ -152,8 +179,10 @@ stages:
               cd $(Build.SourcesDirectory)/oracle
               sudo wget https://download.oracle.com/otn_software/linux/instantclient/216000/instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
-              sudo apt update
-              sudo apt install libaio1
+              sudo wget https://archive.ubuntu.com/ubuntu/pool/main/liba/libaio/libaio1t64_0.3.113-6build1.1_amd64.deb
+              sudo apt install ./libaio1t64_0.3.113-6build1.1_amd64.deb
+              #sudo apt update
+              #sudo apt install libaio1
 
             displayName: "Install Oracle Instant Client"
 
@@ -208,13 +237,19 @@ stages:
               echo 'Install Behave'
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+              sudo pip3 install cx-Oracle
+              sudo pip3 install xmltodict
+              sudo pip3 install python-dotenv
+              sudo pip3 install lxml
               echo python version
               python3 -V
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }}
+              fileBehave=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/$(file_behave)
+
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
 
             displayName: "Run integration test"
 

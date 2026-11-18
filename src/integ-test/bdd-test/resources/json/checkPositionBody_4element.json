@@ -1,0 +1,20 @@
+{
+    "positionslist": [
+        {
+            "fiscalCode": "$fiscalCode1",
+            "noticeNumber": "$noticeNumber1"
+        },
+        {
+            "fiscalCode": "$fiscalCode2",
+            "noticeNumber": "$noticeNumber2"
+        },
+        {
+            "fiscalCode": "$fiscalCode3",
+            "noticeNumber": "$noticeNumber3"
+        },
+        {
+            "fiscalCode": "$fiscalCode4",
+            "noticeNumber": "$noticeNumber4"
+        }
+    ]
+}
