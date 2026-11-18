@@ -5790,7 +5790,7 @@ Feature: NM3 flows PA Old con pagamento KO
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # IDEMPOTENCY_CACHE
-        And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys      | where_values                         |
             | IDEMPOTENCY_KEY | $sendPaymentOutcomeV2.idempotencyKey |
             | PRIMITIVA       | sendPaymentOutcomeV2                 |

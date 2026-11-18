@@ -293,7 +293,7 @@ Feature: process tests for nodoInviaRT_esito=1 796
             | codiceEsitoPagamento              | 1                           |
             | singoloImportoPagato              | 0.00                        |
             | esitoSingoloPagamento             | NON_PAGATO                  |
-        And pay_i:commissioniApplicatePSP with <value> in rtAttachmentBody
+        And pay_i:commissioniApplicatePSP with 0.00 in rtAttachmentBody
         And RT rtAttachmentBody to base64   
         And from body with datatable vertical nodoInviaRT initial XML nodoInviaRT
             | identificativoDominio           | #creditor_institution_code# |

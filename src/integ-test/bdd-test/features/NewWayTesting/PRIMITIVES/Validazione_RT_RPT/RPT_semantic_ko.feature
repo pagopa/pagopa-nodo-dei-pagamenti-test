@@ -40,7 +40,7 @@ Feature: Syntax checks for SEMANTIC RPT 1578
       | rpt                                   | $rptAttachment              |
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRPT response
-    And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+    And check faultCode is PPT_AUTORIZZAZIONE of nodoInviaRPT response
     Examples:
       | elem                 | value | SoapUI  |
       | pay_i:tipoVersamento | PO    | RPTSEM7 |

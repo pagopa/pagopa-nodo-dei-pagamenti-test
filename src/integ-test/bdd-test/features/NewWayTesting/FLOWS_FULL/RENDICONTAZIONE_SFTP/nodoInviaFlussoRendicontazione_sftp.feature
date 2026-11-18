@@ -57,7 +57,7 @@ Feature: nodoInviaFlussoRendicontazione_sftp
             | FILE_NAME          | NotNone                        |
             | STATUS             | TO_UPLOAD                      |
             | FILE_SIZE          | NotNone                        |
-            | SERVER_ID          | 2                              |
+            | SERVER_ID          | 1                              |
             | HOST_NAME          | 10.6.97.46                     |
             | PORT               | 22                             |
             | PATH               | 66666666666                    |
@@ -133,7 +133,7 @@ Feature: nodoInviaFlussoRendicontazione_sftp
             | FILE_NAME          | NotNone                        |
             | STATUS             | TO_UPLOAD                      |
             | FILE_SIZE          | NotNone                        |
-            | SERVER_ID          | 2                              |
+            | SERVER_ID          | 1                              |
             | HOST_NAME          | 10.6.97.46                     |
             | PORT               | 22                             |
             | PATH               | 66666666666                    |

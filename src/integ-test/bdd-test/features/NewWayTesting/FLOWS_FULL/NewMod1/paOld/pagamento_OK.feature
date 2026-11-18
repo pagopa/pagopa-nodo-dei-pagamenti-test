@@ -9685,7 +9685,8 @@ Feature: NMU flows PA Old con pagamento OK
     And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                       |
       | TOKEN      | $sendPaymentOutcomeV2.paymentToken |
-    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
+      | PRIMITIVA  | activatePaymentNoticeV2            |
+    And verify 2 record for the table IDEMPOTENCY_CACHE retrived by the query on db nodo_online with where datatable horizontal
       | where_keys | where_values                       |
       | TOKEN      | $sendPaymentOutcomeV2.paymentToken |
     # PM_SESSION_DATA

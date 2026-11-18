@@ -452,7 +452,7 @@ Feature: TEST INSERT
             | password                              | #password#      |
             | identificativoPSP                     | irraggiungibile |
             | identificativoIntermediarioPSP        | irraggiungibile |
-            | identificativoCanale                  | irraggiungibile |
+            | identificativoCanale                  | irraggiungibile3 |
             | rpt                                   | $rpt1Attachment |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response

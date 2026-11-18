@@ -163,15 +163,15 @@ Feature:  semantic checks for demandPaymentNoticeReq 925
     Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
         Given from body with datatable horizontal demandPaymentNotice initial XML demandPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00005              |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00041              |
         And update for table INTERMEDIARI_PA with parameter ENABLED = 'N' on db nodo_cfg with where datatable horizontal
             | where_keys          | where_values |
-            | ID_INTERMEDIARIO_PA | 77777777777  |
+            | ID_INTERMEDIARIO_PA | 66666666666  |
         And waiting after triggered refresh job ALL
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         And update for table INTERMEDIARI_PA with parameter ENABLED = 'Y' on db nodo_cfg with where datatable horizontal
             | where_keys          | where_values |
-            | ID_INTERMEDIARIO_PA | 77777777777  |
+            | ID_INTERMEDIARIO_PA | 66666666666  |
         And waiting after triggered refresh job ALL
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
