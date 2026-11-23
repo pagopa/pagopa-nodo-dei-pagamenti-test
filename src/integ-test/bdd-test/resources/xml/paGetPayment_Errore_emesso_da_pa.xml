@@ -1,0 +1,14 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<paf:paGetPaymentRes>
+			<outcome>$outcome</outcome>
+			<fault>
+				<faultCode>PAA_SINTASSI_EXTRAXSD</faultCode>
+				<faultString>errore sintattico PA</faultString>
+				<id>1</id>
+				<description>Errore sintattico emesso dalla PA</description>
+			</fault>
+		</paf:paGetPaymentRes>
+	</soapenv:Body>
+</soapenv:Envelope>

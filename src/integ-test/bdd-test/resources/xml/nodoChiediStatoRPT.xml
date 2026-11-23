@@ -1,0 +1,13 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:nodoChiediStatoRPT>
+			<identificativoIntermediarioPA>$identificativoIntermediarioPA</identificativoIntermediarioPA>
+			<identificativoStazioneIntermediarioPA>$identificativoStazioneIntermediarioPA</identificativoStazioneIntermediarioPA>
+			<password>$password</password>
+			<identificativoDominio>$identificativoDominio</identificativoDominio>
+			<identificativoUnivocoVersamento>$identificativoUnivocoVersamento</identificativoUnivocoVersamento>
+			<codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
+		</ws:nodoChiediStatoRPT>
+	</soapenv:Body>
+</soapenv:Envelope>

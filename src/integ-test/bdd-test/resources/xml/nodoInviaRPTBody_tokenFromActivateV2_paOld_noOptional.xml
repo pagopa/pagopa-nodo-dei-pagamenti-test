@@ -1,0 +1,21 @@
+            
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    <soapenv:Header>
+        <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$activatePaymentNoticeV2Response.paymentToken</codiceContestoPagamento>
+        </ppt:intestazionePPT>
+    </soapenv:Header>
+    <soapenv:Body>
+        <ws:nodoInviaRPT>
+            <password>#password#</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_02#</identificativoCanale>
+            <rpt>$rptAttachment</rpt>
+        </ws:nodoInviaRPT>
+    </soapenv:Body>
+</soapenv:Envelope>

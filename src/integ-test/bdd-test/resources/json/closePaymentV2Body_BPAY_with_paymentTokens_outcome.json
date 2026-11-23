@@ -1,0 +1,6 @@
+{
+    "paymentTokens": [
+        "$token1"
+    ],
+    "outcome": "$outcome"
+}

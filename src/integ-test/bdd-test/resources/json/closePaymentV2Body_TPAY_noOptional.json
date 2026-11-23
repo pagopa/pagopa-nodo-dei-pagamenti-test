@@ -1,0 +1,17 @@
+{
+    "paymentTokens": [
+        "$token1"
+    ],
+    "outcome": "$outcome",
+    "idPSP": "$idPSP",
+    "paymentMethod": "$paymentMethod",
+    "idBrokerPSP": "$idBrokerPSP",
+    "idChannel": "$idChannel",
+    "transactionId": "$transactionId",
+    "totalAmount": "$totalAmount",
+    "fee": "$fee",
+    "timestampOperation": "$timestampOperation",
+    "additionalPaymentInformations": {
+        "key": "$key"
+    }
+}

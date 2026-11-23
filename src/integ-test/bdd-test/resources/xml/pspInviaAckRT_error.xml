@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:pspInviaAckRTResponse>
+			<pspInviaAckRTResponse>
+				<fault>
+					<faultCode>$faultCode</faultCode>
+					<faultString>$faultString</faultString>
+					<id>wrapper</id>
+				</fault>
+				<esito>$esito</esito>
+			</pspInviaAckRTResponse>
+		</ws:pspInviaAckRTResponse>
+	</soapenv:Body>
+</soapenv:Envelope>

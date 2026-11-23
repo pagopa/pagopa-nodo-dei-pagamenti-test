@@ -1,0 +1,30 @@
+{
+    "paymentTokens": [
+        "$token1",
+        "$token2",
+        "$token3",
+        "$token4",
+        "$token5"
+    ],
+    "outcome": "$outcome",
+    "idPSP": "$idPSP",
+    "idBrokerPSP": "$idBrokerPSP",
+    "idChannel": "$idChannel",
+    "paymentMethod": "$paymentMethod",
+    "transactionId": "$transactionId",
+    "totalAmount": "$totalAmountExt",
+    "fee": "$feeExt",
+    "primaryCiIncurredFee": "$primaryCiIncurredFee",
+    "idBundle": "$idBundle",
+    "idCiBundle": "$idCiBundle",
+    "timestampOperation": "$timestampOperationExt",
+    "additionalPaymentInformations": {
+        "rrn": "$rrn",
+        "outcomePaymentGateway": "$outPaymentGateway",
+        "totalAmount": "$totalAmount1",
+        "fee": "$fee1",
+        "timestampOperation": "$timestampOperation1",
+        "authorizationCode": "$authorizationCode",
+        "paymentGateway": "$paymentGateway"
+    }
+}

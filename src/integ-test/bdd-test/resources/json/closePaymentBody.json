@@ -1,0 +1,19 @@
+{
+    "paymentTokens": [
+       "$token"
+    ],
+    "outcome": "$outcome",
+    "identificativoPsp": "$identificativoPsp",
+    "tipoVersamento": "$tipoVersamento",
+    "identificativoIntermediario": "$identificativoIntermediario",
+    "identificativoCanale": "$identificativoCanale",
+    "pspTransactionId": "$pspTransactionId",
+    "totalAmount": "$totalAmount",
+    "fee": "$fee",
+    "timestampOperation": "$timestampOperation",
+    "additionalPaymentInformations": {
+       "transactionId": "$transactionId",
+       "outcomePaymentGateway": "$outcomePaymentGateway",
+       "authorizationCode": "$authorizationCode"
+    }
+ }
