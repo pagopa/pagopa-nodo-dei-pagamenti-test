@@ -35,7 +35,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT 911
       And from body with datatable vertical paaInviaRT initial XML paaInviaRT
          | esito | OK |
       And EC replies to nodo-dei-pagamenti with the paaInviaRT
-      And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista_multibeneficiario_full initial XML nodoInviaCarrelloRPT
+      And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista_multibeneficiario initial XML nodoInviaCarrelloRPT
          | identificativoIntermediarioPA         | #creditor_institution_code# |
          | identificativoStazioneIntermediarioPA | #id_station#                |
          | identificativoCarrello                | $1ccp                       |
@@ -55,7 +55,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT 911
          | multiBeneficiario                     | 1                           |
       And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
          | esitoComplessivoOperazione  | OK                                                        |
-         | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello              |
+         | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello       cosa        |
          | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello |
       And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
       And multiBeneficiario with false in nodoInviaCarrelloRPT

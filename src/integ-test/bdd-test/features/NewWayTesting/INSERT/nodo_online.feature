@@ -2873,7 +2873,7 @@ Feature: TEST INSERT
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
         And from body with datatable horizontal activatePaymentNoticeV2Body_full initial XML activatePaymentNoticeV2_2
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 10.00  |
         When calling primitive evolution activatePaymentNoticeV2_1 and activatePaymentNoticeV2_2 with POST and POST in parallel with 10 ms delay
         Then check outcome is OK of activatePaymentNoticeV2_1 response
         And check outcome is OK of activatePaymentNoticeV2_2 response

@@ -7,7 +7,7 @@ Feature: T069_CarrelloRPT_Mod2_AD_noPpp 592
     @ALL @PRIMITIVE @MOD1 @MOD1INCARPTOK @MOD1INCARPTOK_16
     Scenario: CarrelloRPT_AD_noIdCart
         Given replace canaleUsato content with #canale_DIFFERITO_MOD2# content
-        And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
+        And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI_VIEW retrived by the query chekPlugin on db nodo_cfg under macro Mod1
         Given RPT generation RPT_generation_complete with datatable vertical
             | identificativoDominio             | #creditor_institution_code# |
             | identificativoStazioneRichiedente | #id_station#                |

@@ -32,7 +32,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT 921
          | ibanAccredito                     | IT96R0123454321000000012345           |
          | ibanAppoggio                      | IT96R0123454321000000012345           |
          | importoSingoloVersamento          | 1.50                                  |
-      And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista_multibeneficiario_full initial XML nodoInviaCarrelloRPT
+      And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista_multibeneficiario initial XML nodoInviaCarrelloRPT
          | identificativoIntermediarioPA         | #intermediarioPA#                     |
          | identificativoStazioneIntermediarioPA | #id_station#                          |
          | identificativoCarrello                | $1ccp                                 |

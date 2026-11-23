@@ -5,7 +5,6 @@ Feature: JIRA - PG-108
     Background:
         Given systems up
 
-
     @ALL @PRIMITIVE @NM4 @PG108
     Scenario: demandPaymentNotice
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter SERVIZIO_POF = 'POF', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
